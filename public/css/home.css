@@ -1,0 +1,14 @@
+:root {
+    --primario: #800000;
+    --anaranjado: #f0ad4e;
+    --blanco_oscuro: #cccccc;
+    --blanco: #FFFFFF;
+    --negro: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto, Helvetica, sans-serif;
+}

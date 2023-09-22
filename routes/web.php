@@ -9,28 +9,32 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::get('/home', function(){
+    return view('home');
+});
+
 Route::get('/login-google', function () {
     return Socialite::driver('google')->redirect();
 });
  
 Route::get('/google-callback', function () {
     $user = Socialite::driver('google')->user();
-
-    $usuarioExiste = User::where('external_id', $user->id)->where('external_auth', 'google')->first();
     
-    if($usuarioExiste) {
-        Auth::login($usuarioExiste);
-    } else {
-        $usuarioNuevo = User::create([
-            'name' => $user->name,
-            'email' => $user->email,
-            'avatar' => $user->avatar,
-            'external_id' => $user->id,
-            'external_auth' => 'google'
-        ]);
+    if(strpos($user->email, '@catolica.edu.sv') !== false){
+        $usuarioExiste = User::where('email', $user->email)->first();
 
-        Auth::login($usuarioNuevo);
+        if($usuarioExiste) {
+            Auth::login($usuarioExiste);
+        } else {
+            return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontro una cuenta con su dirección email.');
+        }
+
+        return redirect('/home');
+    } else{
+        return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: La dirección de correo electrónico no está permitida en este sitio.');
     }
-
-    return redirect('/dashboard');
 });
