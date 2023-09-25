@@ -10,23 +10,23 @@ Route::get('/', function () {
 });
 
 Route::get('/login', function () {
-    return view('login');
+    return view('auth.login');
 });
 
 Route::get('/home', function(){
-    return view('home');
+    return view('layouts.home');
 });
 
 Route::get('/tablero', function(){
-    return view('tablero');
+    return view('layouts.tablero');
 });
 
 Route::get('/perfil', function(){
-    return view('perfil');
+    return view('layouts.perfil');
 });
 
 Route::get('/investigaciones', function(){
-    return view('investigaciones');
+    return view('layouts.investigaciones');
 });
 
 Route::get('/login-google', function () {

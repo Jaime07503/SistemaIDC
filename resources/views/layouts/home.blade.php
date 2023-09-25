@@ -1,49 +1,11 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <title>Home</title>
+@extends('layout')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="shortcut icon" href="https://plataforma.catolica.edu.sv/pluginfile.php/1/theme_moove/favicon/1672891795/favicon.ico">
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+@endsection
 
-        <!-- Styles -->
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/home.css') }}">
-    </head>
-    <body>
-    <!-- Navbar -->
-    <header class="header">
-        <nav id="navbar">
-            <div class="logo">
-                <img src="{{ asset('images/logo_unicaes.png') }}" alt="Logo UNICAES">
-            </div>
-            <div class="navbar-content">
-                <div class="ic_mensajeria ico">
-                    <span class="ic">
-                        <i class="fa-regular fa-envelope"></i>
-                    </span>
-                </div>
-                <div class="ic_notificaciones ico">
-                    <span class="ic">
-                        <i class="fa-regular fa-bell"></i>
-                    </span>
-                </div>
-                <div class="avatar-container">
-                    @if (session('avatarUrl'))
-                        <img class="avatar" src="{{ session('avatarUrl') }}" alt="Avatar">
-                        <span class="ic_flecha ico"><i class="fa-solid fa-chevron-down"></i></span>
-                    @endif
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Contenido Principal -->
-    <main class="main-content">
+@section('content')
+        <main class="main-content">
         <div class="container">
             <div class="contenido-main">
                 <h1>Investigaciones de Cátedra</h1>
@@ -159,4 +121,4 @@
     <!-- Scripts -->
     <script src=" {{ asset('js/home.js') }}"></script>
     </body>
-</html>
+@endsection
