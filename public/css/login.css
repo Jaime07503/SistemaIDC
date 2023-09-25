@@ -31,7 +31,6 @@ body {
 .login-container {
     background-color: var(--primary);
     color: var(--light-gray);
-    border: 2px solid var(--primary);
     border-radius: 10px;
     display: flex;
     justify-content: center; 
@@ -43,6 +42,7 @@ body {
 .login-left h2 {
     color: var(--gold);
     font-size: 1.7em;
+    margin-bottom: 0.5rem;
 }
 
 .login-right h3 {
@@ -124,6 +124,7 @@ body {
     }
 
     .line {
+        margin-top: 1rem;
         width: 80%; 
         height: 1px; 
     }

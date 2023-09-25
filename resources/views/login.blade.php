@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title>Investigaciones de Cátedra</title>
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}">
+
+        <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+        <link rel="shortcut icon" href="https://plataforma.catolica.edu.sv/pluginfile.php/1/theme_moove/favicon/1672891795/favicon.ico">
+
+        <!-- Styles -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}">
     </head>
     <body>
         <div class="main-container">
