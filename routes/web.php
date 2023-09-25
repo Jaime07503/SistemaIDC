@@ -20,10 +20,10 @@ Route::get('/home', function(){
 Route::get('/login-google', function () {
     return Socialite::driver('google')->redirect();
 });
- 
+
 Route::get('/google-callback', function () {
     $user = Socialite::driver('google')->user();
-    
+
     if(strpos($user->email, '@catolica.edu.sv') !== false){
         $usuarioExiste = User::where('email', $user->email)->first();
 
