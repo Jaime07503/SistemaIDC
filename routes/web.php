@@ -10,11 +10,23 @@ Route::get('/', function () {
 });
 
 Route::get('/login', function () {
-    return view('login');
+    return view('auth.login');
 });
 
 Route::get('/home', function(){
-    return view('home');
+    return view('layouts.home');
+});
+
+Route::get('/tablero', function(){
+    return view('layouts.tablero');
+});
+
+Route::get('/perfil', function(){
+    return view('layouts.perfil');
+});
+
+Route::get('/investigaciones', function(){
+    return view('layouts.investigaciones');
 });
 
 Route::get('/login-google', function () {
@@ -29,6 +41,9 @@ Route::get('/google-callback', function () {
 
         if($usuarioExiste) {
             Auth::login($usuarioExiste);
+            
+            session(['avatarUrl' => $user->getAvatar()]);
+            session(['name' => $user->getName()]);
         } else {
             return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontro una cuenta con su dirección email.');
         }
