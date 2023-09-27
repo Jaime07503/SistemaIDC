@@ -79,4 +79,9 @@
 
 @section('scripts')
     <script src=" {{ asset('js/home.js') }}"></script>
+<<<<<<< HEAD
 @endsection
+=======
+    </body>
+@endsection
+>>>>>>> eed56183abad1a97b0efabf81420fe1c6c96c368
