@@ -1,5 +1,9 @@
 @extends('layout')
 
+@section('title')
+    Home
+@endsection
+
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
@@ -55,70 +59,24 @@
                 </div>
                 <!-- Cursos -->
                 <div class="cursos">
+                    @foreach ($courses as $course)
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Ciclo I 2024</h5>
+                            <h5 class="card-title">{{ $course->subjectCycle }}</h5>
                             <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
-                            <a href="#" class="card-link">Principios de Electrónica</a>
+                            <a href="#" class="card-link">{{ $course->nameSubject }}</a>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Ciclo I 2024</h5>
-                            <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
-                            <a href="#" class="card-link">Redes</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Ciclo I 2024</h5>
-                            <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
-                            <a href="#" class="card-link">Programación Orientada a Objetos</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Ciclo I 2024</h5>
-                            <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
-                            <a href="#" class="card-link">Administración de Servidores</a>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </main>
 
     <!-- Ventana Modal Perfil -->
-    <div id="avatarModal" class="modal">
-        <div class="modal-contenido">
-            <!-- Opciones -->
-            <div class="name-user">
-                <i class="fa-regular fa-user"></i>
-                {{ session('name') }}
-            </div>
-            <div class="line"></div>
-            <div class="tablero">
-                <i class="fa-solid fa-gauge-high"></i>
-                <a href="{{ url('/tablero') }}">Tablero</a>
-            </div>
-            <div class="investigaciones">
-                <i class="fa-regular fa-folder"></i>
-                <a href="{{ url('/investigaciones') }}">Mis investigaciones</a>
-            </div>
-            <div class="perfil">
-                <i class="fa-regular fa-user"></i>
-                <a href="{{ url('/perfil') }}">Perfil</a>
-            </div>
-            <div class="line">
-            </div>
-            <div class="salir">
-                <i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180"></i>
-                <a href="">Salir</a>
-            </div>
-        </div>
-    </div>
+    
+@endsection
 
-    <!-- Scripts -->
+@section('scripts')
     <script src=" {{ asset('js/home.js') }}"></script>
-    </body>
 @endsection

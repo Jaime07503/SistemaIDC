@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use App\Models\Teacher;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,8 +15,19 @@ Route::get('/login', function () {
     return view('auth.login');
 });
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 Route::get('/home', function(){
-    return view('layouts.home');
+    $idTeacher = 1;
+    $teacher = Teacher::find($idTeacher);
+
+    if (!$teacher) {
+        // Manejo de error si el profesor no se encuentra
+    }
+
+    $courses = $teacher->subject()->get(); 
+
+    return view('layouts.home', compact('courses'));
 });
 
 Route::get('/tablero', function(){
