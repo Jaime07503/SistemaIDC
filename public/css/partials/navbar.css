@@ -1,0 +1,84 @@
+:root {
+    --primary: #800000;
+    --white: #FFFFFF;
+}
+
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--white); 
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+}
+
+.header {
+    top: 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Agrega una sombra si lo deseas */
+    z-index: 100; /* Asegura que el header esté por encima del contenido */
+}
+
+.logo img {
+    max-height: 60px; 
+}
+
+.navbar-content {
+    display: flex;
+    align-items: center;
+    height: 70px;
+}
+
+.ico {
+    color: rgb(128, 0, 0);
+    font-size: 1.4rem;
+}
+
+.ic_mensajeria,
+.ic_notificaciones,
+.avatar-container {
+    display: flex;
+    align-items: center;
+    border: 3px solid var(--white);
+    cursor: pointer;
+    height: 90%;
+    width: 100%;
+    padding: 0 5px;
+}
+
+.ic_mensajeria:hover,
+.ic_notificaciones:hover,
+.avatar-container:hover {
+    height: 70px;
+    border: 3px solid var(--primary);
+    cursor: pointer;
+}
+
+.ic {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+}
+
+.avatar {
+    max-width: 35px;
+    border-radius: 50%;
+}
+
+.ic_flecha {
+    margin: 0 5px;
+}
+
+@media (max-width: 635px){
+    #navbar {
+        justify-content: center;
+    }
+
+    .logo{
+        display: none;
+    }
+}

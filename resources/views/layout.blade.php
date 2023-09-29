@@ -12,6 +12,9 @@
         <link rel="shortcut icon" href="https://plataforma.catolica.edu.sv/pluginfile.php/1/theme_moove/favicon/1672891795/favicon.ico">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/partials/navbar.css') }}" >
+        <link rel="stylesheet" href="{{ asset('css/partials/footer.css') }}" >
+        <link rel="stylesheet" href="{{ asset('css/partials/modal.css') }}" >
         @yield('styles')
 
     </head>
@@ -20,8 +23,11 @@
 
         @yield('content')
 
+        @include('partials.modal')
+
         @include('partials.footer')
 
         @yield('scripts')
+        <script src=" {{ asset('js/modal.js') }}"></script>
     </body>
 </html>

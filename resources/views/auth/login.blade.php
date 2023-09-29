@@ -11,7 +11,7 @@
         <link rel="shortcut icon" href="https://plataforma.catolica.edu.sv/pluginfile.php/1/theme_moove/favicon/1672891795/favicon.ico">
 
         <!-- Styles -->
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/login.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/own/login.css') }}">
     </head>
     <body>
         <div class="main-container">

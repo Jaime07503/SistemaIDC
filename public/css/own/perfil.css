@@ -1,0 +1,152 @@
+:root {
+    --primary: #800000;
+    --secondary: #F8F9FA;
+    --gold: #F0AD4E;
+    --light-gray: #CCCCCC;
+    --light: #E5EEF4;
+    --white: #FFFFFF;
+    --silver-pale: #F7F7F7;
+    --black: #000000;
+    --gray: #455a64;
+    --n: #DE7C5A;
+    --1: #BF0000;
+    --2: #E60000;
+    --3: #400000;
+}
+
+body {
+    box-sizing: border-box;
+    background-color: var(--light);
+    font-family: 'Poppins', Helvetica, sans-serif;
+    overflow-y: scroll;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* Estilos para el contener main */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    margin: auto;
+    min-width: auto;
+    gap: 20px;
+}
+
+.main-content a {
+    text-decoration: none;
+}
+
+.head-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    border-top: 3px solid var(--primary);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 90%;
+    padding: 15px;
+    margin-top: 90px;
+    border-radius: 0px 0px 5px 5px;
+}
+
+.head-content h1 {
+    margin: 0;
+}
+
+.info-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    width: 90%;
+    border-top: 3px solid var(--primary);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 0px 0px 5px 5px;
+    margin-bottom: 20px;
+}
+
+.info-content h1, h2, h3 {
+    margin: 0;
+}
+
+.info-top {
+    background-color: var(--white);
+    border-radius: 5px;
+    margin-bottom: 25px;
+    display: grid; /* Usar CSS Grid */
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); /* Crear columnas automáticas con un ancho mínimo de 200px */
+    gap: 10px; /* Establecer el espacio (gap) entre los elementos a 10px */
+}
+
+.history {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+}
+
+.view {
+    padding: 5px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 5px;
+}
+
+.view:hover {
+    text-decoration: underline;
+}
+
+.history a {
+    text-decoration: none;
+}
+
+.perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 5px;
+    border: 3px solid var(--light-gray);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.perfil img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.datos-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    padding: 10px;
+    border: 3px solid var(--light-gray);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.datos-perfil i {
+    font-size: 3rem;
+    color: var(--gold);
+}
+
+.badge {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.info-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 3px solid var(--light-gray);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
