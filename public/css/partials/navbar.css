@@ -9,17 +9,17 @@
     align-items: center;
     background-color: var(--white); 
     position: fixed;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+    z-index: 1000; 
 }
 
 .header {
     top: 0;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Agrega una sombra si lo deseas */
-    z-index: 100; /* Asegura que el header esté por encima del contenido */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+    z-index: 100; 
 }
 
 .logo img {
@@ -47,6 +47,10 @@
     height: 90%;
     width: 100%;
     padding: 0 5px;
+}
+
+.avatar-container i {
+    font-size: 0.9rem;
 }
 
 .ic_mensajeria:hover,

@@ -18,16 +18,20 @@
             </div>
         </div>
         <div class="info-content">
+            <div class="header-title">
+                <h2>Datos generales</h2>
+            </div>
             <div class="info-top">
                 <div class="perfil">
                     <img class="avatar-user" src="{{ session('avatarUrl') }}" alt="Avatar">
                     <h2>{{ session('name') }}</h2>
+                    <a href="">Editar Perfil</a>
                 </div>
                 <div class="datos-perfil">
-                    <h2>Detalles del usuario</h2>
-                    <h3>Dirección Email</h3>
-                    <a href="">mario.martinez4@catolica.edu.sv</a>
-                    <h3>Insignias IDC</h3>
+                    <h3>Detalles del usuario</h3>
+                    <h4>Dirección Email</h4>
+                    mario.martinez4@catolica.edu.sv
+                    <h4>Insignias IDC</h4>
                     <div class="badge">
                         <i class="fa-solid fa-certificate"></i>
                         <i class="fa-solid fa-certificate"></i>
@@ -35,18 +39,18 @@
                     </div>
                 </div>
                 <div class="datos-perfil">
-                    <h2>Actividad de ingresos</h2>
-                    <h3>Primer acceso al sitio</h3>
+                    <h3>Actividad de ingresos</h3>
+                    <h4>Primer acceso al sitio</h4>
                     Thursday, 5 de January de 2023, 20:12  (265 días 19 horas)
-                    <h3>Último acceso al sitio</h3>
+                    <h4>Último acceso al sitio</h4>
                     Thursday, 28 de September de 2023, 15:37  (3 segundos)
                 </div>
             </div>
             <div class="info-bottom">
                 <h2>Detalles de las investigaciones de catedra</h2>
-                <a href="">Tiristores</a>
-                <a href="">Flip-Flop</a>
                 <a href="">Servidores web</a>
+                <a href="">Servidores de correo</a>
+                <a href="">Servidores de archivos</a>
             </div>
         </div>
     </main>

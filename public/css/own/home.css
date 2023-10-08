@@ -10,12 +10,16 @@
 }
 
 body {
+    margin: 0;
     box-sizing: border-box;
     background-color: var(--light);
     font-family: 'Poppins', Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     overflow-y: scroll;
-    margin: 0;
     min-height: 100vh;
+    gap: 1.5rem;
 }
 
 /* Estilos para el contener main */
@@ -27,19 +31,27 @@ body {
     width: 85%;
     margin: auto;
     min-height: auto;
-    gap: 20px;
+    gap: 1.5rem;
 }
 
 .head-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    align-items: center;
     background-color: var(--white);
-    border-top: 3px solid var(--primary);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-top: 2px solid var(--primary);
+    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
     width: 90%;
-    padding: 15px;
-    margin-top: 90px;
-    border-radius: 0px 0px 5px 5px;
+    padding: 1rem;
+    margin-top: 4.5rem;
+    border-radius: 0.3rem;
+}
+
+.head-content h1 {
+    margin: 0;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--primary);
 }
 
 .info-content,
@@ -48,103 +60,165 @@ body {
     flex-direction: column;
     background-color: var(--white);
     width: 90%;
-    border-top: 3px solid var(--primary);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    border-radius: 0px 0px 5px 5px;
-    gap: 15px;
+    border-top: 2px solid var(--primary);
+    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 0.3rem;
+    gap: 1rem;
 }
 
 .courses-content {
-    margin-bottom: 20px;
     justify-content: center;
-}
-
-.head-content h1 {
-    margin: auto;
-    font-size: 2.5rem;
+    gap: 0;
 }
 
 .head-content img {
-    width: 120px;
+    width: 10rem;
 }
 
 /* Estilos para la Información */
 .info-content p {
     text-align: justify;
+    font-size: 1.1rem;
+    margin: 0;
 }
 
 .idc-info {
     text-align: center;
     font-size: 1.25rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 3px solid var(--light);
-    border-radius: 0px 0px 5px 5px;
-    padding: 10px;
+    line-height: 1.8;
+    box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+    border-top: 2px solid var(--gold);
+    border-radius: 0.3rem;
+    padding: 1.3rem;
 }
 
-.idc-info h2 {
+.idc-info h3,
+.mis-vis-content h3 {
     margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary);
 }
 
 .mis-vis-content {
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-    font-size: 1.25rem;
-    gap: 20px;
+    gap: 1rem;
 }
 
 .head-lbl h3{
     margin: 0;
+    font-size: 1.2rem;
 }
 
 .mision,
 .vision {
     flex: 1;
     text-align: center;
-    padding: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    line-height: 1.5;
-    border: 3px solid var(--light);
-    border-radius: 0px 0px 5px 5px;
+    padding: 1.3rem;
+    box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.1);
+    line-height: 1.8;
+    border-top: 2px solid var(--gold);
+    border-radius: 0.3rem;
 }
 
-/* Estilos para el campo de búsqueda */
-.options-search,
-.search-box {
+/* Estilos para el listbox personalizado */
+.options-courses {
     display: flex;
-    justify-content: left;
+    justify-content: start;
     align-items: center;
-    margin: 5px 0;
-    gap: 5px;
+    gap: 0.5rem;
 }
 
-.search-box {
-    display: flex;
-    align-items: center;
+.custom-listbox {
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+    margin: 0.5rem 0;
+    width: 9rem;
+    font-size: 1rem;
+}
+
+.custom-listbox:nth-child(3) {
+    z-index: 1;
+}
+  
+.listbox-header {
+    cursor: pointer;
     border: 1px solid var(--light-gray);
-    border-radius: 4px;
-    background-color: var(--white);
+    padding: 0.5rem;
+    background: var(--white);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 0.3rem;
+}
+  
+.selected-option {
+    flex-grow: 1;
+    margin-right: 0.5rem;
+}
+  
+.arrow-down {
+    transition: transform 0.2s ease-in-out;
+}
+  
+.options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border: 1px solid var(--light-gray);
+    background: var(--white);
+    z-index: 1;
+    margin-top: 0.5rem;
+    border-radius: 0.3rem;
+    width: 9rem;
+    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+}
+  
+.options li {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+  
+.options li:hover {
+    background: var(--primary);
+    color: var(--white);
 }
 
-.search-input {
-    flex: 1; /* Ocupa todo el espacio disponible */
-    border: none;
-    padding: 8px;
-    font-size: 16px;
+.custom-listbox:nth-child(3) {
+    width: 12rem;
+}
+
+.options:nth-child(2) {
+    width: 12rem;
+}
+
+/* Estilos para el listbox activo */
+.custom-listbox.active .options {
+    display: block;
+}
+
+/* Estilos para el campo de entrada de texto */
+.custom-input {
+    display: inline-block;
+}
+
+input[type="text"] {
+    padding: 0.7rem;
+    border: 1px solid var(--light-gray);
+    background-color: var(--white);
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    width: 15rem; /* Ajusta el ancho del campo de entrada según tus necesidades */
     outline: none;
-}
-
-/* Estilos para el elemento select */
-select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid var(--light-gray);
-    border-radius: 4px;
-    background-color: var(--white);
-    font-size: 16px;
-    outline: none; /* Elimina el resaltado del borde en el foco */
 }
 
 /* Estilos de la tarjeta */
@@ -153,18 +227,18 @@ select {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 0.5rem;
 }
 
 .card {
     flex-basis: calc(50% - 10px);
     box-sizing: border-box;
-    border-radius: 0px 0px 5px 5px;
+    border-radius: 0.3rem;
     border: 1px solid var(--light-gray);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: var(--light);
+    box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.1);
+    background-color: var(--white);
     position: relative; /* Agrega posición relativa a todas las tarjetas */
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
 }
 
 .card:nth-child(2n) {
@@ -173,39 +247,43 @@ select {
 
 .card img {
     width: 100%;
-    height: 12rem;
+    height: 12.8rem;
+    border-radius: 0.2rem 0.2rem 0 0;
 }
 
 .card-title {
     position: absolute;
-    top: 5px; /* Ajusta la distancia desde la parte superior */
-    left: 5px; /* Ajusta la distancia desde la izquierda */
-    background-color: var(--light);
-    padding: 5px 10px;
-    border-radius: 5px;
-    z-index: 1; /* Coloca el título por encima de la imagen */
-    font-size: 0.8rem;
+    top: 0.3rem; /* Ajusta la distancia desde la parte superior */
+    left: 0.3rem; /* Ajusta la distancia desde la izquierda */
+    background-color: var(--primary);
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.3rem;
+    z-index: 0; /* Coloca el título por encima de la imagen */
+    font-size: 0.9rem;
     margin: auto;
+    color: var(--white);
 }
 
 .card-text {
-    margin: 10px 0;
+    margin: 0.5rem 0;
 }
 
 .card-link {
-    color: var(--black);
-    margin-top: 10px; /* Espacio entre el título y el enlace */
+    color: var(--primary);
+    margin-top: 0.5rem; /* Espacio entre el título y el enlace */
     text-decoration: none;
     display: block;
-    padding: 10px;
+    padding: 0.5rem;
     margin-top: 0;
+    font-size: 1.1rem;
+    font-weight: 900;
 }
 
 .card-link:hover {
     text-decoration: underline;
 }
 
-@media (max-width: 635px){
+@media (max-width: 780px){
     .main-content {
         width: 90%;
     }
@@ -213,10 +291,8 @@ select {
     .head-content,
     .info-content,
     .mis-vis-content {
-        text-align: center;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
     }
 
     .head-content,
@@ -233,18 +309,18 @@ select {
     }
 
     .info-content p {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
 
     .head-lbl h3{
         margin: 0;
     }
     
-    .options-search {
+    .options-courses {
         flex-direction: column;
         justify-content: center;
         align-items: start;
-        gap: 10px;
+        gap: 0.5rem;
     }
 
     .search-box {
@@ -254,14 +330,14 @@ select {
 
     .courses-content {
         width: 85%;
-        margin-bottom: 10px;
+        margin-bottom: 0.5rem;
     }
 
     .courses {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 0.5rem;
     }
 
     .card {

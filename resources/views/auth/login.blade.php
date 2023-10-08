@@ -30,7 +30,7 @@
                     <h3>Iniciar sesión con</h3>
                     <a href="{{ url('/login-google') }}" class="btn-login">
                         <img src="{{ asset('images/logo_google.png') }}" alt="Logo Google">
-                        Correo Institucional
+                        <h4>Correo Institucional</h4>
                     </a>
                 </section>
             </div>

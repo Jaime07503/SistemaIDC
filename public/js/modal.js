@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Cuando se hace clic fuera del modal, cierra el modal
     window.addEventListener('click', function (event) {
         if (event.target == avatarModal) {
+            console.log('Clic afuera del avatarContainer');
             avatarModal.style.display = 'none';
         }
     });

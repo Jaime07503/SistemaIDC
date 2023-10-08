@@ -17,8 +17,11 @@
         </div>
         <!-- Contenido Información acerca de las IDC -->
         <div class="info-content">
+            <div class="head-lbl">
+                <h3>Información general</h3>
+            </div>
             <div class="idc-info">
-                <h2>¿Qué es una IDC?</h2>
+                <h3>¿Que son las investigaciones de catedra?</h3>
                 <p>Las investigaciones de cátedra representan un componente esencial en la búsqueda de la excelencia académica y la mejora continua en el ámbito educativo. Estas investigaciones permiten la colaboración activa entre docentes y estudiantes, fomentando el desarrollo de habilidades investigativas, el pensamiento crítico y la generación de conocimiento en un contexto académico.</p>
             </div>
             <div class="mis-vis-content">
@@ -36,26 +39,34 @@
         <div class="courses-content">
             <div class="head-lbl">
                 <h3>Vista general del curso</h3>
-                <!-- <div class="line"></div> -->
             </div>
-            <div class="options">
-                <div class="options-search">
-                        <div class="options-listbox">
-                        <select>
-                            <option value="todos">Todos</option>
-                            <option value="en-progreso">En progreso</option>
-                            <option value="pasados">Pasados</option>
-                        </select>
+            <div class="options-courses">
+                <!-- Listbox -->
+                <div class="custom-listbox">
+                    <div class="listbox-header">
+                        <span class="selected-option">Todos</span>
+                        <i class="fa-solid fa-chevron-down arrow-down"></i>
                     </div>
-                    <div class="search-box">
-                        <input type="text" class="search-input" placeholder="Buscar">
+                    <ul class="options">
+                        <li>Todos</li>
+                        <li>En progreso</li>
+                        <li>Pasados</li>
+                    </ul>
+                </div>
+                <!-- Entrada de Texto -->
+                <div class="custom-input">
+                    <input type="text" placeholder="Buscar">
+                </div>
+                <!-- Listbox -->
+                <div class="custom-listbox">
+                    <div class="listbox-header">
+                        <span class="selected-option">Nombre del curso</span>
+                        <i class="fa-solid fa-chevron-down arrow-down"></i>
                     </div>
-                    <div class="name-listbox">
-                        <select>
-                            <option value="nombre-curso">Nombre del Curso</option>
-                            <option value="ultimo-accedido">Último Accedido</option>
-                        </select>
-                    </div>
+                    <ul class="options">
+                        <li>Nombre del curso</li>
+                        <li>Último accedido</li>
+                    </ul>
                 </div>
             </div>
             <!-- Cursos -->
@@ -72,4 +83,8 @@
             </div>
         </div>
     </main>
+@endsection
+
+@section('scripts')
+    <script src=" {{ asset('js/home.js') }}"></script>
 @endsection
