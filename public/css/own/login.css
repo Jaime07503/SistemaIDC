@@ -68,12 +68,12 @@ body {
     height: 2.7rem;
     width: 13rem;
     border: 1px solid var(--primary);
-    transition: box-shadow 0.3s ease, border 0.3s ease;
+    transition: box-shadow 0.4s ease, border 0.3s ease;
 }
 
 .btn-login:hover {
     background: var(--primary);
-    border: 1px solid var(--gold);
+    border: 1px solid var(--white);
     color: var(--white);
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
     cursor: pointer;

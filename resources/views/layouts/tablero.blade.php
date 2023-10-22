@@ -54,6 +54,7 @@
                             <h5 class="card-title">Ciclo I 2024</h5>
                             <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
                             <a href="#" class="card-link">Servidores Web</a>
+                            <progress value="50" max="100"></progress>
                             <h4>100% progreso</h4>
                         </div>
                     </div>
@@ -62,6 +63,7 @@
                             <h5 class="card-title">Ciclo I 2024</h5>
                             <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
                             <a href="#" class="card-link">Servidores de correo</a>
+                            <progress value="50" max="100"></progress>
                             <h4>100% progreso</h4>
                         </div>
                     </div>
@@ -70,6 +72,7 @@
                             <h5 class="card-title">Ciclo I 2024</h5>
                             <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
                             <a href="#" class="card-link">Servidores de archivos</a>
+                            <progress value="50" max="100"></progress>
                             <h4>80% progreso</h4>
                         </div>
                     </div>

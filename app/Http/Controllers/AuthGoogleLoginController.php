@@ -25,11 +25,15 @@ class AuthGoogleLoginController extends Controller
 
                 session(['avatarUrl' => $user->getAvatar()]);
                 session(['name' => $user->getName()]);
+
+                if($usuarioExiste->first_login_at === null){
+                    return redirect('/formularioInicial');
+                }
+
+                return redirect('/home');
             } else {
                 return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontró una cuenta con su dirección de correo electrónico.');
             }
-
-            return redirect('/home');
         } else {
             return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: La dirección de correo electrónico no está permitida en este sitio.');
         }

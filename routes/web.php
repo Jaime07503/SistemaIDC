@@ -1,7 +1,9 @@
 <?php
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthGoogleLoginController;
+    //use App\Http\Controllers\SubjectController;
     use App\Http\Controllers\TeacherController;
+
 
     Route::get('/', function () {
         return view('welcome');
@@ -19,6 +21,10 @@
         return view('layouts.perfil');
     });
 
+    Route::get('/formularioInicial', function(){
+        return view('layouts.formularioInicial');
+    });
+
     Route::get('/investigaciones', function(){
         return view('layouts.investigaciones');
     });
@@ -28,6 +34,7 @@
     Route::get('/login-google', [AuthGoogleLoginController::class, 'redirectToGoogle']);
     Route::get('/google-callback', [AuthGoogleLoginController::class, 'handleGoogleCallback']);
     Route::get('/google-logout', [AuthGoogleLoginController::class, 'logout']);
+    Route::get('/obtener-materias', 'SubjectController@obtenerMaterias');
 
     //POST
     //PUT

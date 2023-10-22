@@ -277,6 +277,10 @@ input[type="text"] {
     margin-top: 0;
     font-size: 1.1rem;
     font-weight: 900;
+    width: 25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card-link:hover {
@@ -344,5 +348,9 @@ input[type="text"] {
         width: 100%;  
         margin-right: 0;
         margin-bottom: 0;   
+    }
+
+    .card-link{
+        width: 18rem;
     }
 }

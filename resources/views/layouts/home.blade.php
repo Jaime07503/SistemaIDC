@@ -76,7 +76,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $course->subjectCycle }}</h5>
                         <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
-                        <a href="#" class="card-link">{{ $course->nameSubject }}</a>
+                        <a href="#" class="card-link">{{ $course->nameSubject }} - {{ $course->section }} - {{ $course->teacher->user->name }}</a>
                     </div>
                 </div>
                 @endforeach
