@@ -1,0 +1,232 @@
+:root {
+    --primary: #800000;
+    --secondary: #F8F9FA;
+    --gold: #F0AD4E;
+    --light-gray: #CCCCCC;
+    --dark-gray: #949494;
+    --light: #E5EEF4;
+    --white: #FFFFFF;
+    --silver-pale: #F7F7F7;
+    --black: #000000;
+}
+
+body {
+    margin: 0;
+    box-sizing: border-box;
+    background-color: var(--light);
+    font-family: 'Poppins', Helvetica, sans-serif;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    gap: 20px;
+}
+
+/* Estilos para el contener main */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    margin: auto;
+    min-height: auto;
+    gap: 20px;
+}
+
+.head-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    border-top: 2px solid var(--primary);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 90%;
+    padding: 15px;
+    margin-top: 70px;
+    border-radius: 5px;
+}
+
+.head-content h1 {
+    margin: 0;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.history {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+}
+
+.view {
+    padding: 10px;
+    background-color: var(--primary);
+    color: white;
+    border-radius: 50%;
+}
+
+.view:hover {
+    text-decoration: underline;
+}
+
+.history a {
+    text-decoration: none;
+    color: var(--white);
+}
+
+.head-lbl h3{
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.courses-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    width: 90%;
+    align-items: center;
+    border-top: 2px solid var(--primary);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 5px;
+    gap: 15px;
+}
+
+.courses-content {
+    justify-content: center;
+    gap: 0;
+}
+
+.title {
+    background-color: var(--light-gray);
+    color: #641a1a;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 25px;
+    height: fit-content;
+    width: fit-content;
+    padding: 10px 20px 5px 20px;
+}
+
+.head-content img {
+    width: 120px;
+}
+
+.track-carrousel {
+    margin-top: 2%;
+
+}
+
+.track-card {
+    display: inline-flex;
+    background-color: var(--dark-gray);
+    border-width: 0;
+    border-radius: 100px 0px 0px 100px;
+    padding: 5px 0 0 20px;
+    margin: 15px 10px 10px 15px;
+    text-align: center;
+    width: fit-content;
+    height: 20px;
+}
+
+.track-card a {
+    font-size: 16px;
+    font-family: Arial;
+    color: var(--black);
+    text-decoration: none;
+
+}
+
+.track-card::after {
+    content: "";
+    position:relative;
+    left: 26px;
+    top: -5px;
+    width: 0;
+    height: 0;
+    border-width: 13px;
+    border-style: solid;
+    border-color:  transparent transparent transparent var(--dark-gray);
+}
+
+
+
+input[type="text"] {
+    padding: 13px;
+    border: 1px solid var(--light-gray);
+    background-color: var(--light);
+    border-radius: 5px;
+    font-size: 1rem;
+    width: 15rem; /* Ajusta el ancho del campo de entrada según tus necesidades */
+    outline: none;
+}
+
+/* Estilos de la tarjeta */
+.courses {
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.card {
+    flex-basis: calc(35% - 10px);
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid var(--light-gray);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: var(--light);
+    position: relative; /* Agrega posición relativa a todas las tarjetas */
+    margin-bottom: 20px;
+}
+
+.card:nth-child(2n) {
+    margin-right: 0;
+}
+
+.card img {
+    padding: 0 2vw 0 2vw;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 5px 5px 0 0;
+}
+
+.card h4 {
+    margin: 5px 10px;
+    font-weight: normal;
+}
+
+.card-title {
+    position: absolute;
+    top: 5px; /* Ajusta la distancia desde la parte superior */
+    left: 5px; /* Ajusta la distancia desde la izquierda */
+    background-color: var(--primary);
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 1; /* Coloca el título por encima de la imagen */
+    font-size: 0.9rem;
+    margin: auto;
+    color: var(--white);
+}
+
+.card-text {
+    margin: 10px 0;
+}
+
+.card-link {
+    color: var(--black);
+    margin-top: 10px; /* Espacio entre el título y el enlace */
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    margin-top: 0;
+    font-size: 1.1rem;
+}
+
+.card-link:hover {
+    text-decoration: underline;
+}
+
