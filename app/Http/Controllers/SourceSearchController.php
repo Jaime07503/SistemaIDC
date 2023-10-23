@@ -3,7 +3,7 @@
 
     use Illuminate\Http\Request;
 
-    class ResearchTopic extends Controller
+    class SourceSearchController extends Controller
     {
         //
     }

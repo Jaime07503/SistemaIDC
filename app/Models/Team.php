@@ -4,20 +4,18 @@
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
 
-    class Subject extends Model
+    class Team extends Model
     {
         use HasFactory;
 
-        protected $table = 'subject';
-        protected $primaryKey = 'subjectId'; 
+        protected $table = 'teams';
+        protected $primaryKey = 'teamId';
 
         protected $fillable = [
-            'subjectId',
-            'nameSubject',
-            'section',
-            'career',
-            'subjectCycle',
-            'subjectYear',
+            'teamId',
+            'creationDate',
+            'integrantQuantity',
+            'state',
             'idTeacher',
         ];
 
@@ -27,9 +25,14 @@
             return $this->belongsTo(Teacher::class, 'idTeacher');
         }
 
-        public function researchTopic()
+        public function studentTeam()
         {
-            return $this->hasMany(ResearchTopic::class);
+            return $this->hasMany(StudentTeam::class);
+        }
+
+        public function IDC()
+        {
+            return $this->hasOne(IDC::class);
         }
     }
 ?>
