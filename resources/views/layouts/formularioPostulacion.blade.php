@@ -6,25 +6,30 @@
 
     <title>Formulario para postularse</title>
 
-    <!-- Fonts -->
+    <!-- Fonts and Icon -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="shortcut icon" href="https://plataforma.catolica.edu.sv/pluginfile.php/1/theme_moove/favicon/1672891795/favicon.ico">
 
-    <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/own/formularioInicial.css') }}">
+    <!-- Style -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/own/formularioPostulacion.css') }}">
+
+    <script src="{{ asset('js/formularioPostulacion.js') }}"></script>
 </head>
 <body>
     <div class="wrapper">
         <form action="" method="POST">
             @csrf
             <h1>Postularse</h1>
+
+            <!-- Input Name -->
             <div class="input-box">
-                <input type="text" placeholder="Nombre completo" required>
+                <input type="text" id="nameInput" placeholder="Nombre completo" required>
             </div>
+
+            <!-- Listbox Careers -->
             <div class="options-courses">
-                <!-- Listbox -->
-                <div class="custom-listbox">
+                <div class="custom-listbox career">
                     <div class="listbox-header">
                         <span class="selected-option" id="career">Carrera</span>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
@@ -43,13 +48,14 @@
                     </ul>
                 </div>
             </div>
+
+            <!-- Carnet and Listbox Years -->
             <div class="info-carnet-año">
                 <div class="input-box item">
-                    <input type="text" placeholder="Número de carnet" required>
+                    <input type="text" placeholder="Número de carnet" required id="carnetInput" maxlength="11">
                 </div>
                 <div class="options-courses item">
-                    <!-- Listbox -->
-                    <div class="custom-listbox">
+                    <div class="custom-listbox year">
                         <div class="listbox-header">
                             <span class="selected-option" id="year">Año</span>
                             <i class="fa-solid fa-chevron-down arrow-down"></i>
@@ -64,40 +70,36 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Listbox Enrolled Subjects -->
             <div class="options-subjects subject">
-                <!-- Listbox -->
                 <div class="custom-listbox">
                     <div class="listbox-header">
                         <span class="selected-option">Materias inscritas</span>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
                     </div>
-                    <ul class="options" id="subject-list">
-                        <li>
-                            <h4>Selecciona las materias que tienes inscritas en este ciclo</h4>
-                        </li>
-                        <ul class="options" id="subject-list">
-                        </ul>
+                    <ul class="options">
+                        <div class="custom-checkbox" id="enrolledSubjects">
+                        </div>
                     </ul>
                 </div>
             </div>
+
+            <!-- Listbox Postulate Subject -->
             <div class="subject-postulate pos">
-                <!-- Listbox -->
                 <div class="custom-listbox">
-                        <div class="listbox-header">
-                            <span class="selected-option">Materia a postular</span>
-                            <i class="fa-solid fa-chevron-down arrow-down"></i>
-                        </div>
-                        <ul class="options">
-                            <li>Etica</li>
-                            <li>Proyectos de informática</li>
-                            <li>Auditoría de sistemas</li>
-                            <li>Técnicas de producción de sistemas</li>
-                            <li>Desarrollo de aplicaciones móviles</li>
-                        </ul>
+                    <div class="listbox-header">
+                        <span class="selected-option">Materia a postular</span>
+                        <i class="fa-solid fa-chevron-down arrow-down"></i>
                     </div>
+                    <ul class="options" id="subject-pos">
+                    </ul>
                 </div>
+            </div>
+
+            <!-- Radios Yes No Particpated IDC -->
             <div class="input-radio">
-                <h4>¿Ha participado en IDC?</h3>
+                <h4>¿Ha participado en IDC?</h4>
                 <div class="radio-options">
                     <div class="div-option">
                         <input type="radio" name="option" id="option-yes">
@@ -109,14 +111,15 @@
                     </div>
                 </div>
             </div>
-            <div class="input-box" id="input-box">
-                <input type="text" placeholder="En que materia" required>
+
+            <!-- Participated IDC Subject -->
+            <div class="input-box idc" id="input-box">
+                <input type="text" placeholder="En que materia" id="participated-idc-input">
             </div>
+
+            <!-- Button -->
             <button type="submit" class="btn">Continuar</button>
         </form>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/formularioInicial.js') }}"></script>
 </body>
 </html>

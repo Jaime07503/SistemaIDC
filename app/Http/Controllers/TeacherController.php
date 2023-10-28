@@ -17,7 +17,7 @@
 
             $courses = Subject::with(['teacher.user'])
             ->whereHas('teacher.user', function ($query) use ($idTeacher) {
-                $query->where('id', $idTeacher);
+                $query->where('userId', $idTeacher);
             })
             ->get();
 

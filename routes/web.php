@@ -1,9 +1,9 @@
 <?php
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthGoogleLoginController;
-    //use App\Http\Controllers\SubjectController;
+    use App\Http\Controllers\SubjectController;
     use App\Http\Controllers\TeacherController;
-
+    use App\Models\Subject;
 
     Route::get('/', function () {
         return view('welcome');
@@ -21,8 +21,8 @@
         return view('layouts.perfil');
     });
 
-    Route::get('/formularioInicial', function(){
-        return view('layouts.formularioInicial');
+    Route::get('/formularioPostulacion', function(){
+        return view('layouts.formularioPostulacion');
     });
 
     Route::get('/investigaciones', function(){
@@ -34,7 +34,9 @@
     Route::get('/login-google', [AuthGoogleLoginController::class, 'redirectToGoogle']);
     Route::get('/google-callback', [AuthGoogleLoginController::class, 'handleGoogleCallback']);
     Route::get('/google-logout', [AuthGoogleLoginController::class, 'logout']);
-    Route::get('/obtener-materias', 'SubjectController@obtenerMaterias');
+    Route::get('/getSubjects/{career}/{year}', function($career, $year) {
+        return Subject::where('career', $career)->where('subjectYear', $year)->get();
+    });
 
     //POST
     //PUT

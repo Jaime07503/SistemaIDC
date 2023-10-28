@@ -26,7 +26,7 @@
                     session(['name' => $user->getName()]);
 
                     if($usuarioExiste->first_login_at === null){
-                        return redirect('/formularioInicial');
+                        return redirect('/formularioPostulacion');
                     }
 
                     return redirect('/home');
