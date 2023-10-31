@@ -18,21 +18,23 @@
 </head>
 <body>
     <div class="wrapper">
-        <form action="" method="POST">
+        <form class="form" action=" {{ url('/storeStudent') }} " method="POST">
             @csrf
             <h1>Postularse</h1>
 
             <!-- Input Name -->
             <div class="input-box">
-                <input type="text" id="nameInput" placeholder="Nombre completo" required>
+                <input type="text" name="name" id="nameInput" placeholder="Nombre completo" class="error-input" autocomplete="off">
+                <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
             </div>
 
             <!-- Listbox Careers -->
             <div class="options-courses">
                 <div class="custom-listbox career">
                     <div class="listbox-header">
-                        <span class="selected-option" id="career">Carrera</span>
+                        <input class="selected-option listbox error-input" name="career" id="career" placeholder="Carrera" readonly></input>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
+                        <i class="fa-solid fa-circle-exclamation error" id="careerInputError"></i>
                     </div>
                     <ul class="options">
                         <li>Arquitectura</li>
@@ -52,13 +54,15 @@
             <!-- Carnet and Listbox Years -->
             <div class="info-carnet-año">
                 <div class="input-box item">
-                    <input type="text" placeholder="Número de carnet" required id="carnetInput" maxlength="11">
+                    <input class="error-input" type="text" name="carnet" placeholder="Número de carnet" id="carnetInput" maxlength="11" autocomplete="off">
+                    <i class="fa-solid fa-circle-exclamation errores" id="carnetInputError"></i>
                 </div>
                 <div class="options-courses item">
                     <div class="custom-listbox year">
                         <div class="listbox-header">
-                            <span class="selected-option" id="year">Año</span>
+                            <input class="selected-option listbox" name="year" id="year" placeholder="Año" readonly></input>
                             <i class="fa-solid fa-chevron-down arrow-down"></i>
+                            <i class="fa-solid fa-circle-exclamation error" id="yearInputError"></i>
                         </div>
                         <ul class="options">
                             <li>Primer Año</li>
@@ -73,10 +77,11 @@
 
             <!-- Listbox Enrolled Subjects -->
             <div class="options-subjects subject">
-                <div class="custom-listbox">
+                <div class="custom-listbox enrolled">
                     <div class="listbox-header">
-                        <span class="selected-option">Materias inscritas</span>
+                        <input class="selected-option listbox" placeholder="Materias inscritas" id="enrolledInputSubjects" readonly></input>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
+                        <i class="fa-solid fa-circle-exclamation error" id="enrolledInputError"></i>
                     </div>
                     <ul class="options">
                         <div class="custom-checkbox" id="enrolledSubjects">
@@ -87,10 +92,11 @@
 
             <!-- Listbox Postulate Subject -->
             <div class="subject-postulate pos">
-                <div class="custom-listbox">
+                <div class="custom-listbox subjectPostulated">
                     <div class="listbox-header">
-                        <span class="selected-option">Materia a postular</span>
+                        <input class="selected-option listbox" id="subjectPostulated" placeholder="Materia a postular" readonly></input>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
+                        <i class="fa-solid fa-circle-exclamation error" id="subjectPostulatedError"></i>
                     </div>
                     <ul class="options" id="subject-pos">
                     </ul>
@@ -114,11 +120,12 @@
 
             <!-- Participated IDC Subject -->
             <div class="input-box idc" id="input-box">
-                <input type="text" placeholder="En que materia" id="participated-idc-input">
+                <input type="text" name="previousIDC" placeholder="En que materia" id="participated-idc-input" autocomplete="off">
+                <i class="fa-solid fa-circle-exclamation errores" id="previousIDCInputError"></i>
             </div>
 
             <!-- Button -->
-            <button type="submit" class="btn">Continuar</button>
+            <button type="submit" class="btn" id="submitButton">Continuar</button>
         </form>
     </div>
 </body>

@@ -50,6 +50,8 @@ form {
 .input-box {
     width: 100%;
     height: 3rem;
+    position: relative;
+    display: inline-block;
 }
 
 .input-box input {
@@ -62,11 +64,24 @@ form {
     border-radius: 0.3rem;
     color: var(--primary);
     font-size: 1rem;
-    padding: 0 0.5rem;
+    padding: 0 2rem 0 0.5rem;
     font-weight: 700;
 }
 
-.input-box input::placeholder {
+.errores {
+    position: absolute;
+    top: 50%; /* Alinea el ícono verticalmente en el centro del input */
+    right: 5px; /* Espacio a la derecha del input */
+    transform: translateY(-50%); /* Corrige la alineación vertical */
+    display: none;
+}
+
+.error {
+    padding-right: 0.3rem;
+    display: none;
+}
+
+input::placeholder {
     color: var(--primary);
 }
 
@@ -126,11 +141,20 @@ form {
     font-size: 1rem;
     font-weight: 700;
 }
+
+.listbox {
+    height: 2.8rem;
+    border: transparent;
+    border-radius: 0.5rem;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem;
+}
   
 .listbox-header {
     cursor: pointer;
     border: 1px solid var(--gold);
-    padding: 0.65rem;
     background: var(--white);
     display: flex;
     justify-content: space-evenly;
@@ -142,10 +166,13 @@ form {
 .selected-option {
     flex-grow: 1;
     margin-right: 0.5rem;
+    width: 100%;
 }
   
 .arrow-down {
     transition: transform 0.2s ease-in-out;
+    margin-right: 0.8rem;
+    font-size: 0.8rem;
 }
   
 .options {
@@ -162,9 +189,18 @@ form {
     border-radius: 0.3rem;
     box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
     color: var(--primary);
-    max-height: 15.5rem;
+    max-height: 14.9rem;
     min-width: 100%;
     overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 0.3rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 0.3rem;
 }
   
 .options li {
@@ -178,8 +214,7 @@ form {
     color: var(--white);
 }
 
-.info-carnet-año .custom-listbox .options,
-.options-subjects .custom-listbox .options {
+.info-carnet-año .custom-listbox .options {
     overflow-y: hidden;
 }
 
