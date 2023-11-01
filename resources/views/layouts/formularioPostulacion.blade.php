@@ -88,6 +88,7 @@
                         </div>
                     </ul>
                 </div>
+                <input type="hidden" name="selectedMaterias" id="selectedMaterias" value="">
             </div>
 
             <!-- Listbox Postulate Subject -->

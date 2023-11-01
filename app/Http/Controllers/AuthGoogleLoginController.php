@@ -22,10 +22,12 @@
                 if ($usuarioExiste) {
                     Auth::login($usuarioExiste);
 
+                    session(['userId' => $usuarioExiste->userId]);
                     session(['avatarUrl' => $user->getAvatar()]);
                     session(['name' => $user->getName()]);
+                    session(['role' => $usuarioExiste->role]);
 
-                    if($usuarioExiste->first_login_at === null){
+                    if($usuarioExiste->first_login_present_cycle === null){
                         return redirect('/formularioPostulacion');
                     }
 

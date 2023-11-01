@@ -8,18 +8,29 @@
     {
         public function viewCourses()
         {
-            $idTeacher = 1;
-            $teacher = Teacher::find($idTeacher);
+            $idTeacher = session('userId');
 
-            if (!$teacher) {
-                // Manejo de error si el profesor no se encuentra
+            if (!$idTeacher) {
+                return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontró una cuenta con su dirección de correo electrónico.');
             }
 
-            $courses = Subject::with(['teacher.user'])
-            ->whereHas('teacher.user', function ($query) use ($idTeacher) {
+            $teacher = Teacher::whereHas('user', function ($query) use ($idTeacher) {
                 $query->where('userId', $idTeacher);
-            })
-            ->get();
+            })->first();
+
+            if (!$teacher) {
+                return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontró una cuenta con su dirección de correo electrónico.');
+            }
+
+            $specialty = $teacher->specialty; // Obtains the teacher's specialty
+
+            $courses = Subject::with(['teacher.user'])
+                ->whereHas('teacher.user', function ($query) use ($idTeacher) {
+                    $query->where('userId', $idTeacher);
+                })
+                ->where('career', $specialty) // Filter by specialty
+                ->where('subjectCycle', 'Ciclo I 2024') // Filter by actual cycle
+                ->get();
 
             return view('layouts.home', compact('courses'));
         }

@@ -1,6 +1,7 @@
 <?php
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthGoogleLoginController;
+    use App\Http\Controllers\ResearchTopic;
     use App\Http\Controllers\StudentController;
     use App\Http\Controllers\SubjectController;
     use App\Http\Controllers\TeacherController;
@@ -40,6 +41,7 @@
     Route::get('/google-callback', [AuthGoogleLoginController::class, 'handleGoogleCallback']);
     Route::get('/google-logout', [AuthGoogleLoginController::class, 'logout']);
     Route::get('/getSubjects/{career}/{year}', [SubjectController::class, 'getSubjects']);
+    Route::get('/temas/{subjectId}', [ResearchTopic::class, 'index'])->name('temas');
 
     //POST
     Route::post('/storeStudent', [StudentController::class, 'store'])->name('student.store');

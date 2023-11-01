@@ -14,7 +14,7 @@
             $student->career = $request->input('career');
             $student->studentYear = $request->input('year');
             $student->studentCycle = 'Ciclo I 2024';
-            $student->enrolledSubject = 'Dibujo';
+            $student->enrolledSubject = $request->input('selectedMaterias');
             $student->previousIDC = $request->input('previousIDC');
             $student->idUser = 1;
 

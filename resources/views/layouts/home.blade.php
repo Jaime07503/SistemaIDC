@@ -44,7 +44,7 @@
                 <!-- Listbox -->
                 <div class="custom-listbox">
                     <div class="listbox-header">
-                        <span class="selected-option">Todos</span>
+                        <input class="selected-option" id="listbox" placeholder="Todos" readonly></input>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
                     </div>
                     <ul class="options">
@@ -60,7 +60,7 @@
                 <!-- Listbox -->
                 <div class="custom-listbox">
                     <div class="listbox-header">
-                        <span class="selected-option">Nombre del curso</span>
+                        <input class="selected-option" id="listbox" placeholder="Nombre del curso" readonly></input>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
                     </div>
                     <ul class="options">
@@ -76,7 +76,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $course->subjectCycle }}</h5>
                         <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
-                        <a href="#" class="card-link">{{ $course->nameSubject }} - {{ $course->section }} - {{ $course->teacher->user->name }}</a>
+                        <a href="{{ route('temas', ['subjectId' => $course->subjectId]) }}" class="card-link">{{ $course->nameSubject }} - {{ $course->section }} - {{ $course->teacher->user->name }}</a>
                     </div>
                 </div>
                 @endforeach

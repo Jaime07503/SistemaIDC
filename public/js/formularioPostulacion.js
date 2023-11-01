@@ -211,6 +211,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let enrolledSubjectsSelect = document.getElementById('enrolledSubjects');
         clearSelect(enrolledSubjectsSelect);
         let selectedSubjects = [];
+        let selectedMaterias = [];
         let maxSelected = 5;
         jsonSubjects.forEach(function (subject, index) {
             if (selectedSubjects.length >= maxSelected) {
@@ -228,6 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
             input.name = 'myCheckboxName' + (index + 1);
             input.id = 'myCheckboxId' + (index + 1);
             input.type = 'checkbox';
+            input.value = subject.nameSubject;
     
             // Create the div element with class "checkbox-box"
             let checkboxBox = document.createElement('div');
@@ -252,6 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         input.checked = false; // No permitir seleccionar más de 6
                     } else {
                         // Add the selected matter to the array
+                        selectedMaterias.push(subject.nameSubject);
                         selectedSubjects.push(subject.nameSubject);
                         lastChecked = subject.nameSubject; // Actualiza el último checkbox marcado
                     }
@@ -260,10 +263,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     const subjectIndex = selectedSubjects.indexOf(subject.nameSubject);
                     if (subjectIndex !== -1) {
                         selectedSubjects.splice(subjectIndex, 1);
+                        selectedMaterias.splice(subjectIndex, 1);
                         lastChecked = subject.nameSubject;
                     }
                 }
-            
+                
+                document.getElementById('selectedMaterias').value = selectedMaterias.join(',');
                 updateSubjectList(selectedSubjects, lastChecked);
             });
         });

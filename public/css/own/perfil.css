@@ -27,6 +27,15 @@ body {
     gap: 10px;
 }
 
+::-webkit-scrollbar {
+    width: 0.4rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 0.3rem;
+}
+
 /* Estilos para el contener main */
 .main-content {
     display: flex;
@@ -134,7 +143,7 @@ body {
 
 .history a:nth-child(2) {
     clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 12% 50%, 0% 0%);
-    width: 3rem;
+    width: 7rem;
     text-align: center;
     margin-left: -18px;
     border-radius: 0 5px 5px 0; /* arriba-derecha arriba-izquierda abajo-izquierda abajo-derecha */
