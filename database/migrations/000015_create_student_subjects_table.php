@@ -7,23 +7,18 @@
     {
         public function up()
         {
-            Schema::create('next_idc_topics_form', function (Blueprint $table) {
-                $table->increments('nextIdcTopicFormId');
-                $table->string('subject');
-                $table->string('lastUpdate');
-                $table->string('regionalImportance');
-                $table->string('globalImportance');
-                $table->string('justificationKnowledge');
-                $table->string('state');
+            Schema::create('student_subject', function (Blueprint $table) {
                 $table->unsignedBigInteger('idStudent');
+                $table->unsignedBigInteger('idSubject');
                 $table->timestamps();
                 $table->foreign('idStudent')->references('studentId')->on('student');
+                $table->foreign('idSubject')->references('subjectId')->on('subject');
             });
         }
 
         public function down()
         {
-            Schema::dropIfExists('next_idc_topics_form');
+            Schema::dropIfExists('student_subject');
         }
     };
 ?>

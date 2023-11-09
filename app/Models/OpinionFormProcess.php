@@ -8,7 +8,7 @@
     {
         use HasFactory;
 
-        protected $table = 'opinion_form_processes';
+        protected $table = 'opinion_form_process';
         protected $primaryKey = 'opinionFormProcessId';
 
         protected $fillable = [

@@ -8,7 +8,7 @@
     {
         use HasFactory;
 
-        protected $table = 'bibliographic_sources';
+        protected $table = 'bibliographic_source';
         protected $primaryKey = 'bibliographicSourceId'; 
 
         protected $fillable = [

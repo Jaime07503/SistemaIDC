@@ -8,7 +8,7 @@
     {
         use HasFactory;
 
-        protected $table = 'research_topics';
+        protected $table = 'research_topic';
         protected $primaryKey = 'researchTopicId'; 
 
         protected $fillable = [
@@ -18,6 +18,7 @@
             'importanceRegional',
             'importanceGlobal',
             'state',
+            'avatar',
             'idSubject',
         ];
 
@@ -27,9 +28,9 @@
             return $this->belongsTo(Subject::class, 'idSubject');
         }
 
-        public function idc()
+        public function team()
         {
-            return $this->hasOne(IDC::class);
+            return $this->hasOne(Team::class);
         }
     }
 ?>

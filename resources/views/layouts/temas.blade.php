@@ -11,43 +11,34 @@
 @section('content')
     <main class="main-content">
         <div class="head-content">
-            <h1>Administración de Servidores</h1>
+            <h1>{{ $subject->nameSubject }}</h1>
             <div class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
                 <a class="view" href="">Mis cursos</a>
-                <a class="view" href="">IYA-ADS104-A-I24</a>
+                <a class="view" href="">ADS104-A-I24</a>
             </div>
         </div>
-        <div class="second-content">
+        <div class="topics-content">
             <div>
-                <h3>Temas de investigación</h3>
+                <h3>Temas de investigación disponibles</h3>
             </div>
-            @foreach ($researchTopics as $topic)
-            <div>
+            <div class="topics">
+                @foreach ($researchTopics as $topic)
                 <div class="researchTopics">
                     <div>
+                        <h5 class="card-title">{{ $topic->state }}</h5>
                         <img src="{{ asset('images/curso_logo.png') }}" class="avatarTopic" alt="Imagen">
                     </div>
                     <div class="topicContent">
                         <div class="title">
                             <div class="topic">
-                                <a href="#" class="">{{ $topic->themeName }}</a>
-                            </div>
-                            <div class="stateStudent">
-                                <div class="state">
-                                    <h3>{{ $topic->state }}</h3>
-                                </div>
-                                <div class="students">
-                                    <h3>15</h3>
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
+                                <a href="{{ route('temasInformation', ['researchTopicId' => $topic->researchTopicId]) }}" class="">{{ $topic->themeName }}</a>
                             </div>
                         </div>
-                        <p>{{ $topic->description }}</p>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
         </div>
     </main>
 @endsection

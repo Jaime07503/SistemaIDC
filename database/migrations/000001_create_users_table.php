@@ -7,18 +7,18 @@
     {
         public function up()
         {
-            Schema::create('users', function (Blueprint $table) {
+            Schema::create('user', function (Blueprint $table) {
                 $table->increments('userId');
                 $table->string('name');
                 $table->string('email')->unique();
                 $table->string('avatar')->nullable();
                 $table->string('role');
-                $table->timestamp('first_login_present_cycle')->nullable();
-                $table->timestamp('first_login_at')->nullable();
-                $table->timestamp('last_login_at')->nullable();
+                $table->timestamp('firstLoginPresentCycle')->nullable();
+                $table->timestamp('firstLogin')->nullable();
+                $table->timestamp('lastLogin')->nullable();
                 $table->string('state');
-                $table->string('external_id');
-                $table->string('external_auth');
+                $table->string('externalId')->nullable();
+                $table->string('externalAuth')->nullable();
                 $table->rememberToken();
                 $table->timestamps();
             });
@@ -26,7 +26,7 @@
 
         public function down()
         {
-            Schema::dropIfExists('users');
+            Schema::dropIfExists('user');
         }
     };
 ?>

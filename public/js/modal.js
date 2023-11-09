@@ -1,36 +1,29 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Obtén el elemento del div avatar-container y el modal
     var avatarContainer = document.querySelector('.avatar-container');
     var avatarModal = document.getElementById('avatarModal');
+    var modalVisible = false;
 
-    avatarContainer.addEventListener('click', function () {
-        console.log('Clic en avatarContainer'); // Agrega este mensaje de registro
-        avatarModal.style.display = 'block';
-    });
-
-    // Cuando se hace clic en el div avatar-container, muestra el modal
-    avatarContainer.addEventListener('click', function () {
-        avatarModal.style.display = 'block';
-    });
-
-    // Cuando se hace clic en el botón de cierre del modal, cierra el modal
-    var cerrarAvatarModal = document.getElementById('avatarModal');
-    cerrarAvatarModal.addEventListener('click', function () {
-        avatarModal.style.display = 'none';
-    });
-
-    // Cuando se hace clic fuera del modal, cierra el modal
-    window.addEventListener('click', function (event) {
-        if (event.target == avatarModal) {
-            console.log('Clic afuera del avatarContainer');
+    avatarContainer.addEventListener('click', function (event) {
+        event.stopPropagation();
+        if (modalVisible) {
             avatarModal.style.display = 'none';
+        } else {
+            avatarModal.style.display = 'block';
+        }
+        modalVisible = !modalVisible;
+    });
+
+    document.addEventListener('click', function (event) {
+        if (modalVisible && event.target !== avatarModal && !avatarModal.contains(event.target)) {
+            avatarModal.style.display = 'none';
+            modalVisible = false;
         }
     });
 
-    // Evento para cerrar el modal si se presiona la tecla Escape
     document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape' && avatarModal.style.display === 'block') {
+        if (event.key === 'Escape' && modalVisible) {
             avatarModal.style.display = 'none';
+            modalVisible = false;
         }
     });
 });

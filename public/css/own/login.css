@@ -13,7 +13,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('../../images/fondo.png') no-repeat center/cover;
+    background: url('../../images/fondo.webp') no-repeat center/cover;
 }
 
 .main-container, .login-right {
@@ -34,17 +34,21 @@ body {
     border-radius: 0.5rem;
 }
 
-.login-left h2 {
+.login-left h1 {
     color: var(--gold);
     font-size: 2rem;
     margin: 1rem;
 }
 
-.login-right h3 {
+.login-right h2 {
     color: var(--white);
     font-size: 1.2rem;
     font-weight: 700;
     margin: 0.5rem 0;
+}
+
+.login-right h3 {
+    font-size: 1rem;
 }
 
 .login-right a {
@@ -73,9 +77,9 @@ body {
 
 .btn-login:hover {
     background: var(--primary);
-    border: 1px solid var(--white);
+    border: 1px solid var(--gold);
     color: var(--white);
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 1rem rgb(0 0 0 / 50%);
     cursor: pointer;
 }
 

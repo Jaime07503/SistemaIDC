@@ -8,7 +8,7 @@
     {
         use HasFactory;
 
-        protected $table = 'teachers';
+        protected $table = 'teacher';
         protected $primaryKey = 'teacherId'; 
 
         protected $fillable = [

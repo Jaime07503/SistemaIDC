@@ -7,19 +7,19 @@
     {
         public function up()
         {
-            Schema::create('teachers', function (Blueprint $table) {
+            Schema::create('teacher', function (Blueprint $table) {
                 $table->increments('teacherId');
                 $table->string('contractType');
                 $table->string('specialty');
                 $table->unsignedBigInteger('idUser');
                 $table->timestamps();
-                $table->foreign('idUser')->references('userId')->on('users');
+                $table->foreign('idUser')->references('userId')->on('user');
             });
         }
 
         public function down()
         {
-            Schema::dropIfExists('teachers');
+            Schema::dropIfExists('teacher');
         }
     };
 ?>

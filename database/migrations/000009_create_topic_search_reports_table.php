@@ -7,7 +7,7 @@
     {
         public function up()
         {
-            Schema::create('topic_search_reports', function (Blueprint $table) {
+            Schema::create('topic_search_report', function (Blueprint $table) {
                 $table->increments('topicSearchReportId');
                 $table->string('teamOrientation');
                 $table->string('searchPlan');
@@ -26,7 +26,7 @@
 
         public function down()
         {
-            Schema::dropIfExists('topic_search_reports');
+            Schema::dropIfExists('topic_search_report');
         }
     };
 ?>

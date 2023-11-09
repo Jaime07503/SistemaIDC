@@ -10,7 +10,7 @@
     {
         use HasApiTokens, HasFactory, Notifiable;
 
-        protected $table = 'users';
+        protected $table = 'user';
         protected $primaryKey = 'userId'; 
 
         protected $fillable = [
@@ -19,9 +19,9 @@
             'email',
             'avatar',
             'role',
-            'first_login_present_cycle',
-            'first_login_at',
-            'last_login_at',
+            'firstLoginPresentCycle',
+            'firstLogin',
+            'lastLogin',
             'state',
             'external_id',
             'external_auth',

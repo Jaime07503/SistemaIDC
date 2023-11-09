@@ -7,30 +7,28 @@
     {
         public function up()
         {
-            Schema::create('idcs', function (Blueprint $table) {
+            Schema::create('idc', function (Blueprint $table) {
                 $table->increments('idcId');
                 $table->string('cicle');
                 $table->string('year');
                 $table->dateTime('endDate');
                 $table->string('badgeProcessCompleted')->nullable();
                 $table->string('state');
-                $table->unsignedBigInteger('idResearchTopic');
                 $table->unsignedBigInteger('idTeam');
                 $table->unsignedBigInteger('idUser');
                 $table->unsignedBigInteger('idTopicSearchReport');
                 $table->unsignedBigInteger('idBibliographicArticle');
                 $table->timestamps();
-                $table->foreign('idResearchTopic')->references('researchTopicId')->on('research_topics');
-                $table->foreign('idTeam')->references('teamId')->on('teams');
-                $table->foreign('idUser')->references('userId')->on('users');
-                $table->foreign('idTopicSearchReport')->references('topicSearchReportId')->on('topic_search_reports');
-                $table->foreign('idBibliographicArticle')->references('bibliographicArticleId')->on('bibliographic_articles');
+                $table->foreign('idTeam')->references('teamId')->on('team');
+                $table->foreign('idUser')->references('userId')->on('user');
+                $table->foreign('idTopicSearchReport')->references('topicSearchReportId')->on('topic_search_report');
+                $table->foreign('idBibliographicArticle')->references('bibliographicArticleId')->on('bibliographic_article');
             });
         }
 
         public function down()
         {
-            Schema::dropIfExists('idcs');
+            Schema::dropIfExists('idc');
         }
     };
 ?>

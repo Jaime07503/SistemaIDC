@@ -7,20 +7,22 @@
     {
         public function up()
         {
-            Schema::create('teams', function (Blueprint $table) {
+            Schema::create('team', function (Blueprint $table) {
                 $table->increments('teamId');
                 $table->dateTime('creationDate');
                 $table->integer('integrantQuantity');
                 $table->string('state');
+                $table->unsignedBigInteger('idResearchTopic');
                 $table->unsignedBigInteger('idTeacher');
                 $table->timestamps();
-                $table->foreign('idTeacher')->references('teacherId')->on('teachers');
+                $table->foreign('idResearchTopic')->references('researchTopicId')->on('research_topic');
+                $table->foreign('idTeacher')->references('teacherId')->on('teacher');
             });
         }
 
         public function down()
         {
-            Schema::dropIfExists('teams');
+            Schema::dropIfExists('team');
         }
     };
 ?>

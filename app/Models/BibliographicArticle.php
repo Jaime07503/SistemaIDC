@@ -8,7 +8,7 @@
     {
         use HasFactory;
 
-        protected $table = 'bibliographic_articles';
+        protected $table = 'bibliographic_article';
         protected $primaryKey = 'bibliographicArticleId'; 
 
         protected $fillable = [

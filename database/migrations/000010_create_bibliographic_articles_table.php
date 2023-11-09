@@ -7,7 +7,7 @@
     {
         public function up()
         {
-            Schema::create('bibliographic_articles', function (Blueprint $table) {
+            Schema::create('bibliographic_article', function (Blueprint $table) {
                 $table->increments('bibliographicArticleId');
                 $table->string('spanishSummary');
                 $table->string('englishSummary');
@@ -27,7 +27,7 @@
 
         public function down()
         {
-            Schema::dropIfExists('bibliographic_articles');
+            Schema::dropIfExists('bibliographic_article');
         }
     };
 ?>

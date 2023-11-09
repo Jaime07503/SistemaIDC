@@ -7,20 +7,20 @@
     {
         public function up()
         {
-            Schema::create('opinion_form_processes', function (Blueprint $table) {
+            Schema::create('opinion_form_process', function (Blueprint $table) {
                 $table->increments('opinionFormProcessId');
                 $table->string('opinionIdcProcess');
                 $table->string('improvementOpportunity');
                 $table->string('state');
                 $table->unsignedBigInteger('idUser');
                 $table->timestamps();
-                $table->foreign('idUser')->references('userId')->on('users');
+                $table->foreign('idUser')->references('userId')->on('user');
             });
         }
 
         public function down()
         {
-            Schema::dropIfExists('opinion_form_processes');
+            Schema::dropIfExists('opinion_form_process');
         }
     };
 ?>

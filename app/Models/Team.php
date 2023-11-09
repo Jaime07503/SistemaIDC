@@ -16,6 +16,7 @@
             'creationDate',
             'integrantQuantity',
             'state',
+            'idResearchTopic',
             'idTeacher',
         ];
 
@@ -23,6 +24,11 @@
         public function teacher()
         {
             return $this->belongsTo(Teacher::class, 'idTeacher');
+        }
+
+        public function researchTopic()
+        {
+            return $this->belongsTo(ResearchTopic::class, 'idResearchTopic');
         }
 
         public function studentTeam()

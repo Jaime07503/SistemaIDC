@@ -8,7 +8,7 @@
     {
         use HasFactory;
 
-        protected $table = 'next_idc_topics_forms';
+        protected $table = 'next_idc_topics_form';
         protected $primaryKey = 'nextIdcTopicFormId'; 
 
         protected $fillable = [
@@ -17,7 +17,7 @@
             'lastUpdate',
             'regionalImportance',
             'globalImportance',
-            'justificationKnoeledge',
+            'justificationKnowledge',
             'state',
             'idStudent',
         ];

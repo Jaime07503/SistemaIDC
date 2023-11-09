@@ -7,18 +7,18 @@
     {
         public function up()
         {
-            Schema::create('student_teams', function (Blueprint $table) {
+            Schema::create('student_team', function (Blueprint $table) {
                 $table->unsignedBigInteger('idStudent');
                 $table->unsignedBigInteger('idTeam');
                 $table->timestamps();
-                $table->foreign('idStudent')->references('studentId')->on('students');
-                $table->foreign('idTeam')->references('teamId')->on('teams');
+                $table->foreign('idStudent')->references('studentId')->on('student');
+                $table->foreign('idTeam')->references('teamId')->on('team');
             });
         }
 
         public function down()
         {
-            Schema::dropIfExists('student_teams');
+            Schema::dropIfExists('student_team');
         }
     };
 ?>

@@ -8,17 +8,16 @@
     {
         use HasFactory;
 
-        protected $table = 'idcs';
+        protected $table = 'idc';
         protected $primaryKey = 'idcId'; 
 
         protected $fillable = [
             'idcId',
-            'cicle',
+            'cycle',
             'year',
             'endDate',
             'badgeProcessCompleted',
             'state',
-            'idResearchTopic',
             'idTeam',
             'idUser',
             'idTopicSearchReport',
@@ -29,10 +28,6 @@
         public function user()
         {
             return $this->belongsTo(User::class, 'idUser');
-        }
-
-        public function researchTopic(){
-            return $this->belongsTo(ResearchTopic::class, 'idResearchTopic');
         }
 
         public function team()

@@ -2,7 +2,7 @@
 <header class="header">
     <nav id="navbar">
         <div class="logo">
-            <img src="{{ asset('images/logo_unicaes.png') }}" alt="Logo UNICAES">
+            <img src="{{ asset('images/logo_unicaes.webp') }}" alt="Logo UNICAES">
         </div>
         <div class="navbar-content">
             <div class="ic_mensajeria ico">

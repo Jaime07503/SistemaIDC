@@ -14,10 +14,10 @@
                 $table->string('career');
                 $table->string('subjectCycle');
                 $table->string('subjectYear');
-                $table->binary('avatar')->nullable();
+                $table->string('avatar')->nullable();
                 $table->unsignedBigInteger('idTeacher');
                 $table->timestamps();
-                $table->foreign('idTeacher')->references('teacherId')->on('teachers');
+                $table->foreign('idTeacher')->references('teacherId')->on('teacher');
             });
         }
 

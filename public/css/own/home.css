@@ -65,6 +65,12 @@ body {
     font-size: 4rem;
     font-weight: 700;
     color: var(--primary);
+    text-align: center;
+}
+
+.head-lbl h3 {
+    color: var(--primary);
+    font-size: 1.2rem;
 }
 
 .info-content,
@@ -151,7 +157,7 @@ body {
     display: inline-block;
     z-index: 2;
     margin: 0.5rem 0;
-    width: 12rem;
+    width: auto;
     font-size: 1rem;
 }
 
@@ -239,6 +245,7 @@ body {
 input::placeholder {
     color: var(--primary);
     font-weight: 700;
+    background: transparent;
 }
 
 input[type="text"] {
@@ -254,15 +261,12 @@ input[type="text"] {
 
 /* Estilos de la tarjeta */
 .courses {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
     gap: 0.5rem;
 }
 
 .card {
-    flex-basis: calc(50% - 10px);
     box-sizing: border-box;
     border-radius: 0.3rem;
     border: 1px solid var(--light-gray);
@@ -308,7 +312,6 @@ input[type="text"] {
     margin-top: 0;
     font-size: 1rem;
     font-weight: 900;
-    width: 25rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -318,9 +321,9 @@ input[type="text"] {
     text-decoration: underline;
 }
 
-@media (max-width: 780px){
+@media (max-width: 880px){
     .main-content {
-        width: 90%;
+        width: 95%;
     }
 
     .head-content,
@@ -332,11 +335,12 @@ input[type="text"] {
 
     .head-content,
     .info-content {
-        width: 85%;
+        width: 90%;
     }
 
     .head-content h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
+        text-align: center;
     }
 
     .info-content h2 {
@@ -368,7 +372,7 @@ input[type="text"] {
     }
 
     .courses-content {
-        width: 85%;
+        width: 90%;
         margin-bottom: 0.5rem;
     }
 
@@ -380,12 +384,14 @@ input[type="text"] {
     }
 
     .card {
-        width: 100%;  
-        margin-right: 0;
-        margin-bottom: 0;   
+        width: 100%;     
     }
+}
 
-    .card-link{
-        width: 18rem;
+@media (max-width: 350px){
+    .courses {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+        gap: 0.5rem;     
     }
 }

@@ -7,23 +7,24 @@
     {
         public function up()
         {
-            Schema::create('students', function (Blueprint $table) {
+            Schema::create('student', function (Blueprint $table) {
                 $table->increments('studentId');
                 $table->string('carnet')->unique();
                 $table->string('career');
                 $table->string('studentCycle');
                 $table->string('studentYear');
                 $table->string('enrolledSubject');
-                $table->string('previousIDC');
+                $table->string('previousIDC')->nullable();
+                $table->string('state');
                 $table->unsignedBigInteger('idUser');
                 $table->timestamps();
-                $table->foreign('idUser')->references('userId')->on('users');
+                $table->foreign('idUser')->references('userId')->on('user');
             });
         }
 
         public function down()
         {
-            Schema::dropIfExists('students');
+            Schema::dropIfExists('student');
         }
     };
 ?>

@@ -7,7 +7,7 @@
     {
         public function up()
         {
-            Schema::create('bibliographic_sources', function (Blueprint $table) {
+            Schema::create('bibliographic_source', function (Blueprint $table) {
                 $table->increments('bibliographicSourceId');
                 $table->string('bibliographicSourceType');
                 $table->string('author');
@@ -20,7 +20,7 @@
 
         public function down()
         {
-            Schema::dropIfExists('bibliographic_sources');
+            Schema::dropIfExists('bibliographic_source');
         }
     };
 ?>

@@ -7,18 +7,18 @@
     {
         public function up()
         {
-            Schema::create('source_searches', function (Blueprint $table) {
+            Schema::create('source_search', function (Blueprint $table) {
                 $table->unsignedBigInteger('idTopicSearchReport');
                 $table->unsignedBigInteger('idBibliographicSource');
                 $table->timestamps();
-                $table->foreign('idTopicSearchReport')->references('topicSearchReportId')->on('topic_search_reports');
-                $table->foreign('idBibliographicSource')->references('bibliographicSourceId')->on('bibliographic_sources');
+                $table->foreign('idTopicSearchReport')->references('topicSearchReportId')->on('topic_search_report');
+                $table->foreign('idBibliographicSource')->references('bibliographicSourceId')->on('bibliographic_source');
             });
         }
 
         public function down()
         {
-            Schema::dropIfExists('source_searches');
+            Schema::dropIfExists('source_search');
         }
     };
 ?>

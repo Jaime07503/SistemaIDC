@@ -27,7 +27,7 @@
                     session(['name' => $user->getName()]);
                     session(['role' => $usuarioExiste->role]);
 
-                    if($usuarioExiste->first_login_present_cycle === null){
+                    if($usuarioExiste->firstLoginPresentCycle === null){
                         return redirect('/formularioPostulacion');
                     }
 
@@ -42,8 +42,8 @@
 
         public function logout()
         {
-            Auth::logout(); // Cierra la sesión actual del usuario
-            Session::flush(); // Borra todas las sesiones, incluyendo las de Google
+            Auth::logout(); 
+            Session::flush();
 
             return redirect('/login');
         }

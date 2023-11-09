@@ -1,44 +1,44 @@
 <footer id="footer-main-content">
-    <div class="footer-top">
+    <header class="footer-top">
         <h4>Universidad Católica de El Salvador</h4>
-    </div>
+    </header>
     <div class="footer-content">
         <div class="wrapper">
-            <div class="button" data-url="https://catolica.edu.sv/">
-                <div class="icon">
+            <div class="button">
+                <header class="icon">
                     <i class="fa-solid fa-globe"></i>
-                </div>
-                <span>Sitio Web</span>
+                </header>
+                <a href="https://catolica.edu.sv/" target="_blank" rel="noreferrer">Sitio Web</a>
             </div>
-            <div class="button" data-url="https://www.facebook.com/UNICAES/">
-                <div class="icon">
+            <div class="button">
+                <header class="icon">
                     <i class="fa-brands fa-facebook"></i>
-                </div>
-                <span>Facebook</span>
+                </header>
+                <a href="https://www.facebook.com/UNICAES/" target="_blank" rel="noreferrer">Facebook</a>
             </div>
-            <div class="button" data-url="https://twitter.com/unicaes_sv">
-                <div class="icon">
+            <div class="button">
+                <header class="icon">
                     <i class="fa-brands fa-square-x-twitter"></i>
-                </div>
-                <span>Twitter</span>
+                </header>
+                <a href="https://twitter.com/unicaes_sv" target="_blank" rel="noreferrer">Twitter</a>
             </div>
-            <div class="button" data-url="https://www.linkedin.com/school/universidad-catolica-de-el-salvador/">
-                <div class="icon">
+            <div class="button">
+                <header class="icon">
                     <i class="fa-brands fa-linkedin"></i>
-                </div>
-                <span>Linkedin</span>
+                </header>
+                <a href="https://www.linkedin.com/school/universidad-catolica-de-el-salvador/" target="_blank" rel="noreferrer">Linkedin</a>
             </div>
-            <div class="button" data-url="https://www.youtube.com/channel/UCXDsbngj7qUa2wVlm9ogPvw">
-                <div class="icon">
+            <div class="button">
+                <header class="icon">
                     <i class="fa-brands fa-youtube"></i>
-                </div>
-                <span>YouTube</span>
+                </header>
+                <a href="https://www.youtube.com/channel/UCXDsbngj7qUa2wVlm9ogPvw" target="_blank" rel="noreferrer">YouTube</a>
             </div>
-            <div class="button" data-url="https://www.instagram.com/unicaes_sv/?hl=es-la">
-                <div class="icon">
+            <div class="button">
+                <header class="icon">
                     <i class="fa-brands fa-instagram"></i>
-                </div>
-                <span>Instagram</span>
+                </header>
+                <a href="https://www.instagram.com/unicaes_sv/?hl=es-la" target="_blank" rel="noreferrer">Instagram</a>
             </div>
       </div>
     </div>

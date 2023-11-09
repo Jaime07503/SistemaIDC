@@ -16,6 +16,7 @@
             $student->studentCycle = 'Ciclo I 2024';
             $student->enrolledSubject = $request->input('selectedMaterias');
             $student->previousIDC = $request->input('previousIDC');
+            $student->state = 'Activo';
             $student->idUser = 1;
 
             $student->save();
@@ -23,9 +24,9 @@
             $user = User::find($student->idUser);
             if ($user) {
                 $user->name = $request->input('name'); 
-                $user->first_login_present_cycle = Carbon::now();
-                if ($user->first_login_at === null) {
-                    $user->first_login_at = Carbon::now();
+                $user->firstLoginPresentCycle = Carbon::now();
+                if ($user->firstLogin === null) {
+                    $user->firstLogin = Carbon::now();
                 }
                 $result = $user->save();
             }

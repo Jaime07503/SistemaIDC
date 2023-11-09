@@ -9,62 +9,71 @@
     --black: #000000;
 }
 
-/* Estilos para el modal */
+/* Estilos para la ventana modal */
 .modal {
     display: none;
     position: fixed;
     z-index: 1;
-    top: 70px; /* Ajusta la distancia desde la parte superior del navbar */
-    right: 0; /* Pega la ventana modal al lado derecho */
-    width: 300px; /* Ajusta el ancho de la ventana modal según tus necesidades */
+    top: 70px;
+    right: 1rem;
+    width: 300px;
     background-color: var(--white);
+    border-radius: 0.3rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border: 2px solid var(--light-gray); /* Opcional: Agrega un borde izquierdo */
 }
 
-.modal-contenido {
+.modal-content {
     margin: auto;
     width: 100%;
     text-align: left;
     position: relative;
 }
 
-/* Estilos para los elementos dentro de .modal-contenido */
+/* Estilos para los elementos dentro de .modal-content */
 .user-options {
     display: column;
     cursor: pointer;
-    transition: background-color 0.3s; /* Agrega una transición para el efecto hover */
+    transition: background 0.3s;
     padding: 10px 0;
 }
 
-.us-op:hover a{
-    background-color: var(--primary); /* Cambia el color de fondo en el hover */
-    color: var(--light); /* Cambia el color del texto en el hover */
-    width: 100%;
+.option:hover a,
+.user-info:hover a {
+    background: var(--primary);
+    color: var(--light);
+    right: 1rem;
     cursor: pointer;
+    text-decoration: none;
 }
 
-.modal-contenido a {
+.modal-content a {
     text-decoration: none;
     color: var(--black);
 }
 
-.modal-contenido div i {
-    margin-right: 10px; /* Ajusta el espacio entre el icono y el texto */
+.modal-content div i {
+    margin-right: 10px;
     margin-left: 10px;
     max-height: 50px;
 }
 
 /* Estilos para los elementos .enlace-div */
 .enlace-div {
-    display: block; /* Hace que el enlace ocupe todo el ancho del div */
-    padding: 10px; /* Añade un espacio de relleno para que sea clicable en cualquier lugar del div */
-    text-decoration: none; /* Elimina la subraya predeterminada */
+    display: block;
+    padding: 10px;
     color: var(--black);
 }
 
 .line {
-    background-color: var(--light); 
-    width: 100%; 
-    height: 2px; 
+    background-color: var(--light);
+    width: 100%;
+    height: 2px;
+}
+
+/* Estilos para las opciones */
+.user-info a {
+    display: flex;
+    align-items: center;
+    background: var(--primary);
+    color: white;
 }

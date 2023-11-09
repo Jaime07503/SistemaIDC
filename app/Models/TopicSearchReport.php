@@ -8,7 +8,7 @@
     {
         use HasFactory;
 
-        protected $table = 'topic_search_reports';
+        protected $table = 'topic_search_report';
         protected $primaryKey = 'topicSearchReportId'; 
 
         protected $fillable = [

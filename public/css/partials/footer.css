@@ -1,15 +1,21 @@
 :root {
     --primary: #800000;
     --white: #FFFFFF;
+    --black: #000000;
+    --web: #333333;
+    --facebook: #4267B2;
+    --linkedin: #FFA500;
+    --youtube: #ff0000;
+    --instagram: #E4405F;
 }
 
 #footer-main-content {
     display: grid;
     width: 100%;
     place-items: center;
-    background-color: var(--white);
+    background: var(--white);
     margin-top: auto;
-    box-shadow: 0px -5px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px -5px 5px rgb(0 0 0 / 10%);
 }
 
 .footer-top h4{
@@ -21,14 +27,14 @@
 
 .wrapper .button{
     display: inline-block;
-    height: 50px;
-    width: 50px;
+    height: 3rem;
+    width: 3rem;
     margin: 0 5px;
     overflow: hidden;
     background: var(--white);
     border-radius: 50px;
     cursor: pointer;
-    box-shadow: 0px 10px 10px rgba(0,0,0,0.1);
+    box-shadow: 0px 10px 10px rgb(0 0 0 / 20%);
     transition: all 0.3s ease-out;
     margin-bottom: 10px;
 }
@@ -39,37 +45,37 @@
 
 .wrapper .button .icon{
     display: inline-block;
-    height: 50px;
-    width: 50px;
+    height: 3rem;
+    width: 3rem;
     text-align: center;
-    border-radius: 50px;
+    border-radius: 50%;
     box-sizing: border-box;
-    line-height: 50px;
+    line-height: 3rem;
     transition: all 0.3s ease-out;
 }
 
 .wrapper .button:nth-child(1):hover .icon{
-    background: #333;
+    background: var(--web);
 }
 
 .wrapper .button:nth-child(2):hover .icon{
-    background: #4267B2;
+    background: var(--facebook);
 }
 
 .wrapper .button:nth-child(3):hover .icon{
-    background: #000000;
+    background: var(--black);
 }
 
 .wrapper .button:nth-child(4):hover .icon{
-    background: #FFA500;
+    background: var(--linkedin);
 }
 
 .wrapper .button:nth-child(5):hover .icon{
-    background: #ff0000;
+    background: var(--youtube);
 }
 
 .wrapper .button:nth-child(6):hover .icon{
-    background: #E4405F;
+    background: var(--instagram);
 }
 
 .wrapper .button .icon i{
@@ -86,36 +92,37 @@
     color: var(--primary);
 }
 
-.wrapper .button span{
+.wrapper .button a{
     font-size: 20px;
     font-weight: 500;
     line-height: 50px;
     margin-left: 10px;
     transition: all 0.3s ease-out;
+    text-decoration: none;
 }
 
-.wrapper .button:nth-child(1) span{
-    color: #333;
+.wrapper .button:nth-child(1) a{
+    color: var(--web);
 }
 
-.wrapper .button:nth-child(2) span{
-    color: #4267B2;
+.wrapper .button:nth-child(2) a{
+    color: var(--facebook);
 }
 
-.wrapper .button:nth-child(3) span{
-    color: #000000;
+.wrapper .button:nth-child(3) a{
+    color: var(--black);
 }
 
-.wrapper .button:nth-child(4) span{
-    color: #FFA500;
+.wrapper .button:nth-child(4) a{
+    color: var(--linkedin);
 }
 
-.wrapper .button:nth-child(5) span{
-    color: #ff0000;
+.wrapper .button:nth-child(5) a{
+    color: var(--youtube);
 }
 
-.wrapper .button:nth-child(6) span{
-    color: #E4405F;
+.wrapper .button:nth-child(6) a{
+    color: var(--instagram);
 }
 
 @media (max-width: 767px) {
