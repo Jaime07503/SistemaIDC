@@ -1,25 +1,25 @@
 <?php
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthGoogleLoginController;
-    use App\Http\Controllers\HomeController;    
+    use App\Http\Controllers\HomeController;
     use App\Http\Controllers\ResearchTopicController;
     use App\Http\Controllers\StudentController;
     use App\Http\Controllers\SubjectController;
 
     // Private Routes
-    Route::middleware(['auth'])->group(function () {    
+    Route::middleware(['auth'])->group(function () {
         Route::get('/tablero', function(){
             return view('layouts.tablero');
         });
-    
+
         Route::get('/perfil', function(){
             return view('layouts.perfil');
         });
-    
+
         Route::get('/formularioPostulacion', function(){
             return view('layouts.formularioPostulacion');
         });
-    
+
         Route::get('/investigaciones', function(){
             return view('layouts.investigaciones');
         });
@@ -46,6 +46,7 @@
 
     //POST
     Route::post('/storeStudent', [StudentController::class, 'store'])->name('student.store');
+    Route::post('/generate-word', [DocumentController::class, 'generateWord']);
 
     //PUT
     //DELETE
