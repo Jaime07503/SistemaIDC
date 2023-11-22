@@ -2,13 +2,15 @@
     namespace App\Http\Controllers;
 
     use App\Models\Student;
+    use App\Models\StudentSubject;
     use App\Models\User;
     use Carbon\Carbon;
     use Illuminate\Http\Request;
 
     class StudentController extends Controller
     {
-        public function store(Request $request){            
+        public function store(Request $request)
+        {            
             $student = new Student;
             $student->carnet = $request->input('carnet');
             $student->career = $request->input('career');
@@ -17,9 +19,27 @@
             $student->enrolledSubject = $request->input('selectedMaterias');
             $student->previousIDC = $request->input('previousIDC');
             $student->state = 'Activo';
-            $student->idUser = 1;
+            $student->idUser = session('userId');
 
             $student->save();
+
+            // Add register in StudentSubject
+            $selectedMaterias = $request->input('selectedMaterias');
+            $idStudent = $student->studentId;
+
+            if(!empty($selectedMaterias)){
+                $materiasArray = explode(',', $selectedMaterias);
+
+                $materiasArray = array_slice($materiasArray, 0, 5);
+
+                foreach ($materiasArray as $idSubject) {
+                    StudentSubject::create([
+                        'idStudent' => $idStudent,
+                        'idSubject' => $idSubject,
+                        'applicationCount' => 0,
+                    ]);
+                }
+            }
 
             $user = User::find($student->idUser);
             if ($user) {

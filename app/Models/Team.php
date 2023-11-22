@@ -8,7 +8,7 @@
     {
         use HasFactory;
 
-        protected $table = 'teams';
+        protected $table = 'team';
         protected $primaryKey = 'teamId';
 
         protected $fillable = [
@@ -33,7 +33,7 @@
 
         public function studentTeam()
         {
-            return $this->hasMany(StudentTeam::class);
+            return $this->hasMany(StudentTeam::class, 'idTeam');
         }
 
         public function IDC()

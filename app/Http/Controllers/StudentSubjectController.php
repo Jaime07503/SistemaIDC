@@ -1,10 +1,10 @@
 <?php
+    namespace App\Http\Controllers;
+    use App\Models\StudentSubject;
+    use Illuminate\Http\Request;
 
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-
-class StudentSubjectController extends Controller
-{
-    //
-}
+    class StudentSubjectController extends Controller
+    {
+        
+    }
+?>

@@ -28,6 +28,11 @@
             return $this->belongsTo(Subject::class, 'idSubject');
         }
 
+        public function studentResearchTopic()
+        {
+            return $this->hasMany(StudentResearchTopic::class, 'idResearchTopic', 'researchTopicId');
+        }
+
         public function team()
         {
             return $this->hasOne(Team::class);

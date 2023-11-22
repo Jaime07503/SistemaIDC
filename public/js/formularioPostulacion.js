@@ -236,7 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
             checkboxBox.className = 'checkbox-box';
     
             // Set the name of the subject
-            let textNode = document.createTextNode(subject.nameSubject);
+            let textNode = document.createTextNode(subject.nameSubject + ' - ' + subject.section + ' - ' + subject.name);
     
             // Add input, div, and text to label
             label.appendChild(input);
@@ -254,17 +254,17 @@ document.addEventListener("DOMContentLoaded", function () {
                         input.checked = false; // No permitir seleccionar más de 6
                     } else {
                         // Add the selected matter to the array
-                        selectedMaterias.push(subject.nameSubject);
-                        selectedSubjects.push(subject.nameSubject);
+                        selectedMaterias.push(subject.subjectId);
+                        selectedSubjects.push(subject.nameSubject + ' - ' + subject.section + ' - ' + subject.name);
                         lastChecked = subject.nameSubject; // Actualiza el último checkbox marcado
                     }
                 } else {
                     // Remove deselected matter from the array
-                    const subjectIndex = selectedSubjects.indexOf(subject.nameSubject);
+                    const subjectIndex = selectedSubjects.indexOf(subject.nameSubject + ' - ' + subject.section + ' - ' + subject.name);
                     if (subjectIndex !== -1) {
                         selectedSubjects.splice(subjectIndex, 1);
                         selectedMaterias.splice(subjectIndex, 1);
-                        lastChecked = subject.nameSubject;
+                        lastChecked = subject.nameSubject + ' - ' + subject.section + ' - ' + subject.name;
                     }
                 }
                 

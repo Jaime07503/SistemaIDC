@@ -29,14 +29,19 @@
             return $this->belongsTo(User::class, 'idUser');
         }
 
-        public function studentTeam()
-        {
-            return $this->hasMany(StudentTeam::class);
-        }
-
         public function studentSubject()
         {
             return $this->hasMany(StudentSubject::class);
+        }
+
+        public function studentResearchTopic()
+        {
+            return $this->hasMany(StudentResearchTopic::class, 'studentId');
+        }
+
+        public function studentTeam()
+        {
+            return $this->hasMany(StudentTeam::class, 'idStudent');
         }
 
         public function nextIdcTopicsForm()

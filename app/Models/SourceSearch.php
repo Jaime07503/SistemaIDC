@@ -8,10 +8,11 @@
     {
         use HasFactory;
 
-        protected $table = 'source_searche';
-        protected $primaryKey = ['idTopicSearchReport' ,'idSourceSearch']; 
+        protected $table = 'source_search';
+        protected $primaryKey = 'idSourceSearch'; 
 
         protected $fillable = [
+            'idSourceSearch',
             'idTopicSearchReport',
             'idBibliographicSource',
         ];
@@ -19,12 +20,12 @@
         //Relationships with other tables
         public function topicSearchReport()
         {
-            return $this->belongsTo(Student::class, 'idTopicSearchReport');
+            return $this->belongsTo(Student::class, 'topicSearchReportId');
         }
 
         public function bibliographicSource()
         {
-            return $this->belongsTo(BibliographicSource::class, 'idBibliographicSource');
+            return $this->belongsTo(BibliographicSource::class, 'bibliographicSourceId');
         }
     }
 ?>

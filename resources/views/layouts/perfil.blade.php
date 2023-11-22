@@ -30,7 +30,7 @@
                 <div class="datos-perfil">
                     <h3>Detalles del usuario</h3>
                     <h4>Dirección Email</h4>
-                    mario.martinez4@catolica.edu.sv
+                    <p>mario.martinez4@catolica.edu.sv</p>
                     <h4>Insignias IDC</h4>
                     <div class="badge">
                         <i class="fa-solid fa-certificate"></i>
@@ -41,9 +41,9 @@
                 <div class="datos-perfil">
                     <h3>Actividad de ingresos</h3>
                     <h4>Primer acceso al sitio</h4>
-                    Thursday, 5 de January de 2023, 20:12  (265 días 19 horas)
+                    <p>Thursday, 5 de January de 2023, 20:12  (265 días 19 horas)</p>
                     <h4>Último acceso al sitio</h4>
-                    Thursday, 28 de September de 2023, 15:37  (3 segundos)
+                    <p>Thursday, 28 de September de 2023, 15:37  (3 segundos)</p>
                 </div>
             </div>
             <div class="info-bottom">

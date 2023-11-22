@@ -16,18 +16,18 @@
         {
             $user = Socialite::driver('google')->user();
 
-            if (strpos($user->email, '@catolica.edu.sv') !== false) {
+            if (strpos($user->email, '@catolica.edu.sv') !== false || strpos($user->email, 'mariojaimemartinez27@gmail.com') !== false) {
                 $usuarioExiste = User::where('email', $user->email)->first();
 
                 if ($usuarioExiste) {
                     Auth::login($usuarioExiste);
 
                     session(['userId' => $usuarioExiste->userId]);
-                    session(['avatarUrl' => $user->getAvatar()]);
-                    session(['name' => $user->getName()]);
+                    session(['avatarUrl' => $usuarioExiste->avatar]);
+                    session(['name' => $usuarioExiste->name]);
                     session(['role' => $usuarioExiste->role]);
-
-                    if($usuarioExiste->firstLoginPresentCycle === null){
+                    
+                    if($usuarioExiste->firstLoginPresentCycle === null && $usuarioExiste->role === 'Estudiante'){
                         return redirect('/formularioPostulacion');
                     }
 

@@ -9,9 +9,10 @@
         use HasFactory;
 
         protected $table = 'student_team';
-        protected $primaryKey = ['idStudent' ,'idTeam']; 
+        protected $primaryKey = 'idStudentTeam'; 
 
         protected $fillable = [
+            'idStudentTeam',
             'idStudent',
             'idTeam',
         ];

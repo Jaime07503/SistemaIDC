@@ -16,13 +16,13 @@
         <!-- Contenido Vista general de las investigaciones -->
         <div class="courses-content">
             <div class="head-lbl">
-                <h3>Vista general de las investigaciones</h3>
+                <h2>Vista general de las investigaciones</h2>
             </div>
             <div class="options-courses">
                 <!-- Listbox -->
                 <div class="custom-listbox">
                     <div class="listbox-header">
-                        <span class="selected-option">Todos</span>
+                        <input class="selected-option" id="listbox" placeholder="Todos" readonly></input>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
                     </div>
                     <ul class="options">
@@ -38,7 +38,7 @@
                 <!-- Listbox -->
                 <div class="custom-listbox">
                     <div class="listbox-header">
-                        <span class="selected-option">Nombre del curso</span>
+                        <input class="selected-option" id="listbox" placeholder="Nombre del curso" readonly></input>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
                     </div>
                     <ul class="options">
@@ -47,37 +47,24 @@
                     </ul>
                 </div>
             </div>
-            <!-- Investigaciones -->
+            <!-- Research Topics -->
             <div class="courses">
+                @foreach($teams as $team)
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Ciclo I 2024</h5>
-                            <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
-                            <a href="#" class="card-link">Servidores Web</a>
-                            <progress value="50" max="100"></progress>
-                            <h4>100% progreso</h4>
+                            <h5 class="card-title">Equipo #{{ $team->teamId}}</h5>
+                            <img src="{{ $team->avatar }}" alt="Imagen">
+                            <a href="{{ route('stagesProcess', ['researchTopicId' => $team->researchTopicId]) }}" class="card-link">{{ $team->themeName }}</a>
+                            <!-- <progress value="50" max="100"></progress>
+                            <h4>100% progreso</h4> -->
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Ciclo I 2024</h5>
-                            <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
-                            <a href="#" class="card-link">Servidores de correo</a>
-                            <progress value="50" max="100"></progress>
-                            <h4>100% progreso</h4>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Ciclo I 2024</h5>
-                            <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
-                            <a href="#" class="card-link">Servidores de archivos</a>
-                            <progress value="50" max="100"></progress>
-                            <h4>80% progreso</h4>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </main>
+@endsection
+
+@section('scripts')
+    <script src=" {{ asset('js/tablero.js') }}"></script>
 @endsection

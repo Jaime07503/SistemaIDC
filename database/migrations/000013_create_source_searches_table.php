@@ -8,6 +8,7 @@
         public function up()
         {
             Schema::create('source_search', function (Blueprint $table) {
+                $table->increments('idSourceSearch');
                 $table->unsignedBigInteger('idTopicSearchReport');
                 $table->unsignedBigInteger('idBibliographicSource');
                 $table->timestamps();

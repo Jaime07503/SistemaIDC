@@ -13,7 +13,7 @@
                 $table->string('career');
                 $table->string('studentCycle');
                 $table->string('studentYear');
-                $table->string('enrolledSubject');
+                $table->string('enrolledSubject', 800);
                 $table->string('previousIDC')->nullable();
                 $table->string('state');
                 $table->unsignedBigInteger('idUser');

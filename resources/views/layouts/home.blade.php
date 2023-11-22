@@ -13,19 +13,19 @@
         <!-- Contenido Titulo IDC -->
         <div class="head-content">
             <h1>Investigaciones de Cátedra</h1>
-            <img src="{{ asset('images/idc_logo.png') }}" alt="Logo IDC">
+            <img src="{{ asset('images/idc_logo.webp') }}" alt="Logo IDC">
         </div>
         <!-- Contenido Vista general de los cursos -->
         <div class="courses-content">
             <div class="head-lbl">
-                <h3>Vista general del curso</h3>
+                <h2>Vista general del curso</h2>
             </div>
             <div class="options-courses">
                 @if($role === 'Docente' || $role === 'Estudiante')
                     <!-- Listbox -->
                     <div class="custom-listbox">
                         <div class="listbox-header">
-                            <input class="selected-option" id="listbox" placeholder="Todos" readonly></input>
+                            <input class="selected-option" id="listbox" value="Todos" readonly></input>
                             <i class="fa-solid fa-chevron-down arrow-down"></i>
                         </div>
                         <ul class="options">
@@ -41,7 +41,7 @@
                     <!-- Listbox -->
                     <div class="custom-listbox">
                         <div class="listbox-header">
-                            <input class="selected-option" id="listbox" placeholder="Nombre del curso" readonly></input>
+                            <input class="selected-option" id="listbox" value="Nombre del curso" readonly></input>
                             <i class="fa-solid fa-chevron-down arrow-down"></i>
                         </div>
                             <ul class="options">
@@ -55,9 +55,9 @@
                         @foreach ($courses as $course)
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">{{ $course->subjectCycle }}</h5>
-                                <img src="{{ asset('images/curso_logo.png') }}" alt="Imagen">
-                                <a href="{{ route('temas', ['subjectId' => $course->subjectId]) }}" class="card-link">{{ $course->nameSubject }} - {{ $course->section }} - {{ $course->teacher->user->name }}</a>
+                                <h3 class="card-title">{{ $course->subjectCycle }}</h3>
+                                <img src="{{ $course->avatar }}" alt="Imagen">
+                                <a href="{{ route('researchTopics', ['subjectId' => $course->subjectId]) }}" class="card-link">{{ $course->nameSubject }} - {{ $course->section }} - {{ $course->teacher->user->name }}</a>
                             </div>
                         </div>
                         @endforeach

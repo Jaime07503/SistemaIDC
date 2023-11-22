@@ -8,6 +8,7 @@
 
         <meta name="description" content="Sitio web para investigaciones de cátedra de la Universidad Católica de El Salvador">
         <meta name="robots" content="index">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
@@ -31,6 +32,5 @@
 
         @yield('scripts')
         <script src=" {{ asset('js/modal.js') }}"></script>
-        <script src=" {{ asset('js/footer.js') }}"></script>
     </body>
 </html>

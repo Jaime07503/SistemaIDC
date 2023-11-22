@@ -1,6 +1,7 @@
 <?php
     namespace App\Http\Controllers;
     use App\Models\Student;
+    use App\Models\StudentSubject;
     use App\Models\Teacher;
     use App\Models\Subject;
 
@@ -20,32 +21,28 @@
                     $query->where('userId', $idUser);
                 })->first();
 
-                $career = $student->career;
+                session(['studentId' => $student->studentId]);
 
-                $courses = Subject::where('career', $career) // Filtrar por carrera
-                    ->where('subjectCycle', 'Ciclo I 2024') // Filtrar por ciclo actual
-                    ->get();
+                $idStudent = $student->studentId;
 
-                    return view('layouts.home', compact('courses', 'role'));
-            }
+                $subjectsIds = StudentSubject::where('idStudent', $idStudent)->pluck('idSubject');
 
-            $teacher = Teacher::whereHas('user', function ($query) use ($idUser) {
-                $query->where('userId', $idUser);
-            })->first();
+                $courses = Subject::whereIn('subjectId', $subjectsIds)->get();
 
-            if (!$teacher) {
-                return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontró una cuenta con su dirección de correo electrónico.');
-            }
-
-            $specialty = $teacher->specialty; // Obtains the teacher's specialty
-
-            $courses = Subject::with(['teacher.user'])
-                ->whereHas('teacher.user', function ($query) use ($idUser) {
+                return view('layouts.home', compact('courses', 'role'));
+            } else {
+                $teacher = Teacher::whereHas('user', function ($query) use ($idUser) {
                     $query->where('userId', $idUser);
-                })
-                ->where('career', $specialty) // Filter by specialty
-                ->where('subjectCycle', 'Ciclo I 2024') // Filter by actual cycle
-                ->get();
+                })->first();
+    
+                if (!$teacher) {
+                    return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontró una cuenta con su dirección de correo electrónico.');
+                }
+     
+                $courses = Subject::where('idTeacher', $idUser) 
+                    ->where('subjectCycle', 'Ciclo I 2024') 
+                    ->get();
+            }
 
             return view('layouts.home', compact('courses', 'role'));
         }

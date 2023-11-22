@@ -1,20 +1,20 @@
 <?php
+    namespace App\Models;
 
-namespace App\Models;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class StudentSubject extends Model
-{
-    use HasFactory;
-
-    protected $table = 'student_subject';
-        protected $primaryKey = ['idStudent' ,'idSubject']; 
+    class StudentSubject extends Model
+    {
+        use HasFactory;
+        protected $table = 'student_subject';
+        protected $primaryKey = 'idStudentSubject'; 
 
         protected $fillable = [
+            'idStudentSubject',
             'idStudent',
             'idSubject',
+            'applicationCount',
         ];
 
         //Relationships with other tables
@@ -27,4 +27,5 @@ class StudentSubject extends Model
         {
             return $this->belongsTo(Subject::class, 'idSubject');
         }
-}
+    }
+?>

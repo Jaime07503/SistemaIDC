@@ -8,6 +8,7 @@
         public function up()
         {
             Schema::create('student_team', function (Blueprint $table) {
+                $table->increments('idStudentTeam');
                 $table->unsignedBigInteger('idStudent');
                 $table->unsignedBigInteger('idTeam');
                 $table->timestamps();

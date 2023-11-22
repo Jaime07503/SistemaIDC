@@ -36,7 +36,6 @@ body {
     border-radius: 0.3rem;
 }
 
-/* Estilos para el contener main */
 .main-content {
     display: flex;
     flex-direction: column;
@@ -55,12 +54,11 @@ body {
     display: flex;
     flex-direction: column;
     background-color: var(--white);
-    border-top: 2px solid var(--primary);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     width: 90%;
     padding: 15px;
     margin-top: 90px;
-    border-radius: 5px;
+    border-radius: .5rem;
 }
 
 .head-content h1 {
@@ -73,7 +71,7 @@ body {
 }
 
 .header-title h2 {
-    color: var(--black);
+    color: var(--primary);
 }
 
 .info-content {
@@ -81,17 +79,17 @@ body {
     flex-direction: column;
     background-color: var(--white);
     width: 90%;
-    border-top: 2px solid var(--primary);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     padding: 15px;
-    border-radius: 5px;
+    border-radius: .5rem;
     margin-bottom: 5px;
 }
 
-.info-content h1, h2, h3 {
+.info-content h1, h2, h3, h4, p {
     margin: 0;
-    font-size: 1.2rem;
-    color: var(--black);
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: 700;
 }
 
 .info-content h4 {
@@ -109,7 +107,7 @@ body {
 }
 
 .info-top a{
-    color: var(--black);
+    color: var(--primary);
 }
 
 .info-top a:hover {
@@ -118,6 +116,7 @@ body {
 
 .history {
     display: flex;
+    gap: .5rem;
     justify-content: start;
     align-items: center;
     font-size: 0.9rem;
@@ -136,17 +135,8 @@ body {
 .history a {
     text-decoration: none;
     color: var(--white);
-    clip-path: polygon(0% 0%, 75% 0%, 84% 50%, 75% 100%, 0% 100%);
-    width: 4.2rem;
-    border-radius: 5px 0 0 5px; /* arriba-derecha arriba-izquierda abajo-izquierda abajo-derecha */
-}
-
-.history a:nth-child(2) {
-    clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 12% 50%, 0% 0%);
-    width: 7rem;
-    text-align: center;
-    margin-left: -18px;
-    border-radius: 0 5px 5px 0; /* arriba-derecha arriba-izquierda abajo-izquierda abajo-derecha */
+    width: auto;
+    border-radius: .5rem; /* arriba-derecha arriba-izquierda abajo-izquierda abajo-derecha */
 }
 
 .perfil {
@@ -156,7 +146,6 @@ body {
     justify-content: center;
     padding: 10px;
     border-radius: 5px;
-    border-top: 2px solid var(--gold);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
     gap: 10px;
@@ -178,7 +167,6 @@ body {
     gap: 10px;
     border-radius: 5px;
     padding: 10px;
-    border-top: 2px solid var(--gold);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -199,12 +187,11 @@ body {
     gap: 10px;
     padding: 10px;
     border-radius: 5px;
-    border-top: 2px solid var(--gold);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .info-bottom a {
-    color: var(--black);
+    color: var(--primary);
 }
 
 .info-bottom a:hover {

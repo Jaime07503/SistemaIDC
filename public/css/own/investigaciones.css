@@ -1,0 +1,113 @@
+:root {
+    --primary: #800000;
+    --secondary: #F8F9FA;
+    --gold: #F0AD4E;
+    --light-gray: #CCCCCC;
+    --light: #E5EEF4;
+    --white: #FFFFFF;
+    --silver-pale: #F7F7F7;
+    --black: #000000;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    min-height: auto;
+    gap: 1.7rem;
+    background: var(--white);
+    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+    margin-top: 80px;
+}
+
+.custom-listbox {
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+    margin: 0.5rem 0;
+    width: 9rem;
+    font-size: 1rem;
+}
+
+.custom-listbox:nth-child(3) {
+    z-index: 1;
+}
+  
+.listbox-header {
+    cursor: pointer;
+    border: 1px solid var(--gold);
+    color: var(--primary);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 0.3rem;
+}
+  
+.selected-option {
+    flex-grow: 1;
+    margin-right: 0.5rem;
+}
+  
+.arrow-down {
+    transition: transform 0.2s ease-in-out;
+    margin-right: 0.8rem;
+    font-size: 0.8rem;
+}
+  
+.options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border: 1px solid var(--gold);
+    background: var(--white);
+    z-index: 1;
+    margin-top: 0.5rem;
+    border-radius: 0.3rem;
+    width: 12rem;
+    box-shadow: 0 0.2rem 0.4rem 0 rgb(0 0 0 / 20%);
+}
+  
+.options li {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    color: var(--primary);
+    font-weight: 700;
+}
+  
+.options li:hover {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.custom-listbox:nth-child(3) {
+    width: 12rem;
+}
+
+/* Estilos para el listbox activo */
+.custom-listbox.active .options {
+    display: block;
+}
+
+/* Estilos para el campo de entrada de texto */
+.custom-input {
+    display: inline-block;
+}
+
+#listbox {
+    height: 2.5rem;
+    border: transparent;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    outline: none;
+    width: auto;
+    padding: 0.5rem;
+    color: var(--primary);
+    font-weight: 700;
+}

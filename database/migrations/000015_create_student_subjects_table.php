@@ -8,8 +8,10 @@
         public function up()
         {
             Schema::create('student_subject', function (Blueprint $table) {
+                $table->increments('idStudentSubject');
                 $table->unsignedBigInteger('idStudent');
                 $table->unsignedBigInteger('idSubject');
+                $table->integer('applicationCount');
                 $table->timestamps();
                 $table->foreign('idStudent')->references('studentId')->on('student');
                 $table->foreign('idSubject')->references('subjectId')->on('subject');

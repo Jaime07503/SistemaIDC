@@ -13,6 +13,17 @@ document.addEventListener('DOMContentLoaded', function () {
         modalVisible = !modalVisible;
     });
 
+    // Obtener todos los enlaces dentro del modal
+    var modalLinks = avatarModal.querySelectorAll('.enlace-div');
+
+    // Agregar un evento de clic a cada enlace para cerrar el modal
+    modalLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+            avatarModal.style.display = 'none';
+            modalVisible = false;
+        });
+    });
+
     document.addEventListener('click', function (event) {
         if (modalVisible && event.target !== avatarModal && !avatarModal.contains(event.target)) {
             avatarModal.style.display = 'none';
