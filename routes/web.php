@@ -1,27 +1,27 @@
 <?php
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthGoogleLoginController;
-    use App\Http\Controllers\HomeController;    
+    use App\Http\Controllers\HomeController;
     use App\Http\Controllers\ResearchTopicController;
     use App\Http\Controllers\ResearchTopicInformationController;
     use App\Http\Controllers\StagesProcessController;
     use App\Http\Controllers\StudentController;
     use App\Http\Controllers\SubjectController;
     use App\Http\Controllers\TableroController;
-use App\Http\Controllers\TeamController;
+    use App\Http\Controllers\TeamController;
 
     // Private Routes
     Route::middleware(['auth'])->group(function () {    
         Route::get('/tablero', [TableroController::class, 'getResearchTopics']);
-    
+
         Route::get('/perfil', function(){
             return view('layouts.perfil');
         });
-    
+
         Route::get('/formularioPostulacion', function(){
             return view('layouts.formularioPostulacion');
         });
-    
+
         Route::get('/investigaciones', function(){
             return view('layouts.investigaciones');
         });
@@ -66,6 +66,7 @@ use App\Http\Controllers\TeamController;
     Route::post('/addPostulated', [ResearchTopicInformationController::class, 'store'])->name('studentSubject.store');
     Route::post('/addResearchTopic', [ResearchTopicController::class, 'create'])->name('researchTopic.create');
     Route::post('/addTeam', [TeamController::class, 'create'])->name('team.create');
+    Route::post('/generate-word', [DocumentController::class, 'generateWord']);
 
     //PUT
     //DELETE
