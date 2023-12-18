@@ -1,13 +1,10 @@
 <?php
     namespace App\Http\Controllers;
-
     use App\Models\ResearchTopic;
     use App\Models\StudentResearchTopic;
     use App\Models\StudentSubject;
-    use App\Models\StudentTeam;
     use App\Models\Subject;
     use App\Models\Team;
-    use App\Models\User;
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Redirect;
 
@@ -18,9 +15,6 @@
             $idStudent = $request->input('idStudent');
             $idSubject = $request->input('idSubject');
             $researchTopicId = $request->input('researchTopicId');
-            
-            $researchTopics = ResearchTopic::where('idSubject', $idSubject)->get();
-            $subject = Subject::find($idSubject);
 
             StudentSubject::where('idStudent', $idStudent)
                 ->where('idSubject', $idSubject)
@@ -32,29 +26,30 @@
                 'state' => 'Postulado',
             ]);
 
-            return Redirect::route('researchTopics', ['researchTopicId' => $researchTopicId, 'subjectId' => $idSubject]);
+            return Redirect::route('researchTopics', ['subjectId' => $idSubject]);
         }
 
         public function getResearchTopicInformation($researchTopicId, $subjectId)
         {
             $studentId = session('studentId');
+            $subject = Subject::where('subjectId', $subjectId)->first();
             $researchTopic = ResearchTopic::where('researchTopicId', $researchTopicId)->first();
 
-            $studentResearch = Subject::join('student_subject', function ($join) use ($subjectId, $studentId) {
-                $join->on('subject.subjectId', '=', 'student_subject.idSubject')
-                    ->where('student_subject.idStudent', '=', $studentId);
+            $studentResearch = Subject::join('Student_Subject', function ($join) use ($subjectId, $studentId) {
+                $join->on('Subject.subjectId', '=', 'Student_Subject.idSubject')
+                    ->where('Student_Subject.idStudent', '=', $studentId);
             })
-            ->where('subject.subjectId', $subjectId)
-            ->select('subject.*', 'student_subject.applicationCount')
+            ->where('Subject.subjectId', $subjectId)
+            ->select('Subject.*', 'Student_Subject.applicationCount')
             ->first();
 
-            $postulatedSubject = ResearchTopic::join('student_research_topic', function ($join) use ($researchTopicId, $studentId) {
-                $join->on('research_topic.researchTopicId', '=', 'student_research_topic.idResearchTopic')
-                    ->where('student_research_topic.idStudent', '=', $studentId)
-                    ->where('student_research_topic.idResearchTopic', '=', $researchTopicId);
+            $postulatedSubject = ResearchTopic::join('Student_Research_Topic', function ($join) use ($researchTopicId, $studentId) {
+                $join->on('Research_Topic.researchTopicId', '=', 'Student_Research_Topic.idResearchTopic')
+                    ->where('Student_Research_Topic.idStudent', '=', $studentId)
+                    ->where('Student_Research_Topic.idResearchTopic', '=', $researchTopicId);
             })
-            ->where('research_topic.researchTopicId', $researchTopicId)
-            ->select('research_topic.*', 'student_research_topic.state')
+            ->where('Research_Topic.researchTopicId', $researchTopicId)
+            ->select('Research_Topic.*', 'Student_Research_Topic.state')
             ->first();
 
             // Obtener todos los equipos (teams) asociados al $researchTopicId
@@ -81,7 +76,7 @@
                 ];
             }
                         
-            return view('layouts.researchTopicInformation', compact('researchTopic', 'researchTopicId', 'studentResearch', 'postulatedSubject' , 'studentId', 'subjectId', 'result'));            
+            return view('layouts.researchTopicInformation', compact('researchTopic', 'subject','researchTopicId', 'studentResearch', 'postulatedSubject' , 'studentId', 'subjectId', 'result'));            
         }
     }
 ?>

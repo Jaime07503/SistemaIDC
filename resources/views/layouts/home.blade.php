@@ -34,7 +34,7 @@
                             <li>Pasados</li>
                         </ul>
                     </div>
-                    <!-- Entrada de Texto -->
+                    <!-- Input Search RT -->
                     <div class="custom-input">
                         <input type="text" placeholder="Buscar">
                     </div>
@@ -44,25 +44,25 @@
                             <input class="selected-option" id="listbox" value="Nombre del curso" readonly></input>
                             <i class="fa-solid fa-chevron-down arrow-down"></i>
                         </div>
-                            <ul class="options">
-                                <li>Nombre del curso</li>
-                                <li>Último accedido</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Cursos -->
-                    <div class="courses">
-                        @foreach ($courses as $course)
-                        <div class="card">
-                            <div class="card-body">
-                                <h3 class="card-title">{{ $course->subjectCycle }}</h3>
-                                <img src="{{ $course->avatar }}" alt="Imagen">
-                                <a href="{{ route('researchTopics', ['subjectId' => $course->subjectId]) }}" class="card-link">{{ $course->nameSubject }} - {{ $course->section }} - {{ $course->teacher->user->name }}</a>
-                            </div>
-                        </div>
-                        @endforeach
+                        <ul class="options">
+                            <li>Nombre del curso</li>
+                            <li>Último accedido</li>
+                        </ul>
                     </div>
                 @endif
+            </div>
+            <!-- Cursos -->
+            <div class="courses">
+                @foreach ($courses as $course)
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ $course->subjectCycle.' '.$course->subjectYear }}</h3>
+                        <img src="{{ $course->avatar }}" alt="Imagen">
+                        <a href="{{ route('researchTopics', ['subjectId' => $course->subjectId]) }}" class="card-link">{{ $course->nameSubject }} - {{ $course->section }} - {{ $course->teacher->user->name }}</a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
         </div>
     </main>
 @endsection

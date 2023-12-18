@@ -1,16 +1,16 @@
 <?php
+    namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
+    use App\Models\ResearchTopic;
+    use Illuminate\Http\Request;
 
-use App\Models\ResearchTopic;
-use Illuminate\Http\Request;
-
-class StagesProcessController extends Controller
-{
-    public function getResearchTopic($researchTopicId) 
+    class StagesProcessController extends Controller
     {
-        $researchTopic = ResearchTopic::where('researchTopicId', $researchTopicId)->first();
+        public function getResearchTopic($researchTopicId) 
+        {
+            $researchTopic = ResearchTopic::where('researchTopicId', $researchTopicId)->first();
 
-        return view('layouts.stagesProcess', compact('researchTopic'));
+            return view('layouts.stagesProcess', compact('researchTopic'));
+        }
     }
-}
+?>

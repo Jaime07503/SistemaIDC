@@ -19,10 +19,11 @@ use Illuminate\Support\Facades\Redirect;
             $subject = Subject::find($researchTopics->idSubject);
 
             $idStudent = session('studentId');
-            $students = DB::table('user as u')
-                ->select('u.name', 'u.avatar', 's.studentId')
-                ->join('student as s', 'u.userId', '=', 's.idUser')
-                ->join('student_research_topic as srt', 's.studentId', '=', 'srt.idStudent')
+            $students = DB::table('User as u')
+                ->select('u.name', 'u.email', 'u.avatar', 's.studentId', 'sh.cum', 'sh.enrolledSubject')
+                ->join('Student as s', 'u.userId', '=', 's.idUser')
+                ->join('Student_History as sh', 's.studentId', '=', 'sh.idStudent')
+                ->join('Student_Research_Topic as srt', 's.studentId', '=', 'srt.idStudent')
                 ->where('srt.state', '=', 'Postulado')
                 ->where('srt.idResearchTopic', '=', $researchTopicId)
                 ->get();
@@ -63,21 +64,21 @@ use Illuminate\Support\Facades\Redirect;
             $studentId = session('studentId');
             $researchTopic = ResearchTopic::where('researchTopicId', $researchTopicId)->first();
 
-            $studentResearch = Subject::join('student_subject', function ($join) use ($subjectId, $studentId) {
-                $join->on('subject.subjectId', '=', 'student_subject.idSubject')
-                    ->where('student_subject.idStudent', '=', $studentId);
+            $studentResearch = Subject::join('Student_Subject', function ($join) use ($subjectId, $studentId) {
+                $join->on('Subject.subjectId', '=', 'Student_Subject.idSubject')
+                    ->where('Student_Subject.idStudent', '=', $studentId);
             })
-            ->where('subject.subjectId', $subjectId)
-            ->select('subject.*', 'student_subject.applicationCount')
+            ->where('Subject.subjectId', $subjectId)
+            ->select('Subject.*', 'Student_Subject.applicationCount')
             ->first();
 
-            $postulatedSubject = ResearchTopic::join('student_research_topic', function ($join) use ($researchTopicId, $studentId) {
-                $join->on('research_topic.researchTopicId', '=', 'student_research_topic.idResearchTopic')
-                    ->where('student_research_topic.idStudent', '=', $studentId)
-                    ->where('student_research_topic.idResearchTopic', '=', $researchTopicId);
+            $postulatedSubject = ResearchTopic::join('Student_Research_Topic', function ($join) use ($researchTopicId, $studentId) {
+                $join->on('Research_Topic.researchTopicId', '=', 'Student_Research_Topic.idResearchTopic')
+                    ->where('Student_Research_Topic.idStudent', '=', $studentId)
+                    ->where('Student_Research_Topic.idResearchTopic', '=', $researchTopicId);
             })
-            ->where('research_topic.researchTopicId', $researchTopicId)
-            ->select('research_topic.*', 'student_research_topic.state')
+            ->where('Research_Topic.researchTopicId', $researchTopicId)
+            ->select('Research_Topic.*', 'Student_Research_Topic.state')
             ->first();
 
             // Obtener todos los equipos (teams) asociados al $researchTopicId
@@ -97,10 +98,10 @@ use Illuminate\Support\Facades\Redirect;
                 $studentTeamIds = StudentTeam::where('idTeam', $team->teamId)->pluck('idStudent')->toArray();
             
                 // Utilizar los IDs de los equipos en la consulta
-                $students = User::join('student', 'user.userId', '=', 'student.idUser')
-                    ->join('student_team', 'student_team.idStudent', '=', 'student.studentId')
-                    ->whereIn('student_team.idTeam', $studentTeamIds)
-                    ->select('user.name', 'user.avatar')
+                $students = User::join('Student', 'User.userId', '=', 'Student.idUser')
+                    ->join('Student_Team', 'Student_Team.idStudent', '=', 'Student.studentId')
+                    ->whereIn('Student_Team.idTeam', $studentTeamIds)
+                    ->select('User.name', 'User.avatar')
                     ->get();
                 }
 

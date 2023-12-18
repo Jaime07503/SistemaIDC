@@ -8,16 +8,18 @@
     {
         use HasFactory;
 
-        protected $table = 'subject';
+        protected $table = 'Subject';
         protected $primaryKey = 'subjectId'; 
 
         protected $fillable = [
             'subjectId',
+            'code',
             'nameSubject',
             'section',
-            'career',
+            'approvedIdc',
             'subjectCycle',
             'subjectYear',
+            'idCareer',
             'idTeacher',
         ];
 
@@ -25,6 +27,11 @@
         public function teacher()
         {
             return $this->belongsTo(Teacher::class, 'idTeacher');
+        }
+
+        public function career()
+        {
+            return $this->belongsTo(Career::class, 'idCareer');
         }
 
         public function studentSubject()

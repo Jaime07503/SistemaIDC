@@ -29,10 +29,17 @@
                 <div class="team-content">
                     @foreach($students as $index => $student)
                         <label class="checkbox" for="myCheckboxId{{ $index + 1 }}">
-                            <input class="checkbox-input" name="myCheckboxName{{ $index + 1 }}" id="myCheckboxId{{ $index + 1 }}" type="checkbox" value="{{ $student->studentId }}">
-                            <div class="checkbox-box"></div>
                             <img class="avatar" src="{{ $student->avatar }}" alt="Avatar">
                             <h2>{{ $student->name }}</h2>
+                            <h2>{{ $student->email }}</h2>
+                            <h2>{{ $student->cum }}</h2>
+                            @php
+                                $enrolledSubjectsArray = explode(',', $student->enrolledSubject);
+                                $subjectQuantity = count($enrolledSubjectsArray);
+                            @endphp
+                            <h2>{{ $subjectQuantity." Materias Inscritas" }}</h2>
+                            <input class="checkbox-input" name="myCheckboxName{{ $index + 1 }}" id="myCheckboxId{{ $index + 1 }}" type="checkbox" value="{{ $student->studentId }}">
+                            <div class="checkbox-box"></div>
                         </label>
                     @endforeach
                 </div>

@@ -27,7 +27,7 @@
                 </header>
                 <div class="line"></div>
                 <section class="login-right">
-                    <h2>Iniciar sesión con</h2>
+                    <h2>Iniciar sesión con:</h2>
                     <a href="{{ url('/login-google') }}" class="btn-login">
                         <img src="{{ asset('images/logo_google.png') }}" alt="Logo Google">
                         <h3>Correo Institucional</h3>

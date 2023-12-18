@@ -47,7 +47,7 @@
                     </ul>
                 </div>
             </div>
-            <!-- Research Topics -->
+            <!-- Teams -->
             <div class="courses">
                 @foreach($teams as $team)
                     <div class="card">

@@ -3,8 +3,8 @@
 
     use Illuminate\Http\Request;
 
-    class OpinionFormProcessController extends Controller
+    class ScientificArticleController extends Controller
     {
-        
+        //
     }
 ?>

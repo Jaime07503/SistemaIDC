@@ -123,9 +123,13 @@ h3 {
 }
 
 .team-content{
-    display: grid;
+    /* border: 1px solid var(--gold); */
+    padding: 1rem 0;
+    /* box-shadow: 0 0.2rem 0.4rem 0 rgb(0 0 0 / 20%); */
+    border-radius: .5rem;
+    /* display: grid;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    gap: 1.5rem;
+    gap: 1.5rem; */
 }
 
 .custom-listbox {
@@ -220,6 +224,8 @@ h3 {
     cursor: pointer;
     padding: 0.5rem 0.5rem 0.5rem 0;
     gap: .5rem;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .checkbox-input {

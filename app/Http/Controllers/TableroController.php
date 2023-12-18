@@ -27,10 +27,10 @@
 
                 $studentId = $student->studentId;
 
-                $teams = StudentTeam::join('team as t', 't.teamId', '=', 'student_team.idTeam')
-                    ->join('research_topic as rt', 'rt.researchTopicId', '=', 't.idResearchTopic')
-                    ->where('student_team.idStudent', $studentId)
-                    ->select('student_team.idStudentTeam', 't.*', 'rt.*')
+                $teams = StudentTeam::join('Team as t', 't.teamId', '=', 'Student_Team.idTeam')
+                    ->join('Research_Topic as rt', 'rt.researchTopicId', '=', 't.idResearchTopic')
+                    ->where('Student_Team.idStudent', $studentId)
+                    ->select('Student_Team.studentTeamId', 't.*', 'rt.*')
                     ->get();
 
                 return view('layouts.tablero', compact('role', 'teams'));
@@ -39,10 +39,10 @@
                     $query->where('userId', $idUser);
                 })->first();
 
-                $teams = Team::join('research_topic as rt', 'rt.researchTopicId', '=', 'team.idResearchTopic')
-                    ->where('team.idTeacher', $teacher->teacherId)
-                    ->where('team.state', 'Aprobado')
-                    ->select('team.*', 'rt.*')
+                $teams = Team::join('Research_Topic as rt', 'rt.researchTopicId', '=', 'Team.idResearchTopic')
+                    ->where('Team.idTeacher', $teacher->teacherId)
+                    ->where('Team.state', 'Aprobado')
+                    ->select('Team.*', 'rt.*')
                     ->get();
             }
 

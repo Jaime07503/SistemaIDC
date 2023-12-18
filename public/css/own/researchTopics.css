@@ -41,7 +41,7 @@ body {
     justify-content: center;
     width: 80%;
     min-height: auto;
-    gap: 1.5rem;
+    gap: 1.7rem;
 }
 
 .head-content {
@@ -51,7 +51,7 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     width: 95%;
     padding: 1rem;
-    margin-top: 90px;
+    margin-top: 6rem;
     border-radius: .5rem;
 }
 
@@ -150,7 +150,7 @@ body {
     padding: .5rem;
     cursor: pointer;
     color: var(--primary);
-    font-weight: 700;
+    font-weight: 100;
     font-size: .9rem;
 }
   
@@ -181,12 +181,12 @@ body {
     width: 7rem;
     padding: .5rem;
     color: var(--primary);
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 
 input::placeholder {
     color: var(--primary);
-    font-weight: 700;
+    /* font-weight: 700; */
     background: transparent;
 }
 
@@ -198,7 +198,7 @@ input[type="text"] {
     font-size: .9rem;
     width: auto; 
     outline: none;
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 
 .topics-content {
@@ -258,7 +258,7 @@ input[type="text"] {
     text-decoration: none;
     color: var(--primary);
     font-size: .9rem;
-    font-weight: 700;
+    font-weight: 100;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -280,7 +280,7 @@ a:hover {
 
 h2 {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--primary);
 }
 
@@ -310,6 +310,7 @@ h4 {
     font-size: .8rem;
     margin: auto;
     color: var(--white);
+    font-weight: 100;
 }
 
 .btn-login {

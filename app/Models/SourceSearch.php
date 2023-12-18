@@ -8,11 +8,11 @@
     {
         use HasFactory;
 
-        protected $table = 'source_search';
-        protected $primaryKey = 'idSourceSearch'; 
+        protected $table = 'Source_Search';
+        protected $primaryKey = 'sourceSearchId'; 
 
         protected $fillable = [
-            'idSourceSearch',
+            'sourceSearchId',
             'idTopicSearchReport',
             'idBibliographicSource',
         ];

@@ -10,7 +10,7 @@
 
 @section('content')
     <main class="main-content">
-        <header class="head-content">
+        <div class="head-content">
             <h1>Información del Proceso</h1>
             <nav class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
@@ -19,7 +19,7 @@
                 <a class="view" href=""> Etapas </a>
                 <a class="view" href=""> Información </a>
             </nav>
-        </header>
+        </div>
         <div class="information-content">
             <section class="documents-content">
                 <header class="title">

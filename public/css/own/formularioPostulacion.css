@@ -67,6 +67,10 @@ form {
     font-weight: 700;
 }
 
+.input-box input:focus {
+    border: 3px solid #eac875; /* Color de borde más oscuro cuando el input está enfocado */
+}
+
 .errores {
     position: absolute;
     top: 50%; /* Alinea el ícono verticalmente en el centro del input */
@@ -101,6 +105,7 @@ input::placeholder {
 .btn:hover {
     background-color: var(--primary);
     color: var(--white);
+    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
 }
 
 .info-carnet-año {
@@ -205,7 +210,6 @@ input::placeholder {
 .options li {
     padding: 0.5rem;
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
 }
   
 .options li:hover {
@@ -260,7 +264,7 @@ input::placeholder {
     background: var(--gold);
 }
 
-.options-subjects .custom-listbox .options h4 {
+.options-subjects .custom-listbox .options h2 {
     padding: 0.3rem;
 }
 
@@ -270,7 +274,8 @@ input::placeholder {
     padding: 0.5rem;
 }
 
-.input-radio h4 {
+.input-radio h2 {
+    font-size: 1rem;
     margin-bottom: 0.5rem;
 }
 

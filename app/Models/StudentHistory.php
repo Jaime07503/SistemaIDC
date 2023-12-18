@@ -4,21 +4,21 @@
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
 
-    class NextIdcTopicsForm extends Model
+    class StudentHistory extends Model
     {
         use HasFactory;
 
-        protected $table = 'next_idc_topics_form';
-        protected $primaryKey = 'nextIdcTopicFormId'; 
+        protected $table = 'Student_History';
+        protected $primaryKey = 'studentHistoryId'; 
 
         protected $fillable = [
-            'nextIdcTopicFormId',
-            'subject',
-            'lastUpdate',
-            'regionalImportance',
-            'globalImportance',
-            'justificationKnowledge',
-            'state',
+            'studentHistoryId',
+            'cum',
+            'studentCycle',
+            'studentYear',
+            'enrolledSubject',
+            'subjectApply',
+            'previousIdc',
             'idStudent',
         ];
 

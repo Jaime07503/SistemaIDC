@@ -8,7 +8,7 @@
     {
         use HasFactory;
 
-        protected $table = 'team';
+        protected $table = 'Team';
         protected $primaryKey = 'teamId';
 
         protected $fillable = [
@@ -28,7 +28,7 @@
 
         public function researchTopic()
         {
-            return $this->belongsTo(ResearchTopic::class, 'idResearchTopic');
+            return $this->hasOne(ResearchTopic::class, 'idResearchTopic');
         }
 
         public function studentTeam()

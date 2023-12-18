@@ -4,11 +4,11 @@
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
 
-    class IDC extends Model
+    class Idc extends Model
     {
         use HasFactory;
 
-        protected $table = 'idc';
+        protected $table = 'Idc';
         protected $primaryKey = 'idcId'; 
 
         protected $fillable = [
@@ -21,7 +21,8 @@
             'idTeam',
             'idUser',
             'idTopicSearchReport',
-            'idBibliographicArticle',
+            'idScientificArticle',
+            'idNextIdcTopicReport',
         ];
 
         //Relationships with other tables
@@ -32,15 +33,22 @@
 
         public function team()
         {
-            return $this->belongsTo(Team::class, 'idTeam');
+            return $this->hasOne(Team::class, 'idTeam');
         }
 
-        public function topicSearchReport(){
+        public function topicSearchReport()
+        {
             return $this->belongsTo(TopicSearchReport::class, 'idTopicSearchReport');
         }
 
-        public function bibliographicArticle(){
-            return $this->belongsTo(BibliographicArticle::class, 'idBibliographicArticle');
+        public function scientificArticle()
+        {
+            return $this->belongsTo(ScientificArticle::class, 'idScientificArticle');
+        }
+
+        public function nextIdcTopicReport()
+        {
+            return $this->belongsTo(NextIdcTopicReport::class, 'idNextIdcTopicReport');
         }
     }
 ?>

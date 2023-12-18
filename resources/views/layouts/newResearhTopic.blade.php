@@ -29,7 +29,7 @@
                     <div class="top-content">
                         <div class="left-content">
                             <input type="text" name="themeName" placeholder="Nombre del Tema" autocomplete="off">
-                            <textarea id="myTextarea" name="description" rows="4" cols="50" placeholder="Descripción" maxlength="500"></textarea>
+                            <textarea id="miTextarea" name="description" rows="4" cols="50" placeholder="Descripción" maxlength="500"></textarea>
                         </div>
                         <div class="right-content">
                             <div class="container file-container" id="container1">

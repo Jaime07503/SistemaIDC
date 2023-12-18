@@ -15,13 +15,13 @@
             <div class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
                 <a class="view" >Mis cursos</a>
-                <a class="view" href="">ADS104-A-I24</a>
+                <a class="view" href="">{{ $subject->code }}</a>
             </div>
         </div>
         <div class="topics-content">
             <div class="head">
                 <h2>Temas de investigación disponibles</h2>
-                @if(session('role') === 'Docente')
+                @if(session('role') === 'Docente' && $subject->teacher->idcQuantity === 0)
                     <a href="{{ route('newResearchTopic', ['subjectId' => $subject->subjectId]) }}" class="btn-login">
                         <i class="fa-solid fa-plus"></i>
                         <h4>Postular Tema</h4>

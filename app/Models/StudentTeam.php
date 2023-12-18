@@ -8,11 +8,11 @@
     {
         use HasFactory;
 
-        protected $table = 'student_team';
-        protected $primaryKey = 'idStudentTeam'; 
+        protected $table = 'Student_Team';
+        protected $primaryKey = 'studentTeamId'; 
 
         protected $fillable = [
-            'idStudentTeam',
+            'studentTeamId',
             'idStudent',
             'idTeam',
         ];

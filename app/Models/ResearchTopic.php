@@ -8,17 +8,17 @@
     {
         use HasFactory;
 
-        protected $table = 'research_topic';
+        protected $table = 'Research_Topic';
         protected $primaryKey = 'researchTopicId'; 
 
         protected $fillable = [
             'researchTopicId',
             'themeName',
             'description',
+            'avatar',
             'importanceRegional',
             'importanceGlobal',
             'state',
-            'avatar',
             'idSubject',
         ];
 
@@ -28,14 +28,14 @@
             return $this->belongsTo(Subject::class, 'idSubject');
         }
 
+        public function team()
+        {
+            return $this->belongsTo(Team::class);
+        }
+
         public function studentResearchTopic()
         {
             return $this->hasMany(StudentResearchTopic::class, 'idResearchTopic', 'researchTopicId');
-        }
-
-        public function team()
-        {
-            return $this->hasOne(Team::class);
         }
     }
 ?>

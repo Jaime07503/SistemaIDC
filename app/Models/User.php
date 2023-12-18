@@ -10,7 +10,7 @@
     {
         use HasApiTokens, HasFactory, Notifiable;
 
-        protected $table = 'user';
+        protected $table = 'User';
         protected $primaryKey = 'userId'; 
 
         protected $fillable = [
@@ -23,8 +23,6 @@
             'firstLogin',
             'lastLogin',
             'state',
-            'external_id',
-            'external_auth',
         ];
 
         protected $hidden = [
@@ -40,11 +38,6 @@
         public function student()
         {
             return $this->hasOne(Student::class);
-        }
-
-        public function opinionFormProcess()
-        {
-            return $this->hasOne(OpinionFormProcess::class);
         }
 
         public function idc()

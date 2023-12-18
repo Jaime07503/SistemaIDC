@@ -8,17 +8,13 @@
     {
         use HasFactory;
 
-        protected $table = 'student';
+        protected $table = 'Student';
         protected $primaryKey = 'studentId'; 
 
         protected $fillable = [
             'studentId',
             'carnet',
             'career',
-            'studentCycle',
-            'studentYear',
-            'enrolledSubject',
-            'previousIDC',
             'state',
             'idUser',
         ];
@@ -44,9 +40,9 @@
             return $this->hasMany(StudentTeam::class, 'idStudent');
         }
 
-        public function nextIdcTopicsForm()
+        public function studentHistory()
         {
-            return $this->hasOne(NextIdcTopicsForm::class);
+            return $this->hasMany(StudentHistory::class, 'idStudent');
         }
     }
 ?>

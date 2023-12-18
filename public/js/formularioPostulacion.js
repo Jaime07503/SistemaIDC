@@ -83,15 +83,15 @@ document.addEventListener("DOMContentLoaded", function () {
     function validateForm() {
         const name = document.getElementById("nameInput").value;
         const carnet = document.getElementById("carnetInput").value;
+        const cum = document.getElementById("cumInput").value;
         const career = document.getElementById("career").value;
-        const year = document.getElementById("year").value;
         const subjectPostulated = document.getElementById("subjectPostulated").value;
         const previousIDC = document.getElementById("participated-idc-input").value;
 
         const nameError = document.getElementById("nameInputError");
         const carnetError = document.getElementById("carnetInputError");
         const careerError = document.getElementById("careerInputError");
-        const yearError = document.getElementById("yearInputError");
+        const cumError = document.getElementById("cumInputError");
         const subjectPostulatedError = document.getElementById("subjectPostulatedError");
         const previousIDCError = document.getElementById("previousIDCInputError");
     
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
         nameError.style.display = "none";
         carnetError.style.display = "none";
         careerError.style.display = "none";
-        yearError.style.display = "none";
+        cumError.style.display = "none";
         subjectPostulatedError.style.display = "none";
         previousIDCError.style.display = "none";
     
@@ -115,13 +115,13 @@ document.addEventListener("DOMContentLoaded", function () {
             isValid = false;
         }
 
-        if (career === ""){
-            careerError.style.display = "block";
+        if (cum === "") {
+            cumError.style.display = "block";
             isValid = false;
         }
-    
-        if (year === ""){
-            yearError.style.display = "block";
+
+        if (career === ""){
+            careerError.style.display = "block";
             isValid = false;
         }
         
@@ -180,8 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     subjectPostulatedError.style.display = "none";
                 } 
         
-                if ((listbox.classList.contains("career") && document.querySelector("#career").value !== "Carrera" && document.querySelector("#year").value) ||
-                    (listbox.classList.contains("year") && document.querySelector("#career").value && document.querySelector("#year").value !== "Año")) {
+                if ((listbox.classList.contains("career") && career.value !== "Carrera")) {
                     getSubjects();
                     preIDC.value = "";
                     let selectedSubjects = [];
@@ -193,12 +192,10 @@ document.addEventListener("DOMContentLoaded", function () {
     
     function getSubjects() {
         let careerSelect = document.querySelector('#career');
-        let yearSelect = document.querySelector('#year');
 
         let career = careerSelect.value;
-        let year = yearSelect.value;
 
-        fetch(`getSubjects/${career}/${year}`)
+        fetch(`getSubjects/${career}`)
             .then(function (response) {
                 return response.json();
             })

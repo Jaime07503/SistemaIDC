@@ -13,7 +13,7 @@
                 </a>
             </div>
             <div class="option investigaciones">
-                <a class="enlace-div" href="#">
+                <a class="enlace-div" href="{{ url('/investigaciones') }}">
                     <i class="fa-regular fa-folder"></i>Mis investigaciones
                 </a>
             </div>

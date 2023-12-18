@@ -4,15 +4,15 @@
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
 
-    class BibliographicArticle extends Model
+    class ScientificArticle extends Model
     {
         use HasFactory;
 
-        protected $table = 'bibliographic_article';
-        protected $primaryKey = 'bibliographicArticleId'; 
+        protected $table = 'Scientific_Article';
+        protected $primaryKey = 'scientificArticleId'; 
 
         protected $fillable = [
-            'bibliographicArticleId',
+            'scientificArticleId',
             'spanishSummary',
             'englishSummary',
             'keywords',

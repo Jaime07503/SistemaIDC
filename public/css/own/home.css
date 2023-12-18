@@ -65,7 +65,7 @@ body {
 
 .head-lbl h2 {
     color: var(--primary);
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .info-content,
@@ -155,7 +155,7 @@ body {
     padding: .5rem;
     cursor: pointer;
     color: var(--primary);
-    font-weight: 700;
+    /* font-weight: 700; */
     font-size: .9rem;
 }
   
@@ -186,12 +186,12 @@ body {
     width: 7rem;
     padding: .5rem;
     color: var(--primary);
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 
 input::placeholder {
     color: var(--primary);
-    font-weight: 700;
+    /* font-weight: 700; */
     background: transparent;
 }
 
@@ -203,7 +203,7 @@ input[type="text"] {
     font-size: .9rem;
     width: auto; 
     outline: none;
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 
 .courses {
@@ -244,6 +244,7 @@ input[type="text"] {
     margin: auto;
     color: var(--white);
     box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+    font-weight: 100;
 }
 
 .card-text {
@@ -258,7 +259,7 @@ input[type="text"] {
     padding: .5rem;
     margin-top: 0;
     font-size: .9rem;
-    font-weight: 900;
+    font-weight: 100;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -268,21 +269,10 @@ input[type="text"] {
     text-decoration: underline;
 }
 
-@media (max-width: 900px){
-    .main-content {
-        width: 95%;
-    }
-
-    .head-content,
-    .info-content,
-    .mis-vis-content {
+@media (max-width: 880px){
+    .head-content {
         flex-direction: column;
         justify-content: center;
-    }
-
-    .head-content,
-    .info-content {
-        width: 90%;
     }
 
     .head-content h1 {
@@ -316,5 +306,15 @@ input[type="text"] {
     .search-box {
         padding: 0;
         margin: 0;
+    }
+}
+
+@media (max-width: 500px){
+    .main-content {
+        width: 90%;
+    }
+
+    .head-content, .courses-content {
+        width: 95%;
     }
 }

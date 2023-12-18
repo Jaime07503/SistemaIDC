@@ -10,7 +10,7 @@
 
 @section('content')
     <main class="main-content">
-        <header class="head-content">
+        <div class="head-content">
             <h1>{{ $researchTopic->themeName }}</h1>
             <nav class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
@@ -19,11 +19,11 @@
                 <a class="view" href="">{{ $researchTopic->themeName }}</a>
                 <a class="view" href=""> Etapas </a>
             </nav>
-        </header>
-        <section class="stages-content">
+        </div>
+        <div class="stages-content">
             <div class="head">
                 <i class="fa-solid fa-puzzle-piece"></i>
-                <header><h2>Etapas del proceso</h2></header>
+                <h2>Etapas del proceso</h2>
             </div>
             <div class="stages">
                 <div class="stage">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 @endsection
 

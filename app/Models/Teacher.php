@@ -8,13 +8,14 @@
     {
         use HasFactory;
 
-        protected $table = 'teacher';
+        protected $table = 'Teacher';
         protected $primaryKey = 'teacherId'; 
 
         protected $fillable = [
             'teacherId',
             'contractType',
             'specialty',
+            'idcQuantity',
             'idUser',
         ];
 

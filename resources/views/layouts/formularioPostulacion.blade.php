@@ -13,12 +13,10 @@
 
     <!-- Style -->
     <link rel="stylesheet" type="text/css" href="{{ asset('css/own/formularioPostulacion.css') }}">
-
-    <script src="{{ asset('js/formularioPostulacion.js') }}"></script>
 </head>
 <body>
     <div class="wrapper">
-        <form class="form" action=" {{ url('/storeStudent') }} " method="POST">
+        <form class="form" action=" {{ url('/addStudent') }} " method="POST">
             @csrf
             <h1>Postularse</h1>
 
@@ -26,6 +24,18 @@
             <div class="input-box">
                 <input type="text" name="name" id="nameInput" placeholder="Nombre completo" class="error-input" autocomplete="off">
                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+            </div>
+
+            <!-- Carnet and CUM Inputs -->
+            <div class="info-carnet-año">
+                <div class="input-box item">
+                    <input class="error-input" type="text" name="carnet" placeholder="Número de carnet" id="carnetInput" maxlength="11" autocomplete="off">
+                    <i class="fa-solid fa-circle-exclamation errores" id="carnetInputError"></i>
+                </div>
+                <div class="input-box item">
+                    <input class="error-input" type="text" name="cum" placeholder="CUM actual" id="cumInput" maxlength="3" autocomplete="off">
+                    <i class="fa-solid fa-circle-exclamation errores" id="cumInputError"></i>
+                </div>
             </div>
 
             <!-- Listbox Careers -->
@@ -37,41 +47,10 @@
                         <i class="fa-solid fa-circle-exclamation error" id="careerInputError"></i>
                     </div>
                     <ul class="options">
-                        <li>Arquitectura</li>
-                        <li>Ingeniería Agronómica</li>
-                        <li>Ingeniería Civil</li>
-                        <li>Ingeniería Eléctrica</li>
-                        <li>Ingeniería en Desarrollo de Software</li>
-                        <li>Ingeniería en Sistemas Informáticos</li>
-                        <li>Ingeniería en Telecomunicaciones y Redes</li>
-                        <li>Ingeniería Industrial</li>
-                        <li>Ingeniería Mecánica</li>
-                        <li>Ingeniería Química</li>
+                        @foreach($careers as $career)
+                            <li>{{$career->nameCareer}}</li>
+                        @endforeach
                     </ul>
-                </div>
-            </div>
-
-            <!-- Carnet and Listbox Years -->
-            <div class="info-carnet-año">
-                <div class="input-box item">
-                    <input class="error-input" type="text" name="carnet" placeholder="Número de carnet" id="carnetInput" maxlength="11" autocomplete="off">
-                    <i class="fa-solid fa-circle-exclamation errores" id="carnetInputError"></i>
-                </div>
-                <div class="options-courses item">
-                    <div class="custom-listbox year">
-                        <div class="listbox-header">
-                            <input class="selected-option listbox" name="year" id="year" placeholder="Año" readonly></input>
-                            <i class="fa-solid fa-chevron-down arrow-down"></i>
-                            <i class="fa-solid fa-circle-exclamation error" id="yearInputError"></i>
-                        </div>
-                        <ul class="options">
-                            <li>Primer Año</li>
-                            <li>Segundo Año</li>
-                            <li>Tercer Año</li>
-                            <li>Cuarto Año</li>
-                            <li>Quinto Año</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
 
@@ -95,7 +74,7 @@
             <div class="subject-postulate pos">
                 <div class="custom-listbox subjectPostulated">
                     <div class="listbox-header">
-                        <input class="selected-option listbox" id="subjectPostulated" placeholder="Materia a postular" readonly></input>
+                        <input class="selected-option listbox" name="subjectApply" id="subjectPostulated" placeholder="Materia a postular" readonly></input>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
                         <i class="fa-solid fa-circle-exclamation error" id="subjectPostulatedError"></i>
                     </div>
@@ -106,7 +85,7 @@
 
             <!-- Radios Yes No Particpated IDC -->
             <div class="input-radio">
-                <h4>¿Ha participado en IDC?</h4>
+                <h2>¿Ha participado en IDC?</h2>
                 <div class="radio-options">
                     <div class="div-option">
                         <input type="radio" name="option" id="option-yes">
@@ -126,8 +105,10 @@
             </div>
 
             <!-- Button -->
-            <button type="submit" class="btn" id="submitButton">Continuar</button>
+            <button type="submit" class="btn" id="submitButton">Postularse</button>
         </form>
     </div>
+
+    <script src="{{ asset('js/formularioPostulacion.js') }}"></script>
 </body>
 </html>

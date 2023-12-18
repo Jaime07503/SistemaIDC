@@ -10,8 +10,8 @@
 
 @section('content')
     <main class="main-content">
-        <header class="head-content">
-            <h1>Informe de Búsqueda de Información</h1>
+        <div class="head-content">
+            <h1>Informe y ordenamiento de búsqueda del tema</h1>
             <nav class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
                 <a class="view" >Mis cursos</a>
@@ -19,12 +19,43 @@
                 <a class="view" href="">Tema</a>
                 <a class="view" href=""> Etapas </a>
             </nav>
-        </header>
-        <section class="description-content">
-            <h2>Descripción del tema</h2>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tenetur atque nisi, aut fuga voluptatum fugiat incidunt ut aliquam earum placeat animi accusamus recusandae aspernatur qui quos. Fugiat, esse adipisci! Ipsa!</p>
-        </section>
-        <section class="info-content">
+        </div>
+        <div class="info-content">
+            <header>
+                <strong><h2>Status de la Entrega</h2></strong>
+            </header>
+            <table class="table content-table">
+                <tbody>
+                    <tr>
+                        <td><strong>Status del informe</strong></td>
+                        <td>Sin intento</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status de calificación</strong></td>
+                        <td>No calificado</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fecha de entrega</strong></td>
+                        <td>Miercoles 16 de marzo 2024</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tiempo restante</strong></td>
+                        <td>1 hora 30 minutos 60 segundos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Comentarios al envío</strong></td>
+                        <td>No hay comentarios por el momento</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="title">
+                <a href="{{ url('/topicSearchReport') }}" class="btn-login">
+                    <i class="fa-solid fa-square-plus"></i>
+                    <h4>Crear Informe</h4>
+                </a>
+            </div>
+        </div>
+        <!-- <div class="info-content">
             <div class="status">
                 <h2>Status de la entrega</h2>
                 <div class="title">
@@ -50,7 +81,7 @@
                     </a>
                 </div>
             </div>
-        </section>
+        </div> -->
     </main>
 @endsection
 

@@ -8,19 +8,17 @@
     {
         use HasFactory;
 
-        protected $table = 'topic_search_report';
+        protected $table = 'Topic_Search_Report';
         protected $primaryKey = 'topicSearchReportId'; 
 
         protected $fillable = [
             'topicSearchReportId',
             'teamOrientation',
             'searchPlan',
-            'meetingReport',
+            'meetings',
             'generalObjetive',
             'specificsObjetives',
-            'criteria',
             'coordinatorAssessment',
-            'evaluationRubric',
             'deadLine',
             'storagePath',
             'state',

@@ -7,14 +7,14 @@
     class StudentSubject extends Model
     {
         use HasFactory;
-        protected $table = 'student_subject';
-        protected $primaryKey = 'idStudentSubject'; 
+        protected $table = 'Student_Subject';
+        protected $primaryKey = 'studentSubjectId'; 
 
         protected $fillable = [
-            'idStudentSubject',
+            'studentSubjectId',
+            'applicationCount',
             'idStudent',
             'idSubject',
-            'applicationCount',
         ];
 
         //Relationships with other tables

@@ -15,37 +15,41 @@
             <div class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
                 <a class="view" >Mis cursos</a>
-                <a class="view" href="{{ route('researchTopics', ['subjectId' => $subjectId]) }}">IYA-ADS104-A-I24</a>
+                <a class="view" href="{{ route('researchTopics', ['subjectId' => $subjectId]) }}">{{ $subject->code }}</a>
                 <a class="view" href="">{{ $researchTopic->themeName }}</a>
             </div>
         </div>
         <div class="information-content">
             <div>
-                <h2>Detalles del tema de investigación</h2>
+                <h2>Información general</h2>
+            </div>
+            <div class="information">
+                <p>{{ $researchTopic->description }}</p>
+                <!-- @if(session('role') === 'Estudiante')
+                    @if($studentResearch->applicationCount < 2 
+                        && (!$postulatedSubject || ($postulatedSubject->state !== 'Postulado' && $postulatedSubject->state !== 'Aprobado')))
+                        <form action="{{ route('studentSubject.store') }}" method="POST" id="applicationForm">
+                            @csrf
+                            <input type="hidden" name="idStudent" class="idStudent" value="{{ session('studentId') }}">
+                            <input type="hidden" name="idSubject" class="idSubject" value="{{ $subjectId }}">
+                            <input type="hidden" name="researchTopicId" class="researchTopicId" value="{{ $researchTopic->researchTopicId }}">
+                            <button type="submit" class="btn">Postularse</button>
+                        </form>
+                    @else
+                        @if($postulatedSubject && ($postulatedSubject->state === 'Postulado' || $postulatedSubject->state === 'Aprobado'))
+                            <h2 class="state">{{ $postulatedSubject->state }}</h2>
+                        @endif
+                    @endif
+                @endif -->
             </div>
             <div class="top-content">
                 <div>
-                    <img src="{{ $researchTopic->avatar }}" alt="" class="avatarTopic">
+                    <!-- <h3>Importancia Regional</h3> -->
+                    <img src="{{ $researchTopic->importanceRegional }}" alt="" class="avatarTopic">
                 </div>
-                <div class="information">
-                    <p>{{ $researchTopic->description }}</p>
-                    @if(session('role') === 'Estudiante')
-                        @if(empty($studentResearch->applicationCount) || $studentResearch->applicationCount < 2 
-                        && (!$postulatedSubject || $postulatedSubject->state !== 'Postulado'))
-                            <form action="{{ route('studentSubject.store') }}" method="POST" id="applicationForm">
-                                @csrf
-                                <input type="hidden" name="idStudent" class="idStudent" value="{{ session('studentId') }}">
-                                <input type="hidden" name="idSubject" class="idSubject" value="{{ $subjectId }}">
-                                <input type="hidden" name="researchTopicId" class="researchTopicId" value="{{ $researchTopic->researchTopicId }}">
-                                <button type="submit" class="btn">Postularse</button>
-                            </form>
-                        @else
-                            @if($postulatedSubject && ($postulatedSubject->state === 'Postulado' || $postulatedSubject->state === null 
-                            || $postulatedSubject->state === 'Aprobado'))
-                                <h2 class="state">{{ $postulatedSubject->state }}</h2>
-                            @endif
-                        @endif
-                    @endif
+                <div>
+                    <!-- <h3>Importancia Global</h3> -->
+                    <img src="{{ $researchTopic->importanceGlobal }}" alt="" class="avatarTopic">
                 </div>
             </div>
         </div>
@@ -66,7 +70,7 @@
                         @foreach($result as $teamResult)
                             @if(isset($teamResult['team']) && $teamResult['team'] !== null && isset($teamResult['students']) && $teamResult['students'] !== null)
                                 <div class="team-content">
-                                    <header class="header">
+                                    <header class="top">
                                         <h3>Equipo #{{ $teamResult['team']->teamId }} </h3>
                                         <h3>{{ $teamResult['team']->state }}</h3>
                                         <div class="integrants">
@@ -78,7 +82,7 @@
                                         @foreach($teamResult['user'] as $student)
                                             <div class="student">
                                                 <img src="{{ $student->avatar }}" alt="{{ $student->name }} Avatar" class="ava">
-                                                <h4>{{ $student->name }}</h4>
+                                                <h4>{{ $student->name.' '.$student->email }}</h4>
                                             </div>
                                         @endforeach
                                     </div>

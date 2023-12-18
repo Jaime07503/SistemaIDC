@@ -31,4 +31,18 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     });
+
+    var textarea = document.getElementById("miTextarea");
+
+    textarea.addEventListener("input", function () {
+        ajustarAltura(textarea);
+    });
+
+    // Ajusta la altura inicial
+    //ajustarAltura(textarea);
+
+    function ajustarAltura(elemento) {
+        elemento.style.height = "auto"; // Restablece la altura a auto para obtener la altura total
+        elemento.style.height = Math.min(elemento.scrollHeight, 120) + "px"; // Limita la altura al máximo de 120px
+    }
 });

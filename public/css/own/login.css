@@ -3,7 +3,18 @@
     --gold: #F0AD4E;
     --gold-dark: #D89008;
     --white: #FFFFFF;
-  }
+    --texas-rose-50: #fef7ec;
+    --texas-rose-100: #fae9cb;
+    --texas-rose-200: #f6d091;
+    --texas-rose-300: #f0ad4e;
+    --texas-rose-400: #ed9732;
+    --texas-rose-500: #e6751a;
+    --texas-rose-600: #cc5513;
+    --texas-rose-700: #a93914;
+    --texas-rose-800: #8a2d16;
+    --texas-rose-900: #712716;
+    --texas-rose-950: #411107;
+}
   
 body {
     margin: 0;
@@ -21,6 +32,7 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    gap: .5rem;
 }
 
 .login-container {
@@ -32,6 +44,7 @@ body {
     background: var(--primary);
     color: var(--white);
     border-radius: 0.5rem;
+    box-shadow: 0 .2rem .4rem 0 rgb(0 0 0 / 20%);
 }
 
 .login-left h1 {
@@ -42,17 +55,12 @@ body {
 
 .login-right h2 {
     color: var(--white);
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    margin: 0;
 }
 
 .login-right h3 {
     font-size: 1rem;
-}
-
-.login-right a {
-    text-decoration: none;
 }
 
 .login-left, .login-right {
@@ -60,7 +68,7 @@ body {
 }
 
 .btn-login {
-    background: var(--gold);
+    background: var(--texas-rose-100);
     color: var(--primary);
     border: none;
     border-radius: 0.5rem;
@@ -68,19 +76,18 @@ body {
     justify-content: center;
     align-items: center;
     text-decoration: none;
-    font-size: 1rem;
     height: 2.7rem;
     width: 13rem;
-    border: 1px solid var(--primary);
-    transition: box-shadow 0.4s ease, border 0.3s ease;
+    border: 3px solid var(--primary);
 }
 
 .btn-login:hover {
-    background: var(--primary);
-    border: 1px solid var(--gold);
-    color: var(--white);
-    box-shadow: 0 0 1rem rgb(0 0 0 / 50%);
+    background: var(--texas-rose-200);
     cursor: pointer;
+}
+
+.btn-login:active {
+    border: 3px solid var(--texas-rose-100);
 }
 
 .btn-login img {
@@ -89,9 +96,9 @@ body {
 }
 
 .line {
-    width: 1px;
-    background: var(--white);
-    height: 85%;
+    width: .01rem;
+    background: var(--texas-rose-100);
+    height: 70%;
 }
 
 .alert {
@@ -119,8 +126,8 @@ body {
     }
 
     .line {
-        width: 80%;
-        height: 1px;
+        width: 70%;
+        height: .01rem;
     }
 
     .btn-login {

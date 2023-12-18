@@ -12,12 +12,14 @@
             $idUser = session('userId');
             $role = session('role');
 
-            if (!$idUser) {
+            if (!$idUser) 
+            {
                 return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontró una cuenta con su dirección de correo electrónico.');
             }
 
-            if($role == 'Estudiante'){
-                $student = Student::whereHas('user', function ($query) use ($idUser){
+            if($role == 'Estudiante')
+            {
+                $student = Student::whereHas('User', function ($query) use ($idUser){
                     $query->where('userId', $idUser);
                 })->first();
 
@@ -30,8 +32,10 @@
                 $courses = Subject::whereIn('subjectId', $subjectsIds)->get();
 
                 return view('layouts.home', compact('courses', 'role'));
-            } else {
-                $teacher = Teacher::whereHas('user', function ($query) use ($idUser) {
+            } 
+            else 
+            {
+                $teacher = Teacher::whereHas('User', function ($query) use ($idUser) {
                     $query->where('userId', $idUser);
                 })->first();
     
@@ -40,7 +44,8 @@
                 }
      
                 $courses = Subject::where('idTeacher', $idUser) 
-                    ->where('subjectCycle', 'Ciclo I 2024') 
+                    ->where('subjectCycle', 'Ciclo I')
+                    ->where('subjectYear', '2024') 
                     ->get();
             }
 

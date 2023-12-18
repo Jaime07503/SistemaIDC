@@ -7,8 +7,8 @@
     {
         public function up()
         {
-            Schema::create('bibliographic_article', function (Blueprint $table) {
-                $table->increments('bibliographicArticleId');
+            Schema::create('Scientific_Article', function (Blueprint $table) {
+                $table->increments('scientificArticleId');
                 $table->string('spanishSummary');
                 $table->string('englishSummary');
                 $table->string('keywords');
@@ -20,14 +20,14 @@
                 $table->string('numberOfWords');
                 $table->string('deadLine');
                 $table->string('storagePath');
-                $table->string('state');
+                $table->string('state', 20);
                 $table->timestamps();
             });
         }
 
         public function down()
         {
-            Schema::dropIfExists('bibliographic_article');
+            Schema::dropIfExists('Scientific_Article');
         }
     };
 ?>

@@ -125,22 +125,21 @@ h3 {
     font-weight: 700;
 }
 
+.newTopic input[type="text"]:focus, .newTopic textarea:focus {
+    border: 2px solid #eac875; /* Color de borde más oscuro cuando el input está enfocado */
+}
+
 .newTopic textarea {
-    max-width: 36rem;
-    background: transparent;
-    border: none;
-    outline: none;
-    border: 1px solid var(--gold);
-    border-radius: .5rem;
-    color: var(--primary);
-    font-size: .9rem;
-    padding: .5rem;
-    font-weight: 700;
-    resize: none;
-    text-align: justify;
-    height: 12rem;
-    line-height: 1.7;
-    scroll-behavior: none;
+    width: 100%;
+    resize: none; /* Evita que el usuario pueda redimensionar el textarea */
+    overflow-y: hidden; /* Oculta la barra de desplazamiento vertical */
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    transition: height 0.2s; /* Agrega una transición suave al cambiar la altura */
+    height: 40px; /* Altura inicial más pequeña */
+    max-height: 120px; /* Altura máxima permitida */
 }
 
 form, .information {
