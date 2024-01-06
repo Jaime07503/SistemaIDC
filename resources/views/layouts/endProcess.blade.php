@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    Búsqueda de Información
+    Finalización del Proceso
 @endsection
 
 @section('styles')
@@ -11,7 +11,7 @@
 @section('content')
     <main class="main-content">
         <div class="head-content">
-            <h1>Informe y ordenamiento de búsqueda del tema</h1>
+            <h1>Finalización del Proceso</h1>
             <nav class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
                 <a class="view" >Mis cursos</a>

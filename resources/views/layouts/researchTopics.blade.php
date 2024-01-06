@@ -20,7 +20,7 @@
         </div>
         <div class="topics-content">
             <div class="head">
-                <h2>Temas de investigación disponibles</h2>
+                <h2>Temas de investigación</h2>
                 @if(session('role') === 'Docente' && $subject->teacher->idcQuantity === 0)
                     <a href="{{ route('newResearchTopic', ['subjectId' => $subject->subjectId]) }}" class="btn-login">
                         <i class="fa-solid fa-plus"></i>
@@ -32,13 +32,13 @@
                 <!-- Listbox -->
                 <div class="custom-listbox">
                     <div class="listbox-header">
-                        <input class="selected-option" id="listbox" placeholder="Todos" readonly></input>
+                        <button id="listbox"><span class="selected-option">Todos</span></button>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
                     </div>
                     <ul class="options">
-                        <li>Todos</li>
-                        <li>Aprobados</li>
-                        <li>Por Aprobar</li>
+                        <li data-value="Todos" class="selected"><i class="fa-solid fa-check"></i> Todos</li>
+                        <li data-value="Aprobados">Aprobados</li>
+                        <li data-value="Por Aprobar">Por Aprobar</li>
                     </ul>
                 </div>
                 <!-- Entrada de Texto -->
@@ -48,12 +48,12 @@
                 <!-- Listbox -->
                 <div class="custom-listbox">
                     <div class="listbox-header">
-                        <input class="selected-option" id="listbox" placeholder="Nombre del curso" readonly></input>
+                        <button id="listbox"><span class="selected-option">Nombre del curso</span></button>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
                     </div>
                     <ul class="options">
-                        <li>Nombre del curso</li>
-                        <li>Último accedido</li>
+                        <li data-value="Nombre del curso" class="selected"><i class="fa-solid fa-check"></i> Nombre del curso</li>
+                        <li data-value="Último accedido">Último accedido</li>
                     </ul>
                 </div>
             </div>

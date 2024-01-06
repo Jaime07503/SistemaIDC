@@ -1,19 +1,18 @@
 <?php
+    use App\Http\Controllers\AdministrationController;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthGoogleLoginController;
-use App\Http\Controllers\BibliographicSourceController;
-use App\Http\Controllers\DocumentController;
+    use App\Http\Controllers\BibliographicSourceController;
+    use App\Http\Controllers\DocumentController;
     use App\Http\Controllers\FormPostulationController;
     use App\Http\Controllers\HomeController;
+    use App\Http\Controllers\ProcessInfoController;
     use App\Http\Controllers\ResearchTopicController;
     use App\Http\Controllers\ResearchTopicInformationController;
     use App\Http\Controllers\StagesProcessController;
-    use App\Http\Controllers\StudentController;
-    use App\Http\Controllers\SubjectController;
     use App\Http\Controllers\TableroController;
     use App\Http\Controllers\TeamController;
-use App\Http\Controllers\TopicSearchReportController;
-use App\Models\BibliographicSource;
+    use App\Http\Controllers\TopicSearchReportController;
 
     // Private Routes
     Route::middleware(['auth'])->group(function () {    
@@ -27,22 +26,28 @@ use App\Models\BibliographicSource;
             return view('layouts.investigaciones');
         });
 
-        // Route::get('/topicSearchReport', function(){
-        //     $role = session('role');
-        //     return view('layouts.topicSearchReport', compact('role'));
-        // });
-
-        Route::get('/processInfo', function(){
-            return view('layouts.processInfo');
-        });
-
         Route::get('/formularioPostulacion', [FormPostulationController::class, 'getCareers']);
         Route::get('/home', [HomeController::class, 'viewCourses']);
         Route::get('/stagesProcess/{researchTopicId}', [StagesProcessController::class, 'getResearchTopic'])->name('stagesProcess');
+        Route::get('/processInfo/{researchTopicId}', [ProcessInfoController::class, 'getResearchTopic'])->name('processInfo');
 
         Route::get('/searchInformation', function(){
             return view('layouts.searchInformation');
         });
+
+        Route::get('/scientificArticle', function(){
+            return view('layouts.scientificArticle');
+        });
+
+        Route::get('/endProcess', function(){
+            return view('layouts.endProcess');
+        });
+
+        Route::get('/scientificArticleReport', function(){
+            return view('layouts.scientificArticleReport');
+        });
+
+        Route::get('/administration', [AdministrationController::class, 'getCareers'])->name('administration');
     });
 
     // Public Routes
@@ -72,7 +77,10 @@ use App\Models\BibliographicSource;
     Route::post('/addTeam', [TeamController::class, 'create'])->name('team.create');
     Route::post('/generate-word', [DocumentController::class, 'generateWord'])->name('generate-word');
     Route::post('/addBibliographicSource', [BibliographicSourceController::class, 'create'])->name('bibliographicSource.create');
+    Route::post('/addUser', [AdministrationController::class, 'addUser'])->name('user.create');
 
     //PUT
+    
     //DELETE
+    Route::delete('/deleteUser/{userId}', [AdministrationController::class, 'deleteUser'])->name('deleteUser');
 ?>

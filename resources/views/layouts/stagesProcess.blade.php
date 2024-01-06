@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    Etapas del Proceso
+    {{ $researchTopic->themeName }} - Etapas del Proceso
 @endsection
 
 @section('styles')
@@ -15,14 +15,13 @@
             <nav class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
                 <a class="view" >Mis cursos</a>
-                <a class="view" href="">ADS104-A-I24</a>
+                <a class="view" href="">{{ $researchTopic->code }}</a>
                 <a class="view" href="">{{ $researchTopic->themeName }}</a>
-                <a class="view" href=""> Etapas </a>
+                <a class="view" href="">Etapas del proceso</a>
             </nav>
         </div>
         <div class="stages-content">
             <div class="head">
-                <i class="fa-solid fa-puzzle-piece"></i>
                 <h2>Etapas del proceso</h2>
             </div>
             <div class="stages">
@@ -30,7 +29,7 @@
                     <img src="{{ asset('images/robot.webp') }}" alt="" class="logo-stage">
                     <div class="footer-card">
                         <i class="fa-solid fa-circle-info"></i>
-                        <a href="{{ url('/processInfo') }}" class="link">Información del Proceso</a>
+                        <a href="{{ route('processInfo', ['researchTopicId' => $researchTopic->researchTopicId]) }}" class="link">Información del Proceso</a>
                     </div>
                 </div>
                 <div class="stage">
@@ -44,14 +43,14 @@
                     <img src="{{ asset('images/article.webp') }}" alt="" class="logo-stage">
                     <div class="footer-card">
                         <i class="fa-solid fa-atom"></i>
-                        <a href="#" class="link">Artículo Científico</a>
+                        <a href="{{ url('/scientificArticle') }}" class="link">Artículo Científico</a>
                     </div>
                 </div>
                 <div class="stage">
                     <img src="{{ asset('images/end.webp') }}" alt="" class="logo-stage">
                     <div class="footer-card">
                         <i class="fa-solid fa-hourglass-end"></i>
-                        <a href="#" class="link">Finalización del Proceso</a>
+                        <a href="{{ url('/endProcess') }}" class="link">Finalización del Proceso</a>
                     </div>
                 </div>
             </div>

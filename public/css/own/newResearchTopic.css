@@ -18,7 +18,7 @@ html, body, div, form, h1, h2, h3, h4, h5, input, i, button, ul, li, p, span, te
 }
 
 body {
-    background-color: var(--light);
+    background-image: url(../../images/background.webp);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,16 +58,19 @@ body {
 
 .history {
     display: flex;
-    gap: .3rem;
+    gap: .5rem;
+    flex-wrap: wrap; 
     justify-content: start;
     align-items: center;
     font-size: 0.9rem;
 }
 
 .view {
-    padding: 10px;
+    padding: .7rem;
     background-color: var(--primary);
-    color: white;
+    color: var(--white);
+    max-width: 9.3rem; 
+    box-sizing: border-box;
 }
 
 .view:hover {
@@ -83,7 +86,6 @@ body {
     color: var(--white);
     width: auto;
     border-radius: .5rem;
-    box-shadow: 0 0.2rem 0.4rem 0 rgb(0 0 0 / 20%);
 }
 
 h2 {
@@ -126,20 +128,20 @@ h3 {
 }
 
 .newTopic input[type="text"]:focus, .newTopic textarea:focus {
-    border: 2px solid #eac875; /* Color de borde más oscuro cuando el input está enfocado */
+    border: 2px solid #eac875; 
 }
 
 .newTopic textarea {
     width: 100%;
-    resize: none; /* Evita que el usuario pueda redimensionar el textarea */
-    overflow-y: hidden; /* Oculta la barra de desplazamiento vertical */
+    resize: none; 
+    overflow-y: hidden;
     box-sizing: border-box;
     border: 1px solid #ccc;
     padding: 10px;
     font-size: 16px;
-    transition: height 0.2s; /* Agrega una transición suave al cambiar la altura */
-    height: 40px; /* Altura inicial más pequeña */
-    max-height: 120px; /* Altura máxima permitida */
+    transition: height 0.2s;
+    height: 40px; 
+    max-height: 120px;
 }
 
 form, .information {

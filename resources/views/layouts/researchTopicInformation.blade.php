@@ -44,53 +44,48 @@
             </div>
             <div class="top-content">
                 <div>
-                    <!-- <h3>Importancia Regional</h3> -->
                     <img src="{{ $researchTopic->importanceRegional }}" alt="" class="avatarTopic">
                 </div>
                 <div>
-                    <!-- <h3>Importancia Global</h3> -->
                     <img src="{{ $researchTopic->importanceGlobal }}" alt="" class="avatarTopic">
                 </div>
             </div>
-        </div>
-        <div class="bottom-content">
-                <div class="head">
-                    <h2>Equipos de Investigación</h2>
-                    @if(session('role') === 'Docente')
-                        <a href="{{ route('newTeam', ['researchTopicId' => $researchTopicId]) }}" class="btn">
-                            <i class="fa-solid fa-plus"></i>
-                            <h4>Postular Equipo</h4>
-                        </a>
-                    @endif
-                </div>
-                @if(empty($result))
-                    <h3 class="empty">No hay equipos postulados aún</h3>
-                @else
-                    <div class="teams">
-                        @foreach($result as $teamResult)
-                            @if(isset($teamResult['team']) && $teamResult['team'] !== null && isset($teamResult['students']) && $teamResult['students'] !== null)
-                                <div class="team-content">
-                                    <header class="top">
-                                        <h3>Equipo #{{ $teamResult['team']->teamId }} </h3>
-                                        <h3>{{ $teamResult['team']->state }}</h3>
-                                        <div class="integrants">
-                                            <i class="fa-solid fa-users"></i>
-                                            <h3>{{ $teamResult['team']->integrantQuantity }}</h3>
-                                        </div>
-                                    </header>
-                                    <div class="students">
-                                        @foreach($teamResult['user'] as $student)
-                                            <div class="student">
-                                                <img src="{{ $student->avatar }}" alt="{{ $student->name }} Avatar" class="ava">
-                                                <h4>{{ $student->name.' '.$student->email }}</h4>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @endif
-                        @endforeach
-                    @endif
-                </div>
+            <div class="head">
+                <h2>Equipos de Investigación</h2>
+                @if(session('role') === 'Docente')
+                    <a href="{{ route('newTeam', ['researchTopicId' => $researchTopicId]) }}" class="btn">
+                        <h4>Postular Equipo</h4>
+                    </a>
+                @endif
             </div>
+            @if(empty($result))
+                <h3 class="empty">No hay equipos postulados aún</h3>
+            @else
+                <div class="teams">
+                    @foreach($result as $teamResult)
+                        @if(isset($teamResult['team']) && $teamResult['team'] !== null && isset($teamResult['students']) && $teamResult['students'] !== null)
+                            <div class="team-content">
+                                <header class="top">
+                                    <h3>Equipo #{{ $teamResult['team']->teamId }} </h3>
+                                    <h3>{{ $teamResult['team']->state }}</h3>
+                                    <div class="integrants">
+                                        <i class="fa-solid fa-users"></i>
+                                        <h3>{{ $teamResult['team']->integrantQuantity }}</h3>
+                                    </div>
+                                </header>
+                                <div class="students">
+                                    @foreach($teamResult['user'] as $student)
+                                        <div class="student">
+                                            <img src="{{ $student->avatar }}" alt="{{ $student->name }} Avatar" class="ava">
+                                            <h4>{{ $student->name.' '.$student->email }}</h4>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            @endif
+        </div>
     </main>
 @endsection

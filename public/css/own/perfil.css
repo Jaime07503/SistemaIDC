@@ -17,7 +17,7 @@
 body {
     margin: 0;
     box-sizing: border-box;
-    background-color: var(--light);
+    background: var(--light);
     font-family: 'Poppins', Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
@@ -54,8 +54,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: var(--white);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    width: 90%;
+    width: 95%;
     padding: 15px;
     margin-top: 90px;
     border-radius: .5rem;
@@ -78,8 +77,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: var(--white);
-    width: 90%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 95%;
     padding: 15px;
     border-radius: .5rem;
     margin-bottom: 5px;
@@ -101,9 +99,9 @@ body {
     background-color: var(--white);
     border-radius: 5px;
     margin-bottom: 15px;
-    display: grid; /* Usar CSS Grid */
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); /* Crear columnas automáticas con un ancho mínimo de 200px */
-    gap: 20px; /* Establecer el espacio (gap) entre los elementos a 10px */
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 20px;
 }
 
 .info-top a{
@@ -117,26 +115,33 @@ body {
 .history {
     display: flex;
     gap: .5rem;
+    flex-wrap: wrap; 
     justify-content: start;
     align-items: center;
     font-size: 0.9rem;
 }
 
 .view {
-    padding: 10px;
+    padding: .7rem;
     background-color: var(--primary);
-    color: white;
+    color: var(--white);
+    max-width: 9.3rem; 
+    box-sizing: border-box;
 }
 
 .view:hover {
     text-decoration: underline;
 }
 
+.view:hover:nth-child(2) {
+    text-decoration: none;
+}
+
 .history a {
     text-decoration: none;
     color: var(--white);
     width: auto;
-    border-radius: .5rem; /* arriba-derecha arriba-izquierda abajo-izquierda abajo-derecha */
+    border-radius: .5rem;
 }
 
 .perfil {
@@ -200,6 +205,6 @@ body {
 
 @media (max-width: 635px){
     .info-top {
-        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); /* Crear columnas automáticas con un ancho mínimo de 200px */
+        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     }
 }

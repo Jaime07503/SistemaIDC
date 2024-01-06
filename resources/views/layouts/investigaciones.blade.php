@@ -9,8 +9,112 @@
 @endsection
 
 @section('content')
-    <main class="table">
-    <section class="table__header">
+<main class="main-content">
+    <div class="custom-listbox">
+        <div class="listbox-header">
+            <button id="listbox"><span class="selected-option">Todos</span></button>
+            <i class="fa-solid fa-chevron-down arrow-down"></i>
+        </div>
+        <ul class="options">
+            <li data-value="Todos" class="selected"><i class="fa-solid fa-check"></i> Todos</li>
+            <li data-value="En progreso">En progreso</li>
+            <li data-value="Pasados">Pasados</li>
+        </ul>
+    </div>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Variables
+        const listboxes = document.querySelectorAll(".custom-listbox");
+        let openListbox = null;
+
+        // Custom Listbox
+        listboxes.forEach(function (listbox) {
+            handleListbox(listbox);
+        });
+
+        function handleListbox(listbox) {
+            const listboxHeader = listbox.querySelector(".listbox-header");
+            const optionsList = listbox.querySelector(".options");
+            const arrowDown = listbox.querySelector(".arrow-down");
+            const selectedOptionSpan = listbox.querySelector(".selected-option");
+
+            listboxHeader.addEventListener("click", function () {
+                if (openListbox && openListbox !== listbox) {
+                    openListbox.querySelector(".options").style.display = "none";
+                    openListbox.querySelector(".arrow-down").style.transform = "rotate(0deg)";
+                    openListbox.querySelector(".listbox-header").classList.remove("active");
+                }
+
+                listboxHeader.classList.toggle("active");
+                optionsList.style.display = optionsList.style.display === "block" ? "none" : "block";
+                arrowDown.style.transform = optionsList.style.display === "block" ? "rotate(180deg)" : "rotate(0deg)";
+                openListbox = listbox;
+            });
+
+            optionsList.addEventListener("click", function (event) {
+                if (event.target.tagName === "LI") {
+                    const selectedOption = event.target.textContent;
+                    selectedOptionSpan.textContent = selectedOption;
+                    optionsList.style.display = "none";
+                    arrowDown.style.transform = "rotate(0deg)";
+                    listboxHeader.classList.remove("active");
+
+                    markSelectedOption(event.target);
+                }
+            });
+
+            // Función para agregar o quitar el ícono de verificación a la opción seleccionada
+            function markSelectedOption(selectedListItem) {
+                const options = optionsList.querySelectorAll("li");
+                options.forEach(function (option) {
+                    option.classList.remove("selected");
+                    option.innerHTML = option.textContent; // Limpiar el contenido HTML
+                });
+
+                selectedListItem.classList.add("selected");
+                selectedListItem.innerHTML = '<i class="fa-solid fa-check"></i> ' + selectedListItem.textContent;
+            }
+        }
+    });
+</script>
+
+<!-- <script>
+  const customListbox = document.getElementById('customListbox');
+  const selectedOption = document.getElementById('listbox');
+
+  customListbox.addEventListener('click', function() {
+    customListbox.classList.toggle('active');
+  });
+
+  function selectOption(option) {
+    selectedOption.value = option.innerText;
+    customListbox.classList.remove('active');
+  }
+</script> -->
+    <!-- <label for="input1">Texto:</label>
+  <input type="text" id="input1" oninput="updateWidth()" />
+
+  <label for="input2">Texto Copiado:</label>
+  <input type="text" id="input2" readonly />
+
+  <script>
+    function updateWidth() {
+      // Obtén el valor del primer input
+      var inputValue = document.getElementById('input1').value;
+
+      // Asigna ese valor al segundo input
+      var input2 = document.getElementById('input2');
+      input2.value = inputValue;
+
+      // Ajusta el ancho del segundo input basado en su contenido
+      input2.style.width = input2.scrollWidth + 'px';
+    }
+  </script> -->
+
+
+    <!-- <section class="table__header">
             <h1>Customer's Orders</h1>
             <div class="input-group">
                 <input type="search" placeholder="Search Data...">
@@ -133,7 +237,7 @@
                     </tr>
                 </tbody>
             </table>
-        </section>
+        </section> -->
         <!-- <header class="head-content">
             <h1>Investigaciones de Cátedra</h1>
             <img src="{{ asset('images/idc_logo.webp') }}" alt="Logo IDC">
@@ -169,9 +273,8 @@
                 </ul>
             </div>
         </section> -->
-    </main>
 
-    <script>
+    <!-- <script>
         const search = document.querySelector('.input-group input'),
     table_rows = document.querySelectorAll('tbody tr'),
     table_headings = document.querySelectorAll('thead th');
@@ -374,5 +477,5 @@ const downloadFile = function (data, fileType, fileName = '') {
     a.click();
     a.remove();
 }
-    </script>
+    </script> -->
 @endsection

@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    Home
+    Inicio del Sitio
 @endsection
 
 @section('styles')
@@ -25,13 +25,13 @@
                     <!-- Listbox -->
                     <div class="custom-listbox">
                         <div class="listbox-header">
-                            <input class="selected-option" id="listbox" value="Todos" readonly></input>
+                            <button id="listbox"><span class="selected-option">Todos</span></button>
                             <i class="fa-solid fa-chevron-down arrow-down"></i>
                         </div>
                         <ul class="options">
-                            <li>Todos</li>
-                            <li>En progreso</li>
-                            <li>Pasados</li>
+                            <li data-value="Todos" class="selected"><i class="fa-solid fa-check"></i> Todos</li>
+                            <li data-value="En progreso">En progreso</li>
+                            <li data-value="Pasados">Pasados</li>
                         </ul>
                     </div>
                     <!-- Input Search RT -->
@@ -41,12 +41,12 @@
                     <!-- Listbox -->
                     <div class="custom-listbox">
                         <div class="listbox-header">
-                            <input class="selected-option" id="listbox" value="Nombre del curso" readonly></input>
+                            <button id="listbox"><span class="selected-option">Nombre del curso</span></button>
                             <i class="fa-solid fa-chevron-down arrow-down"></i>
                         </div>
                         <ul class="options">
-                            <li>Nombre del curso</li>
-                            <li>Último accedido</li>
+                            <li data-value="Nombre del curso" class="selected"><i class="fa-solid fa-check"></i> Nombre del curso</li>
+                            <li data-value="Último accedido">Último accedido</li>
                         </ul>
                     </div>
                 @endif

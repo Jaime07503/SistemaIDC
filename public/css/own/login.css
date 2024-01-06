@@ -1,19 +1,9 @@
 :root {
     --primary: #800000;
     --gold: #F0AD4E;
-    --gold-dark: #D89008;
     --white: #FFFFFF;
-    --texas-rose-50: #fef7ec;
     --texas-rose-100: #fae9cb;
     --texas-rose-200: #f6d091;
-    --texas-rose-300: #f0ad4e;
-    --texas-rose-400: #ed9732;
-    --texas-rose-500: #e6751a;
-    --texas-rose-600: #cc5513;
-    --texas-rose-700: #a93914;
-    --texas-rose-800: #8a2d16;
-    --texas-rose-900: #712716;
-    --texas-rose-950: #411107;
 }
   
 body {
@@ -32,7 +22,7 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: .5rem;
+    gap: .2rem;
 }
 
 .login-container {
@@ -55,12 +45,12 @@ body {
 
 .login-right h2 {
     color: var(--white);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin: 0;
 }
 
 .login-right h3 {
-    font-size: 1rem;
+    font-size: .93rem;
 }
 
 .login-left, .login-right {
@@ -70,14 +60,13 @@ body {
 .btn-login {
     background: var(--texas-rose-100);
     color: var(--primary);
-    border: none;
     border-radius: 0.5rem;
     display: flex;
     justify-content: center;
     align-items: center;
     text-decoration: none;
     height: 2.7rem;
-    width: 13rem;
+    width: 12.5rem;
     border: 3px solid var(--primary);
 }
 
@@ -91,8 +80,8 @@ body {
 }
 
 .btn-login img {
-    height: 2rem;
-    width: 2rem;
+    height: 1.8rem;
+    width: 1.8rem;
 }
 
 .line {
@@ -111,6 +100,10 @@ body {
     text-align: justify;
     font-weight: 700;
     line-height: 1.5;
+}
+
+.logo {
+    height: 5rem;
 }
   
 @media (max-width: 575px) {

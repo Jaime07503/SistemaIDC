@@ -1,15 +1,15 @@
 <?php
     namespace App\Http\Controllers;
     use App\Models\ResearchTopic;
-use App\Models\StudentResearchTopic;
-use App\Models\StudentTeam;
-use App\Models\Subject;
-use App\Models\Team;
-use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
+    use App\Models\StudentResearchTopic;
+    use App\Models\StudentTeam;
+    use App\Models\Subject;
+    use App\Models\Team;
+    use App\Models\User;
+    use Carbon\Carbon;
+    use Illuminate\Http\Request;
     use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Redirect;
+    use Illuminate\Support\Facades\Redirect;
 
     class TeamController extends Controller
     {

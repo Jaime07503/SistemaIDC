@@ -32,5 +32,6 @@
 
         @yield('scripts')
         <script src=" {{ asset('js/modal.js') }}"></script>
+        <script src=" {{ asset('js/navbar.js') }}"></script>
     </body>
 </html>

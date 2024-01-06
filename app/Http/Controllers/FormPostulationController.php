@@ -2,8 +2,8 @@
     namespace App\Http\Controllers;
     use App\Models\Career;
     use App\Models\Student;
-use App\Models\StudentHistory;
-use App\Models\StudentSubject;
+    use App\Models\StudentHistory;
+    use App\Models\StudentSubject;
     use App\Models\Subject;
     use App\Models\User;
     use Carbon\Carbon;

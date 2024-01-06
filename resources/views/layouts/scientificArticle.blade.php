@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    Búsqueda de Información
+    Artículo Científico
 @endsection
 
 @section('styles')
@@ -11,7 +11,7 @@
 @section('content')
     <main class="main-content">
         <div class="head-content">
-            <h1>Informe y ordenamiento de búsqueda del tema</h1>
+            <h1>Artículo Científico</h1>
             <nav class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
                 <a class="view" >Mis cursos</a>
@@ -53,7 +53,7 @@
                 </tbody>
             </table>
             <div class="title">
-                <a href="{{ url('/topicSearchReport') }}" class="btn-login">
+                <a href="{{ url('/scientificArticleReport') }}" class="btn-login">
                     <i class="fa-solid fa-square-plus"></i>
                     <h4>Crear Informe</h4>
                 </a>

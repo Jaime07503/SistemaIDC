@@ -21,27 +21,44 @@
         </header>
         <section class="newTeam">
             <header class="newData">
-                <i class="fa-solid fa-users"></i>
-                <h3> Estudiantes Postulados </h3>
+                <h3> Estudiantes postulados </h3>
             </header>
             <form action="{{ route('team.create') }}" method="POST">
                 @csrf
                 <div class="team-content">
-                    @foreach($students as $index => $student)
-                        <label class="checkbox" for="myCheckboxId{{ $index + 1 }}">
-                            <img class="avatar" src="{{ $student->avatar }}" alt="Avatar">
-                            <h2>{{ $student->name }}</h2>
-                            <h2>{{ $student->email }}</h2>
-                            <h2>{{ $student->cum }}</h2>
-                            @php
-                                $enrolledSubjectsArray = explode(',', $student->enrolledSubject);
-                                $subjectQuantity = count($enrolledSubjectsArray);
-                            @endphp
-                            <h2>{{ $subjectQuantity." Materias Inscritas" }}</h2>
-                            <input class="checkbox-input" name="myCheckboxName{{ $index + 1 }}" id="myCheckboxId{{ $index + 1 }}" type="checkbox" value="{{ $student->studentId }}">
-                            <div class="checkbox-box"></div>
-                        </label>
-                    @endforeach
+                    <table id="data-table" class="table content-table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Nombre del estudiante</th>
+                                <th>Correo</th>
+                                <th>CUM</th>
+                                <th>Materias inscritas</th>
+                                <th>Agregar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($students as $index => $student)
+                                <tr>
+                                    <td><img class="avatar" src="{{ $student->avatar }}" alt="Avatar"></td>
+                                    <td>{{ $student->name }}</td>
+                                    <td>{{ $student->email }}</td>
+                                    <td>{{ $student->cum }}</td>  
+                                    @php
+                                        $enrolledSubjectsArray = explode(',', $student->enrolledSubject);
+                                        $subjectQuantity = count($enrolledSubjectsArray);
+                                    @endphp
+                                    <td>{{ $subjectQuantity }}</td>
+                                    <td>
+                                        <label class="checkbox" for="myCheckboxId{{ $index + 1 }}">
+                                            <input class="checkbox-input" name="myCheckboxName{{ $index + 1 }}" id="myCheckboxId{{ $index + 1 }}" type="checkbox" value="{{ $student->studentId }}">
+                                            <div class="checkbox-box"></div>
+                                        </label>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
                 <input type="text" hidden name="idResearchTopic" value="{{ $researchTopics->researchTopicId }}">
                 <input type="text" hidden name="idTeacher" value="{{ $subject->idTeacher }}">

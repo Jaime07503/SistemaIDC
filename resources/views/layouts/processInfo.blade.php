@@ -11,13 +11,14 @@
 @section('content')
     <main class="main-content">
         <div class="head-content">
-            <h1>Información del Proceso</h1>
+            <h1>{{ $researchTopic->themeName }} - Información del Proceso</h1>
             <nav class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
                 <a class="view" >Mis cursos</a>
-                <a class="view" href="">ADS104-A-I24</a>
-                <a class="view" href=""> Etapas </a>
-                <a class="view" href=""> Información </a>
+                <a class="view" href="">{{ $researchTopic->code }}</a>
+                <a class="view" href="">{{ $researchTopic->themeName }}</a>
+                <a class="view" href="">Etapas del proceso</a>
+                <a class="view" href="">Documentación</a>
             </nav>
         </div>
         <div class="information-content">
