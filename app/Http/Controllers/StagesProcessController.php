@@ -10,7 +10,7 @@
         {
             $researchTopic = ResearchTopic::join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
                 ->where('Research_Topic.researchTopicId', $researchTopicId)
-                ->select('Research_Topic.researchTopicId', 'Research_Topic.themeName', 'Subject.code')
+                ->select('Research_Topic.researchTopicId', 'Research_Topic.themeName', 'Subject.subjectId', 'Subject.code')
                 ->first();
 
             return view('layouts.stagesProcess', compact('researchTopic'));

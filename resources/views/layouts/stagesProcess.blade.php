@@ -10,51 +10,40 @@
 
 @section('content')
     <main class="main-content">
-        <div class="head-content">
+        <!-- Encabezado e Historial de vistas -->
+        <header class="head-content">
             <h1>{{ $researchTopic->themeName }}</h1>
             <nav class="history">
-                <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Mis cursos</a>
-                <a class="view" href="">{{ $researchTopic->code }}</a>
-                <a class="view" href="">{{ $researchTopic->themeName }}</a>
-                <a class="view" href="">Etapas del proceso</a>
+                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" >Mis cursos</a>
+                <a class="history-view" href="{{ route('researchTopics', ['subjectId' => $researchTopic->subjectId]) }}">{{ $researchTopic->code }}</a>
+                <a class="history-view" href="{{ route('researchTopicInformation', ['researchTopicId' => $researchTopic->researchTopicId, 'subjectId' => $researchTopic->subjectId]) }}">{{ $researchTopic->themeName }}</a>
+                <a class="history-view" href="">Etapas del proceso</a>
             </nav>
-        </div>
-        <div class="stages-content">
-            <div class="head">
-                <h2>Etapas del proceso</h2>
-            </div>
-            <div class="stages">
-                <div class="stage">
-                    <img src="{{ asset('images/robot.webp') }}" alt="" class="logo-stage">
-                    <div class="footer-card">
-                        <i class="fa-solid fa-circle-info"></i>
-                        <a href="{{ route('processInfo', ['researchTopicId' => $researchTopic->researchTopicId]) }}" class="link">Información del Proceso</a>
-                    </div>
+        </header>
+        <!-- Vista general de las etapas del proceso -->
+        <section class="stages-content">
+            <h2 class="head-lbl">Etapas del proceso</h2>
+            <!-- Etapas del proceso -->
+            <aside class="stages">
+                <div class="stage-card">
+                    <img src="{{ asset('images/robot.webp') }}" alt="Imagen de informacion del proceso" class="stage-image">
+                    <a href="{{ route('processInfo', ['researchTopicId' => $researchTopic->researchTopicId]) }}" class="stage-link"><i class="fa-solid fa-circle-info stage-icon"></i> Información del Proceso</a>
                 </div>
-                <div class="stage">
-                    <img src="{{ asset('images/search.webp') }}" alt="" class="logo-stage">
-                    <div class="footer-card">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <a href="{{ url('/searchInformation') }}" class="link">Búsqueda de Información</a>
-                    </div>
+                <div class="stage-card">
+                    <img src="{{ asset('images/search.webp') }}" alt="Imagen relacionada con la busqueda de informacion" class="stage-image">
+                    <a href="{{ url('/searchInformation') }}" class="stage-link"><i class="fa-solid fa-magnifying-glass stage-icon"></i> Búsqueda de Información</a>
                 </div>
-                <div class="stage">
-                    <img src="{{ asset('images/article.webp') }}" alt="" class="logo-stage">
-                    <div class="footer-card">
-                        <i class="fa-solid fa-atom"></i>
-                        <a href="{{ url('/scientificArticle') }}" class="link">Artículo Científico</a>
-                    </div>
+                <div class="stage-card">
+                    <img src="{{ asset('images/article.webp') }}" alt="Imagen relacionada con el articulo cientifico" class="stage-image">
+                    <a href="{{ url('/scientificArticle') }}" class="stage-link"><i class="fa-solid fa-atom stage-icon"></i> Artículo Científico</a>
                 </div>
-                <div class="stage">
-                    <img src="{{ asset('images/end.webp') }}" alt="" class="logo-stage">
-                    <div class="footer-card">
-                        <i class="fa-solid fa-hourglass-end"></i>
-                        <a href="{{ url('/endProcess') }}" class="link">Finalización del Proceso</a>
-                    </div>
+                <div class="stage-card">
+                    <img src="{{ asset('images/end.webp') }}" alt="Imagen relacionada con la finalizacion del proceso" class="stage-image">
+                    <a href="{{ url('/endProcess') }}" class="stage-link"><i class="fa-solid fa-hourglass-end stage-icon"></i> Finalización del Proceso</a>
                 </div>
-            </div>
-        </div>
+            </aside>
+        </section>
     </main>
 @endsection
 

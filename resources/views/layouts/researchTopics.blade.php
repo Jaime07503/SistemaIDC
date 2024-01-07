@@ -10,26 +10,28 @@
 
 @section('content')
     <main class="main-content">
-        <div class="head-content">
-            <h1>{{ $subject->nameSubject.' - '.$subject->section.' - '.$subject->teacher->user->name}}</h1>
-            <div class="history">
-                <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Mis cursos</a>
-                <a class="view" href="">{{ $subject->code }}</a>
-            </div>
-        </div>
-        <div class="topics-content">
-            <div class="head">
+        <!-- Encabezado e Historial de vistas -->
+        <header class="head-content">
+            <h1 class="head-lbl">{{ $subject->nameSubject.' - '.$subject->section.' - '.$subject->teacher->user->name}}</h1>
+            <nav class="history">
+                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view">Mis cursos</a>
+                <a class="history-view" href="">{{ $subject->code }}</a>
+            </nav>
+        </header>
+        <!-- Vista general de los temas de investigación -->
+        <section class="topics-content">
+            <header class="head">
                 <h2>Temas de investigación</h2>
                 @if(session('role') === 'Docente' && $subject->teacher->idcQuantity === 0)
-                    <a href="{{ route('newResearchTopic', ['subjectId' => $subject->subjectId]) }}" class="btn-login">
-                        <i class="fa-solid fa-plus"></i>
-                        <h4>Postular Tema</h4>
+                    <a href="{{ route('newResearchTopic', ['subjectId' => $subject->subjectId]) }}" class="btn-postulate">
+                        <h3>Postular Tema</h3>
                     </a>
                 @endif
-            </div>
+            </header>
+            <!-- Opciones para filtrar los temas de investigación -->
             <div class="options-courses">
-                <!-- Listbox -->
+                <!-- Listbox estado del tema de investigación -->
                 <div class="custom-listbox">
                     <div class="listbox-header">
                         <button id="listbox"><span class="selected-option">Todos</span></button>
@@ -41,40 +43,20 @@
                         <li data-value="Por Aprobar">Por Aprobar</li>
                     </ul>
                 </div>
-                <!-- Entrada de Texto -->
-                <div class="custom-input">
-                    <input type="text" placeholder="Buscar">
-                </div>
-                <!-- Listbox -->
-                <div class="custom-listbox">
-                    <div class="listbox-header">
-                        <button id="listbox"><span class="selected-option">Nombre del curso</span></button>
-                        <i class="fa-solid fa-chevron-down arrow-down"></i>
-                    </div>
-                    <ul class="options">
-                        <li data-value="Nombre del curso" class="selected"><i class="fa-solid fa-check"></i> Nombre del curso</li>
-                        <li data-value="Último accedido">Último accedido</li>
-                    </ul>
-                </div>
+                <!-- Input búsqueda por nombre de tema de investigación -->
+                <input class="custom-input" type="text" placeholder="Buscar...">
             </div>
-            <div class="topics">
+            <!-- Temas de investigación -->
+            <aside class="topics">
                 @foreach ($researchTopics as $topic)
-                <div class="researchTopics">
-                    <div>
+                    <div class="card">
                         <h3 class="card-title">{{ $topic->state }}</h3>
-                        <img src="{{ $topic->avatar }}" class="avatarTopic" alt="Imagen">
+                        <img src="{{ $topic->avatar }}" class="card-image" alt="Imagen">
+                        <a href="{{ route('researchTopicInformation', ['researchTopicId' => $topic->researchTopicId, 'subjectId' => $subject->subjectId]) }}" class="card-link">{{ $topic->themeName }}</a>
                     </div>
-                    <div class="topicContent">
-                        <div class="title">
-                            <div class="topic">
-                                <a href="{{ route('researchTopicInformation', ['researchTopicId' => $topic->researchTopicId, 'subjectId' => $subject->subjectId]) }}" class="">{{ $topic->themeName }}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 @endforeach
-            </div>
-        </div>
+            </aside>
+        </section>
     </main>
 @endsection
 

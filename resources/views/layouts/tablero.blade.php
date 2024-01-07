@@ -10,16 +10,14 @@
 
 @section('content')
     <main class="main-content">
-        <div class="head-content">
-            <h1>Tablero</h1>
-        </div>
-        <!-- Contenido Vista general de las investigaciones -->
-        <div class="courses-content">
-            <div class="head-lbl">
-                <h2>Vista general de las investigaciones</h2>
-            </div>
+        <header class="head-content">
+            <h1 class="head-lbl">Tablero</h1>
+        </header>
+        <!-- Vista general de los equipos de investigación -->
+        <section class="teams-content">
+            <h2 class="title">Vista general de las investigaciones</h2>
             <div class="options-courses">
-                <!-- Listbox -->
+                <!-- Listbox estado del equipo de investigación -->
                 <div class="custom-listbox">
                     <div class="listbox-header">
                         <button id="listbox"><span class="selected-option">Todos</span></button>
@@ -31,37 +29,22 @@
                         <li data-value="Pasados">Pasados</li>
                     </ul>
                 </div>
-                <!-- Input Search RT -->
-                <div class="custom-input">
-                    <input type="text" placeholder="Buscar">
-                </div>
-                <!-- Listbox -->
-                <div class="custom-listbox">
-                    <div class="listbox-header">
-                        <button id="listbox"><span class="selected-option">Nombre del curso</span></button>
-                        <i class="fa-solid fa-chevron-down arrow-down"></i>
-                    </div>
-                    <ul class="options">
-                        <li data-value="Nombre del curso" class="selected"><i class="fa-solid fa-check"></i> Nombre del curso</li>
-                        <li data-value="Último accedido">Último accedido</li>
-                    </ul>
-                </div>
+                <!-- Input búsqueda por tema de investigación -->
+                <input class="custom-input" type="text" placeholder="Buscar...">
             </div>
-            <!-- Teams -->
-            <div class="courses">
+            <!-- Equipos de investigación -->
+            <aside class="teams">
                 @foreach($teams as $team)
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Equipo #{{ $team->teamId}}</h5>
-                            <img src="{{ $team->avatar }}" alt="Imagen">
+                            <img src="{{ $team->avatar }}" alt="Imagen" class="card-image">
                             <a href="{{ route('stagesProcess', ['researchTopicId' => $team->researchTopicId]) }}" class="card-link">{{ $team->themeName }}</a>
-                            <!-- <progress value="50" max="100"></progress>
-                            <h4>100% progreso</h4> -->
                         </div>
                     </div>
                 @endforeach
-            </div>
-        </div>
+            </aside>
+        </section>
     </main>
 @endsection
 

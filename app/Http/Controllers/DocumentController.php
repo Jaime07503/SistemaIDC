@@ -27,7 +27,6 @@
             $templateProcessor->setValue('nameResearchTopic', 'Servidores de bases de datos');
             $templateProcessor->setValue('date', $fechaFormateada);
 
-            // Datos del contenido del informe
             // Método elegido para la orientación del equipo
             $templateProcessor->setValue('orientation', $data['orientation']);
             $templateProcessor->setValue('induction', $data['induction']);
@@ -35,7 +34,15 @@
 
             // Plan de búsqueda de información
             $templateProcessor->setValue('searchPlan', $data['searchPlan']);
-            // Falta agregar la imagen
+            if ($request->hasFile('imageDiagram')) {
+                $image = $request->file('imageDiagram');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->storeAs('public/documents', $imageName);
+                $imagePath = 'storage/images/' . $imageName;
+        
+                // Ahora puedes utilizar $imagePath en tu plantilla de Word
+                $templateProcessor->setImageValue('imageDiagram', $imagePath);
+            }
 
             // Tabla de volcado de información
             if (!is_null($datos)) {
@@ -43,6 +50,9 @@
             }
 
             // Resumen de reuniones y definicion de Objetivos
+            $templateProcessor->setValue('meetings', $data['meetings']);
+            $templateProcessor->setValue('valorationTeam', $data['teamComment']);
+
             // Criterios de seleccion de la informacion
 
             // Comentario final
@@ -51,26 +61,6 @@
             $fileName = 'SRVDBCI2024';
             $templateProcessor->saveAs($fileName.'.docx');
             return response()->download($fileName.'.docx')->deleteFileAfterSend(true);
-
-            // Manejar el caso en que $datos sea null (puedes devolver un mensaje de error, por ejemplo)
-            //return response()->json(['error' => 'No se recibieron datos válidos.']);
-
-            // $outputPath = public_path('documents/output.docx');
-            // $phpWord->save($outputPath);
-            // return response()->download($outputPath);
-
-            // $templateProcessor->setValue('resumen_espanol', $data['orientation']);
-            // $templateProcessor->setValue('resumen_ingles', $data['searchPlan']);
-            // $templateProcessor->setValue('introduccion', $data['meetings']);
-            // $templateProcessor->setValue('metodologia', $data['generalObjetive']);
-            // $templateProcessor->setValue('desarrollo', $data['desarrollo']);
-            // $templateProcessor->setValue('conclusiones', $data['conclusiones']);
-            // $templateProcessor->setValue('referencias', $data['referencias']);
-
-            // $fileName = 'documento.docx';
-            // $templateProcessor->saveAs($fileName);
-
-            // return response()->download($fileName);
         }
     }
 ?>

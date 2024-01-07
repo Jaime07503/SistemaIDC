@@ -10,58 +10,59 @@
 
 @section('content')
     <main class="main-content">
-        <div class="head-content">
-            <h1>{{ $researchTopic->themeName }}</h1>
-            <div class="history">
-                <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Mis cursos</a>
-                <a class="view" href="{{ route('researchTopics', ['subjectId' => $subjectId]) }}">{{ $subject->code }}</a>
-                <a class="view" href="">{{ $researchTopic->themeName }}</a>
-            </div>
-        </div>
-        <div class="information-content">
-            <div>
-                <h2>Información general</h2>
-            </div>
+        <!-- Encabezado e Historial de vistas -->
+        <header class="head-content">
+            <h1>{{ $subject->nameSubject.' - '.$researchTopic->themeName }}</h1>
+            <nav class="history">
+                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" >Mis cursos</a>
+                <a class="history-view" href="{{ route('researchTopics', ['subjectId' => $subjectId]) }}">{{ $subject->code }}</a>
+                <a class="history-view" href="">{{ $researchTopic->themeName }}</a>
+            </nav>
+        </header>
+        <!-- Información general del tema de investigación -->
+        <section class="information-content">
+            <h2>Información general</h2>
+            <!-- Información del tema de investigación -->
             <div class="information">
-                <p>{{ $researchTopic->description }}</p>
-                <!-- @if(session('role') === 'Estudiante')
-                    @if($studentResearch->applicationCount < 2 
-                        && (!$postulatedSubject || ($postulatedSubject->state !== 'Postulado' && $postulatedSubject->state !== 'Aprobado')))
-                        <form action="{{ route('studentSubject.store') }}" method="POST" id="applicationForm">
-                            @csrf
-                            <input type="hidden" name="idStudent" class="idStudent" value="{{ session('studentId') }}">
-                            <input type="hidden" name="idSubject" class="idSubject" value="{{ $subjectId }}">
-                            <input type="hidden" name="researchTopicId" class="researchTopicId" value="{{ $researchTopic->researchTopicId }}">
-                            <button type="submit" class="btn">Postularse</button>
-                        </form>
-                    @else
-                        @if($postulatedSubject && ($postulatedSubject->state === 'Postulado' || $postulatedSubject->state === 'Aprobado'))
-                            <h2 class="state">{{ $postulatedSubject->state }}</h2>
-                        @endif
+                <p class="information-paragraph">{{ $researchTopic->description }}</p>
+                <div class="information-images">
+                    <img src="{{ $researchTopic->importanceRegional }}" alt="" class="information-images-importance">
+                    <img src="{{ $researchTopic->importanceGlobal }}" alt="" class="information-images-importance">
+                </div>
+            </div>
+            @if(session('role') === 'Estudiante')
+                @if($studentResearch->applicationCount < 2 
+                    && (!$postulatedSubject || ($postulatedSubject->state !== 'Postulado' && $postulatedSubject->state !== 'Aprobado')))
+                    <form action="{{ route('studentSubject.store') }}" method="POST" id="applicationForm">
+                        @csrf
+                        <input type="hidden" name="idStudent" class="idStudent" value="{{ session('studentId') }}">
+                        <input type="hidden" name="idSubject" class="idSubject" value="{{ $subjectId }}">
+                        <input type="hidden" name="researchTopicId" class="researchTopicId" value="{{ $researchTopic->researchTopicId }}">
+                        <button type="submit" class="btn-postulate">Postularse</button>
+                    </form>
+                @else
+                    @if($postulatedSubject && ($postulatedSubject->state === 'Postulado' || $postulatedSubject->state === 'Aprobado'))
+                    <!-- Postularse al tema (Estudiante) -->
+                    <h2 class="state">{{ $postulatedSubject->state }}</h2>
                     @endif
-                @endif -->
-            </div>
-            <div class="top-content">
-                <div>
-                    <img src="{{ $researchTopic->importanceRegional }}" alt="" class="avatarTopic">
-                </div>
-                <div>
-                    <img src="{{ $researchTopic->importanceGlobal }}" alt="" class="avatarTopic">
-                </div>
-            </div>
+                @endif
+            @endif
+            <!-- Información de los equipos de investigación -->
             <div class="head">
                 <h2>Equipos de Investigación</h2>
+                <!-- Postular Equipos (Docente) -->
                 @if(session('role') === 'Docente')
-                    <a href="{{ route('newTeam', ['researchTopicId' => $researchTopicId]) }}" class="btn">
-                        <h4>Postular Equipo</h4>
+                    <a href="{{ route('newTeam', ['researchTopicId' => $researchTopicId]) }}" class="btn-postulate">
+                        <h3>Postular Equipo</h3>
                     </a>
                 @endif
             </div>
             @if(empty($result))
                 <h3 class="empty">No hay equipos postulados aún</h3>
             @else
-                <div class="teams">
+                <!-- Equipos de investigación -->
+                <aside class="teams">
                     @foreach($result as $teamResult)
                         @if(isset($teamResult['team']) && $teamResult['team'] !== null && isset($teamResult['students']) && $teamResult['students'] !== null)
                             <div class="team-content">
@@ -84,8 +85,8 @@
                             </div>
                         @endif
                     @endforeach
-                </div>
+                </aside>
             @endif
-        </div>
+        </section>
     </main>
 @endsection

@@ -36,15 +36,7 @@ body {
     background: var(--light);
 }
 
-::-webkit-scrollbar {
-    width: .4rem;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--gold);
-    border-radius: .5rem;
-}
-
+/* Contenedor principal */
 .main-content {
     display: flex;
     flex-direction: column;
@@ -55,6 +47,7 @@ body {
     gap: 1.7rem;
 }
 
+/* Encabezado */
 .head-content {
     display: flex;
     flex-direction: column;
@@ -65,63 +58,28 @@ body {
     border-radius: .5rem;
 }
 
-.head-content h1 {
+.head-lbl {
     margin: 0;
     font-weight: 700;
     color: var(--primary);
     font-size: 1.7rem;
 }
 
-h2 {
-    font-size: 1rem;
-    color: var(--primary);
-}
-
-.history {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: .5rem;
-}
-
-.view {
-    padding: 10px;
-    background-color: var(--primary);
-    color: white;
-    border-radius: 50%;
-}
-
-.view:hover {
-    text-decoration: underline;
-}
-
-.history a {
-    text-decoration: none;
-    color: var(--white);
-}
-
-.head-lbl h3{
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.courses-content {
+/* Vista general de la investigaciones */
+.teams-content {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     background-color: var(--white);
     width: 95%;
     padding: 1rem;
     border-radius: .5rem;
-    gap: 1rem;
-}
-
-.courses-content {
-    justify-content: center;
     gap: .5rem;
 }
 
-.head-content img {
-    width: 120px;
+.title {
+    font-size: 1rem;
+    color: var(--primary);
 }
 
 .options-courses {
@@ -150,17 +108,17 @@ h2 {
 }
 
 .listbox-header:hover {
-    background: var(--texas-rose-200);
+    background: var(--texas-rose-100);
 }
 
 .listbox-header:active {
-    background: var(--texas-rose-200);
-    border: 1px solid var(--primary);
+    background: var(--texas-rose-100);
+    border: 3px solid var(--primary);
 }
  
 .active {
-    background: var(--texas-rose-200);
-    border: 1px solid var(--primary);
+    background: var(--texas-rose-100);
+    border: 3px solid var(--primary);
 }
   
 .selected-option {
@@ -189,10 +147,6 @@ h2 {
     padding: .3rem;
     border-radius: .5rem;
 }
-
-.custom-listbox:last-of-type .options {
-    width: 12rem;
-}
   
 .options li {
     padding: .5rem;
@@ -211,10 +165,6 @@ h2 {
     display: block;
 }
 
-.custom-input {
-    display: inline-block;
-}
-
 #listbox {
     height: 2.5rem;
     border: transparent;
@@ -229,43 +179,44 @@ h2 {
     background: transparent;
 }
 
-input::placeholder {
-    color: var(--primary);
-    background: transparent;
-}
-
-input[type="text"] {
+.custom-input {
     padding: .6rem;
     border: 1px solid var(--gold);
     color: var(--primary);
     border-radius: .5rem;
     font-size: .9rem;
-    width: auto; 
+    width: 15rem; 
     outline: none;
 }
 
-.courses {
+.custom-input::placeholder {
+    color: var(--primary);
+    background: transparent;
+}
+
+.custom-input:focus {
+    border: 3px solid var(--gold);
+}
+
+/* Equipos de investigacion */
+.teams {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
     gap: 1.5rem;
 }
 
+/* Card */
 .card {
     box-sizing: border-box;
     border-radius: .5rem;
     box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
     background-color: var(--white);
     position: relative; 
-    margin-bottom: .5rem;
 }
 
-.card:nth-child(2n) {
-    margin-right: 0;
-}
-
-.card img {
+.card-image {
     width: 100%;
-    height: 15rem;
+    height: 16rem;
     border-radius: .5rem .5rem 0 0;
     aspect-ratio: 16/9;
 }
@@ -283,10 +234,6 @@ input[type="text"] {
     color: var(--white);
     box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
     font-weight: 100;
-}
-
-.card-text {
-    margin: .5rem 0;
 }
 
 .card-link {
@@ -307,29 +254,22 @@ input[type="text"] {
     text-decoration: underline;
 }
 
-.logo-stage {
-    width: 100%;
-    height: 20rem;
+/* Scroll */
+::-webkit-scrollbar {
+    width: .4rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: .5rem;
 }
 
 @media (max-width: 880px){
-    .options-courses {
-        flex-direction: column;
-        justify-content: center;
-        align-items: start;
-        gap: .5rem;
-    }
-
     .courses {
         grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
     }
 
-    .search-box {
-        padding: 0;
-        margin: 0;
-    }
-
-    .courses-content {
+    .teams-content {
         margin-bottom: 1.5rem;
     }
 }
