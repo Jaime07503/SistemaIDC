@@ -74,6 +74,7 @@ body {
     font-size: 1.8rem;
 }
 
+/* Historial de vistas */
 .history {
     display: flex;
     gap: .5rem;
@@ -83,25 +84,22 @@ body {
     font-size: 0.9rem;
 }
 
-.view {
+.history-view {
+    text-decoration: none;
     padding: .5rem;
-    background-color: var(--texas-rose-200);
+    color: var(--primary);
+    background: var(--texas-rose-100);
     box-sizing: border-box;
+    width: auto;
+    border-radius: .5rem;
 }
 
-.view:hover {
+.history-view:hover {
     text-decoration: underline;
 }
 
-.view:hover:nth-child(2) {
+.history-view:hover:nth-child(2) {
     text-decoration: none;
-}
-
-.history a {
-    text-decoration: none;
-    color: var(--primary);
-    width: auto;
-    border-radius: .5rem;
 }
 
 .information-content {

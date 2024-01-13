@@ -12,6 +12,10 @@
             $researchTopics = ResearchTopic::where('idSubject', $subjectId)->get();
             $subject = Subject::find($subjectId);
 
+            if ($researchTopics->isEmpty()) {
+                return view('layouts.researchTopics', compact('subjectId', 'subject'))->with('noTopics', true);
+            }
+
             return view('layouts.researchTopics', compact('researchTopics', 'subjectId', 'subject'));
         }
 

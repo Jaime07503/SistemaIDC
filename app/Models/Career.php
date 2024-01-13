@@ -6,7 +6,6 @@
     class Career extends Model
     {
         use HasFactory;
-
         protected $table = 'Career';
         protected $primaryKey = 'careerId'; 
 
@@ -17,14 +16,14 @@
         ];
 
         //Relationships with other tables
-        public function faculty()
-        {
-            return $this->belongsTo(Faculty::class, 'idFaculty');
-        }
-
         public function subject()
         {
             return $this->hasMany(Subject::class);
+        }
+        
+        public function faculty()
+        {
+            return $this->belongsTo(Faculty::class, 'idFaculty');
         }
     }
 ?>

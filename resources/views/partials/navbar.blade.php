@@ -10,11 +10,6 @@
             <img src="{{ asset('images/logo_unicaes.webp') }}" alt="Logo UNICAES">
         </div>
         <div class="navbar-content">
-            <div class="ic_mensajeria ico">
-                <span class="ic">
-                    <i class="fa-regular fa-envelope"></i>
-                </span>
-            </div>
             <div class="ic_notificaciones ico">
                 <span class="ic">
                     <i class="fa-regular fa-bell"></i>
@@ -30,7 +25,7 @@
     </nav>
     
     <!-- Menu Despegable -->
-    <div class="dropdown-menu" id="dropdown-menu">
+    <!-- <div class="dropdown-menu" id="dropdown-menu">
         <nav class="content-menu">
             <ul class="list">
                 <li class="list-item list-item--click">
@@ -55,5 +50,5 @@
                 </li>
             </ul>
         </nav>
-    </div>
+    </div> -->
 </header>

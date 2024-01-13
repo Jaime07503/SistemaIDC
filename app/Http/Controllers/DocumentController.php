@@ -1,66 +1,118 @@
 <?php
     namespace App\Http\Controllers;
-
+    use App\Models\BibliographicSource;
+    use App\Models\Objetive;
     use DateTime;
+    use App\Models\TopicSearchReport;
     use Illuminate\Http\Request;
     use PhpOffice\PhpWord\TemplateProcessor as TemplateProcessor;
+    use Carbon\Carbon;
 
     class DocumentController extends Controller
     {
         public function generateWord(Request $request)
         {
-            // Obtiene los datos del formulario
+            // Obtenemos los datos del formulario
             $data = $request->all();
             $datos = json_decode($request->input('datos'), true);
+            $datosOE = json_decode($request->input('objetivesOE'), true);
+            $fileName = 'SRV-DB-E1-I24-TSR.docx';
+            $filePath = public_path('documents/' . $fileName);
+            $idcId = $data['idcId'];
+            $idTopicSearchReport = $data['idTopicSearchReport'];
+
+            $topicSearchReport = TopicSearchReport::find($idTopicSearchReport);
+            $topicSearchReport->code = 'SRV-DB-E1-I24-TSR';
+            $topicSearchReport->orientation = $fileName;
+            $topicSearchReport->orientation = $data['orientation'];
+            $topicSearchReport->induction = $data['induction'];
+            $topicSearchReport->searchPlan = $data['searchPlan']; 
+            $topicSearchReport->meetings = $data['meetings'];
+            $topicSearchReport->teamValoration = $data['teamValoration'];
+            $topicSearchReport->finalComment = $data['finalComment'];
+            $topicSearchReport->storagePath = 'documents/'.$fileName;
+            $topicSearchReport->state = 'Creado';
+            $topicSearchReport->idIdc = $idcId;
+            $topicSearchReport->save();
+
+            // Creamos una variable para la fecha actual
             $fechaActual = new DateTime();
+            $fechaCarbon = Carbon::parse($fechaActual);
+            $fechaFormateada = $fechaCarbon->locale('es')->isoFormat('D [de] MMMM [de] YYYY');
 
-            // Formatea la fecha en D/M/A
-            $fechaFormateada = $fechaActual->format('d \d\e F \d\e Y');
-
-            // Carga la plantilla del informe
+            // Cargamos la plantilla del primer informe
             $templatePath = public_path('documents/Primer_Informe_Plantilla.docx');
             $templateProcessor = new TemplateProcessor($templatePath);
 
             // Datos de la Portada
-            $templateProcessor->setValue('nameTeacher', 'Ma. Rafael Leonardo Jiménez Álvarez');
+            $templateProcessor->setValue('nameTeacher', 'Rafael Leonardo Jiménez Álvarez');
             $templateProcessor->setValue('nameSubject', 'Administración de Servidores');
             $templateProcessor->setValue('nameResearchTopic', 'Servidores de bases de datos');
+            $templateProcessor->setValue('cycle', 'Ciclo I 2024');
             $templateProcessor->setValue('date', $fechaFormateada);
 
-            // Método elegido para la orientación del equipo
+            // 1. Método elegido para la orientación del equipo
             $templateProcessor->setValue('orientation', $data['orientation']);
             $templateProcessor->setValue('induction', $data['induction']);
-            $templateProcessor->setValue('teamBehavior', $data['teamBehavior']);
 
-            // Plan de búsqueda de información
+            // 2. Plan de búsqueda de información
             $templateProcessor->setValue('searchPlan', $data['searchPlan']);
             if ($request->hasFile('imageDiagram')) {
-                $image = $request->file('imageDiagram');
-                $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $image->storeAs('public/documents', $imageName);
-                $imagePath = 'storage/images/' . $imageName;
-        
-                // Ahora puedes utilizar $imagePath en tu plantilla de Word
-                $templateProcessor->setImageValue('imageDiagram', $imagePath);
+                $imagen = $request->file('imageDiagram');
+            
+                if ($imagen->isValid() && strpos($imagen->getMimeType(), 'image/') === 0) {
+                    $templateProcessor->setImageValue('imageDiagram', $imagen->getPathname());
+                } else {
+                    echo "La imagen no es válida.";
+                }
+            } else {
+                echo "No se ha proporcionado ninguna imagen.";
             }
 
-            // Tabla de volcado de información
-            if (!is_null($datos)) {
-                $templateProcessor->cloneRowAndSetValues('sourceId', $datos);
-            }
+            // 3. Tabla de volcado de del resultado de investigación inicial
+            $sources = BibliographicSource::join('Source_Search', 'Bibliographic_Source.bibliographicSourceId', '=', 'Source_Search.idBibliographicSource')
+                ->where('idTopicSearchReport', $idTopicSearchReport)
+                ->select('Bibliographic_Source.source as sourceII', 'Bibliographic_Source.author as authorII', 'Bibliographic_Source.year as yearII',
+                'Bibliographic_Source.averageType as averageTypeII', 'Bibliographic_Source.link as linkII', 'Bibliographic_Source.bibliographicSourceId as sId')
+                ->get();
 
-            // Resumen de reuniones y definicion de Objetivos
+            $datosSources = json_decode($sources, true);
+            $templateProcessor->cloneRowAndSetValues('sId', $datosSources);
+
+            // 4. Resumen de reuniones y definición de objetivos
             $templateProcessor->setValue('meetings', $data['meetings']);
-            $templateProcessor->setValue('valorationTeam', $data['teamComment']);
+            $objetivesE = Objetive::join('Source_Objetive', 'Objetive.objetiveId', '=', 'Source_Objetive.idObjetive')
+                ->where('Source_Objetive.idTopicSearchReport', $idTopicSearchReport)
+                ->where('Objetive.type', 'Especifico')
+                ->where('Objetive.state', 'Aprobado')
+                ->select('Objetive.objetive as specificObjetive', 'Objetive.objetiveId as idOE')
+                ->get();
 
-            // Criterios de seleccion de la informacion
+            $datosObjetiveE = json_decode($objetivesE, true);
+            $templateProcessor->cloneRowAndSetValues('idOE', $datosObjetiveE);
 
-            // Comentario final
+            // 5. Criterios de selección de la información
+            $templateProcessor->setValue('criteria', $data['criteria']);
+            $sourcesA = BibliographicSource::join('Source_Search', 'Bibliographic_Source.bibliographicSourceId', '=', 'Source_Search.idBibliographicSource')
+                ->where('Source_Search.idTopicSearchReport', $idTopicSearchReport)
+                ->where('Bibliographic_Source.state', 'Aprobado')
+                ->select('Bibliographic_Source.theme as theme', 'Bibliographic_Source.year as year', 'Bibliographic_Source.averageType as averageType', 
+                'Bibliographic_Source.link as link', 'Bibliographic_Source.bibliographicSourceId as id')
+                ->get();
+
+            $datosSourcesA = json_decode($sourcesA, true);
+            $templateProcessor->cloneRowAndSetValues('id', $datosSourcesA);
+            
+            // 6. Valoración del catedrático sobre el equipo
+            $templateProcessor->setValue('teamValoration', $data['teamValoration']);
+            $templateProcessor->setValue('teamComment', $data['teamComment']);
+
+            // 7. Comentario final
             $templateProcessor->setValue('finalComment', $data['finalComment']);
 
-            $fileName = 'SRVDBCI2024';
-            $templateProcessor->saveAs($fileName.'.docx');
-            return response()->download($fileName.'.docx')->deleteFileAfterSend(true);
+            $templateProcessor->saveAs($filePath);
+
+            return redirect()->route('searchInformation', compact('idcId', 'idTopicSearchReport'));
         }
     }
 ?>

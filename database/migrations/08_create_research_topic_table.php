@@ -9,9 +9,11 @@
         {
             Schema::create('Research_Topic', function (Blueprint $table) {
                 $table->increments('researchTopicId');
-                $table->string('themeName', 80);
+                $table->string('code', 50);
+                $table->string('themeName', 255);
                 $table->string('description', 500);
                 $table->string('avatar', 512)->nullable();
+                $table->string('currentInformation', 512);
                 $table->string('importanceRegional', 512);
                 $table->string('importanceGlobal', 512);
                 $table->string('state', 25);

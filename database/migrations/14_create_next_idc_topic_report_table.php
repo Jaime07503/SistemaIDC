@@ -9,15 +9,15 @@
         {
             Schema::create('Next_Idc_Topic_Report', function (Blueprint $table) {
                 $table->increments('nextIdcTopicReportId');
-                $table->string('subject', 80);
-                $table->string('lastUpdate');
-                $table->string('importanceRegional', 512);
-                $table->string('importanceGlobal', 512);
-                $table->string('justificationKnowledge', 500);
-                $table->string('opinionIdcProcess', 500);
-                $table->string('improvementOpportunity', 500);
+                $table->string('code');
+                $table->string('intoduction', 500);
+                $table->string('continueTopic', 500);
+                $table->string('proposeTopics', 500);
+                $table->string('storagePath', 500);
                 $table->string('state', 20);
+                $table->unsignedBigInteger('idIdc');
                 $table->timestamps();
+                $table->foreign('idIdc')->references('idcId')->on('Idc')->onUpdate('cascade')->onDelete('cascade');
             });
         }
 

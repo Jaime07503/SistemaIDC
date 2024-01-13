@@ -11,14 +11,15 @@
 @section('content')
     <main class="main-content">
         <div class="head-content">
-            <h1>{{ $researchTopic->themeName }} - Información del Proceso</h1>
+            <h1>{{ $researchTopic->themeName }} - Equipo #{{ $researchTopic->teamId }} - Documentación</h1>
             <nav class="history">
-                <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Mis cursos</a>
-                <a class="view" href="">{{ $researchTopic->code }}</a>
-                <a class="view" href="">{{ $researchTopic->themeName }}</a>
-                <a class="view" href="">Etapas del proceso</a>
-                <a class="view" href="">Documentación</a>
+                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view">Mis investigaciones</a>
+                <a class="history-view" href="{{ route('researchTopicInformation', ['researchTopicId' => $researchTopic->researchTopicId, 'subjectId' => $researchTopic->subjectId]) }}">{{ $researchTopic->code }}</a>
+                <a class="history-view" href="{{ route('stagesProcess', ['researchTopicId' => $researchTopic->researchTopicId, 
+                    'teamId' => $researchTopic->teamId, 'idcId' => $researchTopic->idcId]) }}">Etapas del proceso
+                </a>
+                <a class="history-view" href="">Documentación</a>
             </nav>
         </div>
         <div class="information-content">

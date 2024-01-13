@@ -6,7 +6,6 @@
     class Faculty extends Model
     {
         use HasFactory;
-
         protected $table = 'Faculty';
         protected $primaryKey = 'facultyId'; 
 

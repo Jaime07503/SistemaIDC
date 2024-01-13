@@ -1,38 +1,45 @@
 <?php
     namespace App\Models;
-
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
 
     class TopicSearchReport extends Model
     {
         use HasFactory;
-
         protected $table = 'Topic_Search_Report';
         protected $primaryKey = 'topicSearchReportId'; 
 
         protected $fillable = [
             'topicSearchReportId',
-            'teamOrientation',
+            'code',
+            'introduction',
+            'induction',
+            'teamBehavior',
             'searchPlan',
             'meetings',
-            'generalObjetive',
-            'specificsObjetives',
-            'coordinatorAssessment',
-            'deadLine',
+            'objetiveInformation',
+            'teamValoration',
+            'teacherComment',
+            'finalComment',
             'storagePath',
             'state',
+            'idIdc'
         ];
 
-        //Relationships with other tables
-        public function idc()
-        {
-            return $this->hasOne(IDC::class);
-        }
-
+        //Relationships with other tables     
         public function sourceSearch()
         {
             return $this->hasMany(SourceSearch::class);
+        }
+
+        public function sourceObjetive()
+        {
+            return $this->hasMany(SourceObjetive::class);
+        }
+
+        public function idc()
+        {
+            return $this->belongsTo(IDC::class, 'idIdc');
         }
     }
 ?>

@@ -1,13 +1,11 @@
 <?php
     namespace App\Models;
-
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
 
     class Student extends Model
     {
         use HasFactory;
-
         protected $table = 'Student';
         protected $primaryKey = 'studentId'; 
 
@@ -16,7 +14,7 @@
             'carnet',
             'career',
             'state',
-            'idUser',
+            'idUser'
         ];
 
         //Relationships with other tables
@@ -32,17 +30,17 @@
 
         public function studentResearchTopic()
         {
-            return $this->hasMany(StudentResearchTopic::class, 'studentId');
+            return $this->hasMany(StudentResearchTopic::class);
         }
 
         public function studentTeam()
         {
-            return $this->hasMany(StudentTeam::class, 'idStudent');
+            return $this->hasMany(StudentTeam::class);
         }
 
         public function studentHistory()
         {
-            return $this->hasMany(StudentHistory::class, 'idStudent');
+            return $this->hasMany(StudentHistory::class);
         }
     }
 ?>

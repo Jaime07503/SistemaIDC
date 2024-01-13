@@ -9,22 +9,19 @@
         {
             Schema::create('Idc', function (Blueprint $table) {
                 $table->increments('idcId');
-                $table->string('cicle');
-                $table->string('year');
-                $table->timestamp('endDate');
+                $table->timestamp('startDateSearchReport');
+                $table->timestamp('endDateSearchReport');
+                $table->timestamp('startDateScientificArticleReport');
+                $table->timestamp('endDateScientificArticleReport');
+                $table->timestamp('startDateNextIdcTopic');
+                $table->timestamp('endDateNextIdcTopic');
                 $table->string('badgeProcessCompleted', 512)->nullable();
                 $table->string('state', 20);
                 $table->unsignedBigInteger('idUser');
                 $table->unsignedBigInteger('idTeam');
-                $table->unsignedBigInteger('idTopicSearchReport');
-                $table->unsignedBigInteger('idScientificArticle');
-                $table->unsignedBigInteger('idNextIdcTopicReport');
                 $table->timestamps();
                 $table->foreign('idUser')->references('userId')->on('User')->onUpdate('cascade')->onDelete('cascade');
                 $table->foreign('idTeam')->references('teamId')->on('Team')->onUpdate('cascade')->onDelete('cascade');
-                $table->foreign('idTopicSearchReport')->references('topicSearchReportId')->on('Topic_Search_Report')->onUpdate('cascade')->onDelete('cascade');
-                $table->foreign('idScientificArticle')->references('scientificArticleId')->on('Scientific_Article')->onUpdate('cascade')->onDelete('cascade');
-                $table->foreign('idNextIdcTopicReport')->references('nextIdcTopicReportId')->on('Next_Idc_Topic_Report')->onUpdate('cascade')->onDelete('cascade');
             });
         }
 

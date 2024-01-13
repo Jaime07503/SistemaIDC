@@ -9,16 +9,17 @@
         {
             Schema::create('Subject', function (Blueprint $table) {
                 $table->increments('subjectId');
-                $table->string('code', 80);
-                $table->string('nameSubject', 80);
+                $table->string('code', 50);
+                $table->string('nameSubject', 100);
                 $table->string('section', 1);
-                $table->string('approvedIdc', 20);
-                $table->string('subjectCycle', 25);
-                $table->string('subjectYear', 25);
+                $table->string('approvedIdc', 30);
+                $table->string('state', 25);
                 $table->string('avatar', 512)->nullable();
+                $table->unsignedBigInteger('idCycle');
                 $table->unsignedBigInteger('idCareer');
                 $table->unsignedBigInteger('idTeacher');
                 $table->timestamps();
+                $table->foreign('idCycle')->references('cycleId')->on('Cycle')->onUpdate('cascade')->onDelete('cascade');
                 $table->foreign('idTeacher')->references('teacherId')->on('Teacher')->onUpdate('cascade')->onDelete('cascade');
                 $table->foreign('idCareer')->references('careerId')->on('Career')->onUpdate('cascade')->onDelete('cascade');
             });

@@ -15,7 +15,6 @@
     place-items: center;
     background: var(--white);
     margin-top: auto;
-    /* box-shadow: 0px -5px 5px rgb(0 0 0 / 10%); */
 }
 
 .footer-top h4{
@@ -43,7 +42,7 @@
     width: 185px;
 }
 
-.wrapper .button .icon{
+.wrapper .button .icon-footer{
     display: inline-block;
     height: 3rem;
     width: 3rem;
@@ -54,41 +53,41 @@
     transition: all 0.3s ease-out;
 }
 
-.wrapper .button:nth-child(1):hover .icon{
+.wrapper .button:nth-child(1):hover .icon-footer{
     background: var(--web);
 }
 
-.wrapper .button:nth-child(2):hover .icon{
+.wrapper .button:nth-child(2):hover .icon-footer{
     background: var(--facebook);
 }
 
-.wrapper .button:nth-child(3):hover .icon{
+.wrapper .button:nth-child(3):hover .icon-footer{
     background: var(--black);
 }
 
-.wrapper .button:nth-child(4):hover .icon{
+.wrapper .button:nth-child(4):hover .icon-footer{
     background: var(--linkedin);
 }
 
-.wrapper .button:nth-child(5):hover .icon{
+.wrapper .button:nth-child(5):hover .icon-footer{
     background: var(--youtube);
 }
 
-.wrapper .button:nth-child(6):hover .icon{
+.wrapper .button:nth-child(6):hover .icon-footer{
     background: var(--instagram);
 }
 
-.wrapper .button .icon i{
+.wrapper .button .icon-footer i{
     font-size: 25px;
     line-height: 50px;
     transition: all 0.3s ease-out;
 }
 
-.wrapper .button:hover .icon i{
+.wrapper .button:hover .icon-footer i{
     color: var(--white);
 }
 
-.icon i {
+.icon-footer i {
     color: var(--primary);
 }
 
@@ -132,6 +131,6 @@
 
     .wrapper {
         display: grid;
-        grid-template-columns: repeat(3, 1fr); /* Dos botones por fila */
+        grid-template-columns: repeat(3, 1fr);
     }
 }

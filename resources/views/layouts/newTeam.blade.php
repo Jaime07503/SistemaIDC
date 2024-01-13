@@ -11,12 +11,13 @@
 @section('content')
     <main class="main-content">
         <header class="head-content">
-            <h1>{{ $researchTopics->themeName }}</h1>
+            <h1> {{ $subject->nameSubject }} - {{ $subject->section }} - {{ $researchTopics->themeName }} - Postular Equipo</h1>
             <div class="history">
-                <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Mis cursos</a>
-                <a class="view" href="{{ route('researchTopics', ['subjectId' => $subject->subjectId]) }}">IYA-ADS104-A-I24</a>
-                <a class="view" href="">{{ $researchTopics->themeName }}</a>
+                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" >Mis cursos</a>
+                <a class="history-view" href="{{ route('researchTopics', ['subjectId' => $subject->subjectId]) }}">{{ $subject->code }}</a>
+                <a class="history-view" href="{{ route('researchTopicInformation', ['researchTopicId' => $researchTopics->researchTopicId, 'subjectId' => $subject->subjectId]) }}">{{ $researchTopics->code }}</a>
+                <a class="history-view" href="">Postular Equipo</a>
             </div>
         </header>
         <section class="newTeam">
@@ -25,41 +26,25 @@
             </header>
             <form action="{{ route('team.create') }}" method="POST">
                 @csrf
-                <div class="team-content">
-                    <table id="data-table" class="table content-table">
-                        <thead>
-                            <tr>
-                                <th>Avatar</th>
-                                <th>Nombre del estudiante</th>
-                                <th>Correo</th>
-                                <th>CUM</th>
-                                <th>Materias inscritas</th>
-                                <th>Agregar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($students as $index => $student)
-                                <tr>
-                                    <td><img class="avatar" src="{{ $student->avatar }}" alt="Avatar"></td>
-                                    <td>{{ $student->name }}</td>
-                                    <td>{{ $student->email }}</td>
-                                    <td>{{ $student->cum }}</td>  
-                                    @php
-                                        $enrolledSubjectsArray = explode(',', $student->enrolledSubject);
-                                        $subjectQuantity = count($enrolledSubjectsArray);
-                                    @endphp
-                                    <td>{{ $subjectQuantity }}</td>
-                                    <td>
-                                        <label class="checkbox" for="myCheckboxId{{ $index + 1 }}">
-                                            <input class="checkbox-input" name="myCheckboxName{{ $index + 1 }}" id="myCheckboxId{{ $index + 1 }}" type="checkbox" value="{{ $student->studentId }}">
-                                            <div class="checkbox-box"></div>
-                                        </label>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                <aside class="students">
+                    @foreach($students as $index => $student)
+                        <div class="card">
+                            <img class="card-image" src="{{ $student->avatar }}" alt="Avatar">
+                            <h3>{{ $student->name }}</h3>
+                            <h3>{{ $student->cum }}</h3>
+                            <h3>{{ $student->email }}</h3>
+                            @php
+                                $enrolledSubjectsArray = explode(',', $student->enrolledSubject);
+                                $subjectQuantity = count($enrolledSubjectsArray);
+                            @endphp
+                            <h3>{{ $subjectQuantity }} Materias inscritas</h3>
+                            <label class="checkbox" for="myCheckboxId{{ $index + 1 }}">
+                                <input class="checkbox-input" name="myCheckboxName{{ $index + 1 }}" id="myCheckboxId{{ $index + 1 }}" type="checkbox" value="{{ $student->studentId }}">
+                                <div class="checkbox-box"></div>
+                            </label>
+                        </div>
+                    @endforeach
+                </aside>
                 <input type="text" hidden name="idResearchTopic" value="{{ $researchTopics->researchTopicId }}">
                 <input type="text" hidden name="idTeacher" value="{{ $subject->idTeacher }}">
                 <input type="text" hidden name="subjectId" value="{{ $subject->subjectId }}">

@@ -10,11 +10,10 @@
             Schema::create('Student_History', function (Blueprint $table) {
                 $table->increments('studentHistoryId');
                 $table->decimal('cum', 3, 1);
-                $table->string('studentCycle', 25);
-                $table->string('studentYear', 25);
                 $table->string('enrolledSubject', 11);
                 $table->string('subjectApply', 80);
-                $table->string('previousIdc', 80)->nullable();
+                $table->string('previousIdc', 10);
+                $table->string('subjectPreviousIdc', 80)->nullable();
                 $table->unsignedBigInteger('idStudent');
                 $table->timestamps();
                 $table->foreign('idStudent')->references('studentId')->on('Student')->onUpdate('cascade')->onDelete('cascade');

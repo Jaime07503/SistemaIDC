@@ -9,7 +9,7 @@
         {
             Schema::create('Career', function (Blueprint $table) {
                 $table->increments('careerId');
-                $table->string('nameCareer', 80);
+                $table->string('nameCareer', 100);
                 $table->unsignedBigInteger('idFaculty');
                 $table->timestamps();
                 $table->foreign('idFaculty')->references('facultyId')->on('Faculty')->onUpdate('cascade')->onDelete('cascade');
