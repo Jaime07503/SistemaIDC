@@ -176,4 +176,45 @@ document.addEventListener("DOMContentLoaded", function () {
             closeModal(modals.objetivoEspecifico);
         }
     });
+
+    // Obtener todos los formularios con la clase 'ajax-form'
+    var forms = document.querySelectorAll('.ajax-form');
+
+    // Asignar un evento submit a cada formulario
+    forms.forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+            // Prevenir la acción predeterminada del formulario
+            e.preventDefault();
+
+            // Enviar la solicitud AJAX
+            enviarSolicitudAjax(form);
+        });
+    });
+
+    function enviarSolicitudAjax(form) {
+        var formData = new FormData(form);
+        var url = form.getAttribute('action');
+        var method = form.getAttribute('method');
+
+        fetch(url, {
+            method: method,
+            body: formData })
+        .then(function (response){
+            // Actualizar los campos del formulario según la respuesta
+            actualizarCamposFormulario(form, response);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function actualizarCamposFormulario(form, estado) {
+        // Ocultar el botón de envío del formulario
+        form.querySelector('.btn-aprobar').style.display = 'none';
+
+        // Mostrar el estado actualizado en su lugar
+        var estadoField = form.querySelector('.state');
+        estadoField.textContent = estado;
+        estadoField.style.display = 'inline-block';
+    }
 });

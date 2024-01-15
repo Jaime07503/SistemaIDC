@@ -66,7 +66,8 @@
                                 <td>{{ $user->role }}</td>
                                 <td>{{ $user->state }}</td>
                                 <td>
-                                    <button class="button-edit btn" data-modal="editarModal"
+                                    <button class="button-edit btn" 
+                                        data-modal="editarModal"
                                         data-userId="{{ $user->userId }}"
                                         data-userName="{{ $user->name }}"
                                         data-userEmail="{{ $user->email }}"
@@ -75,7 +76,8 @@
                                     >
                                         Editar
                                     </button>
-                                    <button class="button-delete btn" data-modal="eliminarModal"
+                                    <button class="button-delete btn" 
+                                        data-modal="eliminarModal"
                                         data-userId="{{ $user->userId }}"
                                     >
                                         Eliminar

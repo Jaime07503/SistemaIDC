@@ -37,7 +37,7 @@
 
         public function student()
         {
-            return $this->hasOne(Student::class);
+            return $this->hasOne(Student::class, 'idUser');
         }
 
         public function idc()

@@ -25,8 +25,8 @@
                 @csrf
                 <div class="first-section">
                     <strong><h2>Orientación del equipo</h2></strong>
-                    <textarea class="textarea" name="orientation" placeholder="Organización del equipo"></textarea>
-                    <textarea class="textarea" name="induction" placeholder="Inducción del tema"></textarea>
+                    <textarea class="textarea" name="orientation" placeholder="Organización del equipo">{{ old('orientation') }}</textarea>
+                    <textarea class="textarea" name="induction" placeholder="Inducción del tema">{{ old('induction') }}</textarea>
                 </div>
                 <div class="second-section">
                     <strong><h2>Plan de búsqueda de información</h2></strong>
@@ -35,7 +35,7 @@
                         <input type="file" name="imageDiagram" class="file-input" accept="image/*" hidden>
                         <div class="img-area" data-img="">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <h4>Diagrama</h4>
+                            <h4>Diagrama (Temas explorados)</h4>
                             <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
                         </div>
                     </div>
@@ -54,22 +54,19 @@
                         <tbody>
                             @foreach($objetivesG as $objetive)
                                 <tr>
-                                    <td>{{ $objetive->studentContribute }}</td>
-                                    <td>{{ $objetive->objetive }}</td>
-                                    <td>
-                                        <form action="" method="POST">
-                                            @csrf
-                                            <div class="custom-listbox">
-                                                <div class="listbox-header">
-                                                    <button type="button" id="listbox"><span class="selected-option">{{ $objetive->state }}</span></button>
-                                                    <i class="fa-solid fa-chevron-down arrow-down"></i>
-                                                </div>
-                                                <ul class="options">
-                                                    <li data-value="Aprobado" class="selected"><i class="fa-solid fa-check"></i>Aprobado</li>
-                                                    <li data-value="Corregir">Corregir</li>
-                                                </ul>
-                                            </div>
-                                        </form>
+                                    <td data-values="Contribuyente">{{ $objetive->studentContribute }}</td>
+                                    <td data-values="Objetivo general">{{ $objetive->objetive }}</td>
+                                    <td data-values="Estado">
+                                        @if($objetive->state !== 'Aprobado')
+                                            <form class="ajax-form" action="{{ route('objetiveG.update', ['idObjetive' => $objetive->objetiveId]) }}" method="GET">
+                                                @csrf
+                                                <input name="idcId" type="text" hidden value="{{ $idcId }}">
+                                                <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
+                                                <button type="button" id="aprobarObjetiveG" class="btn btn-aprobar">Aprobar</button>
+                                            </form>
+                                        @else
+                                            <h6 class="state">{{ $objetive->state }}</h6>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -86,22 +83,19 @@
                         <tbody>
                             @foreach($objetivesE as $objetive)
                                 <tr>
-                                    <td>{{ $objetive->studentContribute }}</td>
-                                    <td>{{ $objetive->objetive }}</td>
-                                    <td>
-                                        <form action="" method="POST">
-                                            @csrf
-                                            <div class="custom-listbox">
-                                                <div class="listbox-header">
-                                                    <button type="button" id="listbox"><span class="selected-option">{{ $objetive->state }}</span></button>
-                                                    <i class="fa-solid fa-chevron-down arrow-down"></i>
-                                                </div>
-                                                <ul class="options">
-                                                <li data-value="Aprobado" class="selected"><i class="fa-solid fa-check"></i>Aprobado</li>
-                                                    <li data-value="Corregir">Corregir</li>
-                                                </ul>
-                                            </div>
-                                        </form>
+                                    <td data-values="Contribuyente">{{ $objetive->studentContribute }}</td>
+                                    <td data-values="Objetivo especifico">{{ $objetive->objetive }}</td>
+                                    <td data-values="Estado">
+                                        @if($objetive->state !== 'Aprobado')
+                                            <form class="ajax-form" action="{{ route('objetiveE.update', ['idObjetive' => $objetive->objetiveId]) }}" method="GET">
+                                                @csrf
+                                                <input name="idcId" type="text" hidden value="{{ $idcId }}">
+                                                <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
+                                                <button class="btn btn-aprobar">Aprobar</button>
+                                            </form>
+                                        @else
+                                            <h6 class="state">{{ $objetive->state }}</h6>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -114,7 +108,6 @@
                     <table id="data-table-sources" class="table content-table export-table">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Contribuyente</th>
                                 <th>Tema</th>
                                 <th>Año</th>
@@ -126,26 +119,22 @@
                         <tbody>
                             @foreach($sources as $source)
                                 <tr>
-                                    <td>{{ $source->bibliographicSourceId }}</td>
-                                    <td>{{ $source->studentContribute }}</td>
-                                    <td>{{ $source->theme }}</td>
-                                    <td>{{ $source->year }}</td>
-                                    <td>{{ $source->averageType }}</td>
-                                    <td><a href="{{ $source->link }}" target="_blank" rel="noreferrer" class="link">{{ $source->link }}</a></td>
-                                    <td>
-                                        <form action="" method="POST">
-                                            @csrf
-                                            <div class="custom-listbox">
-                                                <div class="listbox-header">
-                                                    <button type="button" id="listbox"><span class="selected-option">{{ $source->state }}</span></button>
-                                                    <i class="fa-solid fa-chevron-down arrow-down"></i>
-                                                </div>
-                                                <ul class="options">
-                                                    <li data-value="Aprobado" class="selected"><i class="fa-solid fa-check"></i>Aprobado</li>
-                                                    <li data-value="Corregir">Corregir</li>
-                                                </ul>
-                                            </div>
-                                        </form>
+                                    <td data-values="Contribuyente">{{ $source->studentContribute }}</td>
+                                    <td data-values="Tema">{{ $source->theme }}</td>
+                                    <td data-values="Año">{{ $source->year }}</td>
+                                    <td data-values="Tipo de medio">{{ $source->averageType }}</td>
+                                    <td data-values="Link"><a href="{{ $source->link }}" target="_blank" rel="noreferrer" class="link">{{ $source->link }}</a></td>
+                                    <td data-values="Estado">
+                                        @if($source->state !== 'Aprobado')
+                                            <form class="ajax-form" action="{{ route('source.update', ['idSource' => $source->bibliographicSourceId]) }}" method="GET">
+                                                @csrf
+                                                <input name="idcId" type="text" hidden value="{{ $idcId }}">
+                                                <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
+                                                <button class="btn btn-aprobar">Aprobar</button>
+                                            </form>
+                                        @else
+                                            <h6 class="state">{{ $source->state }}</h6>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -164,40 +153,40 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>El estudiante ha sido responsable con el proceso.</td>
-                                <td></td>
+                                <td data-values="Criterio">El estudiante ha sido responsable con el proceso.</td>
+                                <td data-values="Calificación"><input type="text" class="calification" name="calification" maxlength="2"></td>
                             </tr>
                             <tr>
-                                <td>Ha participado de las reuniones con puntualidad.</td>
-                                <td></td>
+                                <td data-values="Criterio">Ha participado de las reuniones con puntualidad.</td>
+                                <td data-values="Calificación"><input type="text" class="calification" name="calification2" maxlength="2"></td>
                             </tr>
                             <tr>
-                                <td>Ha Evidenciado interés por el proceso.</td>
-                                <td></td>
+                                <td data-values="Criterio">Ha Evidenciado interés por el proceso.</td>
+                                <td data-values="Calificación"><input type="text" class="calification" name="calification3" maxlength="2"></td>
                             </tr>
                             <tr>
-                                <td>Se ha apropiado de la temática.</td>
-                                <td></td>
+                                <td data-values="Criterio">Se ha apropiado de la temática.</td>
+                                <td data-values="Calificación"><input type="text" class="calification" name="calification4" maxlength="2"></td>
                             </tr>
                             <tr>
-                                <td>Realimenta y exterioriza sus comentarios, dudas y reflexiones personales.</td>
-                                <td></td>
+                                <td data-values="Criterio">Realimenta y exterioriza sus comentarios, dudas y reflexiones personales.</td>
+                                <td data-values="Calificación"><input type="text" class="calification" name="calification5" maxlength="2"></td>
                             </tr>
                             <tr>
-                                <td>El estudiante es capaz de autogestionar su conocimiento y el proceso, mejorando su desempeño y capacidad de análisis.</td>
-                                <td></td>
+                                <td data-values="Criterio">El estudiante es capaz de autogestionar su conocimiento y el proceso, mejorando su desempeño y capacidad de análisis.</td>
+                                <td data-values="Calificación"><input type="text" class="calification" name="calification6" maxlength="2"></td>
                             </tr>
                             <tr>
-                                <td>El estudiante ha desarrollado cada una de las actividades asignadas con diligencia y esmero.</td>
-                                <td></td>
+                                <td data-values="Criterio">El estudiante ha desarrollado cada una de las actividades asignadas con diligencia y esmero.</td>
+                                <td data-values="Calificación"><input type="text" class="calification" name="calification7" maxlength="2"></td>
                             </tr>
                             <tr>
-                                <td>El estudiante ha elevado su dominio sobre el tema.</td>
-                                <td></td>
+                                <td data-values="Criterio">El estudiante ha elevado su dominio sobre el tema.</td>
+                                <td data-values="Calificación"><input type="text" class="calification" name="calification8" maxlength="2"></td>
                             </tr>
                             <tr>
-                                <td>El estudiante ha contribuido al resultado esperado en términos de volumen y calidad.</td>
-                                <td></td>
+                                <td data-values="Criterio">El estudiante ha contribuido al resultado esperado en términos de volumen y calidad.</td>
+                                <td data-values="Calificación"><input type="text" class="calification" name="calification9" maxlength="2"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -231,6 +220,7 @@
                             <input type="text" name="theme" id="fuente" placeholder="Tema" autocomplete="off">
                             <input type="text" name="averageType" id="tipoMedio" placeholder="Tipo de medio" autocomplete="off">
                             <input type="text" name="link" id="enlace" placeholder="Enlace" autocomplete="off">
+                            <input type="text" name="source" id="enlace" placeholder="Fuente" autocomplete="off">
                             <input name="idcId" type="text" hidden value="{{ $idcId }}">
                             <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
                             <button type="submit" class="btn" id="submitButton">Agregar</button>
@@ -253,13 +243,13 @@
                         <tbody>
                             @foreach($sources as $source)
                                 <tr>
-                                    <td>{{ $source->studentContribute }}</td>
-                                    <td>{{ $source->year }}</td>
-                                    <td>{{ $source->author }}</td>
-                                    <td>{{ $source->theme }}</td>
-                                    <td>{{ $source->averageType }}</td>
-                                    <td><a href="{{ $source->link }}" target="_blank" rel="noreferrer" class="link">Enlace</a></td>
-                                    <td>Aprobado</td>
+                                    <td data-values="Contribuyente">{{ $source->studentContribute }}</td>
+                                    <td data-values="Año">{{ $source->year }}</td>
+                                    <td data-values="Autor">{{ $source->author }}</td>
+                                    <td data-values="Tema">{{ $source->theme }}</td>
+                                    <td data-values="Tipo de medio">{{ $source->averageType }}</td>
+                                    <td data-values="Enlace"><a href="{{ $source->link }}" target="_blank" rel="noreferrer" class="link">{{ $source->link }}</a></td>
+                                    <td data-values="Estado">Aprobado</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -298,9 +288,9 @@
                     <tbody>
                         @foreach($objetivesG as $objetive)
                             <tr>
-                                <td>{{ $objetive->studentContribute }}</td>
-                                <td>{{ $objetive->objetive }}</td>
-                                <td>{{ $objetive->state }}</td>
+                                <td data-values="Contribuyente">{{ $objetive->studentContribute }}</td>
+                                <td data-values="Objetivo general">{{ $objetive->objetive }}</td>
+                                <td data-values="Estado">{{ $objetive->state }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -338,9 +328,9 @@
                     <tbody>
                         @foreach($objetivesE as $objetive)
                             <tr>
-                                <td>{{ $objetive->studentContribute }}</td>
-                                <td>{{ $objetive->objetive }}</td>
-                                <td>{{ $objetive->state }}</td>
+                                <td data-values="Contribuyente">{{ $objetive->studentContribute }}</td>
+                                <td data-values="Objetivo especifico">{{ $objetive->objetive }}</td>
+                                <td data-values="Estado">{{ $objetive->state }}</td>
                             </tr>
                         @endforeach
                     </tbody>

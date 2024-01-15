@@ -50,10 +50,7 @@
                     </tr>
                     <tr>
                         <td><strong>Archivo generado</strong></td>
-                        @if($searchReport->storagePath === null)
-                            <td>Aún no se ha generado un documento</td>
-                        @else
-                            @if($searchReport->storagePath !== 'Creado')
+                            @if($searchReport->storagePath === 'Por generar')
                                 <td>{{ $searchReport->storagePath }}</td>
                             @else
                                 <td>
@@ -62,7 +59,6 @@
                                     </a></strong>
                                 </td>
                             @endif
-                        @endif
                     </tr>
                     <tr>
                         <td><strong>Comentarios al envío</strong></td>

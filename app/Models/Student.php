@@ -35,7 +35,7 @@
 
         public function studentTeam()
         {
-            return $this->hasMany(StudentTeam::class);
+            return $this->hasMany(StudentTeam::class, 'idStudent');
         }
 
         public function studentHistory()

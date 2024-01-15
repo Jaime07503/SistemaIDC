@@ -40,7 +40,6 @@
                         Búsqueda de Información
                     </a>
                 </div>
-                @if($researchTopic->canShowStageCard)
                     <div class="stage-card">
                         <img src="{{ asset('images/article.webp') }}" alt="Imagen relacionada con el articulo cientifico" class="stage-image">
                         <a href="{{ url('scientificArticle', ['idcId' => $researchTopic->idcId, 
@@ -49,15 +48,14 @@
                             Artículo Científico
                         </a>
                     </div>
-                @endif
-                <!-- <div class="stage-card">
+                <div class="stage-card">
                     <img src="{{ asset('images/end.webp') }}" alt="Imagen relacionada con la finalizacion del proceso" class="stage-image">
                     <a href="{{ url('endProcess', ['idcId' => $researchTopic->idcId, 
                         'idNextIdcTopicReport' => $researchTopic->nextIdcTopicReportId]) }}" 
                         class="stage-link"><i class="fa-solid fa-hourglass-end stage-icon"></i> 
                         Finalización del Proceso
                     </a>
-                </div> -->
+                </div>
             </aside>
         </section>
     </main>

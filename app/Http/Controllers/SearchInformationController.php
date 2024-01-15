@@ -12,7 +12,7 @@
                 ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
                 ->select('Idc.endDateSearchReport', 'Topic_Search_Report.state', 'Topic_Search_Report.storagePath',
                 'Idc.idcId', 'Topic_Search_Report.updated_at', 'Research_Topic.researchTopicId', 'Research_Topic.themeName',
-                'Research_Topic.code', 'Subject.subjectId', 'Team.teamId')
+                'Research_Topic.code', 'Subject.subjectId', 'Team.teamId', 'Topic_Search_Report.code as searchReportCode')
                 ->where('Topic_Search_Report.topicSearchReportId', $idTopicSearchReport)
                 ->first();
 

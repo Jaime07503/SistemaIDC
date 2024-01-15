@@ -86,7 +86,7 @@ body {
 
 .view {
     padding: .5rem;
-    background-color: var(--texas-rose-100);
+    background-color: var(--texas-rose-50);
     max-width: 9.3rem; 
     box-sizing: border-box;
 }
@@ -170,10 +170,19 @@ input::placeholder, textarea::placeholder {
     font-weight: 100;
 }
 
+input:focus {
+    border: 3px solid #eac875;
+}
+
+.calification {
+    width: 4rem;
+    height: 2rem;
+}
+
 .content-table {
     border-collapse: collapse;
     font-size: 0.9em;
-    min-width: 400px;
+    min-width: 200px;
     width: 100%;
     border-radius: .5rem;
     overflow: hidden;
@@ -550,13 +559,54 @@ input::placeholder, textarea::placeholder {
     background: transparent;
 }
 
+@media (max-width: 1160px) {
+    table thead {
+        display: none;
+    }
+
+    table td[data-values] {
+        display: flex;
+        gap: 3rem;
+    }
+
+    table td[data-values]::before {
+        content: attr(data-values);
+        width: 4rem;
+        font-weight: 700;
+    }
+
+    table tr {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
 @media (max-width: 880px){
     .basic {
         grid-template-columns: repeat(auto-fill, minmax(18.5rem, 1fr));
     }
+
+    .modal-content {
+        width: 23rem;
+    }
 }
 
 @media (max-width: 500px){
+    table td[data-values] {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 0;
+    }
+
+    table tr {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
     .main-content {
         width: 90%;
     }

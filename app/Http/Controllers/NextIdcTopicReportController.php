@@ -5,11 +5,11 @@
 
     class NextIdcTopicReportController extends Controller
     {
-        public function getSources($idcId) {
+        public function getSources($idcId, $idNextIdcTopicReport) {
             $role = session('role');
             // $sources = BibliographicSource::all();
 
-            return view('layouts.nextIdcTopicReport', compact('role', 'idcId'));
+            return view('layouts.nextIdcTopicReport', compact('role', 'idcId', 'idNextIdcTopicReport'));
         }
     }
 ?>

@@ -29,7 +29,12 @@
                 ->where('Student_Research_Topic.idResearchTopic', '=', $researchTopicId)
                 ->select('User.name', 'User.email', 'User.avatar', 'Student.studentId', 'Student_History.cum', 
                 'Student_History.enrolledSubject')
+                ->orderByDesc('Student_History.cum')
                 ->get();
+
+            if ($students->isEmpty()) {
+                return view('layouts.newTeam', compact('researchTopics', 'subject'))->with('noTeams', true);
+            }
 
             return view('layouts.newTeam', compact('researchTopics', 'subject', 'students'));
         }
@@ -73,14 +78,11 @@
 
             $searchReport = new TopicSearchReport();
             $searchReport->code = '';
-            $searchReport->introduction = '';
             $searchReport->induction = '';
             $searchReport->teamBehavior = '';
             $searchReport->searchPlan = '';
             $searchReport->meetings = '';
-            $searchReport->objetiveInformation = '';
             $searchReport->teamValoration = '';
-            $searchReport->teacherComment = '';
             $searchReport->finalComment = '';
             $searchReport->storagePath = 'Por generar';
             $searchReport->state = 'Sin Intento';
@@ -108,8 +110,8 @@
             $nextIdcTopic->introduction = '';
             $nextIdcTopic->continueTopic = '';
             $nextIdcTopic->proposeTopics = '';
-            $nextIdcTopic->storagePath = '';
-            $nextIdcTopic->state = '';
+            $nextIdcTopic->storagePath = 'Por generar';
+            $nextIdcTopic->state = 'Sin Intento';
             $nextIdcTopic->idIdc = $idc->idcId;
             $nextIdcTopic->save();
 

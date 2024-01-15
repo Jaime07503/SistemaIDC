@@ -21,7 +21,7 @@
         //Relationships with other tables
         public function IDC()
         {
-            return $this->hasOne(IDC::class);
+            return $this->hasOne(IDC::class, 'idTeam');
         }
         
         public function studentTeam()

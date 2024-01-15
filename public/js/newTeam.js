@@ -3,6 +3,16 @@ document.addEventListener('DOMContentLoaded', function () {
     let maxSelected = 5; // Máximo de checkboxes permitidos
     let selectedStudentIds = []; // Array para almacenar los studentId seleccionados
     let selectedStudentIdsInput = document.getElementById('selectedStudentIds'); // Input oculto
+    let submitButton = document.getElementById('submitButton'); // Botón de envío del formulario
+
+    // Función para habilitar/deshabilitar el botón de envío
+    function toggleSubmitButton() {
+        if (selectedStudentIds.length >= minSelected && selectedStudentIds.length <= maxSelected) {
+            submitButton.disabled = false;
+        } else {
+            submitButton.disabled = true;
+        }
+    }
 
     document.querySelectorAll('.checkbox-input').forEach(function (input) {
         input.addEventListener('change', function () {
@@ -10,9 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (input.checked) {
                 if (checkedCheckboxes.length > maxSelected) {
-                    input.checked = false; // No permitir seleccionar más de 5
+                    input.checked = false;
                 } else {
-                    // Agregar el studentId seleccionado al array
                     selectedStudentIds.push(input.value);
                 }
             } else {
@@ -23,8 +32,11 @@ document.addEventListener('DOMContentLoaded', function () {
             // Actualizar el valor del campo oculto con los valores seleccionados
             selectedStudentIdsInput.value = selectedStudentIds.join(',');
 
-            // Puedes hacer algo con el array selectedStudentIds si es necesario
-            console.log(selectedStudentIds);
+            // Verificar y actualizar la habilitación del botón de envío
+            toggleSubmitButton();
         });
     });
+
+    // Inicialmente, deshabilitar el botón de envío
+    toggleSubmitButton();
 });

@@ -69,6 +69,11 @@
     Route::post('/generate-scientific-article', [ScientificArticleReportController::class, 'generateWord'])->name('generate-scientific-article');
     Route::post('/addUser', [AdministrationController::class, 'addUser'])->name('user.create');
 
+    // UPDATE
+    Route::get('/source/{idSource}', [TopicSearchReportController::class, 'updateSource'])->name('source.update');
+    Route::get('/updateObjetiveG/{idObjetive}', [TopicSearchReportController::class, 'updateObjetiveG'])->name('objetiveG.update');
+    Route::get('/updateObjetiveE/{idObjetive}', [TopicSearchReportController::class, 'updateObjetiveE'])->name('objetiveE.update');
+    
     //PUT
     
     //DELETE

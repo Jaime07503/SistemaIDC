@@ -292,11 +292,12 @@ input::placeholder {
 .content-table {
     border-collapse: collapse;
     font-size: 0.9em;
-    min-width: 400px;
+    min-width: 200px;
     width: 100%;
     border-radius: .5rem;
     overflow: hidden;
     color: var(--primary);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .content-table thead tr {
@@ -431,4 +432,47 @@ input::placeholder {
     justify-content: center;
     align-items: center;
     gap: .5rem;
+}
+
+@media (max-width: 1160px) {
+    table thead {
+        display: none;
+    }
+
+    table td[data-values] {
+        display: flex;
+        gap: 3rem;
+    }
+
+    table td[data-values]::before {
+        content: attr(data-values);
+        width: 4rem;
+        font-weight: 700;
+    }
+
+    table tr {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 500px){
+    table td[data-values] {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 0;
+    }
+
+    table tr {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .main-content {
+        width: 90%;
+    }
+
+    .head-content, .courses-content {
+        width: 95%;
+    }
 }
