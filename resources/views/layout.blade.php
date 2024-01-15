@@ -6,8 +6,12 @@
 
         <title>@yield('title')</title>
 
+        <meta name="description" content="Sitio web para investigaciones de cátedra de la Universidad Católica de El Salvador">
+        <meta name="robots" content="index">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="shortcut icon" href="https://plataforma.catolica.edu.sv/pluginfile.php/1/theme_moove/favicon/1672891795/favicon.ico">
 
@@ -16,7 +20,6 @@
         <link rel="stylesheet" href="{{ asset('css/partials/footer.css') }}" >
         <link rel="stylesheet" href="{{ asset('css/partials/modal.css') }}" >
         @yield('styles')
-
     </head>
     <body>
         @include('partials.navbar')
@@ -29,6 +32,6 @@
 
         @yield('scripts')
         <script src=" {{ asset('js/modal.js') }}"></script>
-        <script src=" {{ asset('js/footer.js') }}"></script>
+        <script src=" {{ asset('js/navbar.js') }}"></script>
     </body>
 </html>

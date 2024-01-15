@@ -1,13 +1,14 @@
 <?php
+    namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
+    use App\Models\Student;
+    use App\Models\StudentSubject;
+    use App\Models\User;
+    use Carbon\Carbon;
+    use Illuminate\Http\Request;
 
-use Illuminate\Http\Request;
+    class StudentController extends Controller
+    {
 
-class StudentController extends Controller
-{
-    public function proceso(Request $request) {
-        $materia = $request->materia;
-        return view('layouts.investigaciones-proceso', ['materiaIDC' => strtr($materia, "-", " "), 'progresoIDC' => 75]);
     }
-}
+?>

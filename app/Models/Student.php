@@ -1,21 +1,46 @@
 <?php
+    namespace App\Models;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
 
-namespace App\Models;
+    class Student extends Model
+    {
+        use HasFactory;
+        protected $table = 'Student';
+        protected $primaryKey = 'studentId'; 
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+        protected $fillable = [
+            'studentId',
+            'carnet',
+            'career',
+            'state',
+            'idUser'
+        ];
 
-class Student extends Model
-{
-    use HasFactory;
+        //Relationships with other tables
+        public function user()
+        {
+            return $this->belongsTo(User::class, 'idUser');
+        }
 
-    protected $fillable = [
-        'licenseNumber',
-        'career',
-        'studentCycle',
-        'studentYear',
-        'enrolledSubject',
-        'previousIDC',
-        'state',
-    ];
-}
+        public function studentSubject()
+        {
+            return $this->hasMany(StudentSubject::class);
+        }
+
+        public function studentResearchTopic()
+        {
+            return $this->hasMany(StudentResearchTopic::class);
+        }
+
+        public function studentTeam()
+        {
+            return $this->hasMany(StudentTeam::class);
+        }
+
+        public function studentHistory()
+        {
+            return $this->hasMany(StudentHistory::class);
+        }
+    }
+?>

@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Investigaciones de Cátedra</title>
+        <title>Investigaciones de Cátedra: Ingresar al sitio</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap" rel="stylesheet">
@@ -14,11 +14,11 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/own/login.css') }}">
     </head>
     <body>
-        <div class="main-container">
-            <img class="logo" src="{{ asset('images/logo_unicaes.png') }}" alt="Logo UNICAES">
+        <main class="main-container">
+            <img class="logo" src="{{ asset('images/logo_unicaes.webp') }}" alt="Logo UNICAES">
             <div class="login-container">
                 <header class="login-left">
-                    <h2>Investigaciones de Cátedra</h2>
+                    <h1>Investigaciones de Cátedra</h1>
                     @if(session('error'))
                         <div class="alert">
                             {{ session('error') }}
@@ -27,13 +27,13 @@
                 </header>
                 <div class="line"></div>
                 <section class="login-right">
-                    <h3>Iniciar sesión con</h3>
+                    <h2>Ingresar con</h2>
                     <a href="{{ url('/login-google') }}" class="btn-login">
                         <img src="{{ asset('images/logo_google.png') }}" alt="Logo Google">
-                        <h4>Correo Institucional</h4>
+                        <h3>Correo Institucional</h3>
                     </a>
                 </section>
             </div>
-        </div>
+        </main>
     </body>
 </html>

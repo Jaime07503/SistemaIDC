@@ -8,17 +8,19 @@
     --silver-pale: #F7F7F7;
     --black: #000000;
     --gray: #455a64;
-    --n: #DE7C5A;
-    --1: #BF0000;
-    --2: #E60000;
-    --3: #400000;
+    --texas-rose-100: #fae9cb;
+    --texas-rose-200: #f6d091;
+}
+
+html, body, div, form, h1, h2, h3, h4, h5, input, i, button, ul, li, p, span {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Helvetica, sans-serif;
 }
 
 body {
-    margin: 0;
-    box-sizing: border-box;
-    background-color: var(--light);
-    font-family: 'Poppins', Helvetica, sans-serif;
+    background: var(--light);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,7 +29,7 @@ body {
     gap: 10px;
 }
 
-/* Estilos para el contener main */
+/* Contenedor Principal */
 .main-content {
     display: flex;
     flex-direction: column;
@@ -38,55 +40,68 @@ body {
     gap: 20px;
 }
 
-.main-content a {
-    text-decoration: none;
-}
-
+/* Encabezado */
 .head-content {
     display: flex;
     flex-direction: column;
     background-color: var(--white);
-    border-top: 2px solid var(--primary);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    width: 90%;
+    width: 95%;
     padding: 15px;
     margin-top: 90px;
-    border-radius: 5px;
+    border-radius: .5rem;
 }
 
-.head-content h1 {
-    margin: 0;
+.head-lbl {
+    font-size: 1.7rem;
     color: var(--primary);
 }
 
-.header-title {
-    margin-bottom: 10px;
+/* Historial de vistas */
+.history {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap; 
+    justify-content: start;
+    align-items: center;
+    font-size: 0.9rem;
 }
 
-.header-title h2 {
-    color: var(--black);
+.history-view {
+    text-decoration: none;
+    padding: .5rem;
+    color: var(--primary);
+    background: var(--texas-rose-100);
+    box-sizing: border-box;
+    width: auto;
+    border-radius: .5rem;
 }
 
-.info-content {
+.history-view:hover {
+    text-decoration: underline;
+}
+
+.history-view:hover:nth-child(2) {
+    text-decoration: none;
+}
+
+/* Información general del Usuario */
+.user-info-content {
     display: flex;
     flex-direction: column;
     background-color: var(--white);
-    width: 90%;
-    border-top: 2px solid var(--primary);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    width: 95%;
     padding: 15px;
-    border-radius: 5px;
+    border-radius: .5rem;
     margin-bottom: 5px;
 }
 
-.info-content h1, h2, h3 {
-    margin: 0;
-    font-size: 1.2rem;
-    color: var(--black);
+.user-info-content h2, h3, h4, p {
+    font-size: 1rem;
+    color: var(--primary);
+    font-weight: 700;
 }
 
-.info-content h4 {
-    margin: 0;
+.user-info-content h4 {
     font-size: 1.1rem;
 }
 
@@ -94,50 +109,17 @@ body {
     background-color: var(--white);
     border-radius: 5px;
     margin-bottom: 15px;
-    display: grid; /* Usar CSS Grid */
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr)); /* Crear columnas automáticas con un ancho mínimo de 200px */
-    gap: 20px; /* Establecer el espacio (gap) entre los elementos a 10px */
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 20px;
 }
 
 .info-top a{
-    color: var(--black);
+    color: var(--primary);
 }
 
 .info-top a:hover {
     text-decoration: underline;
-}
-
-.history {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    font-size: 0.9rem;
-}
-
-.view {
-    padding: 10px;
-    background-color: var(--primary);
-    color: white;
-}
-
-.view:hover {
-    text-decoration: underline;
-}
-
-.history a {
-    text-decoration: none;
-    color: var(--white);
-    clip-path: polygon(0% 0%, 75% 0%, 84% 50%, 75% 100%, 0% 100%);
-    width: 4.2rem;
-    border-radius: 5px 0 0 5px; /* arriba-derecha arriba-izquierda abajo-izquierda abajo-derecha */
-}
-
-.history a:nth-child(2) {
-    clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 12% 50%, 0% 0%);
-    width: 3rem;
-    text-align: center;
-    margin-left: -18px;
-    border-radius: 0 5px 5px 0; /* arriba-derecha arriba-izquierda abajo-izquierda abajo-derecha */
 }
 
 .perfil {
@@ -147,7 +129,6 @@ body {
     justify-content: center;
     padding: 10px;
     border-radius: 5px;
-    border-top: 2px solid var(--gold);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
     gap: 10px;
@@ -169,7 +150,6 @@ body {
     gap: 10px;
     border-radius: 5px;
     padding: 10px;
-    border-top: 2px solid var(--gold);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -190,20 +170,29 @@ body {
     gap: 10px;
     padding: 10px;
     border-radius: 5px;
-    border-top: 2px solid var(--gold);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .info-bottom a {
-    color: var(--black);
+    color: var(--primary);
 }
 
 .info-bottom a:hover {
     text-decoration: underline;
 }
 
+/* Scroll */
+::-webkit-scrollbar {
+    width: 0.4rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 0.3rem;
+}
+
 @media (max-width: 635px){
     .info-top {
-        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); /* Crear columnas automáticas con un ancho mínimo de 200px */
+        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     }
 }

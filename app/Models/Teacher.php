@@ -1,32 +1,36 @@
 <?php
+    namespace App\Models;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
 
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Teacher extends Model
-{
-    use HasFactory;
-
-    protected $table = 'teachers';
-    protected $primaryKey = 'teacherId'; 
-    protected $foreignKey = 'idUser';
-
-    protected $fillable = [
-        'teacherId',
-        'contractType',
-        'specialty',
-        'idUser',
-    ];
-
-    public function user()
+    class Teacher extends Model
     {
-        return $this->belongsTo(User::class, 'idUser');
-    }
+        use HasFactory;
+        protected $table = 'Teacher';
+        protected $primaryKey = 'teacherId'; 
 
-    public function subject()
-    {
-        return $this->hasMany(Subject::class, 'idTeacher');
+        protected $fillable = [
+            'teacherId',
+            'contractType',
+            'specialty',
+            'idcQuantity',
+            'idUser',
+        ];
+
+        //Relationships with other tables
+        public function user()
+        {
+            return $this->belongsTo(User::class, 'idUser');
+        }
+
+        public function subject()
+        {
+            return $this->hasMany(Subject::class);
+        }
+
+        public function team()
+        {
+            return $this->hasMany(Team::class);
+        }
     }
-}
+?>

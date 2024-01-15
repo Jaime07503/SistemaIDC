@@ -1,29 +1,41 @@
 <?php
+    namespace App\Models;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
 
-namespace App\Models;
+    class ResearchTopic extends Model
+    {
+        use HasFactory;
+        protected $table = 'Research_Topic';
+        protected $primaryKey = 'researchTopicId'; 
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+        protected $fillable = [
+            'researchTopicId',
+            'code',
+            'themeName',
+            'description',
+            'avatar',
+            'currentInformation',
+            'importanceRegional',
+            'importanceGlobal',
+            'state',
+            'idSubject',
+        ];
 
-class ResearchTopic extends Model
-{
-    use HasFactory;
+        //Relationships with other tables
+        public function studentResearchTopic()
+        {
+            return $this->hasMany(StudentResearchTopic::class);
+        }
 
-    protected $table = 'research_topics';
-    protected $primaryKey = 'researchTopicId'; 
-    protected $foreignKey = 'idSubject';
-
-    protected $fillable = [
-        'researchTopicId',
-        'themeName',
-        'description',
-        'importanceRegional',
-        'importanceGlobal',
-        'state',
-        'idSubject',
-    ];
-
-    public function subject(){
-        return $this->belongsTo(Subject::class);
+        public function team()
+        {
+            return $this->hasMany(Team::class);
+        }
+        
+        public function subject()
+        {
+            return $this->belongsTo(Subject::class, 'idSubject');
+        }
     }
-}
+?>

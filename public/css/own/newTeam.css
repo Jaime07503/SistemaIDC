@@ -1,0 +1,306 @@
+:root {
+    --primary: #800000;
+    --secondary: #F8F9FA;
+    --gold: #F0AD4E;
+    --light-gray: #CCCCCC;
+    --light: #E5EEF4;
+    --white: #FFFFFF;
+    --silver-pale: #F7F7F7;
+    --black: #000000;
+	--grey: #f2f2f2;
+    --texas-rose-50: #fef7ec;
+    --texas-rose-100: #fae9cb;
+    --texas-rose-200: #f6d091;
+    --texas-rose-300: #f0ad4e;
+    --texas-rose-400: #ed9732;
+    --texas-rose-500: #e6751a;
+    --texas-rose-600: #cc5513;
+    --texas-rose-700: #a93914;
+    --texas-rose-800: #8a2d16;
+    --texas-rose-900: #712716;
+    --texas-rose-950: #411107;
+}
+
+html, body, div, form, h1, h2, h3, h4, h5, input, i, button, ul, li, p, span, textarea {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Helvetica, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    min-height: 100vh;
+    background: var(--light);
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    min-height: auto;
+    gap: 1.5rem;
+}
+
+.head-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    width: 95%;
+    padding: 1rem;
+    margin-top: 90px;
+    border-radius: .5rem;
+}
+
+/* Historial de vistas */
+.history {
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap; 
+    justify-content: start;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.history-view {
+    text-decoration: none;
+    padding: .5rem;
+    color: var(--primary);
+    background: var(--texas-rose-100);
+    box-sizing: border-box;
+    width: auto;
+    border-radius: .5rem;
+}
+
+.history-view:hover {
+    text-decoration: underline;
+}
+
+.history-view:hover:nth-child(2) {
+    text-decoration: none;
+}
+
+h2 {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+h1 {
+    font-size: 1.7rem;
+    color: var(--primary);
+}
+
+h3 {
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+.newTeam {
+    width: 95%;
+    background: var(--white);
+    border-radius: .5rem;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.newData {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.newData i {
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.team-content{
+    padding: 1rem 0;
+    border-radius: .5rem;
+}
+
+.custom-listbox {
+    position: relative;
+    display: inline-block;
+    z-index: 5;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.listbox {
+    height: 2.8rem;
+    border: transparent;
+    border-radius: 0.5rem;
+    outline: none;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 0.5rem;
+}
+  
+.listbox-header {
+    cursor: pointer;
+    border: 1px solid var(--gold);
+    background: var(--white);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: .5rem;
+    color: var(--primary);
+}
+  
+.selected-option {
+    flex-grow: 1;
+    margin-right: 0.5rem;
+    width: 100%;
+}
+  
+.arrow-down {
+    transition: transform 0.2s ease-in-out;
+    margin-right: 0.8rem;
+    font-size: 0.8rem;
+}
+  
+.options {
+    list-style: none;
+    margin: 0;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    border: 1px solid var(--gold);
+    background: var(--white);
+    z-index: 5;
+    margin-top: 0.5rem;
+    border-radius: 0.3rem;
+    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+    color: var(--primary);
+    max-height: 14.9rem;
+    min-width: 100%;
+    overflow-y: scroll;
+}
+  
+.options li {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+  
+.options li:hover {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.custom-checkbox{
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+    gap: .5rem;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.checkbox-input {
+    display: none;
+}
+
+.checkbox-box {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1px solid var(--gold);
+    border-radius: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.checkbox-box::after {
+    content: '\2714';
+    color: var(--white);
+}
+
+.checkbox-input:checked + .checkbox-box {
+    background: var(--gold);
+}
+
+.options-subjects .custom-listbox .options h4 {
+    padding: 0.3rem;
+}
+
+.btn {
+    text-decoration: none;
+    background: var(--texas-rose-100);
+    color: var(--primary);
+    width: 9rem;
+    text-align: center;
+    outline: none;
+    border: none;
+    font-size: .9rem;
+    font-weight: 100;
+    height: 2.3rem;
+    border-radius: .5rem;
+    padding: 0.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    margin: auto;
+}
+
+.btn:hover {
+    background-color: var(--texas-rose-200);
+    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+    border: 3px solid var(--primary);
+}
+
+/* Estudiantes Postulados */
+.students {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1.5rem;
+}
+
+/* Card */
+.card {
+    box-sizing: border-box;
+    border-radius: .5rem;
+    background-color: var(--white);
+    border: 2px solid var(--texas-rose-100);
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.card-image {
+    width: 45%;
+    height: 6rem;
+    border-radius: 50%;
+    aspect-ratio: 16/9;
+}
+
+/* Scroll */
+::-webkit-scrollbar {
+    width: 0.3rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 0.3rem;
+}
