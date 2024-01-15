@@ -4,6 +4,8 @@
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Session;
     use App\Models\User;
+    use Carbon\Carbon;
+    use DateTime;
 
     class AuthGoogleLoginController extends Controller
     {
@@ -27,7 +29,7 @@
                     session(['name' => $usuarioExiste->name]);
                     session(['role' => $usuarioExiste->role]);
 
-                    if($usuarioExiste->firstLogin === null)
+                    if($usuarioExiste->firstLogin === null && $usuarioExiste->role === 'Estudiante')
                     {
                         User::where('userId', $usuarioExiste->userId)
                         ->update(['avatar' => $user->avatar]);
@@ -38,7 +40,7 @@
                         return redirect('/formularioPostulacion');
                     }
 
-                    return redirect('/home');
+                    return redirect('/tablero');
                 } 
                 else 
                 {
@@ -55,6 +57,12 @@
         {
             Auth::logout(); 
             Session::flush();
+
+            $fechaActual = new DateTime();
+            $fechaCarbon = Carbon::parse($fechaActual);
+
+            User::where('userId', session('userId'))
+                ->update(['lastLogin' => $fechaCarbon]);
 
             return redirect('/login');
         }

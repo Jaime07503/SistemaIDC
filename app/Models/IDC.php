@@ -1,28 +1,26 @@
 <?php
     namespace App\Models;
-
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
 
     class Idc extends Model
     {
         use HasFactory;
-
         protected $table = 'Idc';
         protected $primaryKey = 'idcId'; 
 
         protected $fillable = [
             'idcId',
-            'cycle',
-            'year',
-            'endDate',
+            'startDateSearchReport',
+            'endDateSearchReport',
+            'startDateScientificArticleReport',
+            'endDateScientificArticleReport',
+            'startDateNextIdcTopic',
+            'endDateNextIdcTopic',
             'badgeProcessCompleted',
             'state',
-            'idTeam',
             'idUser',
-            'idTopicSearchReport',
-            'idScientificArticle',
-            'idNextIdcTopicReport',
+            'idTeam'
         ];
 
         //Relationships with other tables
@@ -33,22 +31,22 @@
 
         public function team()
         {
-            return $this->hasOne(Team::class, 'idTeam');
+            return $this->belongsTo(Team::class, 'idTeam');
         }
 
         public function topicSearchReport()
         {
-            return $this->belongsTo(TopicSearchReport::class, 'idTopicSearchReport');
+            return $this->hasMany(TopicSearchReport::class);
         }
 
-        public function scientificArticle()
+        public function scientificArticleReport()
         {
-            return $this->belongsTo(ScientificArticle::class, 'idScientificArticle');
+            return $this->hasMany(ScientificArticleReport::class);
         }
 
         public function nextIdcTopicReport()
         {
-            return $this->belongsTo(NextIdcTopicReport::class, 'idNextIdcTopicReport');
+            return $this->hasMany(NextIdcTopicReport::class);
         }
     }
 ?>

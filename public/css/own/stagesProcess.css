@@ -42,10 +42,6 @@ body {
     gap: 1.7rem;
 }
 
-.main-content a {
-    text-decoration: none;
-}
-
 /* Encabezado */
 .head-content {
     display: flex;
@@ -57,8 +53,7 @@ body {
     border-radius: .5rem;
 }
 
-.head-content h1 {
-    margin: 0;
+.head-lbl {
     font-weight: 700;
     color: var(--primary);
     font-size: 1.8rem;
@@ -104,7 +99,7 @@ body {
     gap: .5rem;
 }
 
-.head-lbl {
+.head-title {
     color: var(--primary);
     font-size: 1rem;
     font-weight: 700;
@@ -136,6 +131,7 @@ body {
     font-size: .9rem;
     padding: .5rem;
     text-align: center;
+    text-decoration: none;
 }
 
 .stage-link:hover {

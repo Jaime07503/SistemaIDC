@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     var avatarContainer = document.querySelector('.avatar-container');
-    var avatarModal = document.getElementById('avatarModal');
+    var avatarModal = document.getElementById('userModal');
     var modalVisible = false;
 
     avatarContainer.addEventListener('click', function (event) {

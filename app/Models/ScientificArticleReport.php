@@ -1,18 +1,17 @@
 <?php
     namespace App\Models;
-
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
 
-    class ScientificArticle extends Model
+    class ScientificArticleReport extends Model
     {
         use HasFactory;
-
-        protected $table = 'Scientific_Article';
-        protected $primaryKey = 'scientificArticleId'; 
+        protected $table = 'Scientific_Article_Report';
+        protected $primaryKey = 'scientificArticleReportId'; 
 
         protected $fillable = [
-            'scientificArticleId',
+            'scientificArticleReportId',
+            'code',
             'spanishSummary',
             'englishSummary',
             'keywords',
@@ -22,15 +21,20 @@
             'conclusion',
             'bibliographicReferences',
             'numberOfWords',
-            'deadLine',
             'storagePath',
-            'state,'
+            'state',
+            'idIdc'
         ];
 
         //Relationships with other tables
+        public function articleConclusion()
+        {
+            return $this->hasMany(ArticleConclusion::class);
+        }
+
         public function idc()
         {
-            return $this->hasOne(IDC::class);
+            return $this->belongsTo(IDC::class, 'idIdc');
         }
     }
 ?>

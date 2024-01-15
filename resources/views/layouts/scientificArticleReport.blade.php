@@ -5,36 +5,37 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/own/topicSearchReport.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/own/scientificArticleReport.css') }}">
 @endsection
 
 @section('content')
     <main class="main-content">
-        <div class="head-content">
-            <h1>Datos del Artículo Científico</h1>
+        <header class="head-content">
+            <h1 class="head-lbl">Datos del Artículo Científico</h1>
             <nav class="history">
-                <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Mis cursos</a>
-                <a class="view" href="">ADS104-A-I24</a>
-                <a class="view" href="">Tema</a>
-                <a class="view" href=""> Etapas </a>
+                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" >Mis cursos</a>
+                <a class="history-view" href="">ADS104-A-I24</a>
+                <a class="history-view" href="">Tema</a>
+                <a class="history-view" href=""> Etapas </a>
             </nav>
-        </div>
-        <div class="first-section article-info">
-            <header>
-                <strong><h2>Datos del Informe</h2></strong>
-            </header>
-            <div class="info-team">
-                <textarea class="textarea" name="orientation" placeholder="Resumen en español"></textarea>
-                <textarea class="textarea" name="orientation" placeholder="Resumen en inglés"></textarea>
-                <input type="text" id="comment" placeholder="Palabras clave" autocomplete="off">
-                <textarea class="textarea" name="orientation" placeholder="Introducción"></textarea>
-                <textarea class="textarea" name="orientation" placeholder="Metodología"></textarea>
-                <textarea class="textarea" name="orientation" placeholder="Desarrollo"></textarea>
-                <textarea class="textarea" name="orientation" placeholder="Conclusiones"></textarea>
-                <textarea class="textarea" name="orientation" placeholder="Referencias bibliográficas"></textarea>
-            </div>
-        </div>
+        </header>
+        <section class="scientific-article-content">
+            <strong><h2>Datos del Informe</h2></strong>
+            <form id="myForm" class="scientific-article" action="{{ route('generate-scientific-article') }}" method="POST">
+                @csrf
+                <textarea class="textarea" name="spanishSummary" placeholder="Resumen en español"></textarea>
+                <textarea class="textarea" name="englishSummary" placeholder="Resumen en inglés"></textarea>
+                <input type="text" id="comment" name="keywords" placeholder="Palabras clave" autocomplete="off">
+                <textarea class="textarea" name="introduction" placeholder="Introducción"></textarea>
+                <textarea class="textarea" name="methodology" placeholder="Metodología"></textarea>
+                <!-- <textarea class="textarea" name="" placeholder="Desarrollo"></textarea> -->
+                <textarea class="textarea" name="conclusion" placeholder="Conclusiones"></textarea>
+                <textarea class="textarea" name="bibliographicReferences" placeholder="Referencias bibliográficas"></textarea>
+                <input name="idcId" type="text" hidden value="{{ $idcId }}">
+                <button type="submit" class="btn">Agregar</button>
+            </form>
+        </section>
     </main>
 @endsection
 

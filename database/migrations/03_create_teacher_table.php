@@ -9,8 +9,8 @@
         {
             Schema::create('Teacher', function (Blueprint $table) {
                 $table->increments('teacherId');
-                $table->string('contractType', 15);
-                $table->string('specialty', 80);
+                $table->string('contractType', 30);
+                $table->string('specialty', 100);
                 $table->integer('idcQuantity');
                 $table->unsignedBigInteger('idUser');
                 $table->timestamps();

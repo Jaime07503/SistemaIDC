@@ -9,7 +9,7 @@
         {
             Schema::create('Faculty', function (Blueprint $table) {
                 $table->increments('facultyId');
-                $table->string('nameFaculty', 80);
+                $table->string('nameFaculty', 100);
                 $table->timestamps();
             });
         }

@@ -1,26 +1,13 @@
 :root {
     --primary: #800000;
-    --secondary: #F8F9FA;
     --gold: #F0AD4E;
-    --light-gray: #CCCCCC;
     --light: #E5EEF4;
     --white: #FFFFFF;
-    --silver-pale: #F7F7F7;
-    --black: #000000;
     --texas-rose-50: #fef7ec;
     --texas-rose-100: #fae9cb;
-    --texas-rose-200: #f6d091;
-    --texas-rose-300: #f0ad4e;
-    --texas-rose-400: #ed9732;
-    --texas-rose-500: #e6751a;
-    --texas-rose-600: #cc5513;
-    --texas-rose-700: #a93914;
-    --texas-rose-800: #8a2d16;
-    --texas-rose-900: #712716;
-    --texas-rose-950: #411107;
 }
 
-html, body, main, h1, h2, h3, h4, div, span, i, input {
+html, body, div, form, h1, h2, h3, h4, input, i, ul, li, span {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -28,12 +15,12 @@ html, body, main, h1, h2, h3, h4, div, span, i, input {
 }
 
 body {
-    min-height: 100vh;
+    background: var(--light);
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-y: scroll;
-    background: var(--light);
+    min-height: 100vh;
 }
 
 /* Contenedor principal */
@@ -47,25 +34,46 @@ body {
     gap: 1.7rem;
 }
 
-/* Encabezado */
+/* Título IDC */
 .head-content {
     display: flex;
-    flex-direction: column;
-    background: var(--white);
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--white);
     width: 95%;
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
 }
 
-.head-lbl {
-    margin: 0;
+.head-title {
+    font-size: 3.6rem;
     font-weight: 700;
-    color: var(--primary);
-    font-size: 1.7rem;
+    color: var(--gold);
+    text-align: center;
 }
 
-/* Vista general de la investigaciones */
+.greeting {
+    color: var(--primary);
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.image-idc {
+    width: 10rem;
+}
+
+/* Vista general de los cursos */
+.courses-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    width: 95%;
+    padding: 1rem;
+    border-radius: .5rem;
+    gap: .5rem;
+}
+
 .teams-content {
     display: flex;
     flex-direction: column;
@@ -75,11 +83,13 @@ body {
     padding: 1rem;
     border-radius: .5rem;
     gap: .5rem;
+    margin-bottom: 1.5rem;
 }
 
-.title {
-    font-size: 1rem;
+/* Filtros para los cursos */
+.head-lbl {
     color: var(--primary);
+    font-size: 1rem;
 }
 
 .options-courses {
@@ -98,13 +108,13 @@ body {
   
 .listbox-header {
     cursor: pointer;
-    border: 1px solid var(--gold);
+    border: 3px solid transparent;
     color: var(--primary);
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     border-radius: .5rem;
-    background: var(--white);
+    background: var(--texas-rose-50);
 }
 
 .listbox-header:hover {
@@ -144,8 +154,9 @@ body {
     z-index: 1;
     margin-top: .5rem;
     width: 9rem;
-    padding: .3rem;
+    padding: .2rem;
     border-radius: .5rem;
+    border: 1px solid var(--texas-rose-100);
 }
   
 .options li {
@@ -181,12 +192,13 @@ body {
 
 .custom-input {
     padding: .6rem;
-    border: 1px solid var(--gold);
+    border: 3px solid transparent;
     color: var(--primary);
     border-radius: .5rem;
     font-size: .9rem;
     width: 15rem; 
     outline: none;
+    background: var(--texas-rose-50);
 }
 
 .custom-input::placeholder {
@@ -195,11 +207,11 @@ body {
 }
 
 .custom-input:focus {
-    border: 3px solid var(--gold);
+    border: 3px solid var(--primary);
 }
 
-/* Equipos de investigacion */
-.teams {
+/* Cursos */
+.courses, .teams {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
     gap: 1.5rem;
@@ -254,6 +266,13 @@ body {
     text-decoration: underline;
 }
 
+.empty {
+    font-size: .9rem;
+    color: var(--primary);
+    margin: auto;
+    font-weight: 100;
+}
+
 /* Scroll */
 ::-webkit-scrollbar {
     width: .4rem;
@@ -265,12 +284,18 @@ body {
 }
 
 @media (max-width: 880px){
-    .courses {
-        grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+    .head-content {
+        flex-direction: column;
+        justify-content: center;
     }
 
-    .teams-content {
-        margin-bottom: 1.5rem;
+    .head-title {
+        font-size: 3rem;
+        text-align: center;
+    }
+    
+    .courses, .teams {
+        grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
     }
 }
 
@@ -279,7 +304,7 @@ body {
         width: 90%;
     }
 
-    .information-content {
+    .head-content, .courses-content {
         width: 95%;
     }
 }

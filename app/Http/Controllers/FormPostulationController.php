@@ -46,8 +46,6 @@
             // Create new StudentHistory
             $studentHistory = new StudentHistory;
             $studentHistory->cum = $request->input('cum');
-            $studentHistory->studentCycle = 'Ciclo I';
-            $studentHistory->studentYear = '2024';
             $studentHistory->enrolledSubject = $request->input('selectedMaterias');
             $studentHistory->subjectApply = $request->input('subjectApply');
             $studentHistory->previousIdc = $request->input('previousIDC');
@@ -87,7 +85,7 @@
 
             if($result) 
             {
-                return redirect('/home')->with('success', 'El estudiante ha sido guardado con éxito');
+                return redirect('/tablero')->with('success', 'El estudiante ha sido guardado con éxito');
             }
         }
     }

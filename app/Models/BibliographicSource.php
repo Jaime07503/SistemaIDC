@@ -1,23 +1,22 @@
 <?php
     namespace App\Models;
-
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
 
     class BibliographicSource extends Model
     {
         use HasFactory;
-
         protected $table = 'Bibliographic_Source';
         protected $primaryKey = 'bibliographicSourceId'; 
 
         protected $fillable = [
             'bibliographicSourceId',
-            'bibliographicSourceType',
+            'theme',
             'author',
             'year',
             'averageType',
-            'link',
+            'studentContribute',
+            'link'
         ];
 
         //Relationships with other tables

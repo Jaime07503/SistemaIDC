@@ -12,12 +12,12 @@
     <main class="main-content">
         <!-- Encabezado e Historial de vistas -->
         <header class="head-content">
-            <h1>{{ $subject->nameSubject.' - '.$researchTopic->themeName }}</h1>
+            <h1>{{ $subject->nameSubject.' - '.$subject->section.' - '.$researchTopic->themeName }}</h1>
             <nav class="history">
                 <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
                 <a class="history-view" >Mis cursos</a>
                 <a class="history-view" href="{{ route('researchTopics', ['subjectId' => $subjectId]) }}">{{ $subject->code }}</a>
-                <a class="history-view" href="">{{ $researchTopic->themeName }}</a>
+                <a class="history-view" href="">{{ $researchTopic->code }}</a>
             </nav>
         </header>
         <!-- Información general del tema de investigación -->
@@ -26,6 +26,7 @@
             <!-- Información del tema de investigación -->
             <div class="information">
                 <p class="information-paragraph">{{ $researchTopic->description }}</p>
+                <p class="information-paragraph">{{ $researchTopic->currentInformation }}</p>
                 <div class="information-images">
                     <img src="{{ $researchTopic->importanceRegional }}" alt="" class="information-images-importance">
                     <img src="{{ $researchTopic->importanceGlobal }}" alt="" class="information-images-importance">

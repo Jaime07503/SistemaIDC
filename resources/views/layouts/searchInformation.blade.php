@@ -11,13 +11,15 @@
 @section('content')
     <main class="main-content">
         <div class="head-content">
-            <h1>Informe y ordenamiento de búsqueda del tema</h1>
+            <h1 class="head-lbl">{{ $searchReport->themeName }} - Equipo #{{ $searchReport->teamId}} - Búsqueda de Información</h1>
             <nav class="history">
-                <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Mis cursos</a>
-                <a class="view" href="">ADS104-A-I24</a>
-                <a class="view" href="">Tema</a>
-                <a class="view" href=""> Etapas </a>
+                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view">Mis investigaciones</a>
+                <a class="history-view" href="{{ route('researchTopicInformation', ['researchTopicId' => $searchReport->researchTopicId, 'subjectId' => $searchReport->subjectId]) }}">{{ $searchReport->code }}</a>
+                <a class="history-view" href="{{ route('stagesProcess', ['researchTopicId' => $searchReport->researchTopicId, 
+                    'teamId' => $searchReport->teamId, 'idcId' => $searchReport->idcId]) }}">Etapas del proceso
+                </a>
+                <a class="history-view" href="">Estatus del Informe</a>
             </nav>
         </div>
         <div class="info-content">
@@ -28,23 +30,39 @@
                 <tbody>
                     <tr>
                         <td><strong>Estatus del informe</strong></td>
-                        <td>Sin intento</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Estatus de calificación</strong></td>
-                        <td>No calificado</td>
+                        @if($searchReport->state === null)
+                            <td>Sin Intento</td>
+                        @else 
+                            <td>{{ $searchReport->state }}</td>
+                        @endif
                     </tr>
                     <tr>
                         <td><strong>Fecha de entrega</strong></td>
-                        <td>Miercoles 16 de marzo 2024</td>
+                        <td>{{ $formattedDeadline }}</td>
                     </tr>
                     <tr>
                         <td><strong>Tiempo restante</strong></td>
-                        <td>1 hora 30 minutos 60 segundos</td>
+                        @if($searchReport->state !== 'Creado')
+                            <td>{{ $timeRemaining }}</td>
+                        @else
+                            <td>El documento fue creado: <strong>{{ $formattedupdated_at }}</strong></td>
+                        @endif
                     </tr>
                     <tr>
                         <td><strong>Archivo generado</strong></td>
-                        <td>Sin intento</td>
+                        @if($searchReport->storagePath === null)
+                            <td>Aún no se ha generado un documento</td>
+                        @else
+                            @if($searchReport->storagePath !== 'Creado')
+                                <td>{{ $searchReport->storagePath }}</td>
+                            @else
+                                <td>
+                                    <strong><a href="{{ asset($searchReport->storagePath) }}" class="link-document">
+                                        <i class="fa-regular fa-file-word"></i> {{ $searchReport->searchReportCode }}
+                                    </a></strong>
+                                </td>
+                            @endif
+                        @endif
                     </tr>
                     <tr>
                         <td><strong>Comentarios al envío</strong></td>
@@ -52,12 +70,14 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="title">
-                <a href="{{ url('/topicSearchReport') }}" class="btn-login">
-                    <i class="fa-solid fa-square-plus"></i>
-                    <h4>Crear Informe</h4>
-                </a>
-            </div>
+            @if($searchReport->state !== 'Creado') 
+                <div class="title">
+                    <a href="{{ route('topicSearchReport', ['idcId' => $searchReport->idcId, 
+                        'idTopicSearchReport' => $idTopicSearchReport]) }}" class="btn-login">
+                        <h4>Crear Informe</h4>
+                    </a>
+                </div>
+            @endif
         </div>
     </main>
 @endsection

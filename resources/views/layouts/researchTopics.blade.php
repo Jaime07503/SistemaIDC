@@ -47,15 +47,19 @@
                 <input class="custom-input" type="text" placeholder="Buscar...">
             </div>
             <!-- Temas de investigación -->
-            <aside class="topics">
-                @foreach ($researchTopics as $topic)
-                    <div class="card">
-                        <h3 class="card-title">{{ $topic->state }}</h3>
-                        <img src="{{ $topic->avatar }}" class="card-image" alt="Imagen">
-                        <a href="{{ route('researchTopicInformation', ['researchTopicId' => $topic->researchTopicId, 'subjectId' => $subject->subjectId]) }}" class="card-link">{{ $topic->themeName }}</a>
-                    </div>
-                @endforeach
-            </aside>
+            @if(isset($noTopics))
+                <h3 class="empty">No hay temas de investigación</h3>
+            @else
+                <aside class="topics">
+                    @foreach ($researchTopics as $topic)
+                        <div class="card">
+                            <h3 class="card-title">{{ $topic->state }}</h3>
+                            <img src="{{ $topic->avatar }}" class="card-image" alt="Imagen">
+                            <a href="{{ route('researchTopicInformation', ['researchTopicId' => $topic->researchTopicId, 'subjectId' => $subject->subjectId]) }}" class="card-link">{{ $topic->themeName }}</a>
+                        </div>
+                    @endforeach
+                </aside>
+            @endif
         </section>
     </main>
 @endsection

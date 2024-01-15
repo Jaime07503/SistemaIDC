@@ -129,7 +129,7 @@ h2 {
     padding: 0;
 }
 
-.sixth-content, .report-content, .source-content {
+.source-content {
     margin-bottom: 1.7rem;
 }
 
@@ -157,7 +157,7 @@ input {
     background: transparent;
     border: none;
     outline: none;
-    border: 1px solid var(--gold);
+    border: 1px solid var(--texas-rose-200);
     border-radius: .5rem;
     color: var(--primary);
     font-size: 1rem;
@@ -239,7 +239,7 @@ input::placeholder, textarea::placeholder {
     outline: none;
     resize: none;
     font-size: 1rem;
-    border-color: var(--gold);
+    border-color: var(--texas-rose-200);
     text-align: justify;
     font-weight: 100;
     color: var(--primary);
@@ -328,13 +328,14 @@ input::placeholder, textarea::placeholder {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
 }
 
 .modal-content {
     background-color: #fff;
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 3px solid var(--primary);
     width: 30rem;
     border-radius: .5rem;
     display: flex;
@@ -393,7 +394,7 @@ input::placeholder, textarea::placeholder {
 }
 .img-area i {
 	font-size: 4rem;
-    color: var(--gold);
+    color: var(--texas-rose-200);
 }
 .img-area h4 {
 	font-size: 1.3rem;
@@ -456,6 +457,97 @@ input::placeholder, textarea::placeholder {
 }
 .select-image:hover {
 	background: var(--primary);
+}
+
+.custom-listbox {
+    position: relative;
+    display: inline-block;
+    z-index: 2;
+    font-size: 1rem;
+}
+  
+.listbox-header {
+    cursor: pointer;
+    border: 3px solid transparent;
+    color: var(--primary);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: .5rem;
+    background: var(--texas-rose-50);
+}
+
+.listbox-header:hover {
+    background: var(--texas-rose-100);
+}
+
+.listbox-header:active {
+    background: var(--texas-rose-100);
+    border: 3px solid var(--primary);
+}
+ 
+.active {
+    background: var(--texas-rose-100);
+    border: 3px solid var(--primary);
+}
+  
+.selected-option {
+    flex-grow: 1;
+    margin-right: .5rem;
+}
+  
+.arrow-down {
+    transition: transform 0.2s ease-in-out;
+    margin-right: .7rem;
+    font-size: .7rem;
+}
+  
+.options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--white);
+    z-index: 1;
+    margin-top: .5rem;
+    width: 9rem;
+    padding: .2rem;
+    border-radius: .5rem;
+    border: 1px solid var(--texas-rose-100);
+}
+  
+.options li {
+    padding: .5rem;
+    cursor: pointer;
+    color: var(--primary);
+    font-size: .9rem;
+}
+  
+.options li:hover {
+    background: var(--primary);
+    color: var(--white);
+    border-radius: .5rem;
+}
+
+.custom-listbox.active .options {
+    display: block;
+}
+
+#listbox {
+    height: 2.5rem;
+    border: transparent;
+    border-radius: .5rem;
+    font-size: .9rem;
+    outline: none;
+    display: block;
+    min-width: 0; 
+    width: auto;
+    padding: .5rem;
+    color: var(--primary);
+    background: transparent;
 }
 
 @media (max-width: 880px){

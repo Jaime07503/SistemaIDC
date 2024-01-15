@@ -1,4 +1,57 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Variables
+ const listboxes = document.querySelectorAll(".custom-listbox");
+ let openListbox = null;
+
+ // Custom Listbox
+ listboxes.forEach(function (listbox) {
+     handleListbox(listbox);
+ });
+
+ function handleListbox(listbox) {
+     const listboxHeader = listbox.querySelector(".listbox-header");
+     const optionsList = listbox.querySelector(".options");
+     const arrowDown = listbox.querySelector(".arrow-down");
+     const selectedOptionSpan = listbox.querySelector(".selected-option");
+
+     listboxHeader.addEventListener("click", function () {
+         if (openListbox && openListbox !== listbox) {
+             openListbox.querySelector(".options").style.display = "none";
+             openListbox.querySelector(".arrow-down").style.transform = "rotate(0deg)";
+             openListbox.querySelector(".listbox-header").classList.remove("active");
+         }
+
+         listboxHeader.classList.toggle("active");
+         optionsList.style.display = optionsList.style.display === "block" ? "none" : "block";
+         arrowDown.style.transform = optionsList.style.display === "block" ? "rotate(180deg)" : "rotate(0deg)";
+         openListbox = listbox;
+     });
+
+     optionsList.addEventListener("click", function (event) {
+         if (event.target.tagName === "LI") {
+             const selectedOption = event.target.textContent;
+             selectedOptionSpan.textContent = selectedOption;
+             optionsList.style.display = "none";
+             arrowDown.style.transform = "rotate(0deg)";
+             listboxHeader.classList.remove("active");
+
+             markSelectedOption(event.target);
+         }
+     });
+
+     // Función para agregar o quitar el ícono de verificación a la opción seleccionada
+     function markSelectedOption(selectedListItem) {
+         const options = optionsList.querySelectorAll("li");
+         options.forEach(function (option) {
+             option.classList.remove("selected");
+             option.innerHTML = option.textContent; // Limpiar el contenido HTML
+         });
+
+         selectedListItem.classList.add("selected");
+         selectedListItem.innerHTML = '<i class="fa-solid fa-check"></i> ' + selectedListItem.textContent;
+     }
+ }
+ 
     const textareas = document.querySelectorAll(".textarea");
     textareas.forEach(textarea => {
         textarea.addEventListener('keyup', e => {
@@ -15,18 +68,18 @@ document.addEventListener("DOMContentLoaded", function () {
         fileContainer.addEventListener('click', function () {
             const inputFile = this.querySelector('.file-input');
             const imgArea = this.querySelector('.img-area');
-
-            inputFile.click();
-
+    
+            inputFile.click(); // Hacer clic directamente en el input file
+    
             inputFile.addEventListener('change', function () {
                 const image = this.files[0];
-
+    
                 if (image && image.size < 2000000) {
                     const reader = new FileReader();
                     reader.onload = () => {
                         const allImgs = imgArea.querySelectorAll('img');
                         allImgs.forEach(item => item.remove());
-
+    
                         const imgUrl = reader.result;
                         const img = document.createElement('img');
                         img.src = imgUrl;
@@ -55,202 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
         elemento.style.height = "auto"; // Restablece la altura a auto para obtener la altura total
         elemento.style.height = Math.min(elemento.scrollHeight, 120) + "px"; // Limita la altura al máximo de 120px
     }
-
-    // document.getElementById('myForm').addEventListener('submit', function() {
-    //     var tableData = [];
-    //     var tableRows = document.querySelectorAll('.export-table tbody tr');
-
-    //     tableRows.forEach(function(row) {
-    //         var rowData = {
-    //             bibliographicSourceId: row.cells[0].innerText,
-    //             year: row.cells[1].innerText,
-    //             author: row.cells[2].innerText,
-    //             bibliographicSourceType: row.cells[3].innerText,
-    //             averageType: row.cells[4].innerText,
-    //             link: row.cells[5].innerText,
-    //         };
-
-    //         tableData.push(rowData);
-    //     });
-
-    //     // Agregar los datos al campo de formulario
-    //     var input = document.createElement('input');
-    //     input.type = 'hidden';
-    //     input.name = 'datos';
-    //     input.value = JSON.stringify(tableData);
-
-    //     document.getElementById('myForm').appendChild(input);
-    // });
-
-    // btnAdd = document.getElementById("btnAdd");
-    // btnAddInfo = document.getElementById("btnAddInfo");
-
-    // btnAdd.addEventListener('click', function (){
-    //     agregarFila();
-    // });
-
-    // btnAddInfo.addEventListener('click', function (){
-    //     agregarFilaInfo();
-    // });
-
-    // function agregarFila() {
-    //     // Obtén el valor del input de objetivo específico
-    //     var objetivoEspecifico = document.getElementById("objetivoEspecifico").value;
-
-    //     // Obtén la referencia de la tabla
-    //     var tabla = document.getElementById("data-table").getElementsByTagName('tbody')[0];
-
-    //     // Crea una nueva fila
-    //     var fila = tabla.insertRow();
-
-    //     // Crea celdas en la nueva fila
-    //     var celdaNumero = fila.insertCell(0);
-    //     var celdaEstudiante = fila.insertCell(1);
-    //     var celdaObjetivo = fila.insertCell(2);
-
-    //     // Asigna valores a las celdas
-    //     celdaNumero.innerHTML = tabla.rows.length; // Número de la nueva fila
-    //     celdaEstudiante.innerHTML = "Nombre del estudiante";
-    //     celdaObjetivo.innerHTML = objetivoEspecifico;
-
-    //     // Crear un nuevo elemento <textarea>
-    //     // var textarea = document.createElement("textarea");
-    //     // textarea.className = "textarea";
-    //     // textarea.name = "objetivoEspecifico" + tabla.rows.length;
-    //     // textarea.value = objetivoEspecifico;  // Asigna el valor al contenido del textarea
-
-    //     // Agrega el <textarea> a la celda
-    //     // celdaObjetivo.appendChild(textarea);
-
-    //     // Limpia el valor del input después de agregar la fila
-    //     document.getElementById("objetivoEspecifico").value = "";
-    // }
-
-    // function agregarFilaInfo() {
-    //     // Obtén los valores de los inputs
-    //     var fuente = document.getElementById("fuente").value;
-    //     var autor = document.getElementById("autor").value;
-    //     var ano = document.getElementById("año").value;
-    //     var tipoMedio = document.getElementById("tipoMedio").value;
-    //     var enlace = document.getElementById("enlace").value;
-    
-    //     // Obtén la referencia de la tabla
-    //     var tabla = document.getElementById("data-table-2").getElementsByTagName('tbody')[0];
-    
-    //     // Crea una nueva fila
-    //     var fila = tabla.insertRow();
-    
-    //     // Crea celdas en la nueva fila
-    //     var celdaNumero = fila.insertCell(0);
-    //     var celdaFuente = fila.insertCell(1);
-    //     var celdaAutor = fila.insertCell(2);
-    //     var celdaAno = fila.insertCell(3);
-    //     var celdaTipoMedio = fila.insertCell(4);
-    //     var celdaEnlace = fila.insertCell(5);
-    
-    //     // Asigna valores a las celdas
-    //     celdaNumero.innerHTML = tabla.rows.length;
-    //     celdaFuente.innerHTML = fuente;
-    //     celdaAutor.innerHTML = autor;
-    //     celdaAno.innerHTML = ano;
-    //     celdaTipoMedio.innerHTML = tipoMedio;
-    
-    //     // Crea un elemento de enlace y asigna los atributos al enlace
-    //     var enlaceElemento = document.createElement("a");
-    //     enlaceElemento.href = enlace;
-    //     enlaceElemento.textContent = enlace;
-    
-    //     // Agrega los atributos al enlace
-    //     enlaceElemento.target = "_blank"; // Puedes cambiar "_blank" según tus necesidades
-    //     enlaceElemento.rel = "noreferrer"; // Puedes ajustar esto según tus necesidades
-    //     enlaceElemento.className = "link"; // Puedes ajustar la clase según tus necesidades
-    
-    //     // Agrega el elemento de enlace como hijo de la celda
-    //     celdaEnlace.appendChild(enlaceElemento);
-    
-    //     // Limpia los valores de los inputs después de agregar la fila
-    //     document.getElementById("fuente").value = "";
-    //     document.getElementById("autor").value = "";
-    //     document.getElementById("año").value = "";
-    //     document.getElementById("tipoMedio").value = "";
-    //     document.getElementById("enlace").value = "";
-    // }
-
-    document.getElementById('myForm').addEventListener('submit', function (event) {
-        // Evitar que el formulario se envíe automáticamente
-        event.preventDefault();
-
-        // Obtener los datos de la tabla
-        var datosTabla = obtenerDatosDeLaTabla();
-
-        // Agregar los datos como un campo oculto al formulario
-        var inputDatos = document.createElement('input');
-        inputDatos.type = 'hidden';
-        inputDatos.name = 'datos';
-        inputDatos.value = JSON.stringify(datosTabla);
-        this.appendChild(inputDatos);
-
-        // Enviar el formulario
-        this.submit();
-    });
-
-    function obtenerDatosDeLaTabla() {
-        var datosTabla = [];
-
-        // Iterar sobre las filas de la tabla
-        var filas = document.getElementById('data-table-2').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
-        for (var i = 0; i < filas.length; i++) {
-            var celdas = filas[i].getElementsByTagName('td');
-            var filaDatos = {
-                sourceId: celdas[0].innerText,
-                year: celdas[1].innerText,
-                author: celdas[2].innerText,
-                source: celdas[3].innerText,
-                mediaType: celdas[4].innerText,
-                // link: celdas[5].innerText
-            };
-            datosTabla.push(filaDatos);
-        }
-
-        return datosTabla;
-    }
-
-    // function sortTableByColumn(table, column, asc = true) {
-    //     const dirModifier = asc ? 1 : -1;
-    //     const tBody = table.tBodies[0];
-    //     const rows = Array.from(tBody.querySelectorAll("tr"));
-    
-    //     // Sort each row
-    //     const sortedRows = rows.sort((a, b) => {
-    //         const aColText = a.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
-    //         const bColText = b.querySelector(`td:nth-child(${column + 1})`).textContent.trim();
-    
-    //         return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
-    //     });
-    
-    //     // Remove all existing TRs from the table
-    //     while (tBody.firstChild) {
-    //         tBody.removeChild(tBody.firstChild);
-    //     }
-    
-    //     // Re-add the newly sorted rows
-    //     tBody.append(...sortedRows);
-    
-    //     // Remember how the column is currently sorted
-    //     table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
-    //     table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
-    //     table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
-    // }
-    
-    // document.querySelectorAll(".content-table th").forEach(headerCell => {
-    //     headerCell.addEventListener("click", () => {
-    //         const tableElement = headerCell.parentElement.parentElement.parentElement;
-    //         const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-    //         const currentIsAscending = headerCell.classList.contains("th-sort-asc");
-    
-    //         sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
-    //     });
-    // });
 
     // Función para mostrar un modal
     function showModal(modal) {
@@ -319,5 +176,4 @@ document.addEventListener("DOMContentLoaded", function () {
             closeModal(modals.objetivoEspecifico);
         }
     });
-
 });

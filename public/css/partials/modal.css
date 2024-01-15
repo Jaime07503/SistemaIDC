@@ -1,27 +1,25 @@
 :root {
     --primary: #800000;
-    --secondary: #F8F9FA;
     --gold: #F0AD4E;
-    --light-gray: #CCCCCC;
     --light: #E5EEF4;
     --white: #FFFFFF;
-    --silver-pale: #F7F7F7;
-    --black: #000000;
+    --texas-rose-100: #fae9cb;
 }
 
-.modal {
+.modalUser {
     display: none;
     position: fixed;
     z-index: 1;
-    top: 5.3rem;
+    top: 4.6rem;
     right: 1rem;
-    width: 19rem;
+    width: 15rem;
     background-color: var(--white);
     border-radius: 0.5rem;
+    border: 1px solid var(--texas-rose-100);
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
 }
 
-.modal-content {
+.modal-content-user {
     margin: auto;
     width: 100%;
     text-align: left;
@@ -31,10 +29,18 @@
 .user-options {
     display: column;
     cursor: pointer;
-    padding: .5rem .5rem;
+    padding: .2rem;
 }
 
-.option:hover a {
+.enlace-div {
+    text-decoration: none;
+    color: var(--primary);
+    font-size: 0.9rem;
+    display: block;
+    padding: .7rem;
+}
+
+.enlace-div:hover {
     background: var(--primary);
     color: var(--light);
     right: 1rem;
@@ -43,40 +49,8 @@
     border-radius: .5rem;
 }
 
-.user-info:hover a {
-    background: var(--primary);
-    color: var(--light);
-    right: 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    border-radius: .5rem .5rem 0 0;
-}
-
-.modal-content a {
-    text-decoration: none;
-    color: var(--primary);
-    font-size: 0.9rem;
-}
-
-.modal-content div i {
+.icon {
     margin-right: 10px;
     margin-left: 10px;
     max-height: 50px;
-}
-
-.enlace-div {
-    display: block;
-    padding: 10px;
-    color: var(--black);
-}
-
-.perfil {
-    padding: .7rem 1rem;
-    margin-bottom: .5rem;
-}
-
-.line {
-    background-color: var(--gold);
-    width: 100%;
-    height: .01rem;
 }

@@ -43,7 +43,6 @@
     font-size: 1.23rem;
 }
 
-.ic_mensajeria,
 .ic_notificaciones,
 .avatar-container,
 #menu-btn {
@@ -58,7 +57,6 @@
     font-size: 0.8rem;
 }
 
-.ic_mensajeria:hover,
 .ic_notificaciones:hover,
 .avatar-container:hover,
 #menu-btn:hover {

@@ -1,12 +1,10 @@
 :root {
     --primary: #800000;
-    --secondary: #F8F9FA;
     --gold: #F0AD4E;
-    --light-gray: #CCCCCC;
-    --light: #E5EEF4;
     --white: #FFFFFF;
-    --silver-pale: #F7F7F7;
-    --black: #000000;
+    --texas-rose-100: #fae9cb;
+    --texas-rose-200: #f6d091;
+    --texas-rose-300: #f0ad4e;
 }
 
 html, body, div, form, h1, h2, h3, h4, label, input, button, i, ul, li, span {
@@ -59,7 +57,7 @@ form {
     background: transparent;
     border: none;
     outline: none;
-    border: 1px solid var(--gold);
+    border: 1px solid var(--texas-rose-200);
     border-radius: .5rem;
     color: var(--primary);
     font-size: 1rem;
@@ -158,7 +156,7 @@ input::placeholder {
   
 .listbox-header {
     cursor: pointer;
-    border: 1px solid var(--gold);
+    border: 1px solid var(--texas-rose-200);
     background: var(--white);
     display: flex;
     justify-content: space-evenly;
@@ -222,7 +220,7 @@ input::placeholder {
 }
 
 .subjects {
-    border: 1px solid var(--gold);
+    border: 1px solid var(--texas-rose-200);
     border-radius: 0.3rem;
     padding: 0.5rem;
 }
@@ -269,7 +267,7 @@ input::placeholder {
 }
 
 .input-radio {
-    border: 1px solid var(--gold);
+    border: 1px solid var(--texas-rose-200);
     border-radius: .5rem;
     padding: 0.5rem;
 }
@@ -309,7 +307,7 @@ input[type="radio"] {
     content: "";
     height: 1rem;
     width: 1rem;
-    border: 2px solid var(--gold);
+    border: 2px solid var(--texas-rose-200);
     border-radius: 50%;
     margin-right: 1rem;
     margin: auto;
