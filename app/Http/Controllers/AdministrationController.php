@@ -2,8 +2,8 @@
     namespace App\Http\Controllers;
     use App\Models\Career;
     use App\Models\Student;
-use App\Models\Teacher;
-use App\Models\User;
+    use App\Models\Teacher;
+    use App\Models\User;
     use Illuminate\Http\Request;
 
     class AdministrationController extends Controller

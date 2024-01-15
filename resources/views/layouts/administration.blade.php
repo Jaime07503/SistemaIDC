@@ -93,7 +93,7 @@
                             <h2>Datos del Usuario</h2>
                             <span class="close">&times;</span>
                         </header>
-                        <form action="" method="POST">
+                        <form action="{{ route('editUser', ['userId' => $user->userId]) }}" method="POST">
                             @csrf
                             <div class="input-box">
                                 <input class="error-input" type="text" name="name" id="nameInput" autocomplete="off">
@@ -121,8 +121,8 @@
                         </header>
                         <div class="optionDeleteUser">
                             <form action="{{ route('deleteUser', ['userId' => $user->userId]) }}" method="POST">
-                                @csrf  
-                                @method('DELETE')  
+                                @csrf
+                                @method('DELETE')
                                 <input hidden type="text" name="userId" id="idInputs" class="error-input" autocomplete="off">
                                 <button class="btn">Eliminar</button>
                             </form>
@@ -140,12 +140,12 @@
                         <button type="button" id="cerrarModalUser"><i class="fa-solid fa-xmark"></i></button>
                     </header>
                     <form action="{{ url('/addUser') }}" method="POST" id="formUser" class="addUser">
-                        @csrf                
+                        @csrf
                         <div class="input-box">
                             <input type="text" name="name" id="nameInput" placeholder="Nombre completo" class="error-input" autocomplete="off">
                             <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
-                        
+
                         <div class="input-box">
                             <input type="text" name="email" id="emailInput" placeholder="Correo" class="error-input" autocomplete="off">
                             <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
@@ -196,7 +196,7 @@
                             </div>
                         </div>
                         <input hidden type="text" name="specialty" id="specialtyInput">
-                        
+
                         <button type="submit" class="btn" id="submitButton">Crear</button>
                     </form>
                 </div>

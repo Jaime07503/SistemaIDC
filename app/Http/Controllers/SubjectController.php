@@ -11,15 +11,15 @@ class SubjectController extends Controller
 {
     // ... (métodos index, create, store, show, edit, update, destroy)
 
-    public function getCareers()
+    public function getSubject()
     {
-        $careers = Career::whereHas('Faculty', function ($query) {
+        $subjects = Subject::whereHas('Faculty', function ($query) {
             $query->where('nameFaculty', 'Ingeniería y Arquitectura');
-        })->select('nameCareer')->get();
+        })->select('nameSubject')->get();
 
         $subjects = Subject::get();
 
-        return view('subjects.index', compact('careers', 'subjects'));
+        return view('layouts.subject', compact('careers', 'subjects'));
     }
 
     public function addSubject(Request $request)
