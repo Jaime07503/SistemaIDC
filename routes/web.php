@@ -33,6 +33,7 @@
         Route::get('/investigaciones', function(){
             return view('layouts.investigaciones');
         });
+    });
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/perfil/{idUser}', [PerfilController::class, 'getInformation']);
