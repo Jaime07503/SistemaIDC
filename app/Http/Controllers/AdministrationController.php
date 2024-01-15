@@ -1,10 +1,6 @@
 <?php
     namespace App\Http\Controllers;
     use App\Models\Career;
-<<<<<<< HEAD
-    use App\Models\Student;
-=======
->>>>>>> bc73f2a262a2a93aba5bb998e91c135f9e37462d
     use App\Models\Teacher;
     use App\Models\User;
     use Illuminate\Http\Request;

@@ -23,7 +23,6 @@
     use App\Http\Controllers\SubjectController;
 
     // Private Routes
-<<<<<<< HEAD
     Route::middleware(['auth'])->group(function () {
         Route::get('/tablero', [TableroController::class, 'getResearchTopics']);
 
@@ -35,10 +34,8 @@
             return view('layouts.investigaciones');
         });
 
-=======
     Route::middleware(['auth'])->group(function () {
         Route::get('/perfil/{idUser}', [PerfilController::class, 'getInformation']);
->>>>>>> bc73f2a262a2a93aba5bb998e91c135f9e37462d
         Route::get('/formularioPostulacion', [FormPostulationController::class, 'getCareers']);
         Route::get('/tablero', [TableroController::class, 'viewCourses']);
         Route::get('/stagesProcess/{researchTopicId}/{teamId}/{idcId}', [StagesProcessController::class, 'getResearchTopic'])->name('stagesProcess');
