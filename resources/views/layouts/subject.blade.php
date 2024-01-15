@@ -11,15 +11,15 @@
 @section('content')
     <main class="main-content">
         <div class="head-content">
-            <h1>Administración de Usuarios</h1>
+            <h1>Administración de Materias</h1>
             <div class="history">
                 <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Usuarios</a>
+                <a class="view" >Materias</a>
             </div>
         </div>
         <div class="info-user">
             <div class="head">
-                <h2>Usuarios del sistema</h2>
+                <h2>Materias del sistema</h2>
             </div>
             <div class="options-users">
                 <div class="opt">
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <!-- Add user button -->
-                <button type="button" id="btnAddUser" class="btn">Nuevo Usuario</button>
+                <button type="button" id="btnAddUser" class="btn">Nueva Materia</button>
             </div>
 
             <!-- Users Table -->
@@ -51,34 +51,39 @@
                 <table id="data-table" class="table content-table">
                     <thead>
                         <tr>
+                            <th>Codigo</th>
                             <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Rol</th>
-                            <th>Estado</th>
+                            <th>Seccion</th>
+                            <th>Aprobacion</th>
+                            <th>Ciclo</th>
+                            <th>Año</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($users as $user)
+                        @foreach($subjects as $subject)
                             <tr>
-                                <td><img class="avatar" src="{{ $user->avatar }}" alt="Avatar">{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->role }}</td>
-                                <td>{{ $user->state }}</td>
+                                <td><img class="avatar" src="{{ $subject->avatar }}" alt="Avatar">{{ $subject->name }}</td>
+                                <td>{{ $subject->code }}</td>
+                                <td>{{ $subject->nameSubject }}</td>
+                                <td>{{ $subject->section }}</td>
+                                <td>{{ $subject->approvedIdc }}</td>
+                                <td>{{ $subject->subjectCycle }}</td>
+                                <td>{{ $subject->subjectYear }}</td>
                                 <td>
-                                    <button class="button-edit btn" 
-                                        data-modal="editarModal"
-                                        data-userId="{{ $user->userId }}"
-                                        data-userName="{{ $user->name }}"
-                                        data-userEmail="{{ $user->email }}"
-                                        data-userRole="{{ $user->role }}"
-                                        data-userCareer="{{ $user->career }}"
+                                    <button class="button-edit btn" data-modal="editarModal"
+                                        data-subjectId="{{ $subject->subjectId }}"
+                                        data-code="{{ $subject->code }}"
+                                        data-nameSubject="{{ $subject->nameSubject }}"
+                                        data-section="{{ $subject->section }}"
+                                        data-approvedIdc="{{ $subject->approvedIdc }}"
+                                        data-subjectCycle="{{ $subject->subjectCycle }}"
+                                        data-subjectYear="{{ $subject->subjectYear }}"
                                     >
                                         Editar
                                     </button>
-                                    <button class="button-delete btn" 
-                                        data-modal="eliminarModal"
-                                        data-userId="{{ $user->userId }}"
+                                    <button class="button-delete btn" data-modal="eliminarModal"
+                                        data-subjectId="{{ $subject->subjectId }}"
                                     >
                                         Eliminar
                                     </button>
@@ -92,21 +97,33 @@
                 <div class="modal" id="editarModal">
                     <div class="modal-content">
                         <header>
-                            <h2>Datos del Usuario</h2>
+                            <h2>Datos de la materia</h2>
                             <span class="close">&times;</span>
                         </header>
-                        <form action="{{ route('editUser', ['userId' => $user->userId]) }}" method="POST">
+                        <form action="" method="POST">
                             @csrf
                             <div class="input-box">
-                                <input class="error-input" type="text" name="name" id="nameInput" autocomplete="off">
+                                <input class="error-input" type="number" name="code" id="nameInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <div class="input-box">
-                                <input class="error-input" type="text" name="email" id="emailInput" autocomplete="off">
+                                <input class="error-input" type="text" name="name" id="emailInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <div class="input-box">
-                                <input class="error-input" type="text" name="role" id="roleInputEdit" autocomplete="off">
+                                <input class="error-input" type="text" name="section" id="emailInput" autocomplete="off">
+                                <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                            </div>
+                            <div class="input-box">
+                                <input class="error-input" type="text" name="approveIdc" id="roleInputEdit" autocomplete="off">
+                                <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                            </div>
+                            <div class="input-box">
+                                <input class="error-input" type="text" name="cycle" id="roleInputEdit" autocomplete="off">
+                                <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                            </div>
+                            <div class="input-box">
+                                <input class="error-input" type="text" name="year" id="roleInputEdit" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <button type="button" id="btnEditUser" class="btn">Guardar</button>
@@ -118,14 +135,14 @@
                 <div class="modal" id="eliminarModal">
                     <div class="modal-content">
                         <header>
-                            <h2>¿Realmente deseas eliminar al usuario?</h2>
+                            <h2>¿Realmente deseas eliminar la materia?</h2>
                             <span class="close">&times;</span>
                         </header>
                         <div class="optionDeleteUser">
-                            <form action="{{ route('deleteUser', ['userId' => $user->userId]) }}" method="POST">
+                            <form action="{{ route('deleteSubject', ['subjectId' => $subject->subjectId]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <input hidden type="text" name="userId" id="idInputs" class="error-input" autocomplete="off">
+                                <input hidden type="text" name="subjectId" id="idInputs" class="error-input" autocomplete="off">
                                 <button class="btn">Eliminar</button>
                             </form>
                             <button class="btn cancel">Cancelar</button>
@@ -138,66 +155,42 @@
             <div id="myModalUser" class="modal">
                 <div class="modal-content">
                     <header class="head">
-                        <h2>Nuevo Usuario</h2>
+                        <h2>Nueva Materia</h2>
                         <button type="button" id="cerrarModalUser"><i class="fa-solid fa-xmark"></i></button>
                     </header>
-                    <form action="{{ url('/addUser') }}" method="POST" id="formUser" class="addUser">
+                    <form action="{{ url('/addSubject') }}" method="POST" id="formUser" class="addUser">
                         @csrf
+
+                        <div class="input-box">
+                            <input type="text" name="code" id="codeInput" placeholder="Codigo" class="error-input" autocomplete="off">
+                            <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                        </div>
+
                         <div class="input-box">
                             <input type="text" name="name" id="nameInput" placeholder="Nombre completo" class="error-input" autocomplete="off">
                             <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
 
                         <div class="input-box">
-                            <input type="text" name="email" id="emailInput" placeholder="Correo" class="error-input" autocomplete="off">
+                            <input type="text" name="section" id="sectionInput" placeholder="Seccion" class="error-input" autocomplete="off">
                             <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
 
-                        <div class="options-courses">
-                            <div class="custom-listbox">
-                                <div class="listbox-header">
-                                    <button id="listbox" type="button"><span class="selected-option">Rol</span></button>
-                                    <i class="fa-solid fa-chevron-down arrow-down"></i>
-                                </div>
-                                <ul class="options">
-                                    <li data-value="Estudiante">Estudiante</li>
-                                    <li data-value="Docente">Docente</li>
-                                    <li data-value="Coordinador">Coordinador</li>
-                                    <li data-value="Administrador del Proceso">Administrador del Proceso</li>
-                                    <li data-value="Administrador del Sistema">Administrador del Sistema</li>
-                                </ul>
-                            </div>
+                        <div class="input-box">
+                            <input type="text" name="approvedIdc" id="approvedIdcInput" placeholder="Aprobacion" class="error-input" autocomplete="off">
+                            <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
-                        <input hidden type="text" name="role" id="roleInput">
 
-                        <div class="options-courses lst-contract" hidden>
-                            <div class="custom-listbox contract">
-                                <div class="listbox-header">
-                                    <button id="listbox" type="button"><span class="selected-option">Tipo de contrato</span></button>
-                                    <i class="fa-solid fa-chevron-down arrow-down"></i>
-                                </div>
-                                <ul class="options">
-                                    <li data-value="Tiempo completo">Tiempo completo</li>
-                                    <li data-value="Hora clase">Hora clase</li>
-                                </ul>
-                            </div>
+                        <div class="input-box">
+                            <input type="text" name="cycle" id="subjectCycleInput" placeholder="Ciclo" class="error-input" autocomplete="off">
+                            <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
-                        <input hidden type="text" name="contractType" id="contractTypeInput">
 
-                        <div class="options-courses lst-specialty" hidden>
-                            <div class="custom-listbox specialty">
-                                <div class="listbox-header">
-                                    <button id="listbox" type="button"><span class="selected-option">Especialidad</span></button>
-                                    <i class="fa-solid fa-chevron-down arrow-down"></i>
-                                </div>
-                                <ul class="options">
-                                    @foreach($careers as $career)
-                                        <li data-value="{{$career->nameCareer}}">{{$career->nameCareer}}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                        <div class="input-box">
+                            <input type="text" name="year" id="yearInput" placeholder="Año" class="error-input" autocomplete="off">
+                            <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
-                        <input hidden type="text" name="specialty" id="specialtyInput">
+
 
                         <button type="submit" class="btn" id="submitButton">Crear</button>
                     </form>

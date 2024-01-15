@@ -23,7 +23,7 @@
             </div>
         </div>
     </nav>
-    
+
     <!-- Menu Despegable -->
     <!-- <div class="dropdown-menu" id="dropdown-menu">
         <nav class="content-menu">
@@ -36,12 +36,12 @@
                     <ul class="list-show">
                         <li class="list-inside">
                             <a href="#" class="nav-link nav-link--inside">Facultad</a>
-                        </li> 
-                        <li class="list-inside">
-                            <a href="#" class="nav-link nav-link--inside">Carreras</a>
                         </li>
                         <li class="list-inside">
-                            <a href="#" class="nav-link nav-link--inside">Materias</a>
+                            <a href="{{ route('career')}}" class="nav-link nav-link--inside">Carreras</a>
+                        </li>
+                        <li class="list-inside">
+                            <a href="{{ route('subject')}}" class="nav-link nav-link--inside">Materias</a>
                         </li>
                         <li class="list-inside">
                             <a href="{{ url('/administration') }}" class="nav-link nav-link--inside">Usuarios</a>

@@ -1,5 +1,6 @@
 <?php
     use App\Http\Controllers\AdministrationController;
+    use App\Http\Controllers\FacultyController;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthGoogleLoginController;
     use App\Http\Controllers\BibliographicSourceController;
@@ -18,9 +19,23 @@
     use App\Http\Controllers\TableroController;
     use App\Http\Controllers\TeamController;
     use App\Http\Controllers\TopicSearchReportController;
+    use App\Http\Controllers\CareerController;
+    use App\Http\Controllers\SubjectController;
 
     // Private Routes
-    Route::middleware(['auth'])->group(function () {    
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/tablero', [TableroController::class, 'getResearchTopics']);
+
+        Route::get('/perfil', function(){
+            return view('layouts.perfil');
+        });
+
+        Route::get('/investigaciones', function(){
+            return view('layouts.investigaciones');
+        });
+    });
+
+    Route::middleware(['auth'])->group(function () {
         Route::get('/perfil/{idUser}', [PerfilController::class, 'getInformation']);
         Route::get('/formularioPostulacion', [FormPostulationController::class, 'getCareers']);
         Route::get('/tablero', [TableroController::class, 'viewCourses']);
@@ -30,6 +45,9 @@
         Route::get('/scientificArticle/{idcId}/{idScientificArticle}', [ScientificArticleController::class, 'getInformation'])->name('scientificArticle');
         Route::get('/endProcess/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'getInformation'])->name('endProcess');
         Route::get('/administration', [AdministrationController::class, 'getCareers'])->name('administration');
+        Route::get('/career', [CareerController::class, 'getCareers'])->name('career');
+        //Route::get('/faculty', [FacultyController::class, 'getCareers'])->name('career');
+        Route::get('/subject', [SubjectController::class, 'getSubject'])->name('subject');
     });
 
     // Public Routes
@@ -54,6 +72,8 @@
     Route::get('/newResearchTopic/{subjectId}', [ResearchTopicController::class, 'getInformation'])->name('newResearchTopic');
     Route::get('/newTeam/{researchTopicId}', [TeamController::class, 'getInformation'])->name('newTeam');
     Route::get('/researchTopicInformation/{researchTopicId}/{subjectId}', [ResearchTopicInformationController::class, 'getResearchTopicInformation'])->name('researchTopicInformation');
+    Route::get('/topicSearchReport', [TopicSearchReportController::class, 'getSources'])->name('topicSearchReport');
+    Route::get('/career', [CareerController::class, 'getCareers'])->name('career');
     Route::get('/topicSearchReport/{idcId}/{idTopicSearchReport}', [TopicSearchReportController::class, 'getSources'])->name('topicSearchReport');
     Route::get('/scientificArticleReport/{idcId}/{idScientificArticle}', [ScientificArticleReportController::class, 'getSources'])->name('scientificArticleReport');
     Route::get('/nextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [NextIdcTopicReportController::class, 'getSources'])->name('nextIdcTopicReport');
@@ -74,8 +94,11 @@
     Route::get('/updateObjetiveG/{idObjetive}', [TopicSearchReportController::class, 'updateObjetiveG'])->name('objetiveG.update');
     Route::get('/updateObjetiveE/{idObjetive}', [TopicSearchReportController::class, 'updateObjetiveE'])->name('objetiveE.update');
     
+    Route::post('/addCareer', [CareerController::class, 'addCareer'])->name('career.create');
+    Route::post('/editCareer',[CareerController::class, 'editCareer'])->name('editcareer');
     //PUT
-    
+
     //DELETE
     Route::delete('/deleteUser/{userId}', [AdministrationController::class, 'deleteUser'])->name('deleteUser');
+    Route::delete('/deleteCareer/{careerId}', [CareerController::class, 'deleteCareer'])->name('deleteCareer');
 ?>
