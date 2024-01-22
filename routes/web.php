@@ -46,7 +46,7 @@
         Route::get('/endProcess/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'getInformation'])->name('endProcess');
         Route::get('/administration', [AdministrationController::class, 'getCareers'])->name('administration');
         Route::get('/career', [CareerController::class, 'getCareers'])->name('career');
-        //Route::get('/faculty', [FacultyController::class, 'getCareers'])->name('career');
+        Route::get('/faculty', [FacultyController::class, 'getFacultys'])->name('faculty');
         Route::get('/subject', [SubjectController::class, 'getSubject'])->name('subject');
     });
 
@@ -88,17 +88,24 @@
     Route::post('/generate-word', [DocumentController::class, 'generateWord'])->name('generate-word');
     Route::post('/generate-scientific-article', [ScientificArticleReportController::class, 'generateWord'])->name('generate-scientific-article');
     Route::post('/addUser', [AdministrationController::class, 'addUser'])->name('user.create');
+    Route::post('/addSubject', [SubjectController::class, 'addSubject'])->name('subject.create');
+    Route::post('/addFaculty', [FacultyController::class, 'addFaculty'])->name('faculty.create');
 
     // UPDATE
     Route::get('/source/{idSource}', [TopicSearchReportController::class, 'updateSource'])->name('source.update');
     Route::get('/updateObjetiveG/{idObjetive}', [TopicSearchReportController::class, 'updateObjetiveG'])->name('objetiveG.update');
     Route::get('/updateObjetiveE/{idObjetive}', [TopicSearchReportController::class, 'updateObjetiveE'])->name('objetiveE.update');
-    
+
     Route::post('/addCareer', [CareerController::class, 'addCareer'])->name('career.create');
     Route::post('/editCareer',[CareerController::class, 'editCareer'])->name('editcareer');
+    Route::post('/editSubject',[SubjectController::class, 'editSubject'])->name('editSubject');
+    Route::post('/editFaculty',[FacultyController::class, 'editFaculty'])->name('editFaculty');
+
     //PUT
 
     //DELETE
     Route::delete('/deleteUser/{userId}', [AdministrationController::class, 'deleteUser'])->name('deleteUser');
     Route::delete('/deleteCareer/{careerId}', [CareerController::class, 'deleteCareer'])->name('deleteCareer');
+    Route::delete('/deleteSubject/{subjectId}', [SubjectController::class, 'deleteSubject'])->name('deleteSubject');
+    Route::delete('/deleteFaculty/{facultyId}', [FacultyController::class, 'deleteFaculty'])->name('deleteFaculty');
 ?>

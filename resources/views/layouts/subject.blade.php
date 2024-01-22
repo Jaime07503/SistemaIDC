@@ -30,11 +30,9 @@
                             <i class="fa-solid fa-chevron-down arrow-down"></i>
                         </div>
                         <ul class="options">
-                            <li data-value="Todos" class="selected"><i class="fa-solid fa-check"></i> Todos</li>
-                            <li data-value="Estudiantes"> Estudiantes</li>
-                            <li data-value="Docentes"> Docentes</li>
-                            <li data-value="Coordinadores"> Coordinadores</li>
-                            <li data-value="Administradores"> Administradores</li>
+                        @foreach ($subjects as $subject)
+                            <li data-value="{{$subject->nameSubject}}">{{$subject->nameSubject}} </li>
+                            @endforeach
                         </ul>
                     </div>
                     <!-- Input Search RT -->
@@ -51,25 +49,25 @@
                 <table id="data-table" class="table content-table">
                     <thead>
                         <tr>
+
                             <th>Codigo</th>
                             <th>Nombre</th>
                             <th>Seccion</th>
                             <th>Aprobacion</th>
                             <th>Ciclo</th>
-                            <th>Año</th>
+                            <th>Docente</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($subjects as $subject)
                             <tr>
-                                <td><img class="avatar" src="{{ $subject->avatar }}" alt="Avatar">{{ $subject->name }}</td>
                                 <td>{{ $subject->code }}</td>
-                                <td>{{ $subject->nameSubject }}</td>
+                                <td><img class="avatar" src="{{ $subject->avatar }}" alt="Avatar">{{ $subject->nameSubject }}</td>
                                 <td>{{ $subject->section }}</td>
                                 <td>{{ $subject->approvedIdc }}</td>
-                                <td>{{ $subject->subjectCycle }}</td>
-                                <td>{{ $subject->subjectYear }}</td>
+                                <td>{{ $subject->cycle }}</td>
+                                <td>{{ $subject->name }}</td>
                                 <td>
                                     <button class="button-edit btn" data-modal="editarModal"
                                         data-subjectId="{{ $subject->subjectId }}"
@@ -77,8 +75,8 @@
                                         data-nameSubject="{{ $subject->nameSubject }}"
                                         data-section="{{ $subject->section }}"
                                         data-approvedIdc="{{ $subject->approvedIdc }}"
-                                        data-subjectCycle="{{ $subject->subjectCycle }}"
-                                        data-subjectYear="{{ $subject->subjectYear }}"
+                                        data-cycle="{{ $subject->cycle }}"
+                                        data-teacher="{{ $subject->name }}"
                                     >
                                         Editar
                                     </button>
@@ -100,31 +98,35 @@
                             <h2>Datos de la materia</h2>
                             <span class="close">&times;</span>
                         </header>
-                        <form action="" method="POST">
+                        <form action="{{ url('/editSubject') }}" method="POST">
                             @csrf
                             <div class="input-box">
-                                <input class="error-input" type="number" name="code" id="nameInput" autocomplete="off">
+                                <input class="error-input" type="number" name="code" id="numberSubjectInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <div class="input-box">
-                                <input class="error-input" type="text" name="name" id="emailInput" autocomplete="off">
+                                <input class="error-input" type="text" name="name" id="nameSubjectInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <div class="input-box">
-                                <input class="error-input" type="text" name="section" id="emailInput" autocomplete="off">
+                                <input class="error-input" type="text" name="section" id="sectionInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <div class="input-box">
-                                <input class="error-input" type="text" name="approveIdc" id="roleInputEdit" autocomplete="off">
+                                <input class="error-input" type="text" name="approveIdc" id="approvedInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <div class="input-box">
-                                <input class="error-input" type="text" name="cycle" id="roleInputEdit" autocomplete="off">
+                                <input class="error-input" type="text" name="state" id="subjectCycleput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
-                            <div class="input-box">
-                                <input class="error-input" type="text" name="year" id="roleInputEdit" autocomplete="off">
-                                <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                            <div class="container file-container" id="container3">
+                                <input type="file" name="avatar" class="file-input" accept="image/*" hidden>
+                                <div class="img-area" data-img="">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <h4>Regional</h4>
+                                    <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
+                                </div>
                             </div>
                             <button type="button" id="btnEditUser" class="btn">Guardar</button>
                         </form>
@@ -167,12 +169,12 @@
                         </div>
 
                         <div class="input-box">
-                            <input type="text" name="name" id="nameInput" placeholder="Nombre completo" class="error-input" autocomplete="off">
+                            <input type="text" name="name" id="nameInput" placeholder="Materia" class="error-input" autocomplete="off">
                             <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
 
                         <div class="input-box">
-                            <input type="text" name="section" id="sectionInput" placeholder="Seccion" class="error-input" autocomplete="off">
+                            <input type="text" name="section" id="sectionInput" placeholder="Sección" class="error-input" autocomplete="off">
                             <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
 
@@ -181,16 +183,38 @@
                             <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
 
-                        <div class="input-box">
-                            <input type="text" name="cycle" id="subjectCycleInput" placeholder="Ciclo" class="error-input" autocomplete="off">
-                            <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                        <div class="custom-listbox">
+                        <div class="listbox-header">
+                            <button id="listbox"><span class="selected-option">Ciclo</span></button>
+                            <i class="fa-solid fa-chevron-down arrow-down"></i>
                         </div>
+                        <ul class="options">
+                        @foreach ($cycles as $cycle)
+                            <li data-value="{{$cycle->cycle}}">{{$cycle->cycle}} </li>
+                            @endforeach
+                        </ul>
+                    </div>
 
-                        <div class="input-box">
-                            <input type="text" name="year" id="yearInput" placeholder="Año" class="error-input" autocomplete="off">
-                            <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                    <div class="custom-listbox">
+                        <div class="listbox-header">
+                            <button id="listbox"><span class="selected-option">Carrera</span></button>
+                            <i class="fa-solid fa-chevron-down arrow-down"></i>
                         </div>
+                        <ul class="options">
+                        @foreach ($careers as $career)
+                            <li data-value="{{$career->nameCareer}}">{{$career->nameCareer}} </li>
+                            @endforeach
+                        </ul>
+                    </div>
 
+                    <div class="custom-listbox">
+                        <div class="listbox-header">
+                            <button id="listbox"><span class="selected-option">Docente</span></button>
+                            <i class="fa-solid fa-chevron-down arrow-down"></i>
+                        </div>
+                        <ul class="options">
+                        </ul>
+                    </div>
 
                         <button type="submit" class="btn" id="submitButton">Crear</button>
                     </form>
@@ -201,5 +225,5 @@
 @endsection
 
 @section('scripts')
-    <script src=" {{ asset('js/administration.js') }}"></script>
+    <script src=" {{ asset('js/subject.js') }}"></script>
 @endsection

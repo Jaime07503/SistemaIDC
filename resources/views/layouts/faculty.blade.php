@@ -85,20 +85,19 @@
                             <h2>Datos de la facultad</h2>
                             <span class="close">&times;</span>
                         </header>
-                        <form action="" method="POST">
+                        <form action="{{ url('/editFaculty') }}" method="POST">
                             @csrf
-                            <div class="input-box">
-                                <input class="error-input" type="text" name="name" id="nameInput" autocomplete="off">
-                                <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
-                            </div>
-                            <div class="input-box">
-                                <input class="error-input" type="text" name="email" id="emailInput" autocomplete="off">
-                                <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
-                            </div>
-                            <div class="input-box">
-                                <input class="error-input" type="text" name="role" id="roleInputEdit" autocomplete="off">
-                                <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
-                            </div>
+                            <!-- Listbox -->
+                            <div class="custom-listbox">
+                                <div class="listbox-header">
+                                    <button id="listbox"><span class="selected-option faculty"></span></button>
+                                    <i class="fa-solid fa-chevron-down arrow-down"></i>
+                                </div>
+                                <ul class="options">
+                                    @foreach ($facultys as $faculty)
+                                    <li data-value="{{$faculty->facultyId}}">{{$faculty->nameFaculty}} </li>
+                                    @endforeach
+                                </ul>
                             <button type="button" id="btnEditUser" class="btn">Guardar</button>
                         </form>
                     </div>
@@ -112,7 +111,7 @@
                             <span class="close">&times;</span>
                         </header>
                         <div class="optionDeleteUser">
-                            <form action="{{ route('deleteUser', ['facultyId' => $faculty->facultyId]) }}" method="POST">
+                            <form action="{{ route('deleteFaculty', ['facultyId' => $faculty->facultyId]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="facultyId" id="idInputs" class="error-input" autocomplete="off">
@@ -131,7 +130,7 @@
                         <h2>Nueva Facultad</h2>
                         <button type="button" id="cerrarModalUser"><i class="fa-solid fa-xmark"></i></button>
                     </header>
-                    <form action="{{ url('/addUser') }}" method="POST" id="formUser" class="addUser">
+                    <form action="{{ url('/addFaculty') }}" method="POST" id="formUser" class="addUser">
                         @csrf
                         <div class="input-box">
                             <input type="text" name="name" id="nameInput" placeholder="Nombre completo" class="error-input" autocomplete="off">
@@ -146,5 +145,5 @@
 @endsection
 
 @section('scripts')
-    <script src=" {{ asset('js/administration.js') }}"></script>
+    <script src=" {{ asset('js/faculty.js') }}"></script>
 @endsection

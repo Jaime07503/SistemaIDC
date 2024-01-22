@@ -79,7 +79,7 @@ h2 {
 .history {
     display: flex;
     gap: .5rem;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     justify-content: start;
     align-items: center;
     font-size: 0.9rem;
@@ -119,7 +119,7 @@ h2 {
     z-index: 2;
     font-size: 1rem;
 }
-  
+
 .listbox-header {
     cursor: pointer;
     border: 1px solid var(--gold);
@@ -138,23 +138,23 @@ h2 {
     background: var(--texas-rose-200);
     border: 1px solid var(--primary);
 }
- 
+
 .active {
     background: var(--texas-rose-200);
     border: 1px solid var(--primary);
 }
-  
+
 .selected-option {
     flex-grow: 1;
     margin-right: .5rem;
 }
-  
+
 .arrow-down {
     transition: transform 0.2s ease-in-out;
     margin-right: .7rem;
     font-size: .7rem;
 }
-  
+
 .options {
     list-style: none;
     margin: 0;
@@ -174,14 +174,14 @@ h2 {
 .custom-listbox:last-of-type .options {
     width: 12rem;
 }
-  
+
 .options li {
     padding: .5rem;
     cursor: pointer;
     color: var(--primary);
     font-size: .9rem;
 }
-  
+
 .options li:hover {
     background: var(--primary);
     color: var(--white);
@@ -203,7 +203,7 @@ h2 {
     font-size: .9rem;
     outline: none;
     display: block;
-    min-width: 0; 
+    min-width: 0;
     width: auto;
     padding: .5rem;
     color: var(--primary);
@@ -221,7 +221,7 @@ input[type="text"] {
     color: var(--primary);
     border-radius: .5rem;
     font-size: .9rem;
-    width: auto; 
+    width: auto;
     outline: none;
 }
 
@@ -327,7 +327,7 @@ input::placeholder {
 .content-table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
-} 
+}
 
 .content-table th {
 	cursor: pointer;
@@ -364,7 +364,7 @@ input::placeholder {
 
 .modal-content {
     background-color: #fff;
-    margin: 15% auto;
+    margin: 10% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 30rem;

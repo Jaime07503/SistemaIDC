@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cycle;
 use App\Models\Subject;
 use App\Models\Career;
 use App\Models\Teacher;
@@ -13,13 +14,16 @@ class SubjectController extends Controller
 
     public function getSubject()
     {
-        $subjects = Subject::whereHas('Faculty', function ($query) {
-            $query->where('nameFaculty', 'Ingeniería y Arquitectura');
-        })->select('nameSubject')->get();
+        $subjects = Subject::join('Career', 'Subject.idCareer', '=',
+        'Career.careerId')->join('Cycle','Subject.idCycle', '=', 'Cycle.cycleId')
+        ->join('Teacher', 'Subject.idTeacher', '=', 'Teacher.teacherId')
+        ->join('User', 'Teacher.idUser', '=', 'User.userId')->get();
 
-        $subjects = Subject::get();
 
-        return view('layouts.subject', compact('careers', 'subjects'));
+        $cycles = Cycle::all();
+
+        $careers = Career::all();
+        return view('layouts.subject', compact('subjects', 'cycles', 'careers'));
     }
 
     public function addSubject(Request $request)
@@ -27,15 +31,19 @@ class SubjectController extends Controller
         // Create new Subject
         $subject = new Subject();
         $subject->code = $request->input('code');
+        $subject->nameSubject = $request->input('nameSubject');
+        $subject->section = $request->input('section');
+        $subject->approvedIdc = $request->input('approvedIdc');
+        $subject->state = $request->input('state');
+        $subject->avatar = $request->input('avatar');
+        $subject->idCycle = $request->input('idCycle');
+        $subject->idCareer = $request->input('idCareer');
+        $subject->idTeacher = $request->input('idTeacher');
+
         // ... (asignar los demás campos)
         $subject->save();
 
-        if ($request->input('role') === 'Docente') {
-            // Create new Teacher (si la materia será asignada a un docente)
-            // ...
-        }
-
-        return redirect()->route('subjects.index');
+        return redirect()->route('subject');
     }
 
     public function editSubject(Request $request)
@@ -44,23 +52,23 @@ class SubjectController extends Controller
         $subjectId = $request ->input('subjectId');
 
         $subject = Subject::find($subjectId);
+        $subject->code = $request->input('code');
+        $subject->nameSubject = $request->input('name');
+        $subject->section = $request->input('section');
+        $subject->approvedIdc = $request->input('approvedIdc');
+        $subject->state = $request->input('state');
+        $subject->avatar = $request->input('avatar');
+        $subject->save();
 
-        if (!$subject) {
-            return response()->json(['message' => 'Materia no encontrada'], 404);
-        }
+        return redirect()->route('subject');
+    }
 
-        if ($request->isMethod('post')) {
-            $subject->code = $request->input('code');
-            // ... (actualizar los demás campos)
-
-            if ($request->input('role') === 'Docente') {
-                // Actualizar Teacher si existe o crear uno nuevo
-                // ...
-            }
-
-            $subject->save();
-
-            return redirect()->route('subjects.index')->with('success', 'Materia actualizada');
-        }
+    public function deleteSubject(Request $request) {
+        // Buscar el usuario por ID
+        $subjectId = $request->input('subjectId');
+        $subject = Subject::find($subjectId);
+        // Eliminar la carrera
+        $subject->delete();
+        return redirect()->route('subject');
     }
 }

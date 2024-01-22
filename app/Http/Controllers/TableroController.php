@@ -14,7 +14,7 @@
             $idUser = session('userId');
             $role = session('role');
 
-            if (!$idUser) 
+            if (!$idUser)
             {
                 return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontró una cuenta con su dirección de correo electrónico.');
             }
@@ -44,38 +44,38 @@
                     ->where('Student_Team.idStudent', $idStudent)
                     ->select('Student_Team.studentTeamId', 't.*', 'rt.*', 'Idc.idcId')
                     ->get();
-                
+
                 if ($courses->isEmpty() && $teams->isEmpty()) {
                     return view('layouts.tablero', compact('role'))->with('noContent', true);
                 }
-                
+
                 if ($courses->isEmpty()) {
                     return view('layouts.tablero', compact('role', 'teams'))->with('noCourses', true);
                 }
-                
+
                 if ($teams->isEmpty()) {
                     return view('layouts.tablero', compact('courses', 'role'))->with('noTeams', true);
                 }
 
                 return view('layouts.tablero', compact('courses', 'role', 'teams'));
-            } 
-            else 
+            }
+            else
             {
                 $teacher = Teacher::whereHas('User', function ($query) use ($idUser) {
                     $query->where('userId', $idUser);
                 })->first();
-    
+
                 if (!$teacher) {
                     return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontró una cuenta con su dirección de correo electrónico.');
                 }
-                
+
                 $courses = Subject::join('Cycle', 'Subject.idCycle', '=', 'Cycle.cycleId')
                     ->join('Teacher', 'Subject.idTeacher', '=', 'Teacher.teacherId')
                     ->join('User', 'Teacher.idUser', '=', 'User.userId')
                     ->where('idTeacher', $teacher->teacherId)
                     ->where('idCycle', 1)
-                    ->select('User.name', 'Subject.subjectId', 'Subject.nameSubject', 'Subject.section', 
-                    'Subject.avatarSubject', 'Cycle.cycle')
+                    ->select('User.name', 'Subject.subjectId', 'Subject.nameSubject', 'Subject.section',
+                    'Subject.avatar', 'Cycle.cycle')
                     ->orderBy('nameSubject')
                     ->get();
 
@@ -89,11 +89,11 @@
                 if ($courses->isEmpty() && $teams->isEmpty()) {
                     return view('layouts.tablero', compact('role'))->with('noContent', true);
                 }
-                
+
                 if ($courses->isEmpty()) {
                     return view('layouts.tablero', compact('role', 'teams'))->with('noCourses', true);
                 }
-                
+
                 if ($teams->isEmpty()) {
                     return view('layouts.tablero', compact('courses', 'role'))->with('noTeams', true);
                 }
