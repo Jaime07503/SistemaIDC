@@ -32,6 +32,7 @@
                         <ul class="options">
                             @foreach($careers as $career)
                                 <li data-value="{{ $career->nameCareer }}" class="selected">{{ $career->nameCareer }}</li>
+
                             @endforeach
                         </ul>
                     </div>
@@ -74,8 +75,8 @@
                                         data-nameSubject="{{ $subject->nameSubject }}"
                                         data-section="{{ $subject->section }}"
                                         data-approvedIdc="{{ $subject->approvedIdc }}"
-                                        data-subjectCycle="{{ $subject->subjectCycle }}"
-                                        data-subjectYear="{{ $subject->subjectYear }}"
+                                        data-cycle="{{ $subject->cycle }}"
+                                        data-teacher="{{ $subject->name }}"
                                     >
                                         <i class="fa-regular fa-pen-to-square"></i>
                                     </button>
@@ -97,31 +98,35 @@
                             <h2>Datos de la materia</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form action="" method="POST">
+                        <form action="{{ url('/editSubject') }}" method="POST">
                             @csrf
                             <div class="input-box">
-                                <input class="error-input" type="number" name="code" id="nameInput" autocomplete="off">
+                                <input class="error-input" type="number" name="code" id="numberSubjectInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <div class="input-box">
-                                <input class="error-input" type="text" name="name" id="emailInput" autocomplete="off">
+                                <input class="error-input" type="text" name="name" id="nameSubjectInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <div class="input-box">
-                                <input class="error-input" type="text" name="section" id="emailInput" autocomplete="off">
+                                <input class="error-input" type="text" name="section" id="sectionInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <div class="input-box">
-                                <input class="error-input" type="text" name="approveIdc" id="roleInputEdit" autocomplete="off">
+                                <input class="error-input" type="text" name="approveIdc" id="approvedInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
                             <div class="input-box">
-                                <input class="error-input" type="text" name="cycle" id="roleInputEdit" autocomplete="off">
+                                <input class="error-input" type="text" name="state" id="subjectCycleput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
-                            <div class="input-box">
-                                <input class="error-input" type="text" name="year" id="roleInputEdit" autocomplete="off">
-                                <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                            <div class="container file-container" id="container3">
+                                <input type="file" name="avatar" class="file-input" accept="image/*" hidden>
+                                <div class="img-area" data-img="">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <h4>Regional</h4>
+                                    <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
+                                </div>
                             </div>
                             <button type="button" id="btnEditUser" class="btn">Guardar</button>
                         </form>
