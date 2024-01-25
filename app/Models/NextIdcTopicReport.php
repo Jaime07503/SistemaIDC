@@ -15,6 +15,7 @@
             'introduction',
             'continueTopic',
             'proposeTopics',
+            'conclusion',
             'storagePath',
             'state',
             'idIdc'

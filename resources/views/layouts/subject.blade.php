@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    Administración del Sitio
+    Administración de materias
 @endsection
 
 @section('styles')
@@ -11,39 +11,35 @@
 @section('content')
     <main class="main-content">
         <div class="head-content">
-            <h1>Administración de Materias</h1>
+            <h1>Administración de materias</h1>
             <div class="history">
-                <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Materias</a>
+                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" >Materias</a>
             </div>
         </div>
         <div class="info-user">
             <div class="head">
-                <h2>Materias del sistema</h2>
+                <h2>Materias</h2>
             </div>
             <div class="options-users">
                 <div class="opt">
                     <!-- Listbox -->
                     <div class="custom-listbox">
                         <div class="listbox-header">
-                            <button id="listbox"><span class="selected-option">Todos</span></button>
+                            <button class="listbox"><span class="selected-option">Todas</span></button>
                             <i class="fa-solid fa-chevron-down arrow-down"></i>
                         </div>
                         <ul class="options">
-                            <li data-value="Todos" class="selected"><i class="fa-solid fa-check"></i> Todos</li>
-                            <li data-value="Estudiantes"> Estudiantes</li>
-                            <li data-value="Docentes"> Docentes</li>
-                            <li data-value="Coordinadores"> Coordinadores</li>
-                            <li data-value="Administradores"> Administradores</li>
+                            @foreach($careers as $career)
+                                <li data-value="{{ $career->nameCareer }}" class="selected">{{ $career->nameCareer }}</li>
+                            @endforeach
                         </ul>
                     </div>
                     <!-- Input Search RT -->
-                    <div class="custom-input">
-                        <input type="text" placeholder="Buscar">
-                    </div>
+                    <input class="custom-input" type="text" placeholder="Buscar">
                 </div>
                 <!-- Add user button -->
-                <button type="button" id="btnAddUser" class="btn">Nueva Materia</button>
+                <button type="button" id="btnAddCareer" class="btn"><i class="fa-solid fa-plus"></i> Agregar</button>
             </div>
 
             <!-- Users Table -->
@@ -51,27 +47,28 @@
                 <table id="data-table" class="table content-table">
                     <thead>
                         <tr>
-                            <th>Codigo</th>
                             <th>Nombre</th>
-                            <th>Seccion</th>
-                            <th>Aprobacion</th>
+                            <th>Sección</th>
+                            <th>Aprobado IDC</th>
                             <th>Ciclo</th>
-                            <th>Año</th>
+                            <th>Carrera</th>
+                            <th>Docente</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($subjects as $subject)
                             <tr>
-                                <td><img class="avatar" src="{{ $subject->avatar }}" alt="Avatar">{{ $subject->name }}</td>
-                                <td>{{ $subject->code }}</td>
                                 <td>{{ $subject->nameSubject }}</td>
                                 <td>{{ $subject->section }}</td>
                                 <td>{{ $subject->approvedIdc }}</td>
-                                <td>{{ $subject->subjectCycle }}</td>
-                                <td>{{ $subject->subjectYear }}</td>
+                                <td>{{ $subject->cycle }}</td>
+                                <td>{{ $subject->nameCareer }}</td>
+                                <td>{{ $subject->name }}</td>
+                                <td>{{ $subject->state }}</td>
                                 <td>
-                                    <button class="button-edit btn" data-modal="editarModal"
+                                    <button class="btn-edit btn" data-modal="editarModal"
                                         data-subjectId="{{ $subject->subjectId }}"
                                         data-code="{{ $subject->code }}"
                                         data-nameSubject="{{ $subject->nameSubject }}"
@@ -80,12 +77,12 @@
                                         data-subjectCycle="{{ $subject->subjectCycle }}"
                                         data-subjectYear="{{ $subject->subjectYear }}"
                                     >
-                                        Editar
+                                        <i class="fa-regular fa-pen-to-square"></i>
                                     </button>
-                                    <button class="button-delete btn" data-modal="eliminarModal"
+                                    <button class="btn-delete btn" data-modal="eliminarModal"
                                         data-subjectId="{{ $subject->subjectId }}"
                                     >
-                                        Eliminar
+                                        <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -96,9 +93,9 @@
                 <!-- Edit user modal -->
                 <div class="modal" id="editarModal">
                     <div class="modal-content">
-                        <header>
+                        <header class="head">
                             <h2>Datos de la materia</h2>
-                            <span class="close">&times;</span>
+                            <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
                         <form action="" method="POST">
                             @csrf
@@ -134,12 +131,12 @@
                 <!-- Delete user modal -->
                 <div class="modal" id="eliminarModal">
                     <div class="modal-content">
-                        <header>
+                        <header class="head">
                             <h2>¿Realmente deseas eliminar la materia?</h2>
-                            <span class="close">&times;</span>
+                            <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
                         <div class="optionDeleteUser">
-                            <form action="{{ route('deleteSubject', ['subjectId' => $subject->subjectId]) }}" method="POST">
+                            <form action="{{ route('deleteSubject') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="subjectId" id="idInputs" class="error-input" autocomplete="off">
@@ -151,46 +148,68 @@
                 </div>
             </div>
 
-            <!-- Add user modal -->
-            <div id="myModalUser" class="modal">
+            <!-- Add career modal -->
+            <div id="myModalCareer" class="modal">
                 <div class="modal-content">
                     <header class="head">
                         <h2>Nueva Materia</h2>
-                        <button type="button" id="cerrarModalUser"><i class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                     </header>
                     <form action="{{ url('/addSubject') }}" method="POST" id="formUser" class="addUser">
                         @csrf
 
                         <div class="input-box">
-                            <input type="text" name="code" id="codeInput" placeholder="Codigo" class="error-input" autocomplete="off">
+                            <input type="text" name="code" id="codeInput" placeholder="Código" class="error-input" autocomplete="off">
                             <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
 
                         <div class="input-box">
-                            <input type="text" name="name" id="nameInput" placeholder="Nombre completo" class="error-input" autocomplete="off">
+                            <input type="text" name="nameSubject" id="nameInput" placeholder="Nombre de la materia" class="error-input" autocomplete="off">
                             <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
 
                         <div class="input-box">
-                            <input type="text" name="section" id="sectionInput" placeholder="Seccion" class="error-input" autocomplete="off">
+                            <input type="text" name="section" id="sectionInput" placeholder="Sección" class="error-input" autocomplete="off">
                             <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                         </div>
 
-                        <div class="input-box">
-                            <input type="text" name="approvedIdc" id="approvedIdcInput" placeholder="Aprobacion" class="error-input" autocomplete="off">
-                            <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                        <div class="container file-container" id="container">
+                            <input type="file" name="Avatar" class="file-input" accept="image/*" hidden>
+                            <div class="img-area" data-img="">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <h4>Avatar Materia</h4>
+                                <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
+                                <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
+                            </div>
                         </div>
 
-                        <div class="input-box">
-                            <input type="text" name="cycle" id="subjectCycleInput" placeholder="Ciclo" class="error-input" autocomplete="off">
-                            <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                        <!-- Listbox -->
+                        <div class="custom-listbox cycle">
+                            <div class="listbox-header listbox-header-edit">
+                                <button class="listbox" type="button"><span class="selected-option">Ciclo</span></button>
+                                <i class="fa-solid fa-chevron-down arrow-down"></i>
+                            </div>
+                            <ul class="options optionsEdit">
+                                @foreach($cycles as $cycle)
+                                    <li data-value="{{ $cycle->cycleId }}" class="selected">{{ $cycle->cycle }}</li>
+                                @endforeach
+                            </ul>
                         </div>
+                        <input hidden type="text" name="idCycle" id="cycleInput">
 
-                        <div class="input-box">
-                            <input type="text" name="year" id="yearInput" placeholder="Año" class="error-input" autocomplete="off">
-                            <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                        <!-- Listbox -->
+                        <div class="custom-listbox career">
+                            <div class="listbox-header listbox-header-edit">
+                                <button class="listbox" type="button"><span class="selected-option">Carrera</span></button>
+                                <i class="fa-solid fa-chevron-down arrow-down"></i>
+                            </div>
+                            <ul class="options optionsEdit">
+                                @foreach($careers as $career)
+                                    <li data-value="{{ $career->careerId }}" class="selected">{{ $career->nameCareer }}</li>
+                                @endforeach
+                            </ul>
                         </div>
-
+                        <input hidden type="text" name="idCareer" id="careerInput">
 
                         <button type="submit" class="btn" id="submitButton">Crear</button>
                     </form>
@@ -201,5 +220,5 @@
 @endsection
 
 @section('scripts')
-    <script src=" {{ asset('js/administration.js') }}"></script>
+    <script src=" {{ asset('js/subject.js') }}"></script>
 @endsection

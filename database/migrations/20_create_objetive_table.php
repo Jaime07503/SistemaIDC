@@ -9,10 +9,10 @@
         {
             Schema::create('Objetive', function (Blueprint $table) {
                 $table->increments('objetiveId');
-                $table->string('objetive', 255);
+                $table->string('objetive', 300);
                 $table->string('type', 50);
                 $table->string('studentContribute', 100);
-                $table->string('state', 10);
+                $table->string('state', 30);
                 $table->timestamps();
             });
         }

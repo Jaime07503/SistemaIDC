@@ -12,7 +12,7 @@
                 $table->string('nameDocument', 80);
                 $table->string('documentType', 80);
                 $table->string('type', 80);
-                $table->string('state', 10);
+                $table->string('state', 30);
                 $table->unsignedBigInteger('idIdc');
                 $table->timestamps();
                 $table->foreign('idIdc')->references('idcId')->on('Idc')->onUpdate('cascade')->onDelete('cascade');

@@ -9,8 +9,8 @@
         {
             Schema::create('Cycle', function (Blueprint $table) {
                 $table->increments('cycleId');
-                $table->string('cycle', 80);
-                $table->string('state', 10);
+                $table->string('cycle', 40);
+                $table->string('state', 30);
                 $table->timestamps();
             });
         }

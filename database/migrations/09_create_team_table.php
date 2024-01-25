@@ -11,7 +11,7 @@
                 $table->increments('teamId');
                 $table->timestamp('creationDate');
                 $table->integer('integrantQuantity');
-                $table->string('state', 20);
+                $table->string('state', 30);
                 $table->unsignedBigInteger('idResearchTopic');
                 $table->unsignedBigInteger('idTeacher');
                 $table->timestamps();

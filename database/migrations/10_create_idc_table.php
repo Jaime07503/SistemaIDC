@@ -16,7 +16,7 @@
                 $table->timestamp('startDateNextIdcTopic');
                 $table->timestamp('endDateNextIdcTopic');
                 $table->string('badgeProcessCompleted', 512)->nullable();
-                $table->string('state', 20);
+                $table->string('state', 30);
                 $table->unsignedBigInteger('idUser');
                 $table->unsignedBigInteger('idTeam');
                 $table->timestamps();

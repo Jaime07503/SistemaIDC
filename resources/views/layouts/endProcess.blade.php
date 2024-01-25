@@ -42,7 +42,7 @@
                     </tr>
                     <tr>
                         <td><strong>Tiempo restante</strong></td>
-                        @if($nextIdcTopicReport->state !== 'Creado')
+                        @if($nextIdcTopicReport->state === 'Sin Intento')
                             <td>{{ $timeRemaining }}</td>
                         @else
                             <td>El documento fue creado: <strong>{{ $formattedupdated_at }}</strong></td>
@@ -50,32 +50,90 @@
                     </tr>
                     <tr>
                         <td><strong>Archivo generado</strong></td>
-                        @if($nextIdcTopicReport->storagePath === null)
-                            <td>Aún no se ha generado un documento</td>
+                        @if($nextIdcTopicReport->storagePath === 'Por generar')
+                            <td>{{ $nextIdcTopicReport->storagePath }}</td>
                         @else
-                            @if($nextIdcTopicReport->state !== 'Creado')
-                                <td>{{ $nextIdcTopicReport->storagePath }}</td>
-                            @else
-                                <td>
-                                    <strong><a href="{{ asset($nextIdcTopicReport->storagePath) }}" 
-                                        class="link-document"><i class="fa-regular fa-file-word"></i> {{ $nextIdcTopicReport->scientificArticleCode }}
-                                    </a></strong>
-                                </td>
-                            @endif
+                            <td>
+                                <strong><a href="{{ asset($nextIdcTopicReport->storagePath) }}" 
+                                    class="link-document"><i class="fa-regular fa-file-word"></i> {{ $nextIdcTopicReport->nextIdcTopicReportCode }}
+                                </a></strong>
+                            </td>
                         @endif
                     </tr>
-                    <tr>
-                        <td><strong>Comentarios al envío</strong></td>
-                        <td>No hay comentarios por el momento</td>
-                    </tr>
+                    @if($nextIdcTopicReport->state === 'Aprobado' && $nextIdcTopicReport->previousState === 'Corregido')
+                        <tr>
+                            <td><strong>Archivo corregido</strong></td>
+                            <td>
+                                <strong><a href="{{ asset($nextIdcTopicReport->correctedDocStoragePath) }}" class="link-document">
+                                    <i class="fa-regular fa-file-word"></i> {{ $nextIdcTopicReport->nameCorrectedDoc }}
+                                </a></strong>
+                            </td>
+                        </tr>
+                    @endif
+
+                    @if($nextIdcTopicReport->state === 'Debe corregirse' && session('role') === 'Docente')
+                        <tr>
+                            <td><strong>Archivo corregido</strong></td>
+                            <td>
+                                <input type="file" id="archivo" accept=".doc, .docx">
+                                <button>Subir Documento</button>
+                            </td>
+                        </tr>
+                    @elseif($nextIdcTopicReport->state === 'Debe corregirse' && session('role') === 'Coordinador')
+                        <tr>
+                            <td><strong>Archivo corregido</strong></td>
+                            <td>Por subirse</td>
+                        </tr>
+                    @endif
+
+                    @if($nextIdcTopicReport->state === 'Corregido')
+                        <tr>
+                            <td><strong>Archivo corregido</strong></td>
+                            <td>
+                                <strong><a href="{{ asset($nextIdcTopicReport->storagePath) }}" class="link-document">
+                                    <i class="fa-regular fa-file-word"></i> {{ $nextIdcTopicReport->nextIdcTopicReportCode }}
+                                </a></strong>
+                            </td>
+                        </tr>
+
+                        @if(session('role') === 'Coordinador')
+                            <tr>
+                                <td><strong>Comentarios al envío</strong></td>
+                                <td>
+                                    <button class="btn">Aprobar Documento</button>
+                                    <button class="btn">Corregir Documento</button>
+                                </td>
+                            </tr>
+                        @endif 
+                    @endif
+
+                    @if($nextIdcTopicReport->state === 'En revisión')
+                        <tr>
+                            <td><strong>Comentarios al envío</strong></td>
+                            <td>
+                                @if(session('role') === 'Coordinador')
+                                    <button class="btn">Aprobar Documento</button>
+                                    <button class="btn">Corregir Documento</button>
+                                @else
+                                    No hay comentarios por el momento
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
-            <div class="title">
-                <a href="{{ route('nextIdcTopicReport', ['idcId' => $nextIdcTopicReport->idcId,
-                    'idNextIdcTopicReport' => '$idNextIdcTopicReport']) }}" class="btn-login">
-                    <h4>Crear Informe</h4>
-                </a>
-            </div>
+            @if($nextIdcTopicReport->state === 'Sin Intento' && (session('role') === 'Docente' || session('role') === 'Estudiante')) 
+                <div class="title">
+                    <a href="{{ route('nextIdcTopicReport', ['idcId' => $nextIdcTopicReport->idcId,
+                        'idNextIdcTopicReport' => $idNextIdcTopicReport]) }}" class="btn-login">
+                        @if(session('role') === 'Docente')
+                            <h4>Crear Informe</h4>
+                        @elseif(session('role') === 'Estudiante')
+                            <h4>Aportar al Informe</h4>
+                        @endif
+                    </a>
+                </div>
+            @endif
         </div>
     </main>
 @endsection

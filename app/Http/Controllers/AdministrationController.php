@@ -15,11 +15,21 @@
 
             $users = User::get();
 
+            foreach ($users as $user) {
+                // Verificar si el usuario es de tipo docente
+                if ($user->role == 'Docente') {
+                    // Cargar información adicional para docentes
+                    $docenteInfo = Teacher::where('idUser', $user->userId)->first();
+                    $user->teacherId = $docenteInfo->teacherId;
+                    $user->contractType = $docenteInfo->contractType;
+                    $user->specialty = $docenteInfo->specialty;
+                }
+            }
+
             return view('layouts.administration', compact('careers', 'users'));
         }
 
         public function addUser(Request $request) {
-            // Create new User
             $user = new User();
             $user->name = $request->input('name');
             $user->email = $request->input('email');
@@ -30,11 +40,11 @@
 
             if($request->input('role') === 'Docente')
             {
-                // Create new Teacher
                 $teacher = new Teacher();
                 $teacher->contractType = $request->input('contractType');
                 $teacher->specialty = $request->input('specialty');
-                $teacher->idcQuantity = 1;
+                $teacher->idcQuantity = 0;
+                $teacher->idUser = $user->userId;
                 $teacher->save();
             }
 
@@ -42,47 +52,30 @@
         }
 
         public function editUser(Request $request) {
-            // Edit user by userId
-            $userId = $request ->input('userId');
+            $userId = $request->input('userId');
+            $teacherId = $request->input('teacherId');
 
             $user = User::find($userId);
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->role = $request->input('role');
 
-            if (!$user) {
-                return response()->json(['message' => 'Usuario no encontrado'], 404);
+            if ($request->input('role') === 'Docente') {
+                $teacher = Teacher::find($teacherId);
+                $teacher->contractType = $request->input('contractType');
+                $teacher->specialty = $request->input('specialty');
+                $teacher->save();
             }
 
-            if ($request->isMethod('post')) {
-                $user->name = $request->input('name');
-                $user->email = $request->input('email');
-                $user->role = $request->input('role');
+            $user->save();
 
-                if ($request->input('role') === 'Docente') {
-
-                    $teacher = $user->teacher ?? new Teacher();
-                    $teacher->contractType = $request->input('contractType');
-                    $teacher->specialty = $request->input('specialty');
-                    $teacher->save();
-                }
-
-                $user->save();
-
-                return redirect()->route('administration')->with('success', 'Usurario Actualizado');
-            }
-
+            return redirect()->route('administration')->with('success', 'Usurario Actualizado');
         }
 
         public function deleteUser(Request $request) {
-            // Buscar el usuario por ID
             $userId = $request->input('userId');
             $user = User::find($userId);
 
-            // Verificar si el usuario existe
-            if (!$user) {
-                // Manejar la situación donde el usuario no existe
-                return response()->json(['message' => 'Usuario no encontrado'], 404);
-            }
-
-            // Eliminar el usuario
             $user->delete();
 
             return redirect()->route('administration');

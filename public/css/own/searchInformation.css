@@ -117,22 +117,22 @@ h3 {
     border-radius: .5rem;
     padding: 0.3rem;
     cursor: pointer;
-    transition: box-shadow 0.4s ease, border 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: .5rem;
     color: var(--primary);
     margin: auto;
+    border: 3px solid transparent;
 }
 
 .btn-login:hover {
     background: var(--texas-rose-200);
-    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+    border: 3px solid var(--primary);
 }
 
 .btn-login:active {
-    border: 3px solid var(--texas-rose-100);
+    border: 3px solid var(--primary);
 }
 
 .content-table {
@@ -195,15 +195,30 @@ h3 {
 .link-document {
     font-size: .9rem;
     color: var(--primary);
+    text-decoration: none;
 }
 
 .link-document:hover {
     text-decoration: underline;
 }
 
+/* Scroll */
+::-webkit-scrollbar {
+    width: .4rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: .5rem;
+}
+
 @media (max-width: 880px) {
     .info-content {
         margin-bottom: 1.5rem;
+    }
+
+    .content-table td:nth-child(2) {
+        padding: 12px;
     }
 }
 

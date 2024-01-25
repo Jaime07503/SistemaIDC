@@ -8,19 +8,13 @@
 
     class CareerController extends Controller
     {
-        // ... (métodos index, create, store, show, edit, update, destroy)
-
         public function getCareers()
         {
-            $careers = Career::join('Faculty', 'Career.idFaculty', '=',
-        'Faculty.facultyId')->get();
-
+            $careers = Career::join('Faculty', 'Career.idFaculty', '=', 'Faculty.facultyId')->get();
             $facultys = Faculty::all();
 
             return view('layouts.career', compact('careers', 'facultys'));
         }
-
-
 
         public function addCareer(Request $request)
         {
@@ -35,7 +29,6 @@
 
         public function editCareer(Request $request)
         {
-            //dd($request->all());
             //Edit career by careerId
             $careerId = $request->input('careerId');
 

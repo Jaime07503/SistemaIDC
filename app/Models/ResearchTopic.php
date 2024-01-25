@@ -30,7 +30,7 @@
 
         public function team()
         {
-            return $this->hasMany(Team::class);
+            return $this->hasMany(Team::class, 'idResearchTopic');
         }
         
         public function subject()

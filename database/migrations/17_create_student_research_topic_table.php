@@ -9,7 +9,7 @@
         {
             Schema::create('Student_Research_Topic', function (Blueprint $table) {
                 $table->increments('studentResearchTopicId');
-                $table->string('state', 20);
+                $table->string('state', 30);
                 $table->unsignedBigInteger('idStudent');
                 $table->unsignedBigInteger('idResearchTopic');
                 $table->timestamps();

@@ -9,12 +9,14 @@
         {
             Schema::create('Bibliographic_Source', function (Blueprint $table) {
                 $table->increments('bibliographicSourceId');
-                $table->string('theme');
-                $table->string('author');
-                $table->string('year');
-                $table->string('averageType');
-                $table->string('studentContribute');
-                $table->string('link');
+                $table->string('theme', 300);
+                $table->string('author', 400);
+                $table->string('year', 4);
+                $table->string('averageType', 150);
+                $table->string('source', 100);
+                $table->string('studentContribute', 300);
+                $table->string('link', 1000);
+                $table->string('state', 30);
                 $table->timestamps();
             });
         }

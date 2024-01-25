@@ -233,6 +233,13 @@ body {
     aspect-ratio: 16/9;
 }
 
+.card-teacher {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    aspect-ratio: 16/9;
+}
+
 .card-title {
     position: absolute;
     top: .5rem; 

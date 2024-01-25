@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 if(listbox.classList.contains("faculty-lst")){
                     const idFaculty = document.querySelector('.idFaculty');
                     idFaculty.value=facultyId;
-                    //console.log('click');
                 }
             }
         });
@@ -63,16 +62,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let addUserModal = document.getElementById('myModalUser');
     let btnAddUser = document.getElementById('btnAddUser');
-    let cerrarModalUser = document.getElementById('cerrarModalUser');
+    let cerrarModals = document.querySelectorAll('.cerrarModal');
     let cancel = document.querySelector('.cancel');
 
     btnAddUser.addEventListener('click', function () {
         openModal('myModalUser');
     });
 
-    cerrarModalUser.addEventListener('click', function () {
-        closeModal('myModalUser');
-    });
+    cerrarModals.forEach(function(cerrarModal){
+        cerrarModal.addEventListener('click', function () {
+            const modalId = cerrarModal.closest('.modal').id
+
+            closeModal(modalId);
+        });
+    })
 
     cancel.addEventListener('click', function () {
         closeModal('eliminarModal');
@@ -85,13 +88,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Obtener todos los botones con la clase 'button-edit' y 'button-delete'
-    const buttons = document.querySelectorAll('.button-edit, .button-delete');
+    const buttons = document.querySelectorAll('.btn-edit, .btn-delete');
 
     // Asignar un evento de clic a cada botón
     buttons.forEach(function (button) {
         button.addEventListener('click', function () {
             const modalId = button.dataset.modal;
-            console.log('click');
+
             // Obtener datos del usuario desde los atributos data-*
             const nameCareer = button.getAttribute('data-nameCareer');
             const nameFaculty = button.getAttribute('data-nameFaculty');
@@ -100,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const idFaculty = button.getAttribute('data-idFaculty');
             const careerIdInput = document.querySelector('.careerId');
             const careerInput = document.getElementById('idInputs');
+
             // Llenar los campos del formulario dentro de la ventana modal
             const nameCareerInput = document.getElementById('nameCareerInput');
 

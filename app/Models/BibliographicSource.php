@@ -15,8 +15,10 @@
             'author',
             'year',
             'averageType',
+            'source',
             'studentContribute',
-            'link'
+            'link',
+            'state'
         ];
 
         //Relationships with other tables

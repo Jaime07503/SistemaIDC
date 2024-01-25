@@ -9,18 +9,16 @@
         {
             Schema::create('Scientific_Article_Report', function (Blueprint $table) {
                 $table->increments('scientificArticleReportId');
-                $table->string('code');
-                $table->string('spanishSummary', 500);
-                $table->string('englishSummary', 500);
-                $table->string('keywords', 500);
-                $table->string('introduction', 500);
-                $table->string('methodology', 500);
-                $table->string('development', 500);
-                $table->string('conclusion', 500);
-                $table->string('bibliographicReferences', 500);
-                $table->string('numberOfWords');
-                $table->string('storagePath');
-                $table->string('state', 20);
+                $table->string('code')->nullable();
+                $table->string('spanishSummary', 800)->nullable();
+                $table->string('englishSummary', 800)->nullable();
+                $table->string('keywords', 200)->nullable();
+                $table->string('introduction', 1400)->nullable();
+                $table->string('methodology', 500)->nullable();
+                $table->string('development', 2500)->nullable();
+                $table->string('numberOfWords')->nullable();
+                $table->string('storagePath', 300)->nullable();
+                $table->string('state', 20)->nullable();
                 $table->unsignedBigInteger('idIdc');
                 $table->timestamps();
                 $table->foreign('idIdc')->references('idcId')->on('Idc')->onUpdate('cascade')->onDelete('cascade');

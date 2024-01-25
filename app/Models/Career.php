@@ -18,7 +18,7 @@
         //Relationships with other tables
         public function subject()
         {
-            return $this->hasMany(Subject::class);
+            return $this->hasMany(Subject::class, 'idCareer');
         }
         
         public function faculty()

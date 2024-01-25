@@ -35,6 +35,8 @@
                     ->join('Teacher', 'Subject.idTeacher', '=', 'Teacher.teacherId')
                     ->join('User', 'Teacher.idUser', '=', 'User.userId')
                     ->whereIn('subjectId', $subjectsIds)
+                    ->select('User.name', 'Subject.subjectId', 'Subject.nameSubject', 'Subject.section', 
+                    'Subject.avatar', 'Cycle.cycle')
                     ->orderBy('nameSubject')
                     ->get();
 
@@ -59,7 +61,7 @@
 
                 return view('layouts.tablero', compact('courses', 'role', 'teams'));
             } 
-            else 
+            else if($role === 'Docente')
             {
                 $teacher = Teacher::whereHas('User', function ($query) use ($idUser) {
                     $query->where('userId', $idUser);
@@ -74,8 +76,8 @@
                     ->join('User', 'Teacher.idUser', '=', 'User.userId')
                     ->where('idTeacher', $teacher->teacherId)
                     ->where('idCycle', 1)
-                    ->select('User.name', 'Subject.subjectId', 'Subject.nameSubject', 'Subject.section', 
-                    'Subject.avatarSubject', 'Cycle.cycle')
+                    ->select('User.name', 'User.avatar as userAvatar', 'User.role', 'Subject.subjectId', 'Subject.nameSubject', 'Subject.section', 
+                    'Subject.avatar', 'Cycle.cycle')
                     ->orderBy('nameSubject')
                     ->get();
 
@@ -99,6 +101,20 @@
                 }
 
                 return view('layouts.tablero', compact('courses', 'role', 'teams'));
+            } 
+            else {
+                $teams = Team::join('Research_Topic as rt', 'rt.researchTopicId', '=', 'Team.idResearchTopic')
+                    ->join('Idc', 'Team.teamId', '=', 'Idc.idTeam')
+                    ->where('Idc.idUser', $idUser)
+                    ->where('Team.state', 'Aprobado')
+                    ->select('Team.*', 'rt.*', 'Idc.idcId')
+                    ->get();
+
+                if ($teams->isEmpty()) {
+                    return view('layouts.tablero', compact('role'))->with('noTeams', true);
+                }
+
+                return view('layouts.tablero', compact('role', 'teams'));
             }
         }
     }

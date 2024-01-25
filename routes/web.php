@@ -20,6 +20,9 @@
     use App\Http\Controllers\TeamController;
     use App\Http\Controllers\TopicSearchReportController;
     use App\Http\Controllers\CareerController;
+    use App\Http\Controllers\HistoryController;
+    use App\Http\Controllers\HomeController;
+    use App\Http\Controllers\NextIdcTopicsFormController;
     use App\Http\Controllers\SubjectController;
 
     // Private Routes
@@ -29,24 +32,22 @@
         Route::get('/perfil', function(){
             return view('layouts.perfil');
         });
-
-        Route::get('/investigaciones', function(){
-            return view('layouts.investigaciones');
-        });
     });
 
     Route::middleware(['auth'])->group(function () {
-        Route::get('/perfil/{idUser}', [PerfilController::class, 'getInformation']);
+        Route::get('/perfil/{idUser}', [PerfilController::class, 'getInformation'])->name('perfil');
         Route::get('/formularioPostulacion', [FormPostulationController::class, 'getCareers']);
         Route::get('/tablero', [TableroController::class, 'viewCourses']);
+        Route::get('/home', [HomeController::class, 'getFacultys'])->name('home');
+        Route::get('/history/{idUser}', [HistoryController::class, 'getIdcs'])->name('history');
         Route::get('/stagesProcess/{researchTopicId}/{teamId}/{idcId}', [StagesProcessController::class, 'getResearchTopic'])->name('stagesProcess');
         Route::get('/processInfo/{researchTopicId}', [ProcessInfoController::class, 'getResearchTopic'])->name('processInfo');
         Route::get('/searchInformation/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'getInformation'])->name('searchInformation');
-        Route::get('/scientificArticle/{idcId}/{idScientificArticle}', [ScientificArticleController::class, 'getInformation'])->name('scientificArticle');
+        Route::get('/scientificArticle/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'getInformation'])->name('scientificArticle');
         Route::get('/endProcess/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'getInformation'])->name('endProcess');
         Route::get('/administration', [AdministrationController::class, 'getCareers'])->name('administration');
         Route::get('/career', [CareerController::class, 'getCareers'])->name('career');
-        //Route::get('/faculty', [FacultyController::class, 'getCareers'])->name('career');
+        Route::get('/faculty', [FacultyController::class, 'getCareers'])->name('faculty');
         Route::get('/subject', [SubjectController::class, 'getSubject'])->name('subject');
     });
 
@@ -58,10 +59,6 @@
     Route::get('/login', function () {
         return view('auth.login');
     })->name('login');
-
-    Route::get('/history', function () {
-        return view('layouts.history ');
-    })->name('history');
 
     //GET
     Route::get('/login-google', [AuthGoogleLoginController::class, 'redirectToGoogle']);
@@ -75,8 +72,8 @@
     Route::get('/topicSearchReport', [TopicSearchReportController::class, 'getSources'])->name('topicSearchReport');
     Route::get('/career', [CareerController::class, 'getCareers'])->name('career');
     Route::get('/topicSearchReport/{idcId}/{idTopicSearchReport}', [TopicSearchReportController::class, 'getSources'])->name('topicSearchReport');
-    Route::get('/scientificArticleReport/{idcId}/{idScientificArticle}', [ScientificArticleReportController::class, 'getSources'])->name('scientificArticleReport');
-    Route::get('/nextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [NextIdcTopicReportController::class, 'getSources'])->name('nextIdcTopicReport');
+    Route::get('/scientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleReportController::class, 'getSources'])->name('scientificArticleReport');
+    Route::get('/nextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [NextIdcTopicReportController::class, 'getTopics'])->name('nextIdcTopicReport');
 
     //POST
     Route::post('/addStudent', [FormPostulationController::class, 'addStudent'])->name('student.store');
@@ -84,21 +81,51 @@
     Route::post('/addResearchTopic', [ResearchTopicController::class, 'create'])->name('researchTopic.create');
     Route::post('/addTeam', [TeamController::class, 'create'])->name('team.create');
     Route::post('/addBibliographicSource', [TopicSearchReportController::class, 'create'])->name('source.create');
+    Route::post('/addTopic', [NextIdcTopicReportController::class, 'create'])->name('topic.create');
     Route::post('/addObjetive', [TopicSearchReportController::class, 'createObjetive'])->name('objetive.create');
+    Route::post('/addDevelopment', [ScientificArticleReportController::class, 'createDevelopment'])->name('development.create');
+    Route::post('/addConclusion', [ScientificArticleReportController::class, 'createConclusion'])->name('conclusion.create');
+    Route::post('/addReference', [ScientificArticleReportController::class, 'createReference'])->name('reference.create');
     Route::post('/generate-word', [DocumentController::class, 'generateWord'])->name('generate-word');
     Route::post('/generate-scientific-article', [ScientificArticleReportController::class, 'generateWord'])->name('generate-scientific-article');
+    Route::post('/generate-nextIdcReport', [NextIdcTopicsFormController::class, 'generateWord'])->name('generate-nextIdcReport');
     Route::post('/addUser', [AdministrationController::class, 'addUser'])->name('user.create');
+    Route::post('/updateAvatar/{idUser}', [PerfilController::class, 'updateAvatar'])->name('userAvatar.update');
+    Route::post('/addFaculty', [FacultyController::class, 'addFaculty'])->name('faculty.create');
+    Route::post('/addSubject', [SubjectController::class, 'addSubject'])->name('subject.create');
 
     // UPDATE
     Route::get('/source/{idSource}', [TopicSearchReportController::class, 'updateSource'])->name('source.update');
     Route::get('/updateObjetiveG/{idObjetive}', [TopicSearchReportController::class, 'updateObjetiveG'])->name('objetiveG.update');
     Route::get('/updateObjetiveE/{idObjetive}', [TopicSearchReportController::class, 'updateObjetiveE'])->name('objetiveE.update');
+    Route::get('/updateDevelopment/{idDevelopment}', [ScientificArticleReportController::class, 'updateDevelopment'])->name('development.update');
+    Route::get('/updateConclusion/{idConclusion}', [ScientificArticleReportController::class, 'updateConclusion'])->name('conclusion.update');
+    Route::get('/updateReference/{idReference}', [ScientificArticleReportController::class, 'updateReference'])->name('reference.update');
+    Route::get('/updateTopic/{idTopic}', [NextIdcTopicReportController::class, 'updateTopic'])->name('topic.update');
     
     Route::post('/addCareer', [CareerController::class, 'addCareer'])->name('career.create');
     Route::post('/editCareer',[CareerController::class, 'editCareer'])->name('editcareer');
+    Route::post('/editUser',[AdministrationController::class, 'editUser'])->name('editUser');
+    Route::post('/editSource', [TopicSearchReportController::class, 'editSource'])->name('source.edit');
+    Route::post('/editObjetive', [TopicSearchReportController::class, 'editObjetive'])->name('objetive.edit');
+    Route::post('/editTopic', [NextIdcTopicReportController::class, 'editTopic'])->name('topic.edit');
+    Route::post('/editDevelopment', [ScientificArticleReportController::class, 'editDevelopment'])->name('development.edit');
+    Route::post('/editConclusion', [ScientificArticleReportController::class, 'editConclusion'])->name('conclusion.edit');
+    Route::post('/editReference', [ScientificArticleReportController::class, 'editReference'])->name('reference.edit');
+    Route::post('/editSubject', [SubjectController::class, 'editSubject'])->name('editSubject');
+    Route::post('/editFaculty', [FacultyController::class, 'editFaculty'])->name('editFaculty');
+
     //PUT
 
     //DELETE
-    Route::delete('/deleteUser/{userId}', [AdministrationController::class, 'deleteUser'])->name('deleteUser');
-    Route::delete('/deleteCareer/{careerId}', [CareerController::class, 'deleteCareer'])->name('deleteCareer');
+    Route::delete('/deleteUser', [AdministrationController::class, 'deleteUser'])->name('deleteUser');
+    Route::delete('/deleteCareer', [CareerController::class, 'deleteCareer'])->name('deleteCareer');
+    Route::delete('/deleteSource', [TopicSearchReportController::class, 'deleteSource'])->name('source.delete');
+    Route::delete('/deleteObjetive', [TopicSearchReportController::class, 'deleteObjetive'])->name('objetive.delete');
+    Route::delete('/deleteTopic', [NextIdcTopicReportController::class, 'deleteTopic'])->name('topic.delete');
+    Route::delete('/deleteDevelopment', [ScientificArticleReportController::class, 'deleteDevelopment'])->name('development.delete');
+    Route::delete('/deleteConclusion', [ScientificArticleReportController::class, 'deleteConclusion'])->name('conclusion.delete');
+    Route::delete('/deleteReference', [ScientificArticleReportController::class, 'deleteReference'])->name('reference.delete');
+    Route::delete('/deleteSubject', [SubjectController::class, 'deleteSubject'])->name('deleteSubject');
+    Route::delete('/deleteFaculty', [FacultyController::class, 'deleteFaculty'])->name('deleteFaculty');
 ?>

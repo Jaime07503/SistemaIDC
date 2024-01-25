@@ -9,11 +9,11 @@
         {
             Schema::create('Subject', function (Blueprint $table) {
                 $table->increments('subjectId');
-                $table->string('code', 50);
-                $table->string('nameSubject', 100);
+                $table->string('code', 80);
+                $table->string('nameSubject', 200);
                 $table->string('section', 1);
                 $table->string('approvedIdc', 30);
-                $table->string('state', 25);
+                $table->string('state', 30);
                 $table->string('avatar', 512)->nullable();
                 $table->unsignedBigInteger('idCycle');
                 $table->unsignedBigInteger('idCareer');

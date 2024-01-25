@@ -32,6 +32,11 @@
             return $this->hasMany(ArticleConclusion::class);
         }
 
+        public function articleReference()
+        {
+            return $this->hasMany(ArticleReference::class);
+        }
+
         public function idc()
         {
             return $this->belongsTo(IDC::class, 'idIdc');

@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    Administración del Sitio
+    Administración de Usuarios
 @endsection
 
 @section('styles')
@@ -13,8 +13,8 @@
         <div class="head-content">
             <h1>Administración de Usuarios</h1>
             <div class="history">
-                <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Usuarios</a>
+                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" >Usuarios</a>
             </div>
         </div>
         <div class="info-user">
@@ -26,7 +26,7 @@
                     <!-- Listbox -->
                     <div class="custom-listbox">
                         <div class="listbox-header">
-                            <button id="listbox"><span class="selected-option">Todos</span></button>
+                            <button class="listbox"><span class="selected-option">Todos</span></button>
                             <i class="fa-solid fa-chevron-down arrow-down"></i>
                         </div>
                         <ul class="options">
@@ -38,12 +38,10 @@
                         </ul>
                     </div>
                     <!-- Input Search RT -->
-                    <div class="custom-input">
-                        <input type="text" placeholder="Buscar">
-                    </div>
+                    <input class="custom-input" type="text" placeholder="Buscar...">
                 </div>
                 <!-- Add user button -->
-                <button type="button" id="btnAddUser" class="btn">Nuevo Usuario</button>
+                <button type="button" id="btnAddUser" class="btn"><i class="fa-solid fa-plus"></i> Agregar</button>
             </div>
 
             <!-- Users Table -->
@@ -66,21 +64,26 @@
                                 <td>{{ $user->role }}</td>
                                 <td>{{ $user->state }}</td>
                                 <td>
-                                    <button class="button-edit btn" 
+                                    <button class="btn-edit btn" 
                                         data-modal="editarModal"
                                         data-userId="{{ $user->userId }}"
                                         data-userName="{{ $user->name }}"
                                         data-userEmail="{{ $user->email }}"
                                         data-userRole="{{ $user->role }}"
                                         data-userCareer="{{ $user->career }}"
+                                        @if($user->role == 'Docente')
+                                            data-teacherId="{{ $user->teacherId }}"
+                                            data-contractType="{{ $user->contractType }}"
+                                            data-specialty="{{ $user->specialty }}"
+                                        @endif
                                     >
-                                        Editar
+                                        <i class="fa-regular fa-pen-to-square"></i>
                                     </button>
-                                    <button class="button-delete btn" 
+                                    <button class="btn-delete btn" 
                                         data-modal="eliminarModal"
                                         data-userId="{{ $user->userId }}"
                                     >
-                                        Eliminar
+                                        <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -91,11 +94,11 @@
                 <!-- Edit user modal -->
                 <div class="modal" id="editarModal">
                     <div class="modal-content">
-                        <header>
+                        <header class="head">
                             <h2>Datos del Usuario</h2>
-                            <span class="close">&times;</span>
+                            <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form action="{{ route('editUser', ['userId' => $user->userId]) }}" method="POST">
+                        <form action="{{ route('editUser') }}" method="POST">
                             @csrf
                             <div class="input-box">
                                 <input class="error-input" type="text" name="name" id="nameInput" autocomplete="off">
@@ -105,11 +108,53 @@
                                 <input class="error-input" type="text" name="email" id="emailInput" autocomplete="off">
                                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
                             </div>
-                            <div class="input-box">
-                                <input class="error-input" type="text" name="role" id="roleInputEdit" autocomplete="off">
-                                <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
+                            <div class="options-courses">
+                                <div class="custom-listbox role-edit">
+                                    <div class="listbox-header listbox-header-edit">
+                                        <button class="listbox" type="button"><span class="selected-option" id="roleSpanEdit"></span></button>
+                                        <i class="fa-solid fa-chevron-down arrow-down"></i>
+                                    </div>
+                                    <ul class="options optionsEdit">
+                                        <li data-value="Estudiante">Estudiante</li>
+                                        <li data-value="Docente">Docente</li>
+                                        <li data-value="Coordinador">Coordinador</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <button type="button" id="btnEditUser" class="btn">Guardar</button>
+                            <input hidden type="text" name="role" id="roleInputEdit">
+
+                            <div class="options-courses lst-contract-edit" hidden>
+                                <div class="custom-listbox contract-edit">
+                                    <div class="listbox-header listbox-header-edit">
+                                        <button class="listbox" type="button"><span class="selected-option" id="contractTypeSpanEdit"></span></button>
+                                        <i class="fa-solid fa-chevron-down arrow-down"></i>
+                                    </div>
+                                    <ul class="options optionsEdit">
+                                        <li data-value="Tiempo completo">Tiempo completo</li>
+                                            <li data-value="Hora clase">Hora clase</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input hidden type="text" name="contractType" id="contractTypeInputEdit">
+
+                            <div class="options-courses lst-specialty-edit" hidden>
+                                <div class="custom-listbox specialty-edit">
+                                    <div class="listbox-header listbox-header-edit">
+                                        <button class="listbox" type="button"><span class="selected-option" id="specialtySpanEdit"></span></button>
+                                        <i class="fa-solid fa-chevron-down arrow-down"></i>
+                                    </div>
+                                    <ul class="options optionsEdit">
+                                        @foreach($careers as $career)
+                                            <li data-value="{{$career->nameCareer}}">{{$career->nameCareer}}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                            <input hidden type="text" name="specialty" id="specialtyInputEdit">
+                            <input hidden type="text" name="userId" id="userIdEdit">
+                            <input hidden type="text" name="teacherId" id="teacherIdEdit">
+
+                            <button id="btnEditUser" class="btn">Guardar</button>
                         </form>
                     </div>
                 </div>
@@ -117,12 +162,12 @@
                 <!-- Delete user modal -->
                 <div class="modal" id="eliminarModal">
                     <div class="modal-content">
-                        <header>
+                        <header class="head">
                             <h2>¿Realmente deseas eliminar al usuario?</h2>
-                            <span class="close">&times;</span>
+                            <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
                         <div class="optionDeleteUser">
-                            <form action="{{ route('deleteUser', ['userId' => $user->userId]) }}" method="POST">
+                            <form action="{{ route('deleteUser') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="userId" id="idInputs" class="error-input" autocomplete="off">
@@ -139,7 +184,7 @@
                 <div class="modal-content">
                     <header class="head">
                         <h2>Nuevo Usuario</h2>
-                        <button type="button" id="cerrarModalUser"><i class="fa-solid fa-xmark"></i></button>
+                        <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                     </header>
                     <form action="{{ url('/addUser') }}" method="POST" id="formUser" class="addUser">
                         @csrf
@@ -154,12 +199,12 @@
                         </div>
 
                         <div class="options-courses">
-                            <div class="custom-listbox">
-                                <div class="listbox-header">
-                                    <button id="listbox" type="button"><span class="selected-option">Rol</span></button>
+                            <div class="custom-listbox role">
+                                <div class="listbox-header listbox-header-edit">
+                                    <button class="listbox" type="button"><span class="selected-option">Rol</span></button>
                                     <i class="fa-solid fa-chevron-down arrow-down"></i>
                                 </div>
-                                <ul class="options">
+                                <ul class="options optionsEdit">
                                     <li data-value="Estudiante">Estudiante</li>
                                     <li data-value="Docente">Docente</li>
                                     <li data-value="Coordinador">Coordinador</li>
@@ -172,11 +217,11 @@
 
                         <div class="options-courses lst-contract" hidden>
                             <div class="custom-listbox contract">
-                                <div class="listbox-header">
-                                    <button id="listbox" type="button"><span class="selected-option">Tipo de contrato</span></button>
+                                <div class="listbox-header listbox-header-edit">
+                                    <button class="listbox" type="button"><span class="selected-option">Tipo de contrato</span></button>
                                     <i class="fa-solid fa-chevron-down arrow-down"></i>
                                 </div>
-                                <ul class="options">
+                                <ul class="options optionsEdit">
                                     <li data-value="Tiempo completo">Tiempo completo</li>
                                     <li data-value="Hora clase">Hora clase</li>
                                 </ul>
@@ -186,11 +231,11 @@
 
                         <div class="options-courses lst-specialty" hidden>
                             <div class="custom-listbox specialty">
-                                <div class="listbox-header">
-                                    <button id="listbox" type="button"><span class="selected-option">Especialidad</span></button>
+                                <div class="listbox-header listbox-header-edit">
+                                    <button class="listbox" type="button"><span class="selected-option">Especialidad</span></button>
                                     <i class="fa-solid fa-chevron-down arrow-down"></i>
                                 </div>
-                                <ul class="options">
+                                <ul class="options optionsEdit">
                                     @foreach($careers as $career)
                                         <li data-value="{{$career->nameCareer}}">{{$career->nameCareer}}</li>
                                     @endforeach

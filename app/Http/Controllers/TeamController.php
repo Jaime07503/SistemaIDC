@@ -41,11 +41,18 @@
 
         public function create(Request $request)
         {
-            $selectedStudentIds = explode(',', $request->input('selectedStudentIds', ''));
+            // Variables
+            $INITIAL_STATE = 'Sin Intento';
+            $INITIAL_PATH = 'Por generar';
+            $INITIAL_STATE_IDC = 'Creado';
+            $INITIAL_TEAM_STATE = 'Postulado';
+            $studentId = session('studentId');
             $researchTopicId = $request->input('idResearchTopic');
             $subjectId = $request->input('subjectId');
+            $selectedStudentIds = explode(',', $request->input('selectedStudentIds', ''));
             $integrantQuantity = count($selectedStudentIds);
 
+            // Create team
             $team = new Team;
             $team->creationDate = Carbon::now();
             $team->integrantQuantity = $integrantQuantity;
@@ -54,6 +61,7 @@
             $team->idTeacher = $request->input('idTeacher');
             $team->save();
 
+            // Create all the StudenTeam with studentId
             foreach ($selectedStudentIds as $studentId) {
                 if (is_numeric($studentId)) {
                     $studentTeam = new StudentTeam;
@@ -63,6 +71,7 @@
                 }
             }
 
+            // Create Idc
             $idc = new Idc();
             $idc->startDateSearchReport = '2024-01-22 23:59:59';
             $idc->endDateSearchReport = '2024-02-29 23:59:59';
@@ -71,24 +80,26 @@
             $idc->startDateNextIdcTopic = '2024-05-01 23:59:59';
             $idc->endDateNextIdcTopic = '2024-06-15 23:59:59';
             $idc->badgeProcessCompleted = 'Por obtener';
-            $idc->state = 'Creado';
+            $idc->state = $INITIAL_STATE_IDC;
             $idc->idUser = 1;
             $idc->idTeam = $team->teamId;
             $idc->save();
 
+            // Create empty Topic Search Report
             $searchReport = new TopicSearchReport();
             $searchReport->code = '';
             $searchReport->induction = '';
-            $searchReport->teamBehavior = '';
             $searchReport->searchPlan = '';
             $searchReport->meetings = '';
             $searchReport->teamValoration = '';
             $searchReport->finalComment = '';
-            $searchReport->storagePath = 'Por generar';
-            $searchReport->state = 'Sin Intento';
+            $searchReport->storagePath = $INITIAL_PATH;
+            $searchReport->state = $INITIAL_STATE;
+            $searchReport->previousState = $INITIAL_STATE;
             $searchReport->idIdc = $idc->idcId;
             $searchReport->save();
 
+            // Create empty Scientific Article Report
             $scientificArticle = new ScientificArticleReport();
             $scientificArticle->code = '';
             $scientificArticle->spanishSummary = '';
@@ -96,22 +107,22 @@
             $scientificArticle->keywords = '';
             $scientificArticle->introduction = '';
             $scientificArticle->methodology = '';
-            $scientificArticle->development = '';
-            $scientificArticle->conclusion = '';
-            $scientificArticle->bibliographicReferences = '';
             $scientificArticle->numberOfWords = '';
-            $scientificArticle->storagePath = 'Por generar';
-            $scientificArticle->state = 'Sin Intento';
+            $scientificArticle->storagePath = $INITIAL_PATH;
+            $scientificArticle->state = $INITIAL_STATE;
+            $scientificArticle->previousState = $INITIAL_STATE;
             $scientificArticle->idIdc = $idc->idcId;
             $scientificArticle->save();
 
+            // Create empty Next Idc Topic Report
             $nextIdcTopic = new NextIdcTopicReport();
             $nextIdcTopic->code = '';
             $nextIdcTopic->introduction = '';
             $nextIdcTopic->continueTopic = '';
             $nextIdcTopic->proposeTopics = '';
-            $nextIdcTopic->storagePath = 'Por generar';
-            $nextIdcTopic->state = 'Sin Intento';
+            $nextIdcTopic->storagePath = $INITIAL_PATH;
+            $nextIdcTopic->state = $INITIAL_STATE;
+            $nextIdcTopic->previousState = $INITIAL_STATE;
             $nextIdcTopic->idIdc = $idc->idcId;
             $nextIdcTopic->save();
 
@@ -121,7 +132,6 @@
                     ->update(['state' => 'Aprobado']);
             }
 
-            $studentId = session('studentId');
             $researchTopic = ResearchTopic::where('researchTopicId', $researchTopicId)->first();
 
             $studentResearch = Subject::join('Student_Subject', function ($join) use ($subjectId, $studentId) {

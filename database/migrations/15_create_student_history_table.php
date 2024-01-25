@@ -11,9 +11,9 @@
                 $table->increments('studentHistoryId');
                 $table->decimal('cum', 3, 1);
                 $table->string('enrolledSubject', 11);
-                $table->string('subjectApply', 80);
+                $table->string('subjectApply', 100);
                 $table->string('previousIdc', 10);
-                $table->string('subjectPreviousIdc', 80)->nullable();
+                $table->string('subjectPreviousIdc', 100)->nullable();
                 $table->unsignedBigInteger('idStudent');
                 $table->timestamps();
                 $table->foreign('idStudent')->references('studentId')->on('Student')->onUpdate('cascade')->onDelete('cascade');

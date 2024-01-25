@@ -9,8 +9,9 @@
         {
             Schema::create('Conclusion', function (Blueprint $table) {
                 $table->increments('conclusionId');
-                $table->string('conclusion', 255);
-                $table->string('state', 10);
+                $table->string('conclusion', 700);
+                $table->string('studentContribute', 200);
+                $table->string('state', 30);
                 $table->timestamps();
             });
         }

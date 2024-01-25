@@ -152,8 +152,10 @@ document.addEventListener("DOMContentLoaded", function () {
             if (openListbox && openListbox !== listbox) {
                 openListbox.querySelector(".options").style.display = "none";
                 openListbox.querySelector(".arrow-down").style.transform = "rotate(0deg)";
+                openListbox.querySelector(".listbox-header").classList.remove("active");
             }
 
+            listboxHeader.classList.toggle("active");
             optionsList.style.display = optionsList.style.display === "block" ? "none" : "block";
             arrowDown.style.transform = optionsList.style.display === "block" ? "rotate(180deg)" : "rotate(0deg)";
             openListbox = listbox;
@@ -166,6 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 input.value = selectedOption;
                 optionsList.style.display = "none";
                 arrowDown.style.transform = "rotate(0deg)";
+                listboxHeader.classList.remove("active");
                 const yearError = document.getElementById("yearInputError");
                 const careerError = document.getElementById("careerInputError");
                 const subjectPostulatedError = document.getElementById("subjectPostulatedError");

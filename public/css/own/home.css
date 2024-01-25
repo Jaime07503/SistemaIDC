@@ -1,0 +1,125 @@
+:root {
+    --primary: #800000;
+    --gold: #F0AD4E;
+    --light: #E5EEF4;
+    --white: #FFFFFF;
+    --texas-rose-50: #fef7ec;
+    --texas-rose-100: #fae9cb;
+}
+
+html, body, div, form, h1, h2, h3, h4, h5, input, i, button, ul, li, p, span {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Helvetica, sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    min-height: 100vh;
+    background: var(--light);
+}
+
+/* Contenedor principal */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    min-height: auto;
+    gap: 1.7rem;
+}
+
+/* Encabezado */
+.head-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    width: 95%;
+    padding: 1rem;
+    margin-top: 6rem;
+    border-radius: .5rem;
+}
+
+.head-lbl {
+    font-size: 1.7rem;
+    color: var(--primary);
+}
+
+/*  */
+.facultys-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    width: 95%;
+    padding: 1rem;
+    border-radius: .5rem;
+    gap: .5rem;
+    margin-bottom: 1.5rem;
+}
+
+.faculty {
+    color: var(--primary);
+    font-size: 1rem;
+}
+
+.lt-faculty {
+    display: flex;
+    flex-direction: column;
+}
+
+.lt-item-faculty, .lt-inside-career, .lt-inside-subject {
+    list-style: none;
+    width: 100%;
+    overflow: hidden;
+}
+
+.lt-item-faculty--click, .lt-item-career--click, .lt-item-subject--click {
+    cursor: pointer;
+}
+
+.lt-button-faculty, .lt-button-career, .lt-button-subject {
+    display: flex;
+    gap: .5rem;
+    width: 100%;
+    align-items: center;
+}
+
+.lt-arrow {
+    font-size: .7rem;
+    color: var(--primary);
+}
+
+.lt-link {
+    color: var(--primary);
+    display: block;
+    padding: .3rem 0;
+    text-decoration: none;
+    font-size: .9rem;
+}
+
+.lt-link--inside-faculty, .lt-link--inside-career, .lt-link--inside-subject {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    text-align: left;
+    margin-left: .7rem;
+}
+
+.lt-link--inside-faculty:hover {
+     text-decoration: underline;
+}
+
+.lt-show-careers, .lt-show-subjects, .lt-show-researchTopics {
+    transition: height .3s;
+    height: 0;
+    margin-left: .5rem;
+}
+
+.arrow .lt-arrow {
+    transform: rotate(180deg);
+}

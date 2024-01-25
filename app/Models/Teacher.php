@@ -25,7 +25,7 @@
 
         public function subject()
         {
-            return $this->hasMany(Subject::class);
+            return $this->hasMany(Subject::class, 'idTeacher');
         }
 
         public function team()

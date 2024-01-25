@@ -12,7 +12,8 @@
                 ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
                 ->select('Idc.endDateScientificArticleReport', 'Idc.idcId',
                 'Research_Topic.researchTopicId', 'Research_Topic.themeName', 'Research_Topic.code',
-                'Team.teamId', 'Subject.subjectId',  'Scientific_Article_Report.state', 'Scientific_Article_Report.code AS scientificArticleCode',
+                'Team.teamId', 'Subject.subjectId',  'Scientific_Article_Report.state', 'Scientific_Article_Report.previousState', 
+                'Scientific_Article_Report.correctedDocStoragePath', 'Scientific_Article_Report.nameCorrectedDoc', 'Scientific_Article_Report.code AS scientificArticleCode',
                 'Scientific_Article_Report.updated_at', 'Scientific_Article_Report.storagePath')
                 ->where('Idc.idcId', $idcId)
                 ->first();

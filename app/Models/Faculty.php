@@ -17,7 +17,7 @@
         //Relationships with other tables
         public function career()
         {
-            return $this->hasMany(Career::class);
+            return $this->hasMany(Career::class, 'idFaculty');
         }
     }
 ?>

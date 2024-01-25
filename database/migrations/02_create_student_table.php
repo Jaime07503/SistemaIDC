@@ -10,8 +10,8 @@
             Schema::create('Student', function (Blueprint $table) {
                 $table->increments('studentId');
                 $table->string('carnet', 11)->unique();
-                $table->string('career', 100)->nullable();
-                $table->string('state', 10)->nullable();
+                $table->string('career', 200)->nullable();
+                $table->string('state', 30)->nullable();
                 $table->unsignedBigInteger('idUser');
                 $table->timestamps();
                 $table->foreign('idUser')->references('userId')->on('User')->onUpdate('cascade')->onDelete('cascade');

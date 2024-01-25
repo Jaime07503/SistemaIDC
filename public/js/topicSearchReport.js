@@ -1,61 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Variables
- const listboxes = document.querySelectorAll(".custom-listbox");
- let openListbox = null;
+    let approvedSourcesCount = calculateApprovedSourceCount();
+    let approvedGeneralOCount = calculateApprovedOGCount();
+    let approvedSpecificOCount = calculateApprovedOECount();
 
- // Custom Listbox
- listboxes.forEach(function (listbox) {
-     handleListbox(listbox);
- });
-
- function handleListbox(listbox) {
-     const listboxHeader = listbox.querySelector(".listbox-header");
-     const optionsList = listbox.querySelector(".options");
-     const arrowDown = listbox.querySelector(".arrow-down");
-     const selectedOptionSpan = listbox.querySelector(".selected-option");
-
-     listboxHeader.addEventListener("click", function () {
-         if (openListbox && openListbox !== listbox) {
-             openListbox.querySelector(".options").style.display = "none";
-             openListbox.querySelector(".arrow-down").style.transform = "rotate(0deg)";
-             openListbox.querySelector(".listbox-header").classList.remove("active");
-         }
-
-         listboxHeader.classList.toggle("active");
-         optionsList.style.display = optionsList.style.display === "block" ? "none" : "block";
-         arrowDown.style.transform = optionsList.style.display === "block" ? "rotate(180deg)" : "rotate(0deg)";
-         openListbox = listbox;
-     });
-
-     optionsList.addEventListener("click", function (event) {
-         if (event.target.tagName === "LI") {
-             const selectedOption = event.target.textContent;
-             selectedOptionSpan.textContent = selectedOption;
-             optionsList.style.display = "none";
-             arrowDown.style.transform = "rotate(0deg)";
-             listboxHeader.classList.remove("active");
-
-             markSelectedOption(event.target);
-         }
-     });
-
-     // Función para agregar o quitar el ícono de verificación a la opción seleccionada
-     function markSelectedOption(selectedListItem) {
-         const options = optionsList.querySelectorAll("li");
-         options.forEach(function (option) {
-             option.classList.remove("selected");
-             option.innerHTML = option.textContent; // Limpiar el contenido HTML
-         });
-
-         selectedListItem.classList.add("selected");
-         selectedListItem.innerHTML = '<i class="fa-solid fa-check"></i> ' + selectedListItem.textContent;
-     }
- }
- 
     const textareas = document.querySelectorAll(".textarea");
     textareas.forEach(textarea => {
         textarea.addEventListener('keyup', e => {
-            textarea.style.height = "2.95rem"; // Establece una altura mínima
+            textarea.style.height = "2.95rem"; 
             let scHeight = e.target.scrollHeight;
             console.log(scHeight);
             textarea.style.height = `${scHeight}px`;
@@ -63,158 +14,245 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const fileContainers = document.querySelectorAll('.file-container');
-
     fileContainers.forEach(function(fileContainer) {
+        const inputFile = fileContainer.querySelector('.file-input');
+        const imgArea = fileContainer.querySelector('.img-area');
+        const uploadedImage = fileContainer.querySelector('#uploadedImage');
+
         fileContainer.addEventListener('click', function () {
-            const inputFile = this.querySelector('.file-input');
-            const imgArea = this.querySelector('.img-area');
-    
-            inputFile.click(); // Hacer clic directamente en el input file
-    
-            inputFile.addEventListener('change', function () {
-                const image = this.files[0];
-    
-                if (image && image.size < 2000000) {
+            inputFile.click();
+        });
+
+        inputFile.addEventListener('change', function () {
+            const image = this.files[0];
+
+            if (image) {
+                if (image.size < 2000000) {
                     const reader = new FileReader();
+
                     reader.onload = () => {
-                        const allImgs = imgArea.querySelectorAll('img');
-                        allImgs.forEach(item => item.remove());
-    
-                        const imgUrl = reader.result;
-                        const img = document.createElement('img');
-                        img.src = imgUrl;
-                        imgArea.appendChild(img);
+                        uploadedImage.src = reader.result;
+                        uploadedImage.style.display = 'block';
                         imgArea.classList.add('active');
                         imgArea.dataset.img = image.name;
                     };
+
                     reader.readAsDataURL(image);
                 } else {
-                    alert("La imagen debe ser menor que 2MB");
+                    showNotification("La imagen debe ser menor que 2MB", true);
+                    clearFileInput(inputFile);
                 }
-            });
+            } else {
+                uploadedImage.src = '';
+                uploadedImage.style.display = 'none';
+                imgArea.classList.remove('active');
+                imgArea.dataset.img = '';
+            }
         });
     });
 
-    var textarea = document.getElementById("miTextarea");
-
-    textarea.addEventListener("input", function () {
-        ajustarAltura(textarea);
-    });
-
-    // Ajusta la altura inicial
-    //ajustarAltura(textarea);
-
-    function ajustarAltura(elemento) {
-        elemento.style.height = "auto"; // Restablece la altura a auto para obtener la altura total
-        elemento.style.height = Math.min(elemento.scrollHeight, 120) + "px"; // Limita la altura al máximo de 120px
-    }
-
-    // Función para mostrar un modal
-    function showModal(modal) {
-        modal.style.display = 'block';
-    }
-
-    // Función para cerrar un modal
-    function closeModal(modal) {
-        modal.style.display = 'none';
-    }
-
-    // Obtén referencias a los elementos relevantes
-    var modals = {
-        info: document.getElementById('myModalInfo'),
-        objetivoGeneral: document.getElementById('myModalObjetivoGeneral'),
-        objetivoEspecifico: document.getElementById('myModalObjetivoEspecifico')
-    };
-
-    var btns = {
-        addInfo: document.getElementById('btnAddInfo'),
-        addObjetivoGeneral: document.getElementById('btnAddObjetivoGeneral'),
-        addObjetivoEspecifico: document.getElementById('btnAddObjetivoEspecifico')
-    };
-
-    var closeBtns = {
-        info: document.getElementById('cerrarModalInfo'),
-        objetivoGeneral: document.getElementById('cerrarModalObjetivoGeneral'),
-        objetivoEspecifico: document.getElementById('cerrarModalObjetivoEspecifico')
-    };
-
-    // Funciones para mostrar y cerrar modales al hacer clic
-    function handleModalClick(event, modal) {
-        if (event.target === modal) {
-            closeModal(modal);
+    function clearFileInput(input) {
+        try {
+            input.value = '';
+        } catch (e) {
+            const newInput = document.createElement('input');
+            newInput.type = 'file';
+            newInput.className = input.className;
+            newInput.style.cssText = input.style.cssText;
+            newInput.hidden = true;
+            newInput.addEventListener('change', input.onchange);
+            input.parentNode.replaceChild(newInput, input);
         }
     }
 
-    function handleAddButtonClick(modal) {
-        return function () {
-            showModal(modal);
-        };
+    let btnAprovedSources = document.querySelectorAll('.btn-aproved-source');
+    btnAprovedSources.forEach(function (btnAprovedSource) {
+        btnAprovedSource.addEventListener('click', function (event) {
+            let idSource = btnAprovedSource.getAttribute('data-values');
+
+            fetch(`http://localhost/SistemaIDC/public/source/${idSource}`)
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (state) {
+                    actualizarCamposFormulario(state, idSource, btnAprovedSource);
+                })
+                .catch(function (error) {
+                    console.error('Error en la solicitud Fetch:', error);
+                });
+        });
+    });
+
+    function actualizarCamposFormulario(state, idSource, btnAprovedSource) {
+        btnAprovedSource.style.display = 'none';
+
+        var stateField = document.getElementById(`state-source-${idSource}`);
+        stateField.textContent = state;
+        stateField.style.display = 'inline-block';
+
+        if (state.trim() === 'Aprobado') {
+            approvedSourcesCount++;
+        }
     }
 
-    function handleCloseButtonClick(modal) {
-        return function () {
-            closeModal(modal);
-        };
-    } 
+    let btnAprovedObjetivesE = document.querySelectorAll('.btn-aproved-objetiveE');
+    btnAprovedObjetivesE.forEach(function (btnAprovedObjetiveE) {
+        btnAprovedObjetiveE.addEventListener('click', function (event) {
+            let idObjetive = btnAprovedObjetiveE.getAttribute('data-values');
 
-    // Asignar eventos
-    btns.addInfo.addEventListener('click', handleAddButtonClick(modals.info));
-    btns.addObjetivoGeneral.addEventListener('click', handleAddButtonClick(modals.objetivoGeneral));
-    btns.addObjetivoEspecifico.addEventListener('click', handleAddButtonClick(modals.objetivoEspecifico));
+            fetch(`http://localhost/SistemaIDC/public/updateObjetiveE/${idObjetive}`)
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (state) {
+                    actualizarCamposFormularioOE(state, idObjetive, btnAprovedObjetiveE);
+                })
+                .catch(function (error) {
+                    console.error('Error en la solicitud Fetch:', error);
+                });
+        });
+    });
 
-    closeBtns.info.addEventListener('click', handleCloseButtonClick(modals.info));
-    closeBtns.objetivoGeneral.addEventListener('click', handleCloseButtonClick(modals.objetivoGeneral));
-    closeBtns.objetivoEspecifico.addEventListener('click', handleCloseButtonClick(modals.objetivoEspecifico));
+    function actualizarCamposFormularioOE(state, idObjetive, btnAprovedObjetiveE) {
+        btnAprovedObjetiveE.style.display = 'none';
 
-    // Cierra el modal si se hace clic fuera de él
-    window.addEventListener('click', function (event) {
-        if (event.target === modals.info) {
-            closeModal(modals.info);
-        } else if (event.target === modals.objetivoGeneral) {
-            closeModal(modals.objetivoGeneral);
-        } else if (event.target === modals.objetivoEspecifico) {
-            closeModal(modals.objetivoEspecifico);
+        var stateField = document.getElementById(`state-specific-${idObjetive}`);
+        stateField.textContent = state;
+        stateField.style.display = 'inline-block';
+
+        if (state.trim() === 'Aprobado') {
+            approvedSpecificOCount++;
+        }
+    }
+
+    let btnAprovedObjetivesG = document.querySelectorAll('.btn-aproved-objetiveG');
+    btnAprovedObjetivesG.forEach(function (btnAprovedObjetiveG) {
+        btnAprovedObjetiveG.addEventListener('click', function (event) {
+            let idObjetive = btnAprovedObjetiveG.getAttribute('data-values');
+
+            fetch(`http://localhost/SistemaIDC/public/updateObjetiveG/${idObjetive}`)
+                .then(function (response) {
+                    return response.text();
+                })
+                .then(function (state) {
+                    actualizarCamposFormularioOG(state, idObjetive, btnAprovedObjetiveG);
+                })
+                .catch(function (error) {
+                    console.error('Error en la solicitud Fetch:', error);
+                });
+        });
+    });
+
+    function actualizarCamposFormularioOG(state, idObjetive, btnAprovedObjetiveG) {
+        btnAprovedObjetiveG.style.display = 'none';
+
+        var stateField = document.getElementById(`state-general-${idObjetive}`);
+        stateField.textContent = state;
+        stateField.style.display = 'inline-block';
+
+        if (state.trim() === 'Aprobado') {
+            approvedGeneralOCount++;
+        }
+    }
+
+    const myForm = document.getElementById('myForm');
+    const notification = document.getElementById('notification');
+
+    myForm.addEventListener('submit', function (event) {
+        const textareas = document.querySelectorAll(".textarea");
+        for (const textarea of textareas) {
+            if (textarea.value.trim() === '') {
+                showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true);
+                event.preventDefault();
+                return;
+            }
+        }
+
+        const fileInputs = document.querySelectorAll('.file-input');
+        for (const fileInput of fileInputs) {
+            if (!fileInput.files.length) {
+                showNotification(`Por favor, suba una imagen para el campo "${fileInput.name}"`, true);
+                event.preventDefault(); 
+                return;
+            }
+        }
+
+        const inputs = document.querySelectorAll(".calification");
+        for (const input of inputs) {
+            if (input.value.trim() === '') {
+                showNotification(`Por favor, completa el campo "${input.name}"`, true);
+                event.preventDefault();
+                return;
+            }
+        }
+
+        if (approvedGeneralOCount < 1) {
+            showNotification('Debe haber al menos 1 Objetivo General aprobado', true);
+            event.preventDefault();
+            return;
+        }
+
+        if (approvedSpecificOCount < 3) {
+            showNotification('Debe haber al menos 3 Objetivos Específicos aprobados', true);
+            event.preventDefault();
+            return;
+        }
+
+        if (approvedSourcesCount < 15) {
+            showNotification('Debe haber al menos 15 fuentes bibliográficas aprobadas', true);
+            event.preventDefault();
+            return;
         }
     });
 
-    // Obtener todos los formularios con la clase 'ajax-form'
-    var forms = document.querySelectorAll('.ajax-form');
-
-    // Asignar un evento submit a cada formulario
-    forms.forEach(function(form) {
-        form.addEventListener('submit', function(e) {
-            // Prevenir la acción predeterminada del formulario
-            e.preventDefault();
-
-            // Enviar la solicitud AJAX
-            enviarSolicitudAjax(form);
-        });
-    });
-
-    function enviarSolicitudAjax(form) {
-        var formData = new FormData(form);
-        var url = form.getAttribute('action');
-        var method = form.getAttribute('method');
-
-        fetch(url, {
-            method: method,
-            body: formData })
-        .then(function (response){
-            // Actualizar los campos del formulario según la respuesta
-            actualizarCamposFormulario(form, response);
-        })
-        .catch(error => {
-            console.error('Error:', error);
+    const numberInputs = document.querySelectorAll('.calification');
+    for (const numberInput of numberInputs) {
+        numberInput.addEventListener('input', function () {
+            let inputValue = this.value.replace(/[^0-9]/g, '');
+            this.value = inputValue;
         });
     }
 
-    function actualizarCamposFormulario(form, estado) {
-        // Ocultar el botón de envío del formulario
-        form.querySelector('.btn-aprobar').style.display = 'none';
+    function calculateApprovedSourceCount() {
+        let approvedCount = 0;
+        const stateElements = document.querySelectorAll(`#data-table-sources tbody tr td[data-values="Estado"] h4`);
+        stateElements.forEach(function (stateElement) {
+            if (stateElement.textContent.trim() === 'Aprobado') {
+                approvedCount++;
+            }
+        });
+        return approvedCount;
+    }
 
-        // Mostrar el estado actualizado en su lugar
-        var estadoField = form.querySelector('.state');
-        estadoField.textContent = estado;
-        estadoField.style.display = 'inline-block';
+    function calculateApprovedOGCount() {
+        let approvedCount = 0;
+        const stateElements = document.querySelectorAll(`#data-table-objetivesG tbody tr td[data-values="Estado"] h4`);
+        stateElements.forEach(function (stateElement) {
+            if (stateElement.textContent.trim() === 'Aprobado') {
+                approvedCount++;
+            }
+        });
+        return approvedCount;
+    }
+
+    function calculateApprovedOECount() {
+        let approvedCount = 0;
+        const stateElements = document.querySelectorAll(`#data-table-objetivesE tbody tr td[data-values="Estado"] h4`);
+        stateElements.forEach(function (stateElement) {
+            if (stateElement.textContent.trim() === 'Aprobado') {
+                approvedCount++;
+            }
+        });
+        return approvedCount;
+    }
+
+    function showNotification(message, isError = false) {
+        notification.textContent = message;
+        notification.className = isError ? 'notification error' : 'notification';
+        notification.style.display = 'block';
+
+        setTimeout(function () {
+            notification.style.display = 'none';
+        }, 3000);
     }
 });

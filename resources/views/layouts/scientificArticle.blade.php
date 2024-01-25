@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                         <td><strong>Tiempo restante</strong></td>
-                        @if($scientificArticle->state !== 'Creado')
+                        @if($scientificArticle->state === 'Sin Intento')
                             <td>{{ $timeRemaining }}</td>
                         @else
                             <td>El documento fue creado: <strong>{{ $formattedupdated_at }}</strong></td>
@@ -52,18 +52,14 @@
                     </tr>
                     <tr>
                         <td><strong>Archivo generado</strong></td>
-                        @if($scientificArticle->storagePath === null)
-                            <td>Aún no se ha generado un documento</td>
+                        @if($scientificArticle->storagePath === 'Por generar')
+                            <td>{{ $scientificArticle->storagePath }}</td>
                         @else
-                            @if($scientificArticle->storagePath !== 'Creado')
-                                <td>{{ $scientificArticle->storagePath }}</td>
-                            @else
-                                <td>
-                                    <strong><a href="{{ asset($scientificArticle->storagePath) }}" 
-                                        class="link-document"><i class="fa-regular fa-file-word"></i> {{ $scientificArticle->scientificArticleCode }}
-                                    </a></strong>
-                                </td>
-                            @endif
+                            <td>
+                                <strong><a href="{{ asset($scientificArticle->storagePath) }}" 
+                                    class="link-document"><i class="fa-regular fa-file-word"></i> {{ $scientificArticle->scientificArticleCode }}
+                                </a></strong>
+                            </td>
                         @endif
                     </tr>
                     <tr>
@@ -76,7 +72,11 @@
                 <div class="title">
                     <a href="{{ url('/scientificArticleReport', ['idcId' => $scientificArticle->idcId, 
                         'idScientificArticleReport' => $idScientificArticleReport]) }}" class="btn-login">
-                        <h4>Crear Informe</h4>
+                        @if(session('role') === 'Docente')
+                            <h4>Crear Informe</h4>
+                        @elseif(session('role') === 'Estudiante')
+                            <h4>Aportar al Informe</h4>
+                        @endif
                     </a>
                 </div>
             @endif

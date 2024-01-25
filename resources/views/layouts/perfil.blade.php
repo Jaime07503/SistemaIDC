@@ -10,6 +10,7 @@
 
 @section('content')
     <main class="main-content">
+        <!-- Título -->
         <header class="head-content">
             <h1 class="head-lbl">Perfil del usuario</h1>
             <div class="history">
@@ -17,37 +18,74 @@
                 <a class="history-view" href="">Perfil</a>
             </div>
         </header>
-        <section class="user-info-content">
-            <div class="info-top">
-                <div class="perfil">
-                    <img class="avatar-user" src="{{ session('avatarUrl') }}" alt="Avatar">
-                    <h2>{{ $user->name }}</h2>
-                    <a href="">Editar Perfil</a>
-                    <h4>Dirección Email</h4>
-                    <p>{{ $user->email }}</p>
-                </div>
-                <div class="datos-perfil">
-                    <h4>Insignias IDC</h4>
-                    <div class="badge">
-                        <i class="fa-solid fa-certificate"></i>
-                        <i class="fa-solid fa-certificate"></i>
-                        <i class="fa-solid fa-certificate"></i>
+        <section class="user-content">
+            <div class="basic-information">
+                <header class="perfil">
+                    <img class="avatar-user" src="{{ $user->avatar }}" alt="Avatar">
+                    <h2 class="lbl2">{{ $user->name }}</h2>
+                    <button class="btn" id="btnChangeAvatar">Cambiar Avatar</button>
+                </header>
+                <div class="information">
+                    <header>
+                        <h2 class="lbl2">Información personal</h2>
+                    </header>
+                    <div class="data">
+                        <h3 class="lbl3"><strong>Dirección Email</strong></h3>
+                        <p class="paragraph">{{ $user->email }}</p>
+                        <!-- <h3 class="lbl3"><strong>Participaciones IDC</strong></h3>
+                        <p class="paragraph">{{ $user->email }}</p> -->
                     </div>
                 </div>
-                <div class="datos-perfil">
-                    <h3>Actividad de ingresos</h3>
-                    <h4>Primer acceso al sitio</h4>
-                    <p>{{ $user->firstLogin }}</p>
-                    <h4>Último acceso al sitio</h4>
-                    <p>Thursday, 28 de September de 2023, 15:37  (3 segundos)</p>
+                <div class="income-information">
+                    <header>
+                        <h2 class="lbl2">Actividad del ingresos</h2>
+                    </header>
+                    <div class="data">
+                        <h3 class="lbl3">Primer acceso al sitio</h3>
+                        <p class="paragraph">{{ $formattedFL }}</p>
+                        <h3 class="lbl3">Último acceso al sitio</h3>
+                        <p class="paragraph">{{ $formattedLL }}</p>
+                    </div>
                 </div>
             </div>
-            <aside class="info-bottom">
-                <h2>Detalles de las investigaciones de catedra</h2>
-                <a href="">Servidores web</a>
-                <a href="">Servidores de correo</a>
-                <a href="">Servidores de archivos</a>
+            <aside class="actives-idc">
+                <h2 class="lbl2">Detalles de las investigaciones de catedra</h2>
+                @foreach ($idcs as $idc)
+                    <div class="idc-link">
+                        <img class="avatarTopic" src="{{ $idc->avatar }}" alt="Avatar">
+                        <a class="link" href="{{ route('stagesProcess', ['researchTopicId' => $idc->researchTopicId, 
+                            'teamId' => $idc->teamId, 'idcId' => $idc->idcId]) }}">{{ $idc->themeName }} - Equipo #{{ $idc->teamId }}
+                        </a>
+                    </div>
+                @endforeach
             </aside>
         </section>
+        <!-- Modal Edit User -->
+        <div id="myModalEditUser" class="modal">
+            <div class="modal-content">
+                <header class="head">
+                    <h2 class="lbl2">Cambiar avatar</h2>
+                    <button type="button" id="cerrarModalEditUser"><i class="fa-solid fa-xmark"></i></button>
+                </header>
+                <div class="basic-information">
+                    <form action="{{ route('userAvatar.update', ['idUser' => $user->userId]) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="container file-container" id="container">
+                            <input type="file" name="avatar" class="file-input" accept="image/*" hidden>
+                            <div class="img-area" data-img="">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <h4>Avatar</h4>
+                                <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn" id="submitButton">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </main>
+@endsection
+
+@section('scripts')
+    <script src=" {{ asset('js/perfil.js') }}"></script>
 @endsection

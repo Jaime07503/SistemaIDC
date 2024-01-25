@@ -12,6 +12,7 @@
         protected $fillable = [
             'conclusionId',
             'conclusion',
+            'studentContribute',
             'state'
         ];
 

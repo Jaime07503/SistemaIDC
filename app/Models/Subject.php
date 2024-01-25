@@ -25,7 +25,7 @@
         //Relationships with other tables
         public function researchTopic()
         {
-            return $this->hasMany(ResearchTopic::class);
+            return $this->hasMany(ResearchTopic::class, 'idSubject');
         }
 
         public function studentSubject()

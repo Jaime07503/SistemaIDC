@@ -9,12 +9,13 @@
         {
             Schema::create('Next_Idc_Topic_Report', function (Blueprint $table) {
                 $table->increments('nextIdcTopicReportId');
-                $table->string('code');
-                $table->string('intoduction', 500);
-                $table->string('continueTopic', 500);
-                $table->string('proposeTopics', 500);
-                $table->string('storagePath', 500);
-                $table->string('state', 20);
+                $table->string('code')->nullable();
+                $table->string('introduction', 400)->nullable();
+                $table->string('continueTopic', 850)->nullable();
+                $table->string('proposeTopics', 850)->nullable();
+                $table->string('conclusion', 800)->nullable();
+                $table->string('storagePath', 300)->nullable();
+                $table->string('state', 30)->nullable();
                 $table->unsignedBigInteger('idIdc');
                 $table->timestamps();
                 $table->foreign('idIdc')->references('idcId')->on('Idc')->onUpdate('cascade')->onDelete('cascade');

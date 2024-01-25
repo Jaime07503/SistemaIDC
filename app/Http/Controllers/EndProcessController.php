@@ -10,9 +10,11 @@
                 ->join('Team', 'Idc.idTeam', '=', 'Team.teamId')
                 ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
                 ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
-                ->select('Next_Idc_Topic_Report.state', 'Next_Idc_Topic_Report.storagePath',
-                'Idc.idcId', 'Idc.endDateNextIdcTopic','Next_Idc_Topic_Report.updated_at', 'Next_Idc_Topic_Report.state',
-                'Research_Topic.researchTopicId', 'Research_Topic.code', 'Research_Topic.themeName', 'Team.teamId', 'Subject.subjectId')
+                ->select('Next_Idc_Topic_Report.storagePath', 'Next_Idc_Topic_Report.code as nextIdcTopicReportCode', 'Idc.idcId',
+                'Idc.endDateNextIdcTopic','Next_Idc_Topic_Report.updated_at', 'Next_Idc_Topic_Report.state', 'Next_Idc_Topic_Report.previousState',
+                'Next_Idc_Topic_Report.correctedDocStoragePath', 'Next_Idc_Topic_Report.nameCorrectedDoc', 
+                'Research_Topic.researchTopicId', 'Research_Topic.code', 'Research_Topic.themeName', 'Team.teamId',
+                 'Subject.subjectId')
                 ->where('Idc.idcId', $idcId)
                 ->first();
 

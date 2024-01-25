@@ -18,7 +18,8 @@
         {
             $user = Socialite::driver('google')->user();
 
-            if (strpos($user->email, '@catolica.edu.sv') !== false || strpos($user->email, 'mariojaimemartinez27@gmail.com') !== false) {
+            if (strpos($user->email, '@catolica.edu.sv') !== false || strpos($user->email, 'mariojaimemartinez27@gmail.com') !== false
+                || strpos($user->email, 'mariojaimemartz27@gmail.com') !== false) {
                 $usuarioExiste = User::where('email', $user->email)->first();
 
                 if ($usuarioExiste) {
@@ -55,14 +56,14 @@
 
         public function logout()
         {
-            Auth::logout(); 
-            Session::flush();
-
             $fechaActual = new DateTime();
             $fechaCarbon = Carbon::parse($fechaActual);
 
             User::where('userId', session('userId'))
                 ->update(['lastLogin' => $fechaCarbon]);
+                
+            Auth::logout(); 
+            Session::flush();
 
             return redirect('/login');
         }

@@ -16,9 +16,7 @@
                 $table->timestamp('firstLoginPresentCycle')->nullable();
                 $table->timestamp('firstLogin')->nullable();
                 $table->timestamp('lastLogin')->nullable();
-                $table->string('externalId')->nullable();
-                $table->string('externalAuth')->nullable();
-                $table->string('state', 10);
+                $table->string('state', 30);
                 $table->rememberToken();
                 $table->timestamps();
             });

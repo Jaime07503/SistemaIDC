@@ -2,6 +2,7 @@
     namespace App\Models;
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Foundation\Auth\User as Authenticatable;
+    use Illuminate\Notifications\DatabaseNotification;
     use Illuminate\Notifications\Notifiable;
     use Laravel\Sanctum\HasApiTokens;
 
@@ -20,8 +21,6 @@
             'firstLoginPresentCycle',
             'firstLogin',
             'lastLogin',
-            'externalId',
-            'externalAuth',
             'state'
         ];
 
@@ -32,12 +31,18 @@
         //Relationships with other tables
         public function teacher()
         {
-            return $this->hasOne(Teacher::class);
+            return $this->hasOne(Teacher::class, 'idUser');
         }
 
         public function student()
         {
             return $this->hasOne(Student::class, 'idUser');
+        }
+
+        public function notification()
+        {
+            return $this->hasMany(Notification::class, 'idUser')
+                ->orderBy('created_at', 'desc');
         }
 
         public function idc()

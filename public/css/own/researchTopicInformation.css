@@ -215,14 +215,14 @@ h3 {
 /* Boton para postularse */
 .btn-postulate {
     text-decoration: none;
-    background: var(--texas-rose-50);
+    background: var(--texas-rose-100);
     width: 9rem;
     text-align: center;
     outline: none;
     border: none;
     font-size: .9rem;
     font-weight: 900;
-    height: 1.6rem;
+    height: 2rem;
     border-radius: .5rem;
     padding: 0.3rem;
     cursor: pointer;
@@ -231,30 +231,27 @@ h3 {
     align-items: center;
     justify-content: center;
     gap: .5rem;
+    width: 100%;
+    color: var(--primary);
 }
 
 .btn-postulate:hover {
-    background-color: var(--texas-rose-100);
+    background: var(--texas-rose-200);
     box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
-    color: var(--white);
 }
 
 .state {
     padding: .5rem;
-    color: var(--white);
-    background: var(--primary);
+    color: var(--primary);
+    background: var(--texas-rose-200);
     border-radius: .5rem;
+    text-align: center;
 }
 
 .integrants {
     display: flex;
     align-items: center;
     gap: .3rem;
-}
-
-.state {
-    background: var(--primary);
-    color: var(--white);
 }
 
 .empty {
