@@ -15,7 +15,10 @@
                 $table->string('proposeTopics', 850)->nullable();
                 $table->string('conclusion', 800)->nullable();
                 $table->string('storagePath', 300)->nullable();
+                $table->string('nameCorrectedDocument', 200)->nullable();
+                $table->string('correctedDocumentStoragePath', 300)->nullable();
                 $table->string('state', 30)->nullable();
+                $table->string('previousState', 30)->nullable();
                 $table->unsignedBigInteger('idIdc');
                 $table->timestamps();
                 $table->foreign('idIdc')->references('idcId')->on('Idc')->onUpdate('cascade')->onDelete('cascade');

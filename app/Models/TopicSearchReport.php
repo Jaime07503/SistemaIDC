@@ -20,7 +20,10 @@
             'teamComment',
             'finalComment',
             'storagePath',
+            'nameCorrectedDocument',
+            'correctedDocumentStoragePath',
             'state',
+            'previousState',
             'idIdc'
         ];
 

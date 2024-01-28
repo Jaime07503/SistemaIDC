@@ -30,14 +30,14 @@
                 @csrf
                 <div class="first-section">
                     <strong><h2>Orientación del equipo</h2></strong>
-                    <textarea class="textarea" id="editor" name="orientation" placeholder="Organización del equipo" maxlength="800"></textarea>
-                    <textarea class="textarea" name="induction" placeholder="Inducción del tema" maxlength="1150"></textarea>
+                    <textarea class="textarea" id="editor" name="orientation" placeholder="Organización del equipo" min="600" maxlength="800"></textarea>
+                    <textarea class="textarea" name="induction" placeholder="Inducción del tema" min="950" maxlength="1150"></textarea>
                 </div>
                 <div class="second-section">
                     <strong><h2>Plan de búsqueda de información</h2></strong>
-                    <textarea class="textarea" name="searchPlan" placeholder="Plan de búsqueda" maxlength="700"></textarea>
+                    <textarea class="textarea" name="searchPlan" placeholder="Plan de búsqueda" min="600" maxlength="700"></textarea>
                     <div class="container file-container" id="container3">
-                        <input type="file" name="Imagen-Diagrama" class="file-input" accept="image/*" hidden>
+                        <input type="file" name="Imagen-Diagrama" class="file-input" accept="image/png, image/jpeg" hidden>
                         <div class="img-area" data-img="">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
                             <h4>Diagrama Temas Explorados</h4>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="third-section">
                     <strong><h2>Reuniones y objetivos</h2></strong>
-                    <textarea class="textarea" name="meetings" placeholder="Resumen de reuniones" maxlength="500"></textarea>
+                    <textarea class="textarea" name="meetings" placeholder="Resumen de reuniones" min="400" maxlength="500"></textarea>
                     <table id="data-table-objetivesG" class="table content-table">
                         <thead>
                             <tr>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="fourth-section">
                     <strong><h2>Tabla de volcado de información</h2></strong>
-                    <textarea class="textarea" name="criteria" placeholder="Criterios de selección de la información" maxlength="350"></textarea>
+                    <textarea class="textarea" name="criteria" placeholder="Criterios de selección de la información" min="250" maxlength="350"></textarea>
                     <table id="data-table-sources" class="table content-table export-table">
                         <thead>
                             <tr>
@@ -149,58 +149,61 @@
                 </div>
                 <div class="fifth-content">
                     <strong><h2>Valoración del equipo</h2></strong>
-                    <textarea class="textarea" name="teamValoration" placeholder="Valoración del catedrático sobre el equipo" maxlength="800"></textarea>
-                    <table id="data-table-criteria" class="table content-table">
-                        <thead>
-                            <tr>
-                                <th>Criterios de evaluacion</th>
-                                <th>Calificación (1 - 10)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td data-values="Criterio">El estudiante ha sido responsable con el proceso.</td>
-                                <td data-values="Calificación"><input type="text" class="calification" name="Criterio-1" maxlength="2" autocomplete="off"></td>
-                            </tr>
-                            <tr>
-                                <td data-values="Criterio">Ha participado de las reuniones con puntualidad.</td>
-                                <td data-values="Calificación"><input type="text" class="calification" name="Criterio-2" maxlength="2" autocomplete="off"></td>
-                            </tr>
-                            <tr>
-                                <td data-values="Criterio">Ha Evidenciado interés por el proceso.</td>
-                                <td data-values="Calificación"><input type="text" class="calification" name="Criterio-3" maxlength="2" autocomplete="off"></td>
-                            </tr>
-                            <tr>
-                                <td data-values="Criterio">Se ha apropiado de la temática.</td>
-                                <td data-values="Calificación"><input type="text" class="calification" name="Criterio-4" maxlength="2" autocomplete="off"></td>
-                            </tr>
-                            <tr>
-                                <td data-values="Criterio">Realimenta y exterioriza sus comentarios, dudas y reflexiones personales.</td>
-                                <td data-values="Calificación"><input type="text" class="calification" name="Criterio-5" maxlength="2" autocomplete="off"></td>
-                            </tr>
-                            <tr>
-                                <td data-values="Criterio">El estudiante es capaz de autogestionar su conocimiento y el proceso, mejorando su desempeño y capacidad de análisis.</td>
-                                <td data-values="Calificación"><input type="text" class="calification" name="Criterio-6" maxlength="2" autocomplete="off"></td>
-                            </tr>
-                            <tr>
-                                <td data-values="Criterio">El estudiante ha desarrollado cada una de las actividades asignadas con diligencia y esmero.</td>
-                                <td data-values="Calificación"><input type="text" class="calification" name="Criterio-7" maxlength="2" autocomplete="off"></td>
-                            </tr>
-                            <tr>
-                                <td data-values="Criterio">El estudiante ha elevado su dominio sobre el tema.</td>
-                                <td data-values="Calificación"><input type="text" class="calification" name="Criterio-8" maxlength="2" autocomplete="off"></td>
-                            </tr>
-                            <tr>
-                                <td data-values="Criterio">El estudiante ha contribuido al resultado esperado en términos de volumen y calidad.</td>
-                                <td data-values="Calificación"><input type="text" class="calification" name="Criterio-9" maxlength="2" autocomplete="off"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <textarea class="textarea" name="teamComment" placeholder="Comentarios sobre el equipo" maxlength="300"></textarea>
+                    <textarea class="textarea" name="teamValoration" placeholder="Valoración del catedrático sobre el equipo" min="650" maxlength="800"></textarea>
+                    @foreach($students as $student)
+                        <h2><strong>{{ $student->name }}</strong></h2>
+                        <table id="data-table-criteria" class="table content-table">
+                            <thead>
+                                <tr>
+                                    <th>Criterios de evaluacion</th>
+                                    <th>Calificación (1 - 10)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td data-values="Criterio">El estudiante ha sido responsable con el proceso.</td>
+                                    <td data-values="Calificación"><input type="text" class="calification" name="Criterio-{{ $student->name }}-1" maxlength="2" autocomplete="off"></td>
+                                </tr>
+                                <tr>
+                                    <td data-values="Criterio">Ha participado de las reuniones con puntualidad.</td>
+                                    <td data-values="Calificación"><input type="text" class="calification" name="Criterio-{{ $student->name }}-2" maxlength="2" autocomplete="off"></td>
+                                </tr>
+                                <tr>
+                                    <td data-values="Criterio">Ha Evidenciado interés por el proceso.</td>
+                                    <td data-values="Calificación"><input type="text" class="calification" name="Criterio-{{ $student->name }}-3" maxlength="2" autocomplete="off"></td>
+                                </tr>
+                                <tr>
+                                    <td data-values="Criterio">Se ha apropiado de la temática.</td>
+                                    <td data-values="Calificación"><input type="text" class="calification" name="Criterio-{{ $student->name }}-4" maxlength="2" autocomplete="off"></td>
+                                </tr>
+                                <tr>
+                                    <td data-values="Criterio">Realimenta y exterioriza sus comentarios, dudas y reflexiones personales.</td>
+                                    <td data-values="Calificación"><input type="text" class="calification" name="Criterio-{{ $student->name }}-5" maxlength="2" autocomplete="off"></td>
+                                </tr>
+                                <tr>
+                                    <td data-values="Criterio">El estudiante es capaz de autogestionar su conocimiento y el proceso, mejorando su desempeño y capacidad de análisis.</td>
+                                    <td data-values="Calificación"><input type="text" class="calification" name="Criterio-{{ $student->name }}-6" maxlength="2" autocomplete="off"></td>
+                                </tr>
+                                <tr>
+                                    <td data-values="Criterio">El estudiante ha desarrollado cada una de las actividades asignadas con diligencia y esmero.</td>
+                                    <td data-values="Calificación"><input type="text" class="calification" name="Criterio-{{ $student->name }}-7" maxlength="2" autocomplete="off"></td>
+                                </tr>
+                                <tr>
+                                    <td data-values="Criterio">El estudiante ha elevado su dominio sobre el tema.</td>
+                                    <td data-values="Calificación"><input type="text" class="calification" name="Criterio-{{ $student->name }}-8" maxlength="2" autocomplete="off"></td>
+                                </tr>
+                                <tr>
+                                    <td data-values="Criterio">El estudiante ha contribuido al resultado esperado en términos de volumen y calidad.</td>
+                                    <td data-values="Calificación"><input type="text" class="calification" name="Criterio-{{ $student->name }}-9" maxlength="2" autocomplete="off"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <input type="text" name="{{ $student->name }}" hidden value="{{ $student->name }}">
+                    @endforeach
                 </div>
                 <div class="sixth-content">
                     <strong><h2>Comentario final</h2></strong>
-                    <textarea id="finalComment" class="textarea" name="finalComment" placeholder="Comentario final" maxlength="1000"></textarea>
+                    <textarea id="finalComment" class="textarea" name="finalComment" placeholder="Comentario final" min="850" maxlength="1000"></textarea>
                 </div>
                 <input name="idcId" type="text" hidden value="{{ $idcId }}">
                 <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
@@ -288,15 +291,15 @@
                             <form id="formSourceEdit" action="{{ route('source.edit') }}" method="POST" class="basic-information">
                                 @csrf
                                 <input class="year" name="year" id="year" placeholder="Año" autocomplete="off" maxlength="4">
-                                <textarea class="textarea" name="author" id="author" placeholder="Autor" autocomplete="off" maxlength="400"></textarea>
-                                <textarea class="textarea" name="theme" id="theme" placeholder="Tema" autocomplete="off" maxlength="100"></textarea>
-                                <textarea class="textarea" name="averageType" id="averageType" placeholder="Tipo de medio" autocomplete="off" maxlength="150"></textarea>
-                                <textarea class="textarea" name="link" id="link" placeholder="Enlace" autocomplete="off" maxlength="1000"></textarea>
-                                <textarea class="textarea" name="source" id="source" placeholder="Fuente" autocomplete="off" maxlength="100"></textarea>
+                                <textarea class="textarea textareaEdit" name="author" id="author" placeholder="Autor" autocomplete="off" maxlength="400"></textarea>
+                                <textarea class="textarea textareaEdit" name="theme" id="theme" placeholder="Tema" autocomplete="off" maxlength="100"></textarea>
+                                <textarea class="textarea textareaEdit" name="averageType" id="averageType" placeholder="Tipo de medio" autocomplete="off" maxlength="150"></textarea>
+                                <textarea class="textarea textareaEdit" name="link" id="link" placeholder="Enlace" autocomplete="off" maxlength="1000"></textarea>
+                                <textarea class="textarea textareaEdit" name="source" id="source" placeholder="Fuente" autocomplete="off" maxlength="100"></textarea>
                                 <input hidden type="text" name="sourceId" id="bibliographicSourceId" autocomplete="off">
                                 <input name="idcId" type="text" hidden value="{{ $idcId }}">
                                 <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
-                                <div id="notificationS" class="notificationM"></div>
+                                <div id="notificationSE" class="notificationM"></div>
                                 <button type="submit" class="btn" id="submitButtonSourceEdit">Agregar</button>
                             </form>
                         </div>
@@ -386,7 +389,7 @@
                             <input name="idcId" type="text" hidden value="{{ $idcId }}">
                             <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
                             <input name="type" type="text" hidden value="General">
-                            <div id="notificationOG" class="notificationM"></div>
+                            <div id="notificationOGEdit" class="notificationM"></div>
                             <button type="submit" class="btn" id="submitButtonObjetiveGEdit">Agregar</button>
                         </form>
                     </div>
@@ -471,12 +474,12 @@
                         </header>
                         <form id="formObjetiveEEdit" action="{{ route('objetive.edit') }}" method="POST" class="basic-information">
                             @csrf
-                            <textarea id="specificObjetive" class="textarea textareaOG" name="objetive" placeholder="Objetivo específico"></textarea>
+                            <textarea id="specificObjetive" class="textarea textareaOE" name="objetive" placeholder="Objetivo específico"></textarea>
                             <input hidden type="text" name="objetiveId" id="objetiveEEId" autocomplete="off">
                             <input name="idcId" type="text" hidden value="{{ $idcId }}">
                             <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
                             <input name="type" type="text" hidden value="General">
-                            <div id="notificationOG" class="notificationM"></div>
+                            <div id="notificationOEEdit" class="notificationM"></div>
                             <button type="submit" class="btn" id="submitButtonObjetiveEEdit">Agregar</button>
                         </form>
                     </div>

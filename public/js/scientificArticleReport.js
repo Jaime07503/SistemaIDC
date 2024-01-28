@@ -160,10 +160,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const notification = document.getElementById('notification');
 
     myForm.addEventListener('submit', function (event) {
-        const textareas = document.querySelectorAll(".textarea");
+        const textareas = document.querySelectorAll(".textareaSC");
         for (const textarea of textareas) {
-            if (textarea.value.trim() === '') {
+            const minLength = parseInt(textarea.getAttribute("min")) || 0;
+            const trimmedValue = textarea.value.trim();
+
+            if (trimmedValue === '') {
                 showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true);
+                event.preventDefault();
+                return;
+            }
+
+            if (trimmedValue.length < minLength) {
+                showNotification(`El campo "${textarea.placeholder}" debe tener al menos ${minLength} caracteres`, true);
                 event.preventDefault();
                 return;
             }
@@ -175,18 +184,45 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (approvedConclusionCount < 4) {
-            showNotification('Debe haber al menos 4 conclusiones aprobadas antes de enviar el formulario', true);
+        if (approvedConclusionCount < 5) {
+            showNotification('Debe haber al menos 5 conclusiones aprobadas.', true);
             event.preventDefault();
             return;
         }
 
-        if (approvedReferenceCount < 5) {
-            showNotification('Debe haber al menos 5 referencias aprobados antes de enviar el formulario', true);
+        if (approvedReferenceCount < 2) {
+            showNotification('Debe haber al menos 2 referencias aprobados.', true);
             event.preventDefault();
             return;
         }
     })  
+
+    const buttonsCT = document.querySelectorAll('#data-table-contribute tbody tr td .btn-edit')
+    buttonsCT.forEach(function (button) {
+        button.addEventListener('click', function () {
+            const modalId = button.dataset.modal;
+
+            const subtitle = button.getAttribute('data-subtitle');
+            const content = button.getAttribute('data-content');
+
+            const subtitleInput = document.getElementById('subtitleV');
+            const contentInput = document.getElementById('contentV');
+
+            subtitleInput.value = subtitle
+            contentInput.value = content
+
+            openModals(modalId);
+        });
+    });
+
+    const closeButtons = document.querySelectorAll('.modal .close');
+    closeButtons.forEach(function (closeButton) {
+        closeButton.addEventListener('click', function () {
+            const modalId = closeButton.closest('.modal').id;
+
+            closeModals(modalId);
+        });
+    });
 
     function calculateApprovedDevelopmentCount() {
         let approvedCount = 0;
@@ -219,6 +255,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
         return approvedCount;
+    }
+
+    function openModals(modalId) {
+        document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModals(modalId) {
+        document.getElementById(modalId).style.display = 'none';
     }
 
     function showNotification(message, isError = false) {

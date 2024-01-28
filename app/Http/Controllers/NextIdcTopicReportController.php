@@ -106,13 +106,15 @@
             $idcId = $request->input('idcId');
             $idNextIdcTopicReport = $request->input('idNextIdcTopicReport');
             $topicId = $request->input('topicId');
-            $localRelevanceImg = $request->file('Imagen-Importancia-Local');
+            $localRelevanceImgName = null;
+            $globalRelevanceImgName = null;
+            $localRelevanceImg = $request->file('Importancia-Local');
             if ($localRelevanceImg) {
                 $localRelevanceImgName = uniqid('local_relevance_') . '_' . time() . '.' . $localRelevanceImg->getClientOriginalExtension();
                 $localRelevanceImg->move(public_path('images'), $localRelevanceImgName);
             }
 
-            $globalRelevanceImg = $request->file('Imagen-Importancia-Global');
+            $globalRelevanceImg = $request->file('Importancia-Global');
             if ($globalRelevanceImg) {
                 $globalRelevanceImgName = uniqid('global_relevance_') . '_' . time() . '.' . $globalRelevanceImg->getClientOriginalExtension();
                 $globalRelevanceImg->move(public_path('images'), $globalRelevanceImgName);
@@ -121,8 +123,12 @@
             $topic = Topic::finD($topicId);
             $topic->nameTopic = $request->input('nameTopic');
             $topic->subjectRelevance = $request->input('subjectRelevance');
-            $topic->globalUpdateImg = asset('images/' . $globalRelevanceImgName);
-            $topic->localUpdateImg = asset('images/' . $localRelevanceImgName);
+            if($localRelevanceImgName !== null) {
+                $topic->localUpdateImg = asset('images/' . $localRelevanceImgName);
+            }
+            if($globalRelevanceImgName !== null) {
+                $topic->globalUpdateImg = asset('images/' . $globalRelevanceImgName);
+            }
             $topic->updatedInformation = $request->input('updatedInformation');
             $topic->localRelevance = $request->input('localRelevance');
             $topic->globalRelevance = $request->input('globalRelevance');

@@ -12,12 +12,12 @@
                 $table->string('code', 80);
                 $table->string('nameSubject', 200);
                 $table->string('section', 1);
-                $table->string('approvedIdc', 30);
+                $table->string('approvedIdc', 30)->nullable();
                 $table->string('state', 30);
                 $table->string('avatar', 512)->nullable();
                 $table->unsignedBigInteger('idCycle');
                 $table->unsignedBigInteger('idCareer');
-                $table->unsignedBigInteger('idTeacher');
+                $table->unsignedBigInteger('idTeacher')->nullable();
                 $table->timestamps();
                 $table->foreign('idCycle')->references('cycleId')->on('Cycle')->onUpdate('cascade')->onDelete('cascade');
                 $table->foreign('idTeacher')->references('teacherId')->on('Teacher')->onUpdate('cascade')->onDelete('cascade');

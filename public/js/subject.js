@@ -1,8 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Variables
     const listboxes = document.querySelectorAll(".custom-listbox")
-    var cycleInput = document.getElementById('cycleInput')
-    var careerInput = document.getElementById('careerInput')
+    var cycleInput = document.getElementById('cycleIdInput')
+    var careerInput = document.getElementById('careerIdInput')
+    var stateInput = document.getElementById('stateInput')
+    var estadoInput = document.getElementById('estadoInput')
+    var cicloInput = document.getElementById('cicloIdInput')
+    var carreraInput = document.getElementById('carreraIdInput')
     let openListbox = null
 
     // Custom Listbox
@@ -42,6 +46,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     cycleInput.value = Id;
                 } else if(listbox.classList.contains("career")) {
                     careerInput.value = Id;
+                } else if(listbox.classList.contains("state")) {
+                    stateInput.value = selectedOptionSpan.textContent;
+                } else if(listbox.classList.contains("stateEdit")) {
+                    estadoInput.value = selectedOptionSpan.textContent;
+                } else if(listbox.classList.contains("cycleEdit")) {
+                    cicloInput.value = Id;
+                } else if(listbox.classList.contains("careerEdit")) {
+                    carreraInput.value = Id;
                 }
         
                 markSelectedOption(event.target)
@@ -65,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fileContainers.forEach(function(fileContainer) {
         const inputFile = fileContainer.querySelector('.file-input');
         const imgArea = fileContainer.querySelector('.img-area');
-        const uploadedImage = fileContainer.querySelector('#uploadedImage');
+        const uploadedImage = fileContainer.querySelector('img');
 
         fileContainer.addEventListener('click', function () {
             inputFile.click();
@@ -87,7 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     reader.readAsDataURL(image);
                 } else {
-                    showNotification("La imagen debe ser menor que 2MB", true);
                     clearFileInput(inputFile);
                 }
             } else {
@@ -142,33 +153,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Obtener todos los botones con la clase 'button-edit' y 'button-delete'
     const buttons = document.querySelectorAll('.btn-edit, .btn-delete')
-
     // Asignar un evento de clic a cada botón
     buttons.forEach(function (button) {
         button.addEventListener('click', function () {
             const modalId = button.dataset.modal
 
             // Obtener datos del usuario desde los atributos data-*
-            const userId = button.getAttribute('data-userId')
-            const teacherId = button.getAttribute('data-teacherId')
-            const userName = button.getAttribute('data-userName')
-            const userEmail = button.getAttribute('data-userEmail')
-            const userRole = button.getAttribute('data-userRole')
+            const subjectId = button.getAttribute('data-subjectId')
+            const nameSubject = button.getAttribute('data-nameSubject')
+            const code = button.getAttribute('data-code')
+            const section = button.getAttribute('data-section')
+            const avatar = button.getAttribute('data-avatar')
+            const state = button.getAttribute('data-state')
+            const cycleId = button.getAttribute('data-cycleId')
+            const cycle = button.getAttribute('data-cycle')
+            const careerId = button.getAttribute('data-careerId')
+            const nameCareer = button.getAttribute('data-nameCareer')
 
             // Llenar los campos del formulario dentro de la ventana modal
-            // const userIdInput = document.getElementById('userIdEdit')
-            // const teacherIdInput = document.getElementById('teacherIdEdit')
-            // const nameInput = document.getElementById('nameInput')
-            // const emailInput = document.getElementById('emailInput')
-            // const roleInput = document.getElementById('roleInputEdit')
-            // const IdInput = document.getElementById('idInputs')
-            // const roleSpanEdit = document.getElementById('roleSpanEdit')
+            const subjectIdInput = document.getElementById('materiaId')
+            const subjectIdEInput = document.getElementById('subjectId')
+            const nameSubjectInput = document.getElementById('materiaInput')
+            const codeInput = document.getElementById('codigoInput')
+            const sectionInput = document.getElementById('seccionInput')
+            const avatarInput = document.getElementById('previousImage')
+            const stateSpanInput = document.getElementById('stateSpanEdit')
+            const estadoEInput = document.getElementById('estadoInput')
+            const cycleIdInput = document.getElementById('cicloIdInput')
+            const cycleSpanEdit = document.getElementById('cycleSpanEdit')
+            const careerIdInput = document.getElementById('carreraIdInput')
+            const careerSpanEdit = document.getElementById('careerSpanEdit')
 
-            // userIdInput.value = userId
-            // nameInput.value = userName
-            // emailInput.value = userEmail
-            // roleInput.value = userRole
-            // IdInput.value = userId
+            subjectIdInput.value = subjectId
+            subjectIdEInput.value = subjectId
+            nameSubjectInput.value = nameSubject
+            codeInput.value = code
+            sectionInput.value = section
+            avatarInput.src = avatar
+            stateSpanInput.innerText = state
+            estadoEInput.value = state
+            cycleIdInput.value = cycleId
+            cycleSpanEdit.innerText = cycle
+            careerIdInput.value = careerId
+            careerSpanEdit.innerText = nameCareer
 
             openModal(modalId)
         });

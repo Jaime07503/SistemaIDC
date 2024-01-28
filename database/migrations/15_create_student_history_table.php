@@ -13,7 +13,7 @@
                 $table->string('enrolledSubject', 11);
                 $table->string('subjectApply', 100);
                 $table->string('previousIdc', 10);
-                $table->string('subjectPreviousIdc', 100)->nullable();
+                $table->string('subjectPreviousIdc', 30)->nullable();
                 $table->unsignedBigInteger('idStudent');
                 $table->timestamps();
                 $table->foreign('idStudent')->references('studentId')->on('Student')->onUpdate('cascade')->onDelete('cascade');

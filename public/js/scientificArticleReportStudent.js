@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const textareas = document.querySelectorAll(".textarea");
+    textareas.forEach(textarea => {
+        textarea.addEventListener('keyup', e => {
+            textarea.style.height = "2.95rem"; 
+            let scHeight = e.target.scrollHeight;
+            console.log(scHeight);
+            textarea.style.height = `${scHeight}px`;
+        });
+    });
+
     function showModal(modal) {
         modal.style.display = 'block';
     }
@@ -62,8 +72,46 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('formContribute').addEventListener('submit', function (event) {
         const textareas = document.querySelectorAll("#formContribute .textareaD");
         for (const textarea of textareas) {
-            if (textarea.value.trim() === '') {
+            const minLength = parseInt(textarea.getAttribute("min")) || 0;
+            const trimmedValue = textarea.value.trim();
+
+            if (trimmedValue === '') {
                 showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationD');
+                event.preventDefault();
+                return;
+            }
+
+            if (trimmedValue.length < minLength) {
+                showNotification(`El campo "${textarea.placeholder}" debe tener al menos ${minLength} caracteres`, true, '#notificationD');
+                event.preventDefault();
+                return;
+            }
+        }
+
+        const fileInputs = document.querySelectorAll('.file-input');
+        for (const fileInput of fileInputs) {
+            if (!fileInput.files.length) {
+                showNotification(`Por favor, suba una imagen para el campo "${fileInput.name}"`, true, '#notificationD');
+                event.preventDefault(); 
+                return;
+            }
+        }
+    });
+
+    document.getElementById('formContentEdit').addEventListener('submit', function (event) {
+        const textareas = document.querySelectorAll("#formContentEdit .textareaDE");
+        for (const textarea of textareas) {
+            const minLength = parseInt(textarea.getAttribute("min")) || 0;
+            const trimmedValue = textarea.value.trim();
+
+            if (trimmedValue === '') {
+                showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationDEV');
+                event.preventDefault();
+                return;
+            }
+
+            if (trimmedValue.length < minLength) {
+                showNotification(`El campo "${textarea.placeholder}" debe tener al menos ${minLength} caracteres`, true, '#notificationDEV');
                 event.preventDefault();
                 return;
             }
@@ -80,20 +128,82 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById('formConclusion').addEventListener('submit', function (event) {
-        const textarea = document.querySelector("#formConclusion .textareaC");
-        if (textarea.value.trim() === '') {
-            showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationC');
-            event.preventDefault();
-            return;
+        const textareas = document.querySelectorAll("#formConclusion .textareaC");
+        for (const textarea of textareas) {
+            const minLength = parseInt(textarea.getAttribute("min")) || 0;
+            const trimmedValue = textarea.value.trim();
+
+            if (trimmedValue === '') {
+                showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationC');
+                event.preventDefault();
+                return;
+            }
+
+            if (trimmedValue.length < minLength) {
+                showNotification(`El campo "${textarea.placeholder}" debe tener al menos ${minLength} caracteres`, true, '#notificationC');
+                event.preventDefault();
+                return;
+            }
+        }
+    });
+
+    document.getElementById('formConclusionEdit').addEventListener('submit', function (event) {
+        const textareas = document.querySelectorAll("#formConclusionEdit .textareaCO");
+        for (const textarea of textareas) {
+            const minLength = parseInt(textarea.getAttribute("min")) || 0;
+            const trimmedValue = textarea.value.trim();
+
+            if (trimmedValue === '') {
+                showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationCO');
+                event.preventDefault();
+                return;
+            }
+
+            if (trimmedValue.length < minLength) {
+                showNotification(`El campo "${textarea.placeholder}" debe tener al menos ${minLength} caracteres`, true, '#notificationCO');
+                event.preventDefault();
+                return;
+            }
         }
     });
 
     document.getElementById('formReference').addEventListener('submit', function (event) {
-        const textarea = document.querySelector("#formReference .textareaR");
-        if (textarea.value.trim() === '') {
-            showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationR');
-            event.preventDefault();
-            return;
+        const textareas = document.querySelectorAll("#formReference .textareaR");
+        for (const textarea of textareas) {
+            const minLength = parseInt(textarea.getAttribute("min")) || 0;
+            const trimmedValue = textarea.value.trim();
+
+            if (trimmedValue === '') {
+                showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationR');
+                event.preventDefault();
+                return;
+            }
+
+            if (trimmedValue.length < minLength) {
+                showNotification(`El campo "${textarea.placeholder}" debe tener al menos ${minLength} caracteres`, true, '#notificationR');
+                event.preventDefault();
+                return;
+            }
+        }
+    });
+
+    document.getElementById('formReferenceEdit').addEventListener('submit', function (event) {
+        const textareas = document.querySelectorAll("#formReferenceEdit .textareaRE");
+        for (const textarea of textareas) {
+            const minLength = parseInt(textarea.getAttribute("min")) || 0;
+            const trimmedValue = textarea.value.trim();
+
+            if (trimmedValue === '') {
+                showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationRE');
+                event.preventDefault();
+                return;
+            }
+
+            if (trimmedValue.length < minLength) {
+                showNotification(`El campo "${textarea.placeholder}" debe tener al menos ${minLength} caracteres`, true, '#notificationRE');
+                event.preventDefault();
+                return;
+            }
         }
     });
 
@@ -103,18 +213,18 @@ document.addEventListener("DOMContentLoaded", function () {
             const modalId = button.dataset.modal;
 
             const developmentId = button.getAttribute('data-developmentId');
-            const title = button.getAttribute('data-title');
+            const subtitle = button.getAttribute('data-subtitle');
             const content = button.getAttribute('data-content');
 
             const developmentIdInput = document.getElementById('developmentId');
             const developmentEIdInput = document.getElementById('developmentEId');
-            const titleInput = document.getElementById('title');
+            const subtitleInput = document.getElementById('subtitle');
             const contentInput = document.getElementById('content');
 
-            developmentIdInput.value = developmentId;
-            developmentEIdInput.value = developmentId;
-            titleInput.value = title;
-            contentInput.value = content;
+            developmentIdInput.value = developmentId
+            developmentEIdInput.value = developmentId
+            subtitleInput.value = subtitle
+            contentInput.value = content
 
             openModals(modalId);
         });

@@ -38,11 +38,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 arrowDown.style.transform = "rotate(0deg)";
                 listboxHeader.classList.remove("active");
                 var facultyId = event.target.getAttribute('data-value');
-                markSelectedOption(event.target);
                 nameFacultyInput.value = facultyId;
+                markSelectedOption(event.target);
+
                 if(listbox.classList.contains("faculty-lst")){
                     const idFaculty = document.querySelector('.idFaculty');
-                    idFaculty.value=facultyId;
+                    idFaculty.value = facultyId;
                 }
             }
         });

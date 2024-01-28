@@ -32,31 +32,32 @@
                     <img src="{{ $researchTopic->importanceGlobal }}" alt="" class="information-images-importance">
                 </div>
             </div>
-            @if(session('role') === 'Estudiante')
-                @if($studentResearch->applicationCount < 2 
-                    && (!$postulatedSubject || ($postulatedSubject->state !== 'Postulado' && $postulatedSubject->state !== 'Aprobado')))
-                    <form action="{{ route('studentSubject.store') }}" method="POST" id="applicationForm">
-                        @csrf
-                        <input type="hidden" name="idStudent" class="idStudent" value="{{ session('studentId') }}">
-                        <input type="hidden" name="idSubject" class="idSubject" value="{{ $subjectId }}">
-                        <input type="hidden" name="researchTopicId" class="researchTopicId" value="{{ $researchTopic->researchTopicId }}">
-                        <button type="submit" class="btn-postulate">Postularse</button>
-                    </form>
-                @else
-                    @if($postulatedSubject && ($postulatedSubject->state === 'Postulado' || $postulatedSubject->state === 'Aprobado'))
-                    <!-- Postularse al tema (Estudiante) -->
-                    <h2 class="state">{{ $postulatedSubject->state }}</h2>
-                    @endif
-                @endif
-            @endif
             <!-- Información de los equipos de investigación -->
             <div class="head">
                 <h2>Equipos de Investigación</h2>
                 <!-- Postular Equipos (Docente) -->
                 @if(session('role') === 'Docente')
                     <a href="{{ route('newTeam', ['researchTopicId' => $researchTopicId]) }}" class="btn-postulate">
-                        <h3>Postular Equipo</h3>
+                        <i class="fa-solid fa-plus"></i> Agregar
                     </a>
+                @else
+                    @if(session('role') === 'Estudiante')
+                        @if($studentResearch->applicationCount < 2 
+                            && (!$postulatedSubject || ($postulatedSubject->state !== 'Postulado' && $postulatedSubject->state !== 'Aprobado')))
+                            <form action="{{ route('studentSubject.store') }}" method="POST" id="applicationForm">
+                                @csrf
+                                <input type="hidden" name="idStudent" class="idStudent" value="{{ session('studentId') }}">
+                                <input type="hidden" name="idSubject" class="idSubject" value="{{ $subjectId }}">
+                                <input type="hidden" name="researchTopicId" class="researchTopicId" value="{{ $researchTopic->researchTopicId }}">
+                                <button type="submit" class="btn-postulate">Postularse</button>
+                            </form>
+                        @else
+                            @if($postulatedSubject && ($postulatedSubject->state === 'Postulado' || $postulatedSubject->state === 'Aprobado'))
+                            <!-- Postularse al tema (Estudiante) -->
+                            <h2 class="state">{{ $postulatedSubject->state }}</h2>
+                            @endif
+                        @endif
+                    @endif
                 @endif
             </div>
             @if(empty($result))

@@ -13,55 +13,62 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    const fileContainers = document.querySelectorAll('.file-container');
-    fileContainers.forEach(function(fileContainer) {
-        const inputFile = fileContainer.querySelector('.file-input');
-        const imgArea = fileContainer.querySelector('.img-area');
-        const uploadedImage = fileContainer.querySelector('#uploadedImage');
-
+    const fileContainers = document.querySelectorAll('.file-container')
+    fileContainers.forEach(function (fileContainer) {
+        const inputFile = fileContainer.querySelector('.file-input')
+        const imgArea = fileContainer.querySelector('.img-area')
+        const uploadedImage = fileContainer.querySelector('#uploadedImage')
+    
         fileContainer.addEventListener('click', function () {
             inputFile.click();
         });
-
+    
         inputFile.addEventListener('change', function () {
-            const image = this.files[0];
-
+            const image = this.files[0]
+    
             if (image) {
-                if (image.size < 2000000) {
-                    const reader = new FileReader();
-
-                    reader.onload = () => {
-                        uploadedImage.src = reader.result;
-                        uploadedImage.style.display = 'block';
-                        imgArea.classList.add('active');
-                        imgArea.dataset.img = image.name;
-                    };
-
-                    reader.readAsDataURL(image);
+                const allowedTypes = ['image/png', 'image/jpeg']
+    
+                if (allowedTypes.includes(image.type)) {
+                    if (image.size < 2000000) {
+                        const reader = new FileReader()
+    
+                        reader.onload = () => {
+                            uploadedImage.src = reader.result
+                            uploadedImage.style.display = 'block'
+                            imgArea.classList.add('active')
+                            imgArea.dataset.img = image.name
+                        };
+    
+                        reader.readAsDataURL(image)
+                    } else {
+                        showNotification("La imagen debe ser menor que 2MB", true)
+                        clearFileInput(inputFile)
+                    }
                 } else {
-                    showNotification("La imagen debe ser menor que 2MB", true);
+                    showNotification("Solo se permiten archivos de imagen (PNG, JPG o JPEG)", true)
                     clearFileInput(inputFile);
                 }
             } else {
-                uploadedImage.src = '';
-                uploadedImage.style.display = 'none';
-                imgArea.classList.remove('active');
-                imgArea.dataset.img = '';
+                uploadedImage.src = ''
+                uploadedImage.style.display = 'none'
+                imgArea.classList.remove('active')
+                imgArea.dataset.img = ''
             }
         });
     });
 
     function clearFileInput(input) {
         try {
-            input.value = '';
+            input.value = ''
         } catch (e) {
-            const newInput = document.createElement('input');
+            const newInput = document.createElement('input')
             newInput.type = 'file';
-            newInput.className = input.className;
-            newInput.style.cssText = input.style.cssText;
-            newInput.hidden = true;
-            newInput.addEventListener('change', input.onchange);
-            input.parentNode.replaceChild(newInput, input);
+            newInput.className = input.className
+            newInput.style.cssText = input.style.cssText
+            newInput.hidden = true
+            newInput.addEventListener('change', input.onchange)
+            input.parentNode.replaceChild(newInput, input)
         }
     }
 
@@ -161,8 +168,17 @@ document.addEventListener("DOMContentLoaded", function () {
     myForm.addEventListener('submit', function (event) {
         const textareas = document.querySelectorAll(".textarea");
         for (const textarea of textareas) {
-            if (textarea.value.trim() === '') {
+            const minLength = parseInt(textarea.getAttribute("min")) || 0;
+            const trimmedValue = textarea.value.trim();
+
+            if (trimmedValue === '') {
                 showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true);
+                event.preventDefault();
+                return;
+            }
+
+            if (trimmedValue.length < minLength) {
+                showNotification(`El campo "${textarea.placeholder}" debe tener al menos ${minLength} caracteres`, true);
                 event.preventDefault();
                 return;
             }
@@ -198,8 +214,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        if (approvedSourcesCount < 15) {
-            showNotification('Debe haber al menos 15 fuentes bibliográficas aprobadas', true);
+        if (approvedSourcesCount < 2) {
+            showNotification('Debe haber al menos 2 fuentes bibliográficas aprobadas', true);
             event.preventDefault();
             return;
         }

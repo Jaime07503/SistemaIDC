@@ -14,25 +14,42 @@
             $facultys = Faculty::all();
             $careers = Career::get();
             $cycles = Cycle::all();
-            $subjects = Subject::join('Cycle', 'Subject.idCycle', '=', 'Cycle.cycleId')
+            $unassignedSubjects = Subject::join('Cycle', 'Subject.idCycle', '=', 'Cycle.cycleId')
+                ->join('Career', 'Subject.idCareer', '=', 'Career.careerId')
+                ->where('Subject.approvedIdc', null)
+                ->where('Subject.idTeacher', null)
+                ->select('Subject.subjectId', 'Subject.nameSubject', 'Subject.code', 'Subject.section', 'Subject.avatar','Cycle.cycleId','Cycle.cycle', 
+                'Career.careerId','Career.nameCareer', 'Subject.state')
+                ->get();
+
+            $assignedSubjects = Subject::join('Cycle', 'Subject.idCycle', '=', 'Cycle.cycleId')
                 ->join('Career', 'Subject.idCareer', '=', 'Career.careerId')
                 ->join('Teacher', 'Subject.idTeacher', '=', 'Teacher.teacherId')
                 ->join('User', 'Teacher.idUser', '=', 'User.userId')
                 ->get();
 
-            return view('layouts.subject', compact('facultys', 'careers', 'subjects', 'cycles'));
+            return view('layouts.subject', compact('facultys', 'careers', 'unassignedSubjects', 'assignedSubjects', 'cycles'));
         }
 
         public function addSubject(Request $request)
         {
-            $INITIAL_STATE = 'Activo';
+            $avatar = $request->file('Avatar');
+            $avatarName = null;
+
+            if ($avatar) {
+                $avatarName = uniqid('avatar_subject_') . '_' . time() . '.' . $avatar->getClientOriginalExtension();
+                $avatar->move(public_path('images'), $avatarName);
+            }
+
             // Create new Subject
             $subject = new Subject();
             $subject->code = $request->input('code');
             $subject->nameSubject = $request->input('nameSubject');
             $subject->section = $request->input('section');
-            // $subject->avatar = $request->input('Avatar');
-            $subject->state = $INITIAL_STATE;
+            if($avatarName !== null){
+                $subject->avatar = asset('images/' . $avatarName);
+            }
+            $subject->state = $request->input('state');
             $subject->idCycle = $request->input('idCycle');
             $subject->idCareer = $request->input('idCareer');
 
@@ -43,28 +60,39 @@
 
         public function editSubject(Request $request)
         {
-            // Edit subject by subjectId
+            $avatar = $request->file('Avatar');
+            $avatarName = null;
+
+            if ($avatar) {
+                $avatarName = uniqid('avatar_subject_') . '_' . time() . '.' . $avatar->getClientOriginalExtension();
+                $avatar->move(public_path('images'), $avatarName);
+            }
+
             $subjectId = $request ->input('subjectId');
 
             $subject = Subject::find($subjectId);
-
-            if (!$subject) {
-                return response()->json(['message' => 'Materia no encontrada'], 404);
+            $subject->code = $request->input('code');
+            $subject->nameSubject = $request->input('nameSubject');
+            $subject->section = $request->input('section');
+            if($avatarName !== null){
+                $subject->avatar = asset('images/' . $avatarName);
             }
+            $subject->state = $request->input('state');
+            $subject->idCycle = $request->input('idCycle');
+            $subject->idCareer = $request->input('idCareer');
 
-            if ($request->isMethod('post')) {
-                $subject->code = $request->input('code');
-                // ... (actualizar los demás campos)
+            $subject->save();
 
-                if ($request->input('role') === 'Docente') {
-                    // Actualizar Teacher si existe o crear uno nuevo
-                    // ...
-                }
+            return redirect()->route('subject');
+        }
 
-                $subject->save();
+        public function deleteSubject(Request $request) {
+            $subjectId = $request->input('subjectId');
+            $subject = Subject::find($subjectId);
 
-                return redirect()->route('subjects.index')->with('success', 'Materia actualizada');
-            }
+            $subject->delete();
+
+            return redirect()->route('subject');
         }
     }
 ?>

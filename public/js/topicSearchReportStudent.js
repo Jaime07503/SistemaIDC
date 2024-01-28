@@ -1,4 +1,13 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const textareas = document.querySelectorAll(".textarea");
+    textareas.forEach(textarea => {
+        textarea.addEventListener('keyup', e => {
+            textarea.style.height = "2.95rem"; 
+            let scHeight = e.target.scrollHeight;
+            textarea.style.height = `${scHeight}px`;
+        });
+    });
+
     function showModal(modal) {
         modal.style.display = 'block';
     }
@@ -182,6 +191,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    document.getElementById('formSourceEdit').addEventListener('submit', function (event) {
+        const input = document.querySelector("#formSourceEdit .year");
+        if (input.value.trim() === '') {
+            showNotification(`Por favor, completa el campo "${input.placeholder}"`, true, '#notificationSE');
+            event.preventDefault();
+            return;
+        }
+
+        const textareas = document.querySelectorAll("#formSourceEdit .textarea");
+        for (const textarea of textareas) {
+            if (textarea.value.trim() === '') {
+                showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationSE');
+                event.preventDefault();
+                return;
+            }
+        }
+    });
+
     document.getElementById('formObjetiveG').addEventListener('submit', function (event) {
         const textarea = document.querySelector("#formObjetiveG .textareaOG");
         if (textarea.value.trim() === '') {
@@ -191,10 +218,28 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    document.getElementById('formObjetiveGEdit').addEventListener('submit', function (event) {
+        const textarea = document.querySelector("#formObjetiveGEdit .textareaOG");
+        if (textarea.value.trim() === '') {
+            showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationOGEdit');
+            event.preventDefault();
+            return;
+        }
+    });
+
     document.getElementById('formObjetiveE').addEventListener('submit', function (event) {
         const textarea = document.querySelector("#formObjetiveE .textareaOE");
         if (textarea.value.trim() === '') {
             showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationOE');
+            event.preventDefault();
+            return;
+        }
+    });
+
+    document.getElementById('formObjetiveEEdit').addEventListener('submit', function (event) {
+        const textarea = document.querySelector("#formObjetiveEEdit .textareaOE");
+        if (textarea.value.trim() === '') {
+            showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true, '#notificationOEEdit');
             event.preventDefault();
             return;
         }

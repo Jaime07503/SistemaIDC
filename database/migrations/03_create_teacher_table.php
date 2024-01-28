@@ -11,6 +11,7 @@
                 $table->increments('teacherId');
                 $table->string('contractType', 50);
                 $table->string('specialty', 200);
+                $table->string('title');
                 $table->integer('idcQuantity');
                 $table->unsignedBigInteger('idUser');
                 $table->timestamps();

@@ -11,7 +11,7 @@
 
         protected $fillable = [
             'developmentId',
-            'title',
+            'subtitle',
             'content',
             'image',
             'studentContribute',

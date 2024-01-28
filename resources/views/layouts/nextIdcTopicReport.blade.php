@@ -31,9 +31,9 @@
                     @csrf
                     <div class="first-section">
                         <strong><h2>Introducción</h2></strong>
-                        <textarea class="textarea textareaTopic" name="introduction" placeholder="Resumen de actividades" maxlength="400"></textarea>
-                        <textarea class="textarea textareaTopic" name="continueTopic" placeholder="Continuar con el tema o investigar sobre sus ramas" maxlength="850"></textarea>
-                        <textarea class="textarea textareaTopic" name="proposeTopics" placeholder="Se propondrán temas nuevos o derivados" maxlength="850"></textarea>
+                        <textarea class="textarea textareaTopic" name="introduction" placeholder="Resumen de actividades" min="300" maxlength="400"></textarea>
+                        <textarea class="textarea textareaTopic" name="continueTopic" placeholder="Continuar con el tema o investigar sobre sus ramas" min="700" maxlength="850"></textarea>
+                        <textarea class="textarea textareaTopic" name="proposeTopics" placeholder="Se propondrán temas nuevos o derivados" min="700" maxlength="850"></textarea>
                     </div>
                     <div class="second-section">
                         <strong><h2>Temas de investigación propuestos</h2></strong>
@@ -44,6 +44,7 @@
                                     <th>Tema</th>
                                     <th>Relevancia</th>
                                     <th>Estado</th>
+                                    <th>Detalles</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,6 +61,14 @@
                                                 <h4 style="font-weight: 100;">{{ $topic->state}}</h4>
                                             @endif
                                         </td>
+                                        <td>
+                                            <button type="button" class="btn btn-edit" data-modal="verDetallesModalTopic" data-topicId="{{ $topic->topicId }}" 
+                                                data-nameTopic="{{ $topic->nameTopic }}" data-subjectRelevance="{{ $topic->subjectRelevance }}" data-globalUpdateImg="{{ $topic->globalUpdateImg }}"
+                                                data-localUpdateImg="{{ $topic->localUpdateImg }}" data-updatedInformation="{{ $topic->updatedInformation }}" data-localRelevance="{{ $topic->localRelevance }}" 
+                                                data-globalRelevance="{{ $topic->globalRelevance }}">
+                                                <i class="fa-regular fa-eye"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -74,7 +83,7 @@
                     <button type="submit" id="submitButton" class="btn">Generar Documento</button>
                 </form>
             </section>
-            <div id="editarModalTopic" class="modal">
+            <div id="verDetallesModalTopic" class="modal">
                 <div class="modal-content">
                     <header class="head">
                         <h2>Datos del tema</h2>
@@ -82,30 +91,13 @@
                     </header>
                     <textarea style="height: 4rem;" id="theme" class="textarea textareaT" name="nameTopic" placeholder="Tema" readonly></textarea>
                     <textarea id="subjectRelevance" class="textarea textareaT" name="subjectRelevance" placeholder="Es pertinente para la materia" readonly></textarea>
-                    <div class="container file-container" id="container3">
-                        <input type="file" name="Imagen-Importancia-Global" class="file-input" accept="image/*" hidden>
-                        <div class="img-area" data-img="">
-                            <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <h4>Importancia Global</h4>
-                            <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
-                            <img id="globalUpdateImg" src="" alt="Imagen previa" style="display: none;">
-                        </div>
-                    </div>
-                    <div class="container file-container" id="container4">
-                        <input type="file" name="Imagen-Importancia-Local" class="file-input" accept="image/*" hidden>
-                        <div class="img-area" data-img="">
-                            <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <h4>Importancia Local</h4>
-                            <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
-                            <img id="localUpdateImg" src="" alt="Imagen previa" style="display: none;">
-                        </div>
-                    </div>
+                    <img class="uploaded-image-g" src="" alt="">
+                    <img class="uploaded-image-l" src="" alt="">
                     <textarea id="updatedInformation" class="textarea textareaT" name="updatedInformation" placeholder="Existe información actualizada sobre el tema" readonly></textarea>
                     <textarea id="localRelevance" class="textarea textareaT" name="localRelevance" placeholder="Qué tan pertinente es el tema localmente" readonly></textarea>
                     <textarea id="globalRelevance" class="textarea textareaT" name="globalRelevance" placeholder="Qué tan pertinente es el tema geográficamente" readonly></textarea>
                 </div>
             </div>
-            <div id="notification" class="notification"></div>
         @else
             <section class="nextTopic">
                 <div class="topics">
@@ -160,21 +152,21 @@
                             <textarea class="textarea textareaTopicA" name="nameTopic" placeholder="Tema"></textarea>
                             <textarea class="textarea textareaTopicA" name="subjectRelevance" placeholder="Es pertinente para la materia"></textarea>
                             <div class="container file-container" id="container">
-                                <input type="file" name="Imagen-Importancia-Global" id="img1" class="file-input" accept="image/*" hidden>
+                                <input type="file" name="Imagen-Importancia-Global" class="file-input" accept="image/png, image/jpeg" hidden>
                                 <div class="img-area" data-img="">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
                                     <h4>Importancia Global</h4>
                                     <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
-                                    <img class="uploaded-image" src="" alt="Imagen previa" style="display: none;">
+                                    <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
                                 </div>
                             </div>
                             <div class="container file-container" id="container2">
-                                <input type="file" name="Imagen-Importancia-Local" id="img2" class="file-input" accept="image/*" hidden>
+                                <input type="file" name="Imagen-Importancia-Local" class="file-input" accept="image/png, image/jpeg" hidden>
                                 <div class="img-area" data-img="">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
                                     <h4>Importancia Local</h4>
                                     <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
-                                    <img class="uploaded-image" src="" alt="Imagen previa" style="display: none;">
+                                    <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
                                 </div>
                             </div>
                             <textarea class="textarea textareaTopicA" name="updatedInformation" placeholder="Existe información actualizada sobre el tema"></textarea>
@@ -194,26 +186,28 @@
                             <h2>Datos del tema</h2>
                             <button type="button" class="cerrarModal close"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form id="formTopicEdit" action="{{ route('topic.edit') }}" method="POST" class="basic-information">
+                        <form id="formTopicEdit" action="{{ route('topic.edit') }}" method="POST" class="basic-information" enctype="multipart/form-data">
                             @csrf
                             <textarea id="theme" class="textarea textareaT" name="nameTopic" placeholder="Tema"></textarea>
                             <textarea id="subjectRelevance" class="textarea textareaT" name="subjectRelevance" placeholder="Es pertinente para la materia"></textarea>
+                            <h2>Importancia Global</h2>
                             <div class="container file-container" id="container3">
-                                <input type="file" name="Imagen-Importancia-Global" id="img3" class="file-input" accept="image/*" hidden>
+                                <input type="file" name="Importancia-Global" class="file-input" accept="image/png, image/jpeg" hidden>
                                 <div class="img-area" data-img="">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
                                     <h4>Importancia Global</h4>
                                     <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
-                                    <img id="localUpdateImg" class="uploaded-image" src="" alt="Imagen previa" style="display: none;">
+                                    <img id="uploadedImage" class="uploaded-image-g" src="" alt="Imagen previa" style="display: none;">
                                 </div>
                             </div>
+                            <h2>Importancia Local</h2>
                             <div class="container file-container" id="container4">
-                                <input type="file" name="Imagen-Importancia-Local" id="img4" class="file-input" accept="image/*" hidden>
+                                <input type="file" name="Importancia-Local" class="file-input" accept="image/png, image/jpeg" hidden>
                                 <div class="img-area" data-img="">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
                                     <h4>Importancia Local</h4>
                                     <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
-                                    <img id="globalUpdateImg" class="uploaded-image" src="" alt="Imagen previa" style="display: none;">
+                                    <img id="uploadedImage" class="uploaded-image-l" src="" alt="Imagen previa" style="display: none;">
                                 </div>
                             </div>
                             <textarea id="updatedInformation" class="textarea textareaT" name="updatedInformation" placeholder="Existe información actualizada sobre el tema"></textarea>

@@ -292,7 +292,7 @@ input:focus {
 }
 
 .btn:active {
-    border: 3px solid var(--texas-rose-100);
+    border: 3px solid var(--primary);
 }
 
 .btn-delete {
@@ -362,6 +362,8 @@ input:focus {
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    max-height: 30rem;
+    overflow-y: scroll;
 }
 
 .head {
@@ -529,6 +531,10 @@ input:focus {
 
 .notificationM.show {
     display: block;
+}
+
+.textareaEdit {
+    height: 65px;
 }
 
 /* Scroll */

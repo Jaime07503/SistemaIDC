@@ -96,6 +96,8 @@
             $searchReport->storagePath = $INITIAL_PATH;
             $searchReport->state = $INITIAL_STATE;
             $searchReport->previousState = $INITIAL_STATE;
+            $searchReport->nameCorrectedDocument = '';
+            $searchReport->correctedDocumentStoragePath = '';
             $searchReport->idIdc = $idc->idcId;
             $searchReport->save();
 
@@ -107,10 +109,12 @@
             $scientificArticle->keywords = '';
             $scientificArticle->introduction = '';
             $scientificArticle->methodology = '';
-            $scientificArticle->numberOfWords = '';
+            $scientificArticle->numberOfWords = 0;
             $scientificArticle->storagePath = $INITIAL_PATH;
             $scientificArticle->state = $INITIAL_STATE;
             $scientificArticle->previousState = $INITIAL_STATE;
+            $scientificArticle->nameCorrectedDocument = '';
+            $scientificArticle->correctedDocumentStoragePath = '';
             $scientificArticle->idIdc = $idc->idcId;
             $scientificArticle->save();
 
@@ -123,6 +127,8 @@
             $nextIdcTopic->storagePath = $INITIAL_PATH;
             $nextIdcTopic->state = $INITIAL_STATE;
             $nextIdcTopic->previousState = $INITIAL_STATE;
+            $nextIdcTopic->nameCorrectedDocument = '';
+            $nextIdcTopic->correctedDocumentStoragePath = '';
             $nextIdcTopic->idIdc = $idc->idcId;
             $nextIdcTopic->save();
 

@@ -39,12 +39,6 @@
             return $this->hasOne(Student::class, 'idUser');
         }
 
-        public function notification()
-        {
-            return $this->hasMany(Notification::class, 'idUser')
-                ->orderBy('created_at', 'desc');
-        }
-
         public function idc()
         {
             return $this->hasMany(IDC::class);

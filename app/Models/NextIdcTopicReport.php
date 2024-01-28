@@ -15,9 +15,11 @@
             'introduction',
             'continueTopic',
             'proposeTopics',
-            'conclusion',
             'storagePath',
+            'nameCorrectedDocument',
+            'correctedDocumentStoragePath',
             'state',
+            'previousState',
             'idIdc'
         ];
 

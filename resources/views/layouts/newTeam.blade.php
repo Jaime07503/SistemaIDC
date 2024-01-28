@@ -70,6 +70,7 @@
                 </form>
             @endif
         </section>
+        <div id="notification" class="notification"></div>
     </main>
 @endsection
 

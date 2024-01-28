@@ -15,7 +15,7 @@
         public function generateWord(Request $request)
         {
             // Obtenemos los datos del formulario
-            $CREATE_STATE = 'Creado';
+            $REVISION_STATE = 'En revisión';
             $data = $request->all();
             $datos = json_decode($request->input('datos'), true);
             $datosOE = json_decode($request->input('objetivesOE'), true);
@@ -49,10 +49,9 @@
             $topicSearchReport->meetings = $data['meetings'];
             $topicSearchReport->criteria = $data['criteria'];
             $topicSearchReport->teamValoration = $data['teamValoration'];
-            $topicSearchReport->teamComment = $data['teamComment'];
             $topicSearchReport->finalComment = $data['finalComment'];
             $topicSearchReport->storagePath = 'documents/'.$fileName;
-            $topicSearchReport->state = $CREATE_STATE;
+            $topicSearchReport->state = $REVISION_STATE;
             $topicSearchReport->save();
 
             // Cargamos la plantilla del primer informe
@@ -79,8 +78,7 @@
             $templateProcessor->setValue('PAGE_BREAK', '</w:t></w:r>'.' <w:r ><w:br w:type="página"/></w:r>' . '<w:r><w:t>');
 
             // 1. Método elegido para la orientación del equipo
-            $contenidoSinHTML = strip_tags($data['orientation']);
-            $templateProcessor->setValue('orientation', $contenidoSinHTML);
+            $templateProcessor->setValue('orientation', $data['orientation']);
             $templateProcessor->setValue('induction', $data['induction']);
 
             // 2. Plan de búsqueda de información
@@ -138,17 +136,37 @@
             
             // 6. Valoración del catedrático sobre el equipo
             $templateProcessor->setValue('teamValoration', $data['teamValoration']);
-            $templateProcessor->setValue('calification', $data['Criterio-1']);
-            $templateProcessor->setValue('calification2', $data['Criterio-2']);
-            $templateProcessor->setValue('calification3', $data['Criterio-3']);
-            $templateProcessor->setValue('calification4', $data['Criterio-4']);
-            $templateProcessor->setValue('calification5', $data['Criterio-5']);
-            $templateProcessor->setValue('calification6', $data['Criterio-6']);
-            $templateProcessor->setValue('calification7', $data['Criterio-7']);
-            $templateProcessor->setValue('calification8', $data['Criterio-8']);
-            $templateProcessor->setValue('calification9', $data['Criterio-9']);
-            $templateProcessor->setValue('teamComment', $data['teamComment']);
 
+            $jsonStudents = [];
+            
+            foreach ($data as $key => $value) {
+                $parts = explode('-', $key, 3);
+            
+                if (count($parts) === 3 && $parts[0] === 'Criterio') {
+                    $studentName = str_replace('_', ' ', $parts[1]);
+                    $criterionNumber = $parts[2];
+            
+                    if (is_numeric($criterionNumber)) {
+                        $calificationKey = 'calification' . $criterionNumber;
+            
+                        if (!isset($jsonStudents[$studentName])) {
+                            $jsonStudents[$studentName] = [
+                                'student' => $studentName,
+                                'nameSubject' => $topic->nameSubject,
+                            ];
+                        }
+            
+                        $jsonStudents[$studentName][$calificationKey] = $value;
+                    }
+                }
+            }
+            
+            // Convertir a JSON
+            $jsonResult = json_encode(array_values($jsonStudents), JSON_PRETTY_PRINT);
+
+            $studentsData = json_decode($jsonResult, true);
+            $templateProcessor->cloneBlock('block_table', 0, true, false, $studentsData);
+            
             // 7. Comentario final
             $templateProcessor->setValue('PAGE_BREAK2', '</w:t></w:r>'.' <w:r ><w:br w:type="página"/></w:r>' . '<w:r><w:t>');
             $templateProcessor->setValue('finalComment', $data['finalComment']);

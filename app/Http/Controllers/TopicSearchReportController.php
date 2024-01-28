@@ -37,8 +37,15 @@
                     'Research_Topic.code', 'Subject.subjectId', 'Team.teamId', 'Topic_Search_Report.code as searchReportCode')
                     ->where('Topic_Search_Report.topicSearchReportId', $idTopicSearchReport)
                     ->first();
+                $students = Idc::join('Team', 'Idc.idTeam', '=', 'Team.teamId')
+                    ->join('Student_Team', 'Team.teamId', '=', 'Student_Team.idTeam')
+                    ->join('Student', 'Student_Team.idStudent', '=', 'Student.studentId')
+                    ->join('User', 'Student.idUser', '=', 'User.userId')
+                    ->where('Idc.idcId', $idcId)
+                    ->select('User.name')
+                    ->get();
 
-                return view('layouts.topicSearchReport', compact('sources', 'objetivesG', 'objetivesE', 'role', 'idcId', 'idTopicSearchReport', 'topicSearchReport'));
+                return view('layouts.topicSearchReport', compact('sources', 'objetivesG', 'objetivesE', 'students','role', 'idcId', 'idTopicSearchReport', 'topicSearchReport'));
             } else {
                 $userId = session('userId');
                 $user = User::find($userId);

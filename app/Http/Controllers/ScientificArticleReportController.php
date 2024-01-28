@@ -93,7 +93,7 @@
             $INIT_STATE = 'Por aprobar';
 
             $development = new Development();
-            $development->title = $request->input('title');
+            $development->subtitle = $request->input('subtitle');
             $development->content = $request->input('content');
             $development->studentContribute = $user->name;
             $development->state = $INIT_STATE;
@@ -127,7 +127,7 @@
             $developmentId = $request->input('developmentId');
 
             $development = Development::find($developmentId);
-            $development->title = $request->input('title');
+            $development->subtitle = $request->input('subtitle');
             $development->content = $request->input('content');
             $development->save();
 
@@ -263,7 +263,7 @@
 
         public function generateWord(Request $request) {
             // Obtenemos datos del formulario
-            $CREATE_STATE = 'Creado';
+            $REVISION_STATE = 'En revisión';
             $data = $request->all();
             $idcId = $data['idcId'];
             $idScientificArticleReport = $data['idScientificArticleReport'];
@@ -295,7 +295,7 @@
             $scientificArticle->methodology = $data['methodology'];
             $scientificArticle->numberOfWords = 300;
             $scientificArticle->storagePath = 'documents/'.$fileName;
-            $scientificArticle->state = $CREATE_STATE;
+            $scientificArticle->state = $REVISION_STATE;
             $scientificArticle->save();
 
             // Cargamos la plantilla del primer informe
@@ -330,7 +330,7 @@
             $development = Development::join('Article_Development', 'Development.developmentId', '=', 'Article_Development.idDevelopment')
                 ->where('Article_Development.idScientificArticleReport', $idScientificArticleReport)
                 ->where('Development.state', 'Aprobado')
-                ->select('Development.title as sub-title', 'Development.content')
+                ->select('Development.subtitle as sub-title', 'Development.content')
                 ->get();
 
             $datosDevelopments = json_decode($development, true);

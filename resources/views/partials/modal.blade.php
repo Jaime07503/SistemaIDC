@@ -24,19 +24,3 @@
         </div>
     </div>
 </div>
-
-<div id="notificationModal" class="notificationUser">
-    <div class="notification-content-user">
-        <header class="head-notification">
-            <h2 class="notification-title">Notificaciones</h2>
-        </header>
-        <section class="notifications">
-            @foreach(auth()->user()->notification as $notification)
-                <div class="notification">
-                    <h3 class="notification-subtitle">{{ $notification->notification }}</h3>
-                    <a href="{{ $notification->state }}" class="link">Ver detalles</a>
-                </div>
-            @endforeach
-        </section>
-    </div>
-</div>

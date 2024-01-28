@@ -9,8 +9,8 @@
         {
             Schema::create('Reference', function (Blueprint $table) {
                 $table->increments('referenceId');
-                $table->string('reference', 300);
-                $table->string('studentContribute', 100);
+                $table->string('reference', 800);
+                $table->string('studentContribute', 200);
                 $table->string('state', 30);
                 $table->timestamps();
             });

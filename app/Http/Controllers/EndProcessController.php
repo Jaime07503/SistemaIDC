@@ -1,7 +1,9 @@
 <?php
     namespace App\Http\Controllers;
     use App\Models\Idc;
+    use App\Models\NextIdcTopicReport;
     use Carbon\Carbon;
+    use Illuminate\Http\Request;
 
     class EndProcessController extends Controller
     {
@@ -12,7 +14,8 @@
                 ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
                 ->select('Next_Idc_Topic_Report.storagePath', 'Next_Idc_Topic_Report.code as nextIdcTopicReportCode', 'Idc.idcId',
                 'Idc.endDateNextIdcTopic','Next_Idc_Topic_Report.updated_at', 'Next_Idc_Topic_Report.state', 'Next_Idc_Topic_Report.previousState',
-                'Next_Idc_Topic_Report.correctedDocStoragePath', 'Next_Idc_Topic_Report.nameCorrectedDoc', 
+                'Next_Idc_Topic_Report.correctDocumentStoragePath', 'Next_Idc_Topic_Report.nameCorrectDocument', 
+                'Next_Idc_Topic_Report.correctedDocumentStoragePath', 'Next_Idc_Topic_Report.nameCorrectedDocument', 
                 'Research_Topic.researchTopicId', 'Research_Topic.code', 'Research_Topic.themeName', 'Team.teamId',
                  'Subject.subjectId')
                 ->where('Idc.idcId', $idcId)
@@ -59,6 +62,84 @@
             }        
 
             return view('layouts.endProcess', compact('nextIdcTopicReport', 'timeRemaining', 'formattedDeadline', 'formattedupdated_at', 'idNextIdcTopicReport'));
+        }
+
+        public function approveNextIdcTopicReport($idcId, $idNextIdcTopicReport) {
+            $APPROVE_STATE = 'Aprobado';
+            $nextIdcTopicReport = NextIdcTopicReport::find($idNextIdcTopicReport);
+    
+            $nextIdcTopicReport->state = $APPROVE_STATE;
+    
+            $nextIdcTopicReport->save();
+
+            return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
+        }
+
+        public function approveCorrectedNextIdcTopicReport($idcId, $idNextIdcTopicReport) {
+            $APPROVE_STATE = 'Aprobado';
+            $PREVIOUS_STATE = 'Corregido';
+            $nextIdcTopicReport = NextIdcTopicReport::find($idNextIdcTopicReport);
+    
+            $nextIdcTopicReport->state = $APPROVE_STATE;
+            $nextIdcTopicReport->previousState = $PREVIOUS_STATE;
+    
+            $nextIdcTopicReport->save();
+
+            return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
+        }
+
+        public function correctNextIdcTopicReport($idcId, $idNextIdcTopicReport, Request $request) {
+            $CORRECT_STATE = 'Debe corregirse';
+            $nextIdcTopicReport = NextIdcTopicReport::find($idNextIdcTopicReport);
+    
+            if($request->hasFile('archivoCorrecciones')) {
+                $file = $request->file('archivoCorrecciones');
+
+                $fileName = $file->getClientOriginalName();
+
+                $nextIdcTopicReport->nameCorrectDocument = $fileName;
+                $nextIdcTopicReport->correctDocumentStoragePath = 'documents/'.$fileName;
+        
+                $file->move(public_path('documents'), $fileName);
+            }
+
+            $nextIdcTopicReport->state = $CORRECT_STATE;
+            $nextIdcTopicReport->save();
+
+            return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
+        }
+
+        public function correctedNextIdcTopicReport($idcId, $idNextIdcTopicReport, Request $request) {
+            $CORRECTED_STATE = 'Corregido';
+            $nextIdcTopicReport = NextIdcTopicReport::find($idNextIdcTopicReport);
+    
+            if($request->hasFile('archivoCorregido')) {
+                $file = $request->file('archivoCorregido');
+
+                $fileName = $file->getClientOriginalName();
+
+                $nextIdcTopicReport->nameCorrectedDocument = $fileName;
+                $nextIdcTopicReport->correctedDocumentStoragePath = 'documents/'.$fileName;
+        
+                $file->move(public_path('documents'), $fileName);
+            }
+
+            $nextIdcTopicReport->state = $CORRECTED_STATE;
+            $nextIdcTopicReport->save();
+
+            return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
+        }
+
+        public function declineNextIdcTopicReport($idcId, $idNextIdcTopicReport) {
+            $DECLINE_STATE = 'Rechazado';
+            $PREVIOUS_STATE = 'Corregido';
+            $nextIdcTopicReport = NextIdcTopicReport::find($idNextIdcTopicReport);
+
+            $nextIdcTopicReport->state = $DECLINE_STATE;
+            $nextIdcTopicReport->previousState = $PREVIOUS_STATE;
+            $nextIdcTopicReport->save();
+
+            return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
         }
     }
 ?>

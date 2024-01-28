@@ -34,7 +34,7 @@
                             @if($searchReport->state === null)
                                 Sin Intento
                             @else 
-                                {{ $searchReport->state }}
+                                <strong>{{ $searchReport->state }}</strong>
                             @endif
                         </td>
                     </tr>
@@ -58,33 +58,81 @@
                             @if($searchReport->storagePath === 'Por generar')
                                 {{ $searchReport->storagePath }}
                             @else
-                                <strong><a href="{{ asset($searchReport->storagePath) }}" class="link-document">
-                                    <i class="fa-regular fa-file-word"></i> {{ $searchReport->searchReportCode }}
-                                </a></strong>
+                                <strong>
+                                    <a href="{{ asset($searchReport->storagePath) }}" class="link-document">
+                                        <i class="fa-regular fa-file-word"></i> {{ $searchReport->searchReportCode }}
+                                    </a>
+                                </strong>
                             @endif
                         </td>
                     </tr>
 
-                    @if($searchReport->state === 'Aprobado' && $searchReport->previousState === 'Corregido')
+                    @if(($searchReport->state === 'Aprobado' || $searchReport->state === 'Rechazado') && $searchReport->previousState === 'Corregido')
+                        <tr>
+                            <td>
+                                <strong>Archivo con correcciones</strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    <a href="{{ asset($searchReport->correctDocumentStoragePath) }}" class="link-document">
+                                        <i class="fa-regular fa-file-word"></i> {{ $searchReport->nameCorrectDocument }}
+                                    </a>
+                                </strong>
+                            </td>
+                        </tr>
                         <tr>
                             <td><strong>Archivo corregido</strong></td>
                             <td>
-                                <strong><a href="{{ asset($searchReport->storagePath) }}" class="link-document">
-                                    <i class="fa-regular fa-file-word"></i> {{ $searchReport->searchReportCode }}
-                                </a></strong>
+                                <strong>
+                                    <a href="{{ asset($searchReport->correctedDocumentStoragePath) }}" class="link-document">
+                                        <i class="fa-regular fa-file-word"></i> {{ $searchReport->nameCorrectedDocument }}
+                                    </a>
+                                </strong>
                             </td>
                         </tr>
                     @endif
 
                     @if($searchReport->state === 'Debe corregirse' && session('role') === 'Docente')
                         <tr>
+                            <td>
+                                <strong>Archivo con correcciones</strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    <a href="{{ asset($searchReport->correctDocumentStoragePath) }}" class="link-document">
+                                        <i class="fa-regular fa-file-word"></i> {{ $searchReport->nameCorrectDocument }}
+                                    </a>
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
                             <td><strong>Archivo corregido</strong></td>
                             <td>
-                                <input type="file" id="archivo" accept=".doc, .docx">
-                                <button>Subir Documento</button>
+                                <form id="formTSRCO" action="{{ route('topicSearchReport.corrected', ['idcId' => $searchReport->idcId, 
+                                    'idTopicSearchReport' => $idTopicSearchReport]) }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <button type="button" class="contenedor-btn-file">
+                                        <i class="fas fa-file"></i>
+                                        Adjuntar archivo corregido
+                                        <label for="btn-file-TSRCO"></label>
+                                        <input type="file" id="btn-file-TSRCO" name="archivoCorregido" accept=".doc, .docx">
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @elseif($searchReport->state === 'Debe corregirse' && session('role') === 'Coordinador')
+                        <tr>
+                            <td>
+                                <strong>Archivo con correcciones</strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    <a href="{{ asset($searchReport->correctDocumentStoragePath) }}" class="link-document">
+                                        <i class="fa-regular fa-file-word"></i> {{ $searchReport->nameCorrectDocument }}
+                                    </a>
+                                </strong>
+                            </td>
+                        </tr>
                         <tr>
                             <td><strong>Archivo corregido</strong></td>
                             <td>Por subirse</td>
@@ -93,11 +141,25 @@
 
                     @if($searchReport->state === 'Corregido')
                         <tr>
+                            <td>
+                                <strong>Archivo con correcciones</strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    <a href="{{ asset($searchReport->correctDocumentStoragePath) }}" class="link-document">
+                                        <i class="fa-regular fa-file-word"></i> {{ $searchReport->nameCorrectDocument }}
+                                    </a>
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
                             <td><strong>Archivo corregido</strong></td>
                             <td>
-                                <strong><a href="{{ asset($searchReport->storagePath) }}" class="link-document">
-                                    <i class="fa-regular fa-file-word"></i> {{ $searchReport->searchReportCode }}
-                                </a></strong>
+                                <strong>
+                                    <a href="{{ asset($searchReport->correctedDocumentStoragePath) }}" class="link-document">
+                                        <i class="fa-regular fa-file-word"></i> {{ $searchReport->nameCorrectedDocument }}
+                                    </a>
+                                </strong>
                             </td>
                         </tr>
 
@@ -105,8 +167,18 @@
                             <tr>
                                 <td><strong>Comentarios al envío</strong></td>
                                 <td>
-                                    <button class="btn">Aprobar Documento</button>
-                                    <button class="btn">Corregir Documento</button>
+                                    <div class="stateDocument">
+                                        <form action="{{ route('topicSearchReport.approveCorrected', ['idcId' => $searchReport->idcId, 
+                                            'idTopicSearchReport' => $idTopicSearchReport]) }}" method="POST">
+                                            @csrf
+                                            <button class="btn"><i class="fa-solid fa-check"></i>Aprobar Documento</button>
+                                        </form>
+                                        <form action="{{ route('topicSearchReport.decline', ['idcId' => $searchReport->idcId, 
+                                            'idTopicSearchReport' => $idTopicSearchReport]) }}" method="POST">
+                                            @csrf
+                                            <button class="btn"><i class="fa-solid fa-xmark"></i>Rechazar Documento</button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endif 
@@ -117,8 +189,23 @@
                             <td><strong>Comentarios al envío</strong></td>
                             <td>
                                 @if(session('role') === 'Coordinador')
-                                    <button class="btn">Aprobar Documento</button>
-                                    <button class="btn">Corregir Documento</button>
+                                    <div class="stateDocument">
+                                        <form action="{{ route('topicSearchReport.approve', ['idcId' => $searchReport->idcId, 
+                                            'idTopicSearchReport' => $idTopicSearchReport]) }}" method="POST">
+                                            @csrf
+                                            <button class="btn"><i class="fa-solid fa-check"></i>Aprobar Documento</button>
+                                        </form>
+                                        <form id="formTSRC" action="{{ route('topicSearchReport.correct', ['idcId' => $searchReport->idcId, 
+                                            'idTopicSearchReport' => $idTopicSearchReport]) }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <button type="button" class="contenedor-btn-file">
+                                                <i class="fas fa-file"></i>
+                                                Adjuntar archivo con correcciones
+                                                <label for="btn-file-TSRC"></label>
+                                                <input type="file" id="btn-file-TSRC" name="archivoCorrecciones" accept=".doc, .docx">
+                                            </button>
+                                        </form>
+                                    </div>
                                 @else
                                     No hay comentarios por el momento
                                 @endif

@@ -31,14 +31,14 @@
                     @csrf
                     <div class="first-section">
                         <strong><h2>Resúmenes</h2></strong>
-                        <textarea class="textarea" name="spanishSummary" placeholder="Resumen en español"></textarea>
-                        <textarea class="textarea" name="englishSummary" placeholder="Resumen en inglés"></textarea>
-                        <textarea class="textarea" name="keywords" placeholder="Palabras clave"></textarea>
+                        <textarea class="textarea textareaSC" name="spanishSummary" placeholder="Resumen en español" min="650" maxlength="850"></textarea>
+                        <textarea class="textarea textareaSC" name="englishSummary" placeholder="Resumen en inglés" min="650" maxlength="850"></textarea>
+                        <textarea class="textarea textareaSC" name="keywords" placeholder="Palabras clave" min="100" maxlength="160"></textarea>
                     </div>
                     <div class="second-section">
                         <strong><h2>Introducción</h2></strong>
-                        <textarea class="textarea" name="introduction" placeholder="Introducción"></textarea>
-                        <textarea class="textarea" name="methodology" placeholder="Metodología"></textarea>
+                        <textarea class="textarea textareaSC" name="introduction" placeholder="Introducción" min="1300" maxlength="1450"></textarea>
+                        <textarea class="textarea textareaSC" name="methodology" placeholder="Metodología" min="375" maxlength="500"></textarea>
                     </div>
                     <div class="third-section">
                         <strong><h2>Desarrollo del tema</h2></strong>
@@ -48,13 +48,14 @@
                                     <th>Contribuyente</th>
                                     <th>Sub-Título</th>
                                     <th>Estado</th>
+                                    <th>Detalles</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($contents as $content)
                                     <tr>
                                         <td data-values="Contribuyente">{{ $content->studentContribute }}</td>
-                                        <td data-values="Sub-Título">{{ $content->title }}</td>
+                                        <td data-values="Sub-Título">{{ $content->subtitle }}</td>
                                         <td data-values="Estado">
                                             @if($content->state !== 'Aprobado')
                                                 <button type="button" class="btn btn-aproved-development" 
@@ -67,10 +68,37 @@
                                                 <h4 class="state">{{ $content->state }}</h4>
                                             @endif
                                         </td>
+                                        <td>
+                                            <button type="button" class="btn btn-edit" data-modal="verDetallesModalTopic" data-subtitle="{{ $content->subtitle }}" 
+                                            data-content="{{ $content->content }}" >
+                                                <i class="fa-regular fa-eye"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+                        <div>
+                            <p class="note">
+                                <strong>IMPORTANTE:</strong> Como contribución al docente se facilita la <strong>selección de los textos</strong> que considere importantes 
+                                para la temática y la generación de <strong>un solo archivo</strong>. Se debe editar el archivo generado para agregar imagenes y tablas, 
+                                si son necesarias. Este archivo editado será enviado por esta plataforma al coordinador para su revisión.
+                            </p>
+                        </div>
+                        <!-- View Contribute Modal -->
+                        <div id="verDetallesModalTopic" class="modal">
+                            <div class="modal-content">
+                                <header class="head">
+                                    <h2>Datos del aporte</h2>
+                                    <button type="button" class="cerrarModal close"><i class="fa-solid fa-xmark"></i></button>
+                                </header>
+                                <textarea id="subtitleV" class="textarea textareaDE" name="subtitle" placeholder="Sub-título" min="35" maxlength="100" readonly></textarea>
+                                <textarea id="contentV" class="textarea textareaDE" name="content" placeholder="Contenido" min="2550" maxlength="4000" readonly></textarea>
+                                <input hidden type="text" name="developmentId" id="developmentEId" autocomplete="off">
+                                <input name="idcId" type="text" hidden value="{{ $idcId }}">
+                                <input name="idScientificArticleReport" type="text" hidden value="{{ $idScientificArticleReport }}">
+                            </div>
+                        </div>
                     </div>
                     <div class="fourth-section">
                         <strong><h2>Conclusiones</h2></strong>
@@ -118,7 +146,7 @@
                                 @foreach ($references as $reference)
                                     <tr>
                                         <td data-values="Contribuyente">{{ $reference->studentContribute }}</td>
-                                        <td data-values="Referencia bibliográfica">{{ $reference->reference }}</td>
+                                        <td data-values="Referencia bibliográfica"><p class="reference">{{ $reference->reference }}</p></td>
                                         <td data-values="Estado">
                                             @if($reference->state !== 'Aprobado')
                                                 <button type="button" class="btn btn-aproved-reference" 
@@ -158,8 +186,8 @@
                             </header>
                             <form id="formContribute" action="{{ route('development.create') }}" method="POST" class="information-development" enctype="multipart/form-data">
                                 @csrf
-                                <textarea class="textarea textareaD" name="title" placeholder="Sub-Título" maxlength="300"></textarea>
-                                <textarea class="textarea textareaD" name="content" placeholder="Contenido" maxlength="3000"></textarea>
+                                <textarea class="textarea textareaD" name="subtitle" placeholder="Sub-título" min="35" maxlength="100"></textarea>
+                                <textarea class="textarea textareaD" name="content" placeholder="Contenido" min="2550" maxlength="4000"></textarea>
                                 <input name="idcId" type="text" hidden value="{{ $idcId }}">
                                 <input name="idScientificArticleReport" type="text" hidden value="{{ $idScientificArticleReport }}">
                                 <div id="notificationD" class="notificationM"></div>
@@ -178,12 +206,12 @@
                         <tbody>
                             @foreach ($contents as $content)
                                 <tr>
-                                    <td data-values="Sub-Título">{{ $content->title }}</td>
+                                    <td data-values="Sub-Título">{{ $content->subtitle }}</td>
                                     <td data-values="Estado">{{ $content->state }}</td>
                                     <td data-values="Acciones">
                                         @if($content->state !== 'Aprobado')
                                             <button type="button" class="btn btn-edit" data-modal="editarModalContent" data-developmentId="{{ $content->developmentId }}" 
-                                                data-title="{{ $content->title }}" data-content="{{ $content->content }}" data-image="{{ $content->image }}"
+                                                data-subtitle="{{ $content->subtitle }}" data-content="{{ $content->content }}"
                                             >
                                                 <i class="fa-regular fa-pen-to-square"></i>
                                             </button>
@@ -196,7 +224,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <!-- Edit content modal -->
+                    <!-- Edit Contribute Modal -->
                     <div id="editarModalContent" class="modal">
                         <div class="modal-content">
                             <header class="head">
@@ -205,17 +233,17 @@
                             </header>
                             <form id="formContentEdit" action="{{ route('development.edit') }}" method="POST" class="basic-information">
                                 @csrf
-                                <textarea id="title" class="textarea textareaDE" name="title" placeholder="Titulo"></textarea>
-                                <textarea id="content" class="textarea textareaDE" name="content" placeholder="Contenido"></textarea>
+                                <textarea id="subtitle" class="textarea textareaDE" name="subtitle" placeholder="Sub-título" min="35" maxlength="100"></textarea>
+                                <textarea id="content" class="textarea textareaDE" name="content" placeholder="Contenido" min="2550" maxlength="4000"></textarea>
                                 <input hidden type="text" name="developmentId" id="developmentEId" autocomplete="off">
                                 <input name="idcId" type="text" hidden value="{{ $idcId }}">
                                 <input name="idScientificArticleReport" type="text" hidden value="{{ $idScientificArticleReport }}">
-                                <div id="notificationOG" class="notificationM"></div>
+                                <div id="notificationDEV" class="notificationM"></div>
                                 <button type="submit" class="btn" id="submitButtonConclusionEdit">Agregar</button>
                             </form>
                         </div>
                     </div>
-                    <!-- Delete content modal -->
+                    <!-- Delete Contribute Modal -->
                     <div class="modal" id="eliminarModalContent">
                         <div class="modal-content">
                             <header class="head">
@@ -250,7 +278,7 @@
                             </header>
                             <form id="formConclusion" action="{{ route('conclusion.create') }}" method="POST" class="information-conclusion">
                                 @csrf
-                                <textarea class="textarea textareaC" name="conclusion" placeholder="Conclusión" maxlength="800"></textarea>
+                                <textarea class="textarea textareaC" name="conclusion" placeholder="Conclusión" min="300" maxlength="400"></textarea>
                                 <input name="idcId" type="text" hidden value="{{ $idcId }}">
                                 <input name="idScientificArticleReport" type="text" hidden value="{{ $idScientificArticleReport }}">
                                 <div id="notificationC" class="notificationM"></div>
@@ -286,7 +314,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <!-- Edit conclusion modal -->
+                    <!-- Edit Conclusion Modal -->
                     <div id="editarModalConclusion" class="modal">
                         <div class="modal-content">
                             <header class="head">
@@ -295,16 +323,16 @@
                             </header>
                             <form id="formConclusionEdit" action="{{ route('conclusion.edit') }}" method="POST" class="basic-information">
                                 @csrf
-                                <textarea id="conclusion" class="textarea textareaCO" name="conclusion" placeholder="Conclusion"></textarea>
+                                <textarea id="conclusion" class="textarea textareaCO" name="conclusion" placeholder="Conclusión"></textarea>
                                 <input hidden type="text" name="conclusionId" id="conclusionEId" autocomplete="off">
                                 <input name="idcId" type="text" hidden value="{{ $idcId }}">
                                 <input name="idScientificArticleReport" type="text" hidden value="{{ $idScientificArticleReport }}">
-                                <div id="notificationOG" class="notificationM"></div>
+                                <div id="notificationCO" class="notificationM"></div>
                                 <button type="submit" class="btn" id="submitButtonConclusionEdit">Agregar</button>
                             </form>
                         </div>
                     </div>
-                    <!-- Delete conclusion modal -->
+                    <!-- Delete Conclusion Modal -->
                     <div class="modal" id="eliminarModalConclusion">
                         <div class="modal-content">
                             <header class="head">
@@ -339,7 +367,7 @@
                             </header>
                             <form id="formReference" action="{{ route('reference.create') }}" method="POST" class="information-reference">
                                 @csrf
-                                <textarea class="textarea textareaR" name="reference" placeholder="Referencia bibliográfica" maxlength="800"></textarea>
+                                <textarea class="textarea textareaR" name="reference" placeholder="Referencia bibliográfica" min="" maxlength="800"></textarea>
                                 <input name="idcId" type="text" hidden value="{{ $idcId }}">
                                 <input name="idScientificArticleReport" type="text" hidden value="{{ $idScientificArticleReport }}">
                                 <div id="notificationR" class="notificationM"></div>
@@ -358,7 +386,7 @@
                         <tbody>
                             @foreach($references as $reference)
                                 <tr>
-                                    <td data-values="Referencia bibliográfica">{{ $reference->reference }}</td>
+                                    <td data-values="Referencia bibliográfica"><p class="reference">{{ $reference->reference }}</p></td>
                                     <td data-values="Estado">{{ $reference->state }}</td>
                                     <td data-values="Acciones">
                                         @if($reference->state !== 'Aprobado')
@@ -376,7 +404,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <!-- Edit reference modal -->
+                    <!-- Edit Reference Modal -->
                     <div id="editarModalReference" class="modal">
                         <div class="modal-content">
                             <header class="head">
@@ -389,12 +417,12 @@
                                 <input hidden type="text" name="referenceId" id="referenceEId" autocomplete="off">
                                 <input name="idcId" type="text" hidden value="{{ $idcId }}">
                                 <input name="idScientificArticleReport" type="text" hidden value="{{ $idScientificArticleReport }}">
-                                <div id="notificationOG" class="notificationM"></div>
+                                <div id="notificationRE" class="notificationM"></div>
                                 <button type="submit" class="btn" id="submitButtonReferenceEdit">Agregar</button>
                             </form>
                         </div>
                     </div>
-                    <!-- Delete content modal -->
+                    <!-- Delete Content Modal -->
                     <div class="modal" id="eliminarModalReference">
                         <div class="modal-content">
                             <header class="head">

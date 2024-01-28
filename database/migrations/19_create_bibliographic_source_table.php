@@ -14,8 +14,8 @@
                 $table->string('year', 4);
                 $table->string('averageType', 150);
                 $table->string('source', 100);
-                $table->string('studentContribute', 300);
                 $table->string('link', 1000);
+                $table->string('studentContribute', 300);
                 $table->string('state', 30);
                 $table->timestamps();
             });

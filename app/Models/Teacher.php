@@ -13,6 +13,7 @@
             'teacherId',
             'contractType',
             'specialty',
+            'title',
             'idcQuantity',
             'idUser',
         ];

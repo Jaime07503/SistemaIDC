@@ -413,6 +413,16 @@ table td[data-values="Conclusión"], table td[data-values="Referencia bibliográ
     font-weight: 100;
 }
 
+.reference {
+    color: var(--primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+    display: inline-block;
+    text-decoration: none;
+}
+
 /* Notification */
 .notification {
     position: fixed;
@@ -453,6 +463,15 @@ table td[data-values="Conclusión"], table td[data-values="Referencia bibliográ
 
 .notificationM.show {
     display: block;
+}
+
+.note {
+    color: var(--primary);
+    font-size: 1rem;
+    border: 3px solid var(--texas-rose-200);
+    border-radius: .5rem;
+    padding: .5rem;
+    text-align: justify;
 }
 
 /* Scroll */

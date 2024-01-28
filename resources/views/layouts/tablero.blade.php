@@ -14,7 +14,7 @@
         <header class="head-content">
             <div>
                 <h1 class="head-title">Investigaciones de Cátedra</h1>
-                <h3 class="greeting">Bienvenido {{ $role }}</h3>
+                <h3 class="greeting">Bienvenido, {{ $role }} 👋</h3>
             </div>
             <img src="{{ asset('images/idc_logo.webp') }}" class="image-idc" alt="Logo IDC">
         </header>

@@ -45,17 +45,17 @@
         Route::get('/searchInformation/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'getInformation'])->name('searchInformation');
         Route::get('/scientificArticle/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'getInformation'])->name('scientificArticle');
         Route::get('/endProcess/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'getInformation'])->name('endProcess');
+    });
+
+    // Admin Routes
+    Route::middleware('admin')->group(function () {
         Route::get('/administration', [AdministrationController::class, 'getCareers'])->name('administration');
         Route::get('/career', [CareerController::class, 'getCareers'])->name('career');
         Route::get('/faculty', [FacultyController::class, 'getCareers'])->name('faculty');
         Route::get('/subject', [SubjectController::class, 'getSubject'])->name('subject');
-    });
+     });
 
     // Public Routes
-    Route::get('/', function () {
-        return view('welcome');
-    });
-
     Route::get('/login', function () {
         return view('auth.login');
     })->name('login');
@@ -70,7 +70,6 @@
     Route::get('/newTeam/{researchTopicId}', [TeamController::class, 'getInformation'])->name('newTeam');
     Route::get('/researchTopicInformation/{researchTopicId}/{subjectId}', [ResearchTopicInformationController::class, 'getResearchTopicInformation'])->name('researchTopicInformation');
     Route::get('/topicSearchReport', [TopicSearchReportController::class, 'getSources'])->name('topicSearchReport');
-    Route::get('/career', [CareerController::class, 'getCareers'])->name('career');
     Route::get('/topicSearchReport/{idcId}/{idTopicSearchReport}', [TopicSearchReportController::class, 'getSources'])->name('topicSearchReport');
     Route::get('/scientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleReportController::class, 'getSources'])->name('scientificArticleReport');
     Route::get('/nextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [NextIdcTopicReportController::class, 'getTopics'])->name('nextIdcTopicReport');
@@ -115,7 +114,24 @@
     Route::post('/editSubject', [SubjectController::class, 'editSubject'])->name('editSubject');
     Route::post('/editFaculty', [FacultyController::class, 'editFaculty'])->name('editFaculty');
 
-    //PUT
+    Route::post('/approveTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'approveTopicSearchReport'])->name('topicSearchReport.approve');
+    Route::post('/aprovedCorrectedTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'approveCorrectedTopicSearchReport'])->name('topicSearchReport.approveCorrected');
+    Route::post('/correctTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'correctTopicSearchReport'])->name('topicSearchReport.correct');
+    Route::post('/correctedTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'correctedTopicSearchReport'])->name('topicSearchReport.corrected');
+    Route::post('/declineTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'declineTopicSearchReport'])->name('topicSearchReport.decline');
+
+    Route::post('/approveScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'approveScientificArticleReport'])->name('scientificArticleReport.approve');
+    Route::post('/aprovedCorrectedScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'approveCorrectedScientificArticleReport'])->name('scientificArticleReport.approveCorrected');
+    Route::post('/correctScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'correctScientificArticleReport'])->name('scientificArticleReport.correct');
+    Route::post('/docImageScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'docImageScientificArticleReport'])->name('scientificArticleReport.docImage');
+    Route::post('/correctedScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'correctedScientificArticleReport'])->name('scientificArticleReport.corrected');
+    Route::post('/declineScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'declineScientificArticleReport'])->name('scientificArticleReport.decline');
+    
+    Route::post('/approveNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'approveNextIdcTopicReport'])->name('nextIdcTopicReport.approve');
+    Route::post('/aprovedCorrectedNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'approveCorrectedNextIdcTopicReport'])->name('nextIdcTopicReport.approveCorrected');
+    Route::post('/correctNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'correctNextIdcTopicReport'])->name('nextIdcTopicReport.correct');
+    Route::post('/correctedNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'correctedNextIdcTopicReport'])->name('nextIdcTopicReport.corrected');
+    Route::post('/declineNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'declineNextIdcTopicReport'])->name('nextIdcTopicReport.decline');
 
     //DELETE
     Route::delete('/deleteUser', [AdministrationController::class, 'deleteUser'])->name('deleteUser');

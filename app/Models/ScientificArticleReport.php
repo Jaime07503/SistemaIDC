@@ -17,12 +17,12 @@
             'keywords',
             'introduction',
             'methodology',
-            'development',
-            'conclusion',
-            'bibliographicReferences',
             'numberOfWords',
             'storagePath',
+            'nameCorrectedDocument',
+            'correctedDocumentStoragePath',
             'state',
+            'previousState',
             'idIdc'
         ];
 
