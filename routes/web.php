@@ -1,6 +1,7 @@
 <?php
     use App\Http\Controllers\AdministrationController;
     use App\Http\Controllers\FacultyController;
+    use App\Notifications\DocEntregado;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthGoogleLoginController;
     use App\Http\Controllers\BibliographicSourceController;
@@ -74,6 +75,13 @@
     Route::get('/scientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleReportController::class, 'getSources'])->name('scientificArticleReport');
     Route::get('/nextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [NextIdcTopicReportController::class, 'getTopics'])->name('nextIdcTopicReport');
 
+    use App\User;
+    Route::get('/notificacion', function (){
+        $user = User::find(1);
+        $user->notify(new DocEntregado);
+
+        return "Notificacion Enviada";
+    });
     //POST
     Route::post('/addStudent', [FormPostulationController::class, 'addStudent'])->name('student.store');
     Route::post('/addPostulated', [ResearchTopicInformationController::class, 'store'])->name('studentSubject.store');
@@ -101,7 +109,7 @@
     Route::get('/updateConclusion/{idConclusion}', [ScientificArticleReportController::class, 'updateConclusion'])->name('conclusion.update');
     Route::get('/updateReference/{idReference}', [ScientificArticleReportController::class, 'updateReference'])->name('reference.update');
     Route::get('/updateTopic/{idTopic}', [NextIdcTopicReportController::class, 'updateTopic'])->name('topic.update');
-    
+
     Route::post('/addCareer', [CareerController::class, 'addCareer'])->name('career.create');
     Route::post('/editCareer',[CareerController::class, 'editCareer'])->name('editcareer');
     Route::post('/editUser',[AdministrationController::class, 'editUser'])->name('editUser');
@@ -126,7 +134,7 @@
     Route::post('/docImageScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'docImageScientificArticleReport'])->name('scientificArticleReport.docImage');
     Route::post('/correctedScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'correctedScientificArticleReport'])->name('scientificArticleReport.corrected');
     Route::post('/declineScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'declineScientificArticleReport'])->name('scientificArticleReport.decline');
-    
+
     Route::post('/approveNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'approveNextIdcTopicReport'])->name('nextIdcTopicReport.approve');
     Route::post('/aprovedCorrectedNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'approveCorrectedNextIdcTopicReport'])->name('nextIdcTopicReport.approveCorrected');
     Route::post('/correctNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'correctNextIdcTopicReport'])->name('nextIdcTopicReport.correct');
