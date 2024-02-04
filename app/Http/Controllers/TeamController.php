@@ -45,6 +45,12 @@
             return view('layouts.newTeam', compact('researchTopics', 'subject', 'students'));
         }
 
+        public function approveTeam() {
+            $researchTopics = ResearchTopic::all();
+
+            
+        }
+
         public function create(Request $request)
         {
             $INITIAL_STATE = 'Sin Intento';

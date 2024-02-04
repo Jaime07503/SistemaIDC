@@ -1,5 +1,6 @@
 <?php
     use App\Http\Controllers\FacultyController;
+    use App\Notifications\DocEntregado;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthGoogleLoginController;
     use App\Http\Controllers\DocumentController;
@@ -86,6 +87,13 @@
     Route::get('/scientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleReportController::class, 'getSources'])->name('scientificArticleReport');
     Route::get('/nextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [NextIdcTopicReportController::class, 'getTopics'])->name('nextIdcTopicReport');
 
+    use App\User;
+    Route::get('/notificacion', function (){
+        $user = User::find(1);
+        $user->notify(new DocEntregado);
+
+        return "Notificacion Enviada";
+    });
     //POST
     Route::post('/addStudent', [FormPostulationController::class, 'addStudent'])->name('student.store');
     Route::post('/addPostulated', [ResearchTopicInformationController::class, 'store'])->name('studentSubject.store');
