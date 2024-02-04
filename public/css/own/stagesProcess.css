@@ -51,6 +51,8 @@ body {
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .head-lbl {
@@ -62,7 +64,7 @@ body {
 /* Historial de vistas */
 .history {
     display: flex;
-    gap: .5rem;
+    gap: .7rem;
     flex-wrap: wrap; 
     justify-content: start;
     align-items: center;
@@ -77,6 +79,7 @@ body {
     box-sizing: border-box;
     width: auto;
     border-radius: .5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .history-view:hover {
@@ -97,26 +100,22 @@ body {
     display: flex;
     flex-direction: column;
     gap: .5rem;
-}
-
-.head-title {
-    color: var(--primary);
-    font-size: 1rem;
-    font-weight: 700;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 /* Etapas del proceso */
 .stages {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 1rem;
 }
 
 /* Etapa del proceso */
 .stage-card {
     background: var(--white);
     border-radius: .5rem;
-    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .stage-image {

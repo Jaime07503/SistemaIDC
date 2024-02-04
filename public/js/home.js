@@ -1,24 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let facultyButtons = document.querySelectorAll('.lt-button--click-faculty');
-    let careerButtons = document.querySelectorAll('.lt-button--click-career');
-    let subjectButtons = document.querySelectorAll('.lt-button--click-subject');
+    let buttons = document.querySelectorAll('.lt-button--click-faculty, .lt-button--click-career, .lt-button--click-subject');
 
     function toggleSection(button) {
         let arrowIcon = button.querySelector('.lt-arrow');
         let section = button.nextElementSibling;
 
-        // Cierra todos los elementos padres
-        let parentSection = button.closest('.lt-show-careers, .lt-show-subjects, .lt-show-researchTopics');
-        let parentSections = document.querySelectorAll('.lt-show-careers, .lt-show-subjects, .lt-show-researchTopics');
-        parentSections.forEach(parent => {
-            if (parent !== parentSection) {
-                parent.style.height = "0";
+        let siblingSections = button.parentElement.querySelectorAll('.lt-show-careers, .lt-show-subjects, .lt-show-researchTopics');
+        siblingSections.forEach(sibling => {
+            if (sibling !== section) {
+                sibling.style.height = "0";
             }
         });
 
-        // Abre o cierra la sección actual
         if (section.style.height === "0px" || section.style.height === "") {
-            section.style.height = `${section.scrollHeight}px`;
+            section.style.height = 'auto'
             arrowIcon.classList.add('arrow');
         } else {
             section.style.height = "0";
@@ -26,19 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    facultyButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            toggleSection(button);
-        });
-    });
-
-    careerButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            toggleSection(button);
-        });
-    });
-
-    subjectButtons.forEach(button => {
+    buttons.forEach(button => {
         button.addEventListener('click', () => {
             toggleSection(button);
         });

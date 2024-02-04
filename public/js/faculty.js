@@ -5,40 +5,73 @@ document.addEventListener("DOMContentLoaded", function () {
     let cancel = document.querySelector('.cancel')
 
     btnAddFaculty.addEventListener('click', function () {
-        openModal('myModalFaculty');
-    });
+        openModal('myModalFaculty')
+    })
 
     cerrarModals.forEach(function(cerrarModal){
         cerrarModal.addEventListener('click', function () {
             const modalId = cerrarModal.closest('.modal').id
 
-            closeModal(modalId);
-        });
+            closeModal(modalId)
+        })
     })
 
     cancel.addEventListener('click', function () {
         closeModal('eliminarModal')
-    });
+    })
 
     window.addEventListener('click', function (event) {
         if (event.target === addFacultyModal) {
             closeModal('myModalFaculty')
         }
-    });
+    })
 
-    // Obtener todos los botones con la clase 'button-edit' y 'button-delete'
+    const searchInput = document.getElementById('searchInput')
+    const tableRows = document.querySelectorAll('#data-table-faculty tbody tr')
+
+    searchInput.addEventListener('input', function () {
+        const searchText = searchInput.value.trim().toLowerCase()
+
+        tableRows.forEach(function (row) {
+            const facultyText = row.querySelector('td[data-values="Facultad"]').textContent.trim().toLowerCase()
+            const containsSearchText = facultyText.includes(searchText)
+
+            row.style.display = containsSearchText ? '' : 'none'
+        })
+    })
+
+    const formAddFaculty = document.getElementById('formAddFaculty')    
+    formAddFaculty.addEventListener('submit', function (event) {
+        const inputCycles = document.querySelectorAll("#formAddFaculty .input-faculty")
+        for(const inputCycle of inputCycles) {
+            if (inputCycle.value.trim() === '') {
+                showNotification(`Por favor, completa el campo "${inputCycle.placeholder}"`, true, '#notificationF')
+                event.preventDefault()
+                return
+            }
+        }
+    })
+
+    const formEditFaculty = document.getElementById('formEditFaculty')    
+    formEditFaculty.addEventListener('submit', function (event) {
+        const inputCycles = document.querySelectorAll("#formEditFaculty .input-faculty")
+        for(const inputCycle of inputCycles) {
+            if (inputCycle.value.trim() === '') {
+                showNotification(`Por favor, completa el campo "${inputCycle.placeholder}"`, true, '#notificationFE')
+                event.preventDefault()
+                return
+            }
+        }
+    })
+
     const buttons = document.querySelectorAll('.btn-edit, .btn-delete')
-
-    // Asignar un evento de clic a cada botón
     buttons.forEach(function (button) {
         button.addEventListener('click', function () {
             const modalId = button.dataset.modal
 
-            // Obtener datos del usuario desde los atributos data-
             const facultyId = button.getAttribute('data-facultyId')
             const nameFaculty = button.getAttribute('data-nameFaculty')
 
-            // Llenar los campos del formulario dentro de la ventana modal
             const facultyIdInput = document.getElementById('facultyId')
             const facultyIdEditInput = document.getElementById('facultyEditId')
             const nameFacultyInput = document.getElementById('nameFaculty')
@@ -51,7 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     })
 
-    // Asignar un evento de clic a los elementos con la clase 'close'
     const closeButtons = document.querySelectorAll('.modal .close')
     closeButtons.forEach(function (closeButton) {
         closeButton.addEventListener('click', function () {
@@ -70,6 +102,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    function showNotification(message, isError = false, notificationId) {
+        const notification = document.querySelector(notificationId)
+    
+        if (notification) {
+            notification.textContent = message
+            notification.className = isError ? 'notificationM error' : 'notificationM'
+            notification.style.display = 'block'
+    
+            setTimeout(function () {
+                notification.style.display = 'none'
+            }, 3000)
+        }
+    }
+
     function openModal(modalId) {
         document.getElementById(modalId).style.display = 'block'
     }
@@ -77,4 +123,4 @@ document.addEventListener("DOMContentLoaded", function () {
     function closeModal(modalId) {
         document.getElementById(modalId).style.display = 'none'
     }
-});
+})

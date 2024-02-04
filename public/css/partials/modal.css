@@ -15,7 +15,7 @@
     width: 15rem;
     background-color: var(--white);
     border-radius: 0.5rem;
-    border: 1px solid var(--texas-rose-100);
+    border: 3px solid var(--texas-rose-50);
     box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
 }
 
@@ -27,7 +27,7 @@
 .modal-content-user, .notification-content-user {
     margin: auto;
     width: 100%;
-    text-align: left;
+    text-align: start;
     position: relative;
 }
 
@@ -61,13 +61,13 @@
 }
 
 .head-notification {
-    border-bottom: 2px solid var(--texas-rose-100);
+    border-bottom: 3px solid var(--texas-rose-50);
 }
 
 .notification-title {
     color: var(--primary);
     font-size: 1rem;
-    font-weight: 100;
+    font-weight: 900;
     padding: .5rem;
     text-align: center;
 }
@@ -75,16 +75,31 @@
 .notifications {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
 }
 
 .notification {
-    padding: .5rem;
+    padding: .3rem .5rem;
+    text-align: center;
 }
 
 .notification-subtitle {
     color: var(--primary);
     font-size: .9rem;
+}
+
+.footer {
+    text-align: center;
+    border-top: 3px solid var(--texas-rose-50);
+    padding: .5rem;
+}
+
+.notification-mark-all {
+    color: var(--primary);
+    font-size: .9rem;
+    text-decoration: none;
+    text-align: center;
+    padding: .7rem;
+    font-weight: 900;
 }
 
 .link {
@@ -96,4 +111,12 @@
 
 .link:hover {
     text-decoration: underline;
+}
+
+.empty-notification {
+    font-size: .9rem;
+    color: var(--primary);
+    padding: .5rem;
+    font-weight: 100;
+    text-align: center;
 }

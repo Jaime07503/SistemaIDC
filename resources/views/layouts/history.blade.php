@@ -23,28 +23,16 @@
             <h2 class="head">Vista general del curso</h2>
             <!-- Opciones para filtrar las investigaciones de cátedra -->
             <header class="options-courses">
-                <!-- Listbox estado de las investigaciones de cátedra -->
-                <div class="custom-listbox">
-                    <div class="listbox-header">
-                        <button id="listbox"><span class="selected-option">Pasados</span></button>
-                        <i class="fa-solid fa-chevron-down arrow-down"></i>
-                    </div>
-                    <ul class="options">
-                        <li data-value="Todos" class="selected">Todos</li>
-                        <li data-value="En progreso">En progreso</li>
-                        <li data-value="Pasados"><i class="fa-solid fa-check"></i> Pasados</li>
-                    </ul>
-                </div>
                 <!-- Input búsqueda por nombre de curso -->
-                <input class="custom-input" type="text" placeholder="Buscar...">
+                <input id="input-idc" class="custom-input" type="text" placeholder="Buscar...">
             </header>
             <!-- Investigaciones de Cátedra -->
             @if(isset($noIdcs))
                 <h3 class="empty">Aún no tienes IDC finalizadas</h3>
             @else
-                <aside class="courses">
+                <aside class="idcs">
                     @foreach ($idcs as $idc)
-                        <div class="card">
+                        <div class="card card-idcs">
                             <h5 class="card-title">Equipo #{{ $idc->teamId}}</h5>
                             <img src="{{ $idc->avatar }}" alt="Imagen" class="card-image">
                             <a href="{{ route('stagesProcess', ['researchTopicId' => $idc->researchTopicId, 

@@ -8,24 +8,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function cerrarTodasModales() {
         avatarModal.style.display = 'none'
-        // notificationModal.style.display = 'none'
+        notificationModal.style.display = 'none'
         modalUserVisible = false
-        // modalNotificationVisible = false
+        modalNotificationVisible = false
     }
 
     avatarContainer.addEventListener('click', function (event) {
         event.stopPropagation()
-        cerrarTodasModales()
-        avatarModal.style.display = 'block'
-        modalUserVisible = true
+        if (modalUserVisible) {
+            cerrarTodasModales()
+        } else {
+            cerrarTodasModales()
+            avatarModal.style.display = 'block'
+            modalUserVisible = true
+        }
     })
 
-    // notificationUser.addEventListener('click', function (event) {
-    //     event.stopPropagation()
-    //     cerrarTodasModales()
-    //     notificationModal.style.display = 'block'
-    //     modalNotificationVisible = true
-    // })
+    notificationUser.addEventListener('click', function (event) {
+        event.stopPropagation()
+        if (modalNotificationVisible) {
+            cerrarTodasModales()
+        } else {
+            cerrarTodasModales()
+            notificationModal.style.display = 'block'
+            modalNotificationVisible = true
+        }
+    })
 
     var modalLinks = avatarModal.querySelectorAll('.enlace-div')
     modalLinks.forEach(function (link) {
@@ -35,14 +43,14 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     document.addEventListener('click', function (event) {
-        if ((modalUserVisible) && 
-            event.target !== avatarModal && !avatarModal.contains(event.target)) {
+        if ((modalUserVisible || modalNotificationVisible) && event.target !== avatarModal && !avatarModal.contains(event.target) 
+        && event.target !== notificationModal && !notificationModal.contains(event.target)) {
             cerrarTodasModales()
         }
     })
 
     document.addEventListener('keydown', function (event) {
-        if (event.key === 'Escape' && (modalUserVisible)) {
+        if (event.key === 'Escape' && (modalUserVisible || modalNotificationVisible)) {
             cerrarTodasModales()
         }
     })

@@ -31,4 +31,26 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
     }
+
+    const formSARDC = document.getElementById('formSARDC')
+    const fileInputSARDC = document.getElementById('btn-file-SARDC')
+    
+    if (formSARDC && fileInputSARDC) {
+        fileInputSARDC.addEventListener('change', function() {
+            if (fileInputSARDC.files.length > 0) {
+                formSARDC.submit()
+            }
+        })
+    }
+
+    const formSARDCO = document.getElementById('formSARDCO')
+    const fileInputSARDCO = document.getElementById('btn-file-SARDCO')
+    
+    if (formSARDCO && fileInputSARDCO) {
+        fileInputSARDCO.addEventListener('change', function() {
+            if (fileInputSARDCO.files.length > 0) {
+                formSARDCO.submit()
+            }
+        })
+    }
 })

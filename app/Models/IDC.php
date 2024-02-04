@@ -11,12 +11,6 @@
 
         protected $fillable = [
             'idcId',
-            'startDateSearchReport',
-            'endDateSearchReport',
-            'startDateScientificArticleReport',
-            'endDateScientificArticleReport',
-            'startDateNextIdcTopic',
-            'endDateNextIdcTopic',
             'badgeProcessCompleted',
             'state',
             'idUser',
@@ -47,6 +41,11 @@
         public function nextIdcTopicReport()
         {
             return $this->hasMany(NextIdcTopicReport::class);
+        }
+
+        public function idcComment() 
+        {
+            return $this->hasMany(IDCComments::class);
         }
     }
 ?>

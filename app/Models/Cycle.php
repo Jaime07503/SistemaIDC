@@ -20,5 +20,17 @@
         {
             return $this->hasMany(Subject::class);
         }
+
+        public function researchTopics()
+        {
+            return $this->hasManyThrough(
+                ResearchTopic::class,
+                Subject::class,
+                'idCycle', 
+                'idSubject', 
+                'cycleId',
+                'subjectId'
+            );
+        }
     }
 ?>

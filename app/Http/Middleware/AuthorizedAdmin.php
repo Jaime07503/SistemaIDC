@@ -9,7 +9,7 @@
         public function handle($request, Closure $next)
         {
             if (!$this->isAdmin($request)) {
-                abort(Response::HTTP_UNAUTHORIZED);
+                return redirect()->back();
             }
 
             return $next($request);

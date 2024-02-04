@@ -82,6 +82,7 @@
                     <input name="idNextIdcTopicReport" type="text" hidden value="{{ $idNextIdcTopicReport }}">
                     <button type="submit" id="submitButton" class="btn">Generar Documento</button>
                 </form>
+                <div id="notification" class="notification"></div>
             </section>
             <div id="verDetallesModalTopic" class="modal">
                 <div class="modal-content">
@@ -102,7 +103,7 @@
             <section class="nextTopic">
                 <div class="topics">
                     <strong><h2>Temas de investigación</h2></strong>
-                    <button type="button" id="btnAddTopic" class="btn"><i class="fa-solid fa-plus"></i> Agregar</button>
+                    <button type="button" id="btnAddTopic" class="btn"><i class="fa-solid fa-square-plus"></i> Agregar</button>
                 </div>
                 <div>
                     <table id="data-table-topics" class="table content-table">
@@ -125,7 +126,7 @@
                                     <td data-values="Acciones">
                                         @if($topic->state !== 'Aprobado')
                                             <button type="button" class="btn btn-edit" data-modal="editarModalTopic" data-topicId="{{ $topic->topicId }}" 
-                                                data-nameTopic="{{ $topic->nameTopic }}" data-subjectRelevance="{{ $topic->subjectRelevance }}" data-globalUpdateImg="{{ $topic->globalUpdateImg }}"
+                                                data-nameTopic="{{ $topic->nameTopic }}" data-description="{{ $topic->description }}" data-subjectRelevance="{{ $topic->subjectRelevance }}" data-globalUpdateImg="{{ $topic->globalUpdateImg }}"
                                                 data-localUpdateImg="{{ $topic->localUpdateImg }}" data-updatedInformation="{{ $topic->updatedInformation }}" data-localRelevance="{{ $topic->localRelevance }}" 
                                                 data-globalRelevance="{{ $topic->globalRelevance }}">
                                                 <i class="fa-regular fa-pen-to-square"></i>
@@ -150,6 +151,7 @@
                         <form id="formTopic" action="{{ route('topic.create') }}" method="POST" class="basic-information" enctype="multipart/form-data">
                             @csrf
                             <textarea class="textarea textareaTopicA" name="nameTopic" placeholder="Tema"></textarea>
+                            <textarea class="textarea textareaTopicA" name="description" placeholder="Descripción"></textarea>
                             <textarea class="textarea textareaTopicA" name="subjectRelevance" placeholder="Es pertinente para la materia"></textarea>
                             <div class="container file-container" id="container">
                                 <input type="file" name="Imagen-Importancia-Global" class="file-input" accept="image/png, image/jpeg" hidden>
@@ -189,6 +191,7 @@
                         <form id="formTopicEdit" action="{{ route('topic.edit') }}" method="POST" class="basic-information" enctype="multipart/form-data">
                             @csrf
                             <textarea id="theme" class="textarea textareaT" name="nameTopic" placeholder="Tema"></textarea>
+                            <textarea id="description" class="textarea textareaT" name="description" placeholder="Descripción"></textarea>
                             <textarea id="subjectRelevance" class="textarea textareaT" name="subjectRelevance" placeholder="Es pertinente para la materia"></textarea>
                             <h2>Importancia Global</h2>
                             <div class="container file-container" id="container3">

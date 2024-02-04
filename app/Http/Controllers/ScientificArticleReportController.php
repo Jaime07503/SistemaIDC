@@ -6,10 +6,14 @@
     use App\Models\Conclusion;
     use App\Models\Development;
     use App\Models\Idc;
+    use App\Models\IDCDates;
     use App\Models\Reference;
     use App\Models\ResearchTopic;
     use App\Models\ScientificArticleReport;
+    use App\Models\StudentTeam;
+    use App\Models\Team;
     use App\Models\User;
+    use App\Notifications\GenerateSAR;
     use Carbon\Carbon;
     use DateTime;
     use Illuminate\Http\Request;
@@ -19,13 +23,15 @@
     {
         public function getSources($idcId, $idScientificArticleReport) {
             $role = session('role');
+
+            $dates = IDCDates::select('Idc_Date.startDateScientificArticleReport', 'Idc_Date.endDateScientificArticleReport')->first();
+
             if($role !== 'Estudiante') {
                 $scientificArticleReport = Idc::join('Team', 'Idc.idTeam', '=', 'Team.teamId')
                     ->join('Scientific_Article_Report', 'Idc.idcId', '=', 'Scientific_Article_Report.idIdc')
                     ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
                     ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
-                    ->select('Idc.endDateScientificArticleReport', 'Idc.idcId',
-                    'Research_Topic.researchTopicId', 'Research_Topic.themeName', 'Research_Topic.code',
+                    ->select('Idc.idcId', 'Research_Topic.researchTopicId', 'Research_Topic.themeName', 'Research_Topic.code',
                     'Team.teamId', 'Subject.subjectId',  'Scientific_Article_Report.state', 'Scientific_Article_Report.previousState',
                     'Scientific_Article_Report.code AS scientificArticleCode',
                     'Scientific_Article_Report.updated_at', 'Scientific_Article_Report.storagePath')
@@ -47,6 +53,12 @@
                     ->orderby('state')
                     ->get();
 
+                // $now = Carbon::now();
+
+                // if ($now < Carbon::parse($dates->startDateScientificArticleReport)) {
+                //     return redirect()->back();
+                // }
+
                 return view('layouts.scientificArticleReport', compact('role', 'idcId', 'idScientificArticleReport', 'scientificArticleReport', 'contents', 'references', 'conclusions'));
             } else {
                 $userId = session('userId');
@@ -56,8 +68,7 @@
                     ->join('Scientific_Article_Report', 'Idc.idcId', '=', 'Scientific_Article_Report.idIdc')
                     ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
                     ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
-                    ->select('Idc.endDateScientificArticleReport', 'Idc.idcId',
-                    'Research_Topic.researchTopicId', 'Research_Topic.themeName', 'Research_Topic.code',
+                    ->select('Idc.idcId', 'Research_Topic.researchTopicId', 'Research_Topic.themeName', 'Research_Topic.code',
                     'Team.teamId', 'Subject.subjectId',  'Scientific_Article_Report.state', 'Scientific_Article_Report.code AS scientificArticleCode',
                     'Scientific_Article_Report.updated_at', 'Scientific_Article_Report.storagePath')
                     ->where('Idc.idcId', $idcId)
@@ -80,6 +91,12 @@
                     ->where('studentContribute', $user->name)
                     ->orderby('state')
                     ->get();
+
+                // $now = Carbon::now();
+
+                // if ($now < Carbon::parse($dates->startDateScientificArticleReport)) {
+                //     return redirect()->back();
+                // }
 
                 return view('layouts.scientificArticleReport', compact('role', 'idcId', 'idScientificArticleReport', 'scientificArticleReport', 'contents', 'references', 'conclusions'));
             }
@@ -288,12 +305,8 @@
 
             $scientificArticle = ScientificArticleReport::find($idScientificArticleReport);
             $scientificArticle->code = $fileName;
-            $scientificArticle->spanishSummary = $data['spanishSummary'];
-            $scientificArticle->englishSummary = $data['englishSummary'];
-            $scientificArticle->keywords = $data['keywords'];
-            $scientificArticle->introduction = $data['introduction'];
-            $scientificArticle->methodology = $data['methodology'];
-            $scientificArticle->numberOfWords = 300;
+            $scientificArticle->numberOfWords = $data['numbersOfWords'];
+            $scientificArticle->creationDate = $fechaCarbon;
             $scientificArticle->storagePath = 'documents/'.$fileName;
             $scientificArticle->state = $REVISION_STATE;
             $scientificArticle->save();
@@ -357,6 +370,32 @@
             $templateProcessor->cloneBlock('block_references', 0, true, false, $datosReferences);
 
             $templateProcessor->saveAs($filePath);
+
+            $researchTopicId = Idc::join('Team', 'Idc.idTeam', '=', 'Team.teamId')
+                ->where('Idc.idcId', $idcId)
+                ->select('Team.idResearchTopic')->first();
+
+            $teams = Team::where('idResearchTopic', $researchTopicId->idResearchTopic)
+                ->with('studentTeam.student')
+                ->get();
+
+            foreach ($teams as $team) {
+                $studentTeamIds = StudentTeam::where('idTeam', $team->teamId)->pluck('idStudent')->toArray();
+            
+                $students = $team->studentTeam->pluck('student');
+            }
+
+            $coordinator = Idc::select('Idc.idUser')
+                ->where('Idc.idcId', $idcId)
+                ->first();
+                
+            $user = User::find($coordinator->idUser);
+            $user->notify(new GenerateSAR($scientificArticle, $idcId));
+
+            foreach ($students as $student) {
+                $user = User::find($student->idUser);
+                $user->notify(new GenerateSAR($scientificArticle, $idcId));
+            }
 
             return redirect()->route('scientificArticle', compact('idcId', 'idScientificArticleReport'));
         }

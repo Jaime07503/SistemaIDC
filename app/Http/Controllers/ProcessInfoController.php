@@ -1,6 +1,8 @@
 <?php
     namespace App\Http\Controllers;
     use App\Models\ResearchTopic;
+    use App\Models\TrainingDocument;
+    use Illuminate\Http\Request;
 
     class ProcessInfoController extends Controller
     {
@@ -14,7 +16,55 @@
                 'Subject.subjectId', 'Team.teamId', 'Idc.idcId')
                 ->first();
 
-            return view('layouts.processInfo', compact('researchTopic'));
+            $documents = TrainingDocument::join('Idc', 'Training_Document.idIdc', '=', 'Idc.idcId')
+                ->where('Idc.idcId', $researchTopic->idcId)
+                ->get();
+
+            return view('layouts.processInfo', compact('researchTopic', 'documents'));
+        }
+
+        public function addDocument($idcId, Request $request) {
+            $researchTopicId = $request->input('researchTopicId');
+            $ACTIVE_STATE = 'Activo';
+    
+            $trainingDocument = new TrainingDocument();
+
+            if($request->hasFile('documento')) {
+                $file = $request->file('documento');
+
+                $fileName = $file->getClientOriginalName();
+                $fileExtension = $file->getClientOriginalExtension();
+
+                $trainingDocument->nameDocument = $fileName;
+                $trainingDocument->storagePath = 'documents/'.$fileName;
+
+                if (in_array($fileExtension, ['doc', 'docx'])) {
+                    $documentType = 'Word';
+                } elseif (in_array($fileExtension, ['pdf'])) {
+                    $documentType = 'PDF';
+                } elseif (in_array($fileExtension, ['ppt', 'pptx'])) {
+                    $documentType = 'PowerPoint';
+                }
+        
+                $trainingDocument->documentType = $documentType;
+        
+                $file->move(public_path('documents'), $fileName);
+            }
+
+            $trainingDocument->state = $ACTIVE_STATE;
+            $trainingDocument->idIdc = $idcId;
+            $trainingDocument->save();
+
+            return redirect()->route('processInfo', compact('researchTopicId'));
+        }
+
+        public function deleteDocument($documentId, Request $request) {
+            $researchTopicId = $request->input('researchTopicId');
+            $trainingDocument = TrainingDocument::find($documentId);
+
+            $trainingDocument->delete();
+
+            return redirect()->route('processInfo', compact('researchTopicId'));
         }
     }
 ?>

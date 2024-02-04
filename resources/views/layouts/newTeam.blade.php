@@ -25,7 +25,7 @@
                 <h3>Estudiantes postulados</h3>
             </header>
             @if(isset($noTeams))
-                <h3 class="empty">Por el momento no hay estudiantes postulados</h3>
+                <h3 class="empty">Por el momento no hay <strong>Estudiantes Postulados</strong></h3>
             @else
                 <form action="{{ route('team.create') }}" method="POST">
                     @csrf
@@ -66,7 +66,7 @@
                     <input type="text" hidden name="idTeacher" value="{{ $subject->idTeacher }}">
                     <input type="text" hidden name="subjectId" value="{{ $subject->subjectId }}">
                     <input type="hidden" name="selectedStudentIds" id="selectedStudentIds">
-                    <button type="submit" class="btn" id="submitButton">Postular Equipo</button>
+                    <button type="submit" class="btn" id="submitButton"><i class="fa-solid fa-people-group"></i>Postular Equipo</button>
                 </form>
             @endif
         </section>

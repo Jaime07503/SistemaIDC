@@ -23,9 +23,6 @@
             </nav>
         </div>
         <div class="info-content">
-            <header>
-                <strong><h2>Estatus de la Entrega</h2></strong>
-            </header>
             <table class="table content-table">
                 <tbody>
                     <tr>
@@ -127,9 +124,21 @@
                             </td>
                             <td>
                                 <strong>
-                                    <a href="{{ asset($searchReport->correctDocumentStoragePath) }}" class="link-document">
-                                        <i class="fa-regular fa-file-word"></i> {{ $searchReport->nameCorrectDocument }}
-                                    </a>
+                                    <div class="stateDocument">
+                                        <a href="{{ asset($searchReport->correctDocumentStoragePath) }}" class="link-document">
+                                            <i class="fa-regular fa-file-word"></i> {{ $searchReport->nameCorrectDocument }}
+                                        </a>
+                                        <form id="formTSRCC" action="{{ route('topicSearchReport.changeCorrect', ['idcId' => $searchReport->idcId, 
+                                            'idTopicSearchReport' => $idTopicSearchReport]) }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <button type="button" class="contenedor-btn-file">
+                                                <i class="fas fa-file"></i>
+                                                Adjuntar otro documento
+                                                <label for="btn-file-TSRCC"></label>
+                                                <input type="file" id="btn-file-TSRCC" name="archivoCorrecciones" accept=".doc, .docx">
+                                            </button>
+                                        </form>
+                                    </div>
                                 </strong>
                             </td>
                         </tr>
@@ -156,9 +165,23 @@
                             <td><strong>Archivo corregido</strong></td>
                             <td>
                                 <strong>
-                                    <a href="{{ asset($searchReport->correctedDocumentStoragePath) }}" class="link-document">
-                                        <i class="fa-regular fa-file-word"></i> {{ $searchReport->nameCorrectedDocument }}
-                                    </a>
+                                    <div class="stateDocument">
+                                        <a href="{{ asset($searchReport->correctedDocumentStoragePath) }}" class="link-document">
+                                            <i class="fa-regular fa-file-word"></i> {{ $searchReport->nameCorrectedDocument }}
+                                        </a>
+                                        @if(session('role') === 'Docente')
+                                            <form id="formTSRCCO" action="{{ route('topicSearchReport.changeCorrected', ['idcId' => $searchReport->idcId, 
+                                                'idTopicSearchReport' => $idTopicSearchReport]) }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <button type="button" class="contenedor-btn-file">
+                                                    <i class="fas fa-file"></i>
+                                                    Adjuntar otro documento
+                                                    <label for="btn-file-TSRCCO"></label>
+                                                    <input type="file" id="btn-file-TSRCCO" name="archivoCorregido" accept=".doc, .docx">
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </strong>
                             </td>
                         </tr>

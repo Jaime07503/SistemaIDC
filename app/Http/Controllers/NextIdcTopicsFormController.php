@@ -1,9 +1,13 @@
 <?php
     namespace App\Http\Controllers;
+    use App\Models\Idc;
     use App\Models\NextIdcTopicReport;
     use App\Models\ResearchTopic;
+    use App\Models\StudentTeam;
+    use App\Models\Team;
     use App\Models\Topic;
     use App\Models\User;
+    use App\Notifications\GenerateNTR;
     use Carbon\Carbon;
     use DateTime;
     use Illuminate\Http\Request;
@@ -38,10 +42,7 @@
 
             $nextIdcTopicReport = NextIdcTopicReport::find($idNextIdcTopicReport);
             $nextIdcTopicReport->code = $fileName;
-            $nextIdcTopicReport->introduction = $data['introduction'];
-            $nextIdcTopicReport->continueTopic = $data['continueTopic'];
-            $nextIdcTopicReport->proposeTopics = $data['proposeTopics'];
-            $nextIdcTopicReport->conclusion = $data['conclusion'];
+            $nextIdcTopicReport->creationDate = $fechaCarbon;
             $nextIdcTopicReport->storagePath = 'documents/'.$fileName;
             $nextIdcTopicReport->state = $CREATE_STATE;
             $nextIdcTopicReport->save();
@@ -119,6 +120,32 @@
             $templateProcessor->setValue('conclusion', $data['conclusion']);
 
             $templateProcessor->saveAs($filePath);
+
+            $researchTopicId = Idc::join('Team', 'Idc.idTeam', '=', 'Team.teamId')
+                ->where('Idc.idcId', $idcId)
+                ->select('Team.idResearchTopic')->first();
+
+            $teams = Team::where('idResearchTopic', $researchTopicId->idResearchTopic)
+                ->with('studentTeam.student')
+                ->get();
+
+            foreach ($teams as $team) {
+                $studentTeamIds = StudentTeam::where('idTeam', $team->teamId)->pluck('idStudent')->toArray();
+            
+                $students = $team->studentTeam->pluck('student');
+            }
+
+            $coordinator = Idc::select('Idc.idUser')
+                ->where('Idc.idcId', $idcId)
+                ->first();
+                
+            $user = User::find($coordinator->idUser);
+            $user->notify(new GenerateNTR($nextIdcTopicReport, $idcId));
+
+            foreach ($students as $student) {
+                $user = User::find($student->idUser);
+                $user->notify(new GenerateNTR($nextIdcTopicReport, $idcId));
+            }
 
             return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
         }

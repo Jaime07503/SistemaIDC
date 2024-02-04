@@ -1,6 +1,7 @@
 :root {
     --primary: #800000;
     --white: #FFFFFF;
+    --texas-rose-50: #fef7ec;
 }
 
 #navbar {
@@ -13,6 +14,7 @@
     left: 0;
     right: 0;
     z-index: 1000; 
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .header {
@@ -51,6 +53,7 @@
     border: 3px solid var(--white);
     cursor: pointer;
     padding: 0 5px;
+    height: 100%;
 }
 
 .avatar-container i {
@@ -60,9 +63,24 @@
 .ic_notificaciones:hover,
 .avatar-container:hover,
 #menu-btn:hover {
-    height: 70px;
     border: 3px solid var(--primary);
     cursor: pointer;
+}
+
+.ic_notificaciones {
+    position: relative; /* Agregar posición relativa */
+}
+
+.ic_notificaciones .badge {
+    position: absolute; /* Hacer que el conteo sea posicionado absolutamente */
+    top: 0; /* Ajustar la posición vertical */
+    right: 4px; /* Ajustar la posición horizontal */
+    color: var(--primary); /* Color del texto */
+    border-radius: 50%; /* Hacer el badge circular */
+    padding: .3rem; /* Ajustar el relleno */
+    font-size: .8rem; /* Tamaño del texto */
+    font-weight: 900;
+    pointer-events: none; /* Evitar que el badge afecte al hover */
 }
 
 .ic {
@@ -101,13 +119,12 @@
 .nav-link {
     color: var(--white);
     display: block;
-    padding: 1rem 0;
     text-decoration: none;
+    font-size: 1rem;
 }
 
 .nav-link--inside {
-    border-radius: .5rem;
-    padding-left: 1.3rem;
+    padding: .5rem;
     text-align: left;
 }
 
@@ -137,9 +154,9 @@
 .list-button {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: .5rem;
     width: 100%;
+    padding: .7rem;
 }
 
 .list-icon, .list-arrow {
@@ -148,7 +165,7 @@
 }
 
 .list-show {
-    width: 80%;
+    width: 90%;
     margin-left: auto;
     border-left: 2px solid var(--white);
     list-style: none;
@@ -156,11 +173,11 @@
     height: 0;
 }
 
-.arrow .list-arrow {
+.arrow .list-arrow-nav {
     transform: rotate(180deg);
 }
 
-.list-arrow {
+.list-arrow-nav {
     transition: transform .3s;
 }
 
@@ -180,10 +197,10 @@
         width: 100%;
     }
 
-    #dropdown-menu {
+    /* #dropdown-menu {
         display: flex;
         flex-direction: column;
-    }
+    } */
 
     .logo{
         display: none;

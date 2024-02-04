@@ -13,7 +13,7 @@
             'trainingDocumentId',
             'nameDocument',
             'documentType',
-            'type',
+            'storagePath',
             'state',
             'idIdc'
         ];

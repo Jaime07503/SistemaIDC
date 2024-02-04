@@ -15,7 +15,6 @@
             'themeName',
             'description',
             'avatar',
-            'currentInformation',
             'importanceRegional',
             'importanceGlobal',
             'state',

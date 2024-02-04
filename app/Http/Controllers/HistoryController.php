@@ -13,6 +13,10 @@
 
             $user = User::find($idUser);
 
+            if ($user->userId !== auth()->user()->userId) {
+                return redirect()->back();
+            }
+
             if($user->role === 'Estudiante'){
                 $student = Student::where('idUser' ,$user->userId)
                     ->first();
@@ -21,7 +25,7 @@
                     ->join('Idc', 't.teamId', '=', 'Idc.idTeam')
                     ->join('Research_Topic as rt', 'rt.researchTopicId', '=', 't.idResearchTopic')
                     ->where('Student_Team.idStudent', $student->studentId)
-                    ->where('t.state', 'Finalizado')
+                    ->where('Idc.state', 'Finalizado')
                     ->select('Student_Team.studentTeamId', 't.*', 'rt.*', 'Idc.idcId')
                     ->get();
 
@@ -29,7 +33,7 @@
                     return view('layouts.history', compact('idUser'))->with('noIdcs', true);
                 }
 
-                return view('layouts.history', 'idcs');
+                return view('layouts.history', compact('idUser' ,'idcs'));
             }else if($user->role === 'Docente'){
                 $teacher = Teacher::where('idUser', $user->userId)
                     ->first();
@@ -37,7 +41,7 @@
                 $idcs = Team::join('Research_Topic as rt', 'rt.researchTopicId', '=', 'Team.idResearchTopic')
                     ->join('Idc', 'Team.teamId', '=', 'Idc.idTeam')
                     ->where('Team.idTeacher', $teacher->teacherId)
-                    ->where('Team.state', 'Finalizado')
+                    ->where('Idc.state', 'Finalizado')
                     ->select('Team.*', 'rt.*', 'Idc.idcId')
                     ->get();
 
@@ -50,7 +54,7 @@
                 $idcs = Team::join('Research_Topic as rt', 'rt.researchTopicId', '=', 'Team.idResearchTopic')
                     ->join('Idc', 'Team.teamId', '=', 'Idc.idTeam')
                     ->where('Idc.idUser', $idUser)
-                    ->where('Team.state', 'Finalizado')
+                    ->where('Idc.state', 'Finalizado')
                     ->select('Team.*', 'rt.*', 'Idc.idcId')
                     ->get();
 

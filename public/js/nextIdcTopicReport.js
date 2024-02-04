@@ -91,8 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     })
 
-    myForm.addEventListener('submit', function (event) {
-        const textareas = document.querySelectorAll("#myForm .textareaTopic")
+    myForm.addEventListener('submit', function (event) {        
+        const textareas = document.querySelectorAll(".textareaTopic")
         for (const textarea of textareas) {
             if (textarea.value.trim() === '') {
                 showNotification(`Por favor, completa el campo "${textarea.placeholder}"`, true)

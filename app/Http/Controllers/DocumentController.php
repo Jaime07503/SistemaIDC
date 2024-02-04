@@ -1,11 +1,15 @@
 <?php
     namespace App\Http\Controllers;
     use App\Models\BibliographicSource;
+    use App\Models\Idc;
     use App\Models\Objetive;
     use App\Models\ResearchTopic;
+    use App\Models\StudentTeam;
+    use App\Models\Team;
     use DateTime;
     use App\Models\TopicSearchReport;
     use App\Models\User;
+    use App\Notifications\GenerateTSR;
     use Illuminate\Http\Request;
     use PhpOffice\PhpWord\TemplateProcessor as TemplateProcessor;
     use Carbon\Carbon;
@@ -43,13 +47,7 @@
 
             $topicSearchReport = TopicSearchReport::find($idTopicSearchReport);
             $topicSearchReport->code = $fileName;
-            $topicSearchReport->orientation = $data['orientation'];
-            $topicSearchReport->induction = $data['induction'];
-            $topicSearchReport->searchPlan = $data['searchPlan']; 
-            $topicSearchReport->meetings = $data['meetings'];
-            $topicSearchReport->criteria = $data['criteria'];
-            $topicSearchReport->teamValoration = $data['teamValoration'];
-            $topicSearchReport->finalComment = $data['finalComment'];
+            $topicSearchReport->creationDate = $fechaCarbon;
             $topicSearchReport->storagePath = 'documents/'.$fileName;
             $topicSearchReport->state = $REVISION_STATE;
             $topicSearchReport->save();
@@ -172,6 +170,32 @@
             $templateProcessor->setValue('finalComment', $data['finalComment']);
 
             $templateProcessor->saveAs($filePath);
+
+            $researchTopicId = Idc::join('Team', 'Idc.idTeam', '=', 'Team.teamId')
+                ->where('Idc.idcId', $idcId)
+                ->select('Team.idResearchTopic')->first();
+
+            $teams = Team::where('idResearchTopic', $researchTopicId->idResearchTopic)
+                ->with('studentTeam.student')
+                ->get();
+
+            foreach ($teams as $team) {
+                $studentTeamIds = StudentTeam::where('idTeam', $team->teamId)->pluck('idStudent')->toArray();
+            
+                $students = $team->studentTeam->pluck('student');
+            }
+
+            $coordinator = Idc::select('Idc.idUser')
+                ->where('Idc.idcId', $idcId)
+                ->first();
+                
+            $user = User::find($coordinator->idUser);
+            $user->notify(new GenerateTSR($topicSearchReport, $idcId));
+
+            foreach ($students as $student) {
+                $user = User::find($student->idUser);
+                $user->notify(new GenerateTSR($topicSearchReport, $idcId));
+            }
 
             return redirect()->route('searchInformation', compact('idcId', 'idTopicSearchReport'));
         }

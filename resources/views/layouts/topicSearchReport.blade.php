@@ -30,7 +30,7 @@
                 @csrf
                 <div class="first-section">
                     <strong><h2>Orientación del equipo</h2></strong>
-                    <textarea class="textarea" id="editor" name="orientation" placeholder="Organización del equipo" min="600" maxlength="800"></textarea>
+                    <textarea class="textarea" name="orientation" placeholder="Organización del equipo" min="600" maxlength="800"></textarea>
                     <textarea class="textarea" name="induction" placeholder="Inducción del tema" min="950" maxlength="1150"></textarea>
                 </div>
                 <div class="second-section">
@@ -214,7 +214,7 @@
             <div class="source-content">
                 <div class="fuentes">
                     <strong><h2>Fuentes bibliográficas</h2></strong>
-                    <button type="button" id="btnAddInfo" class="btn"><i class="fa-solid fa-plus"></i> Agregar</button>
+                    <button type="button" id="btnAddInfo" class="btn"><i class="fa-solid fa-square-plus"></i> Agregar</button>
                 </div>
                 <div>
                     <table id="data-table-sources" class="table content-table">
@@ -327,7 +327,7 @@
                 </div>
                 <div class="fuentes">
                     <strong><h2>Objetivo general</h2></strong>
-                    <button id="btnAddObjetivoGeneral" class="btn"><i class="fa-solid fa-plus"></i> Agregar</button>
+                    <button id="btnAddObjetivoGeneral" class="btn"><i class="fa-solid fa-square-plus"></i> Agregar</button>
                 </div>
                 <div id="myModalObjetivoGeneral" class="modal">
                     <div class="modal-content">
@@ -384,7 +384,7 @@
                         </header>
                         <form id="formObjetiveGEdit" action="{{ route('objetive.edit') }}" method="POST" class="basic-information">
                             @csrf
-                            <textarea id="generalObjetive" class="textarea textareaOG" name="objetive" placeholder="Objetivo general"></textarea>
+                            <textarea id="generalObjetive" class="textarea textareaOG textareaEdit" name="objetive" placeholder="Objetivo general"></textarea>
                             <input hidden type="text" name="objetiveId" id="objetiveGGId" autocomplete="off">
                             <input name="idcId" type="text" hidden value="{{ $idcId }}">
                             <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
@@ -415,13 +415,13 @@
                     </div>
                 </div>
                 <div class="fuentes">
-                    <strong><h2>Objetivos especifícos</h2></strong>
-                    <button id="btnAddObjetivoEspecifico" class="btn"><i class="fa-solid fa-plus"></i> Agregar</button>
+                    <strong><h2>Objetivos específicos</h2></strong>
+                    <button id="btnAddObjetivoEspecifico" class="btn"><i class="fa-solid fa-square-plus"></i> Agregar</button>
                 </div>
                 <div id="myModalObjetivoEspecifico" class="modal">
                     <div class="modal-content">
                         <header class="head">
-                            <h2>Nuevo objetivo especifíco</h2>
+                            <h2>Nuevo objetivo específico</h2>
                             <button type="button" id="cerrarModalObjetivoEspecifico"><i class="fa-solid fa-xmark"></i></button>
                         </header>
                         <form id="formObjetiveE" action="{{ route('objetive.create') }}" method="POST" class="basic-information">
@@ -474,7 +474,7 @@
                         </header>
                         <form id="formObjetiveEEdit" action="{{ route('objetive.edit') }}" method="POST" class="basic-information">
                             @csrf
-                            <textarea id="specificObjetive" class="textarea textareaOE" name="objetive" placeholder="Objetivo específico"></textarea>
+                            <textarea id="specificObjetive" class="textarea textareaOE textareaEdit" name="objetive" placeholder="Objetivo específico"></textarea>
                             <input hidden type="text" name="objetiveId" id="objetiveEEId" autocomplete="off">
                             <input name="idcId" type="text" hidden value="{{ $idcId }}">
                             <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">

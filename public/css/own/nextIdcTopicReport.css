@@ -48,6 +48,7 @@ body {
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
 }
 
 .head-lbl {
@@ -93,6 +94,7 @@ body {
     border-radius: .5rem;
     margin-bottom: 1.5rem;
     gap: .5rem;
+    border: 3px solid var(--texas-rose-50);
 }
 
 .nextTopic-content, .first-section, .second-section,

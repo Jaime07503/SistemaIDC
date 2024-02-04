@@ -25,9 +25,6 @@
             </nav>
         </div>
         <div class="info-content">
-            <header>
-                <strong><h2>Estatus de la Entrega</h2></strong>
-            </header>
             <table class="table content-table">
                 <tbody>
                     <tr>
@@ -65,6 +62,23 @@
                         @endif
                     </tr>
                     @if(($scientificArticle->state === 'Aprobado' || $scientificArticle->state === 'Rechazado') && $scientificArticle->previousState === 'Corregido')
+                        @if($scientificArticle->documentImageStoragePath !== 'Sin Intento')
+                            <tr>
+                                <td><strong>Archivo con imágenes</strong></td>
+                                <td>
+                                    <strong>
+                                        <a href="{{ asset($scientificArticle->documentImageStoragePath) }}" class="link-document">
+                                            <i class="fa-regular fa-file-word"></i> {{ $scientificArticle->nameDocumentImage }}
+                                        </a>
+                                    </strong>
+                                </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td><strong>Archivo con imágenes</strong></td>
+                                <td>{{ $scientificArticle->documentImageStoragePath }}</td>
+                            </tr>
+                        @endif
                         <tr>
                             <td>
                                 <strong>Archivo con correcciones</strong>
@@ -88,7 +102,7 @@
                             </td>
                         </tr>
                     @elseif($scientificArticle->state === 'Aprobado')
-                        @if($scientificArticle->nameDocumentImage !== null)
+                        @if($scientificArticle->documentImageStoragePath !== 'Sin Intento')
                             <tr>
                                 <td><strong>Archivo con imágenes</strong></td>
                                 <td>
@@ -99,11 +113,16 @@
                                     </strong>
                                 </td>
                             </tr>
+                        @else
+                            <tr>
+                                <td><strong>Archivo con imágenes</strong></td>
+                                <td>{{ $scientificArticle->documentImageStoragePath }}</td>
+                            </tr>
                         @endif
                     @endif
 
                     @if($scientificArticle->state === 'Debe corregirse' && session('role') === 'Docente')
-                        @if($scientificArticle->nameDocumentImage !== null)
+                        @if($scientificArticle->documentImageStoragePath !== 'Sin Intento')
                             <tr>
                                 <td><strong>Archivo con imágenes</strong></td>
                                 <td>
@@ -113,6 +132,11 @@
                                         </a>
                                     </strong>
                                 </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td><strong>Archivo con imágenes</strong></td>
+                                <td>{{ $scientificArticle->documentImageStoragePath }}</td>
                             </tr>
                         @endif
                         <tr>
@@ -143,7 +167,7 @@
                             </td>
                         </tr>
                     @elseif($scientificArticle->state === 'Debe corregirse' && session('role') === 'Coordinador')
-                        @if($scientificArticle->nameDocumentImage !== null)
+                        @if($scientificArticle->documentImageStoragePath !== 'Sin Intento')
                             <tr>
                                 <td><strong>Archivo con imágenes</strong></td>
                                 <td>
@@ -154,6 +178,11 @@
                                     </strong>
                                 </td>
                             </tr>
+                        @else
+                            <tr>
+                                <td><strong>Archivo con imágenes</strong></td>
+                                <td>{{ $scientificArticle->documentImageStoragePath }}</td>
+                            </tr>
                         @endif
                         <tr>
                             <td>
@@ -161,9 +190,21 @@
                             </td>
                             <td>
                                 <strong>
-                                    <a href="{{ asset($scientificArticle->correctDocumentStoragePath) }}" class="link-document">
-                                        <i class="fa-regular fa-file-word"></i> {{ $scientificArticle->nameCorrectDocument }}
-                                    </a>
+                                    <div class="stateDocument">
+                                        <a href="{{ asset($scientificArticle->correctDocumentStoragePath) }}" class="link-document">
+                                            <i class="fa-regular fa-file-word"></i> {{ $scientificArticle->nameCorrectDocument }}
+                                        </a>
+                                        <form id="formSARDC" action="{{ route('scientificArticleReport.changeCorrect', ['idcId' => $scientificArticle->idcId, 
+                                            'idScientificArticleReport' => $idScientificArticleReport]) }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <button type="button" class="contenedor-btn-file">
+                                                <i class="fas fa-file"></i>
+                                                Adjuntar otro documento
+                                                <label for="btn-file-SARDC"></label>
+                                                <input type="file" id="btn-file-SARDC" name="archivoCorrecciones" accept=".doc, .docx">
+                                            </button>
+                                        </form>
+                                    </div>
                                 </strong>
                             </td>
                         </tr>
@@ -171,8 +212,8 @@
                             <td><strong>Archivo corregido</strong></td>
                             <td>Por subirse</td>
                         </tr>
-                    @else
-                        @if($scientificArticle->nameDocumentImage !== null)
+                    @elseif($scientificArticle->state === 'Debe corregirse' && session('role') === 'Estudiante')
+                        @if($scientificArticle->documentImageStoragePath !== 'Sin Intento')
                             <tr>
                                 <td><strong>Archivo con imágenes</strong></td>
                                 <td>
@@ -183,10 +224,32 @@
                                     </strong>
                                 </td>
                             </tr>
+                        @else
+                            <tr>
+                                <td><strong>Archivo con imágenes</strong></td>
+                                <td>{{ $scientificArticle->documentImageStoragePath }}</td>
+                            </tr>
                         @endif
                     @endif
 
                     @if($scientificArticle->state === 'Corregido')
+                        @if($scientificArticle->documentImageStoragePath !== 'Sin Intento')
+                            <tr>
+                                <td><strong>Archivo con imágenes</strong></td>
+                                <td>
+                                    <strong>
+                                        <a href="{{ asset($scientificArticle->documentImageStoragePath) }}" class="link-document">
+                                            <i class="fa-regular fa-file-word"></i> {{ $scientificArticle->nameDocumentImage }}
+                                        </a>
+                                    </strong>
+                                </td>
+                            </tr>
+                        @else
+                            <tr>
+                                <td><strong>Archivo con imágenes</strong></td>
+                                <td>{{ $scientificArticle->documentImageStoragePath }}</td>
+                            </tr>
+                        @endif
                         <tr>
                             <td>
                                 <strong>Archivo con correcciones</strong>
@@ -203,9 +266,23 @@
                             <td><strong>Archivo corregido</strong></td>
                             <td>
                                 <strong>
-                                    <a href="{{ asset($scientificArticle->correctedDocumentStoragePath) }}" class="link-document">
-                                        <i class="fa-regular fa-file-word"></i> {{ $scientificArticle->nameCorrectedDocument }}
-                                    </a>
+                                    <div class="stateDocument">
+                                        <a href="{{ asset($scientificArticle->correctedDocumentStoragePath) }}" class="link-document">
+                                            <i class="fa-regular fa-file-word"></i> {{ $scientificArticle->nameCorrectedDocument }}
+                                        </a>
+                                        @if(session('role') === 'Docente')
+                                            <form id="formSARDCO" action="{{ route('scientificArticleReport.changeCorrected', ['idcId' => $scientificArticle->idcId, 
+                                                'idScientificArticleReport' => $idScientificArticleReport]) }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <button type="button" class="contenedor-btn-file">
+                                                    <i class="fas fa-file"></i>
+                                                    Adjuntar otro documento
+                                                    <label for="btn-file-SARDCO"></label>
+                                                    <input type="file" id="btn-file-SARDCO" name="archivoCorregido" accept=".doc, .docx">
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
                                 </strong>
                             </td>
                         </tr>
@@ -234,7 +311,7 @@
                     @if($scientificArticle->state === 'En revisión')
                         <tr>
                             <td><strong>Archivo con imágenes</strong></td>
-                            @if(session('role') === 'Docente' && $scientificArticle->nameDocumentImage === null)
+                            @if(auth()->user()->role === 'Docente' && $scientificArticle->documentImageStoragePath === 'Sin Intento')
                                 <td>
                                     <form id="formSARDI" action="{{ route('scientificArticleReport.docImage', ['idcId' => $scientificArticle->idcId, 
                                         'idScientificArticleReport' => $idScientificArticleReport]) }}" method="POST" enctype="multipart/form-data">
@@ -247,8 +324,28 @@
                                         </button>
                                     </form>
                                 </td>
+                            @elseif(auth()->user()->role === 'Docente' && $scientificArticle->documentImageStoragePath !== 'Sin Intento')
+                                <td>
+                                   <div class="stateDocument">
+                                    <strong>
+                                            <a href="{{ asset($scientificArticle->documentImageStoragePath) }}" class="link-document">
+                                                <i class="fa-regular fa-file-word"></i> {{ $scientificArticle->nameDocumentImage }}
+                                            </a>
+                                        </strong>
+                                        <form id="formSARDI" action="{{ route('scientificArticleReport.changeDocImage', ['idcId' => $scientificArticle->idcId, 
+                                            'idScientificArticleReport' => $idScientificArticleReport]) }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <button type="button" class="contenedor-btn-file">
+                                                <i class="fas fa-file"></i>
+                                                Adjuntar otro archivo
+                                                <label for="btn-file-SARDI"></label>
+                                                <input type="file" id="btn-file-SARDI" name="archivoImagenes" accept=".doc, .docx">
+                                            </button>
+                                        </form>
+                                   </div>
+                                </td>
                             @else
-                                @if($scientificArticle->documentImageStoragePath === 'Por subir')
+                                @if($scientificArticle->documentImageStoragePath === 'Sin Intento')
                                     <td>{{ $scientificArticle->documentImageStoragePath }}</td>
                                 @else
                                     <td>

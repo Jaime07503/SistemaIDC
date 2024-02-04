@@ -7,8 +7,12 @@
     class HomeController extends Controller
     {
         public function getFacultys(){
-            $facultys = Faculty::with('career.subject.researchTopic')->get();
-
+            $facultys = Faculty::with('career.subject.cycle.researchTopics.team.idc')
+                ->whereHas('career.subject.cycle', function ($query) {
+                    $query->where('state', 'Activo');
+                })
+                ->get();
+                
             return view('layouts.home', compact('facultys'));
         }
     }

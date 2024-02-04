@@ -10,6 +10,7 @@
             Schema::create('Topic', function (Blueprint $table) {
                 $table->increments('topicId');
                 $table->string('nameTopic', 200);
+                $table->string('description', 500);
                 $table->string('subjectRelevance', 500);
                 $table->string('globalUpdateImg', 512);
                 $table->string('localUpdateImg', 512);

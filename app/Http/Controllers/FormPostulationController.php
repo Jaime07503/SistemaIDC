@@ -40,7 +40,7 @@
             $student->carnet = $request->input('carnet');
             $student->career = $request->input('career');
             $student->state = 'Activo';
-            $student->idUser = session('userId');
+            $student->idUser = auth()->user()->userId;
             $student->save();
 
             // Create new StudentHistory

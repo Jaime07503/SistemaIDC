@@ -80,9 +80,9 @@
                         </table>
                         <div>
                             <p class="note">
-                                <strong>IMPORTANTE:</strong> Como contribución al docente se facilita la <strong>selección de los textos</strong> que considere importantes 
-                                para la temática y la generación de <strong>un solo archivo</strong>. Se debe editar el archivo generado para agregar imagenes y tablas, 
-                                si son necesarias. Este archivo editado será enviado por esta plataforma al coordinador para su revisión.
+                                <strong>IMPORTANTE:</strong> Como contribución al docente se facilita la <strong>selección de información</strong> que considere importante 
+                                para la temática y la generación de <strong>un sólo archivo</strong>. Se debe editar el archivo generado para agregar imagenes y tablas, 
+                                si son necesarias. Ese archivo editado debera ser enviado por esta plataforma al coordinador para su revisión.
                             </p>
                         </div>
                         <!-- View Contribute Modal -->
@@ -92,9 +92,9 @@
                                     <h2>Datos del aporte</h2>
                                     <button type="button" class="cerrarModal close"><i class="fa-solid fa-xmark"></i></button>
                                 </header>
-                                <textarea id="subtitleV" class="textarea textareaDE" name="subtitle" placeholder="Sub-título" min="35" maxlength="100" readonly></textarea>
-                                <textarea id="contentV" class="textarea textareaDE" name="content" placeholder="Contenido" min="2550" maxlength="4000" readonly></textarea>
-                                <input hidden type="text" name="developmentId" id="developmentEId" autocomplete="off">
+                                <textarea id="subtitleV" class="textarea textareaDE" placeholder="Sub-título" min="35" maxlength="100" readonly></textarea>
+                                <textarea id="contentV" class="textarea textareaDE" placeholder="Contenido" min="2550" maxlength="4000" readonly></textarea>
+                                <input hidden type="text" id="developmentEId" autocomplete="off">
                                 <input name="idcId" type="text" hidden value="{{ $idcId }}">
                                 <input name="idScientificArticleReport" type="text" hidden value="{{ $idScientificArticleReport }}">
                             </div>
@@ -166,6 +166,7 @@
                     </div>
                     <input name="idcId" type="text" hidden value="{{ $idcId }}">
                     <input name="idScientificArticleReport" type="text" hidden value="{{ $idScientificArticleReport }}">
+                    <input type="hidden" id="wordCount" name="numbersOfWords" value="0">
                     <button type="submit" class="btn">Generar Documento</button>
                 </form>
                 <div id="notification" class="notification"></div>
@@ -175,7 +176,7 @@
                 <div class="first-section">
                     <header class="head">
                         <strong><h2>Desarrollo del tema</h2></strong>
-                        <button type="button" id="btnAddContribute" class="btn"><i class="fa-solid fa-plus"></i> Agregar</button>
+                        <button type="button" id="btnAddContribute" class="btn"><i class="fa-solid fa-square-plus"></i> Agregar</button>
                     </header>
                     <!-- Modal Add Contribute -->
                     <div id="myModalContribute" class="modal">
@@ -267,7 +268,7 @@
                 <div class="second-section">
                     <header class="conclusion">
                         <strong><h2>Conclusiones</h2></strong>
-                        <button type="button" id="btnAddConclusion" class="btn"><i class="fa-solid fa-plus"></i> Agregar</button>
+                        <button type="button" id="btnAddConclusion" class="btn"><i class="fa-solid fa-square-plus"></i> Agregar</button>
                     </header>
                     <!-- Modal Add Conclusion -->
                     <div id="myModalConclusion" class="modal">
@@ -356,7 +357,7 @@
                 <div class="third-section">
                     <header class="references">
                         <strong><h2>Referencias bibliográficas</h2></strong>
-                        <button type="button" id="btnAddReference" class="btn"><i class="fa-solid fa-plus"></i> Agregar</button>
+                        <button type="button" id="btnAddReference" class="btn"><i class="fa-solid fa-square-plus"></i> Agregar</button>
                     </header>
                     <!-- Modal Add References -->
                     <div id="myModalReference" class="modal">

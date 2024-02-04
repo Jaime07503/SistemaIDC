@@ -13,6 +13,10 @@
         public function getInformation($idUser) {
             $user = User::find($idUser);
 
+            if ($user->userId !== auth()->user()->userId) {
+                return redirect()->back();
+            }
+
             if($user->role === 'Estudiante'){
                 $student = Student::where('idUser' ,$user->userId)
                     ->first();

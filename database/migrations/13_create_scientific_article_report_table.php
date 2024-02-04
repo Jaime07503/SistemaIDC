@@ -10,13 +10,12 @@
             Schema::create('Scientific_Article_Report', function (Blueprint $table) {
                 $table->increments('scientificArticleReportId');
                 $table->string('code')->nullable();
-                $table->string('spanishSummary', 850)->nullable();
-                $table->string('englishSummary', 850)->nullable();
-                $table->string('keywords', 160)->nullable();
-                $table->string('introduction', 1450)->nullable();
-                $table->string('methodology', 500)->nullable();
                 $table->integer('numberOfWords')->nullable();  
                 $table->string('storagePath', 300)->nullable();
+                $table->string('nameDocumentImage', 200)->nullable();
+                $table->string('documentImageStoragePath', 300)->nullable();
+                $table->string('nameCorrectDocument', 200)->nullable();
+                $table->string('correctDocumentStoragePath', 300)->nullable();
                 $table->string('nameCorrectedDocument', 200)->nullable();
                 $table->string('correctedDocumentStoragePath', 300)->nullable();
                 $table->string('state', 30)->nullable();

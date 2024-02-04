@@ -30,15 +30,27 @@
                     session(['name' => $usuarioExiste->name]);
                     session(['role' => $usuarioExiste->role]);
 
-                    if($usuarioExiste->firstLogin === null && $usuarioExiste->role === 'Estudiante')
+                    if($usuarioExiste->firstLogin === null)
                     {
                         User::where('userId', $usuarioExiste->userId)
                         ->update(['avatar' => $user->avatar]);
+
+                        if($usuarioExiste->role !== 'Estudiante'){
+                            $fechaActual = new DateTime();
+                            $fechaCarbon = Carbon::parse($fechaActual);
+
+                            User::where('userId', session('userId'))
+                                ->update(['firstLogin' => $fechaCarbon]);
+                        }
                     }
                     
                     if($usuarioExiste->firstLoginPresentCycle === null && $usuarioExiste->role === 'Estudiante')
                     {
                         return redirect('/formularioPostulacion');
+                    }
+
+                    if($usuarioExiste->role === 'Administrador del Proceso' || $usuarioExiste->role === 'Administrador del Sistema') {
+                        return redirect('/home');
                     }
 
                     return redirect('/tablero');

@@ -9,9 +9,9 @@
         {
             Schema::create('Training_Document', function (Blueprint $table) {
                 $table->increments('trainingDocumentId');
-                $table->string('nameDocument', 80);
-                $table->string('documentType', 80);
-                $table->string('type', 80);
+                $table->string('nameDocument', 200);
+                $table->string('documentType', 30);
+                $table->string('storagePath', 320);
                 $table->string('state', 30);
                 $table->unsignedBigInteger('idIdc');
                 $table->timestamps();

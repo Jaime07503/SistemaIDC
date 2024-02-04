@@ -1,15 +1,20 @@
 <?php
     namespace App\Http\Controllers;
     use App\Models\Idc;
+    use App\Models\IDCDates;
     use App\Models\ReportTopic;
     use App\Models\Topic;
     use App\Models\User;
+    use Carbon\Carbon;
     use Illuminate\Http\Request;
 
     class NextIdcTopicReportController extends Controller
     {
         public function getTopics($idcId, $idNextIdcTopicReport) {
             $role = session('role');
+
+            $dates = IDCDates::select('Idc_Date.startDateNextIdcTopic', 'Idc_Date.endDateNextIdcTopic')->first();
+
             if($role !== 'Estudiante') {
                 $topics = Topic::join('Report_Topic', 'Topic.topicId', '=', 'Report_Topic.idTopic')
                     ->where('idNextIdcTopicReport', $idNextIdcTopicReport)
@@ -20,12 +25,17 @@
                     ->join('Team', 'Idc.idTeam', '=', 'Team.teamId')
                     ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
                     ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
-                    ->select('Next_Idc_Topic_Report.storagePath', 'Next_Idc_Topic_Report.code as nextIdcTopicReportCode', 'Idc.idcId',
-                    'Idc.endDateNextIdcTopic','Next_Idc_Topic_Report.updated_at', 'Next_Idc_Topic_Report.state',
+                    ->select('Next_Idc_Topic_Report.code as nextIdcTopicReportCode', 'Idc.idcId','Next_Idc_Topic_Report.updated_at', 'Next_Idc_Topic_Report.state',
                     'Research_Topic.researchTopicId', 'Research_Topic.code', 'Research_Topic.themeName', 'Team.teamId',
                     'Subject.subjectId')
                     ->where('Idc.idcId', $idcId)
                     ->first();
+
+                // $now = Carbon::now();
+
+                // if ($now < Carbon::parse($dates->startDateNextIdcTopic)) {
+                //     return redirect()->back();
+                // }
 
                 return view('layouts.nextIdcTopicReport', compact('role', 'idcId', 'topics', 'idNextIdcTopicReport', 'nextIdcTopicReport'));
             } else {
@@ -43,11 +53,17 @@
                     ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
                     ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
                     ->select('Next_Idc_Topic_Report.storagePath', 'Next_Idc_Topic_Report.code as nextIdcTopicReportCode', 'Idc.idcId',
-                    'Idc.endDateNextIdcTopic','Next_Idc_Topic_Report.updated_at', 'Next_Idc_Topic_Report.state',
+                    'Next_Idc_Topic_Report.updated_at', 'Next_Idc_Topic_Report.state',
                     'Research_Topic.researchTopicId', 'Research_Topic.code', 'Research_Topic.themeName', 'Team.teamId',
                     'Subject.subjectId')
                     ->where('Idc.idcId', $idcId)
                     ->first();
+
+                // $now = Carbon::now();
+
+                // if ($now < Carbon::parse($dates->startDateNextIdcTopic)) {
+                //     return redirect()->back();
+                // }
 
                 return view('layouts.nextIdcTopicReport', compact('role', 'idcId', 'topics', 'idNextIdcTopicReport', 'nextIdcTopicReport'));
             }
@@ -73,6 +89,7 @@
             $topic = new Topic();
             $topic->nameTopic = $request->input('nameTopic');
             $topic->subjectRelevance = $request->input('subjectRelevance');
+            $topic->description = $request->input('description');
             $topic->globalUpdateImg = asset('images/' . $globalRelevanceImgName);
             $topic->localUpdateImg = asset('images/' . $localRelevanceImgName);
             $topic->updatedInformation = $request->input('updatedInformation');
@@ -122,6 +139,7 @@
 
             $topic = Topic::finD($topicId);
             $topic->nameTopic = $request->input('nameTopic');
+            $topic->description = $request->input('description');
             $topic->subjectRelevance = $request->input('subjectRelevance');
             if($localRelevanceImgName !== null) {
                 $topic->localUpdateImg = asset('images/' . $localRelevanceImgName);

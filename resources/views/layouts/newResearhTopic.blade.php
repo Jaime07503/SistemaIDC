@@ -13,56 +13,55 @@
         <header class="head-content">
             <h1>{{ $subject->nameSubject.' - '.$subject->section.' - '.$subject->teacher->user->name}}</h1>
             <div class="history">
-                <a class="view" href="{{ url('/tablero') }}">Tablero</a>
-                <a class="view" >Mis cursos</a>
-                <a class="view" href="">ADS104-A-I24</a>
+                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view">Mis cursos</a>
+                <a class="history-view" href="{{ route('researchTopics', ['subjectId' => $subjectId]) }}">{{ $subject->code }}</a>
+                <a class="history-view" href="">Postular Tema</a>
             </div>
         </header>
         <section class="newTopic">
-            <form action="{{ route('researchTopic.create') }}" method="POST" enctype="multipart/form-data">
+            <form id="formAddResearchTopic" action="{{ route('researchTopic.create', ['subjectId' => $subjectId]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <header class="newData">
-                    <i class="fa-regular fa-rectangle-list"></i>
-                    <h3>Datos del Tema Nuevo</h3>
+                    <h3>Información del Tema de Investigación</h3>
                 </header>
                 <div class="information">
-                    <div class="top-content">
-                        <div class="left-content">
-                            <input type="text" name="themeName" placeholder="Nombre del Tema" autocomplete="off">
-                            <textarea id="miTextarea" name="description" rows="4" cols="50" placeholder="Descripción" maxlength="500"></textarea>
-                        </div>
-                        <div class="right-content">
-                            <div class="container file-container" id="container1">
-                                <input type="file" name="avatar" class="file-input" accept="image/*" hidden>
-                                <div class="img-area" data-img="">
-                                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                                    <h4>Avatar</h4>
-                                    <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
-                                </div>
-                            </div>
+                    <textarea class="textarea textareaTopicA" name="code" placeholder="Código" maxlength="80"></textarea>
+                    <textarea class="textarea textareaTopicA" name="themeName" placeholder="Tema" maxlength="300"></textarea>
+                    <textarea class="textarea textareaTopicA" name="description" placeholder="Descripción" maxlength="500"></textarea>
+
+                    <div class="container file-container" id="container">
+                        <input type="file" name="Avatar" class="file-input" accept="image/png, image/jpeg" hidden>
+                        <div class="img-area" data-img="">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <h4>Avatar</h4>
+                            <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
+                            <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
                         </div>
                     </div>
-                    <div class="bottom-content">
-                        <div class="container file-container" id="container2">
-                            <input type="file" name="importanceRegional" class="file-input" accept="image/*" hidden>
-                            <div class="img-area" data-img="">
-                                <i class="fa-solid fa-cloud-arrow-up"></i>
-                                <h4>Importancia Regional</h4>
-                                <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
-                            </div>
-                        </div>
-                        <div class="container file-container" id="container3">
-                            <input type="file" name="importanceGlobal" class="file-input" accept="image/*" hidden>
-                            <div class="img-area" data-img="">
-                                <i class="fa-solid fa-cloud-arrow-up"></i>
-                                <h4>Importancia Global</h4>
-                                <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
-                            </div>
+
+                    <div class="container file-container" id="container2">
+                        <input type="file" name="Imagen-Importancia-Local" class="file-input" accept="image/png, image/jpeg" hidden>
+                        <div class="img-area" data-img="">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <h4>Importancia Local</h4>
+                            <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
+                            <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
                         </div>
                     </div>
-                    <input type="text" name="idSubject" hidden value="{{ $subject->subjectId }}">
+
+                    <div class="container file-container" id="container3">
+                        <input type="file" name="Imagen-Importancia-Global" class="file-input" accept="image/png, image/jpeg" hidden>
+                        <div class="img-area" data-img="">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <h4>Importancia Global</h4>
+                            <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
+                            <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="btn"> <i class="fa-solid fa-plus"></i> Crear Tema </button>
+                <div id="notificationT" class="notificationM"></div>
+                <button type="submit" class="btn">Postular Tema</button>
             </form>
         </section>
     </main>

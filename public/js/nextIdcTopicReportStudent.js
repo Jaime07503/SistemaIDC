@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             uploadedImage.style.display = 'block'
                             imgArea.classList.add('active')
                             imgArea.dataset.img = image.name
-                        };
+                        }
     
                         reader.readAsDataURL(image)
                     } else {
@@ -113,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const topicId = button.getAttribute('data-topicId')
             const nameTopic = button.getAttribute('data-nameTopic')
+            const description = button.getAttribute('data-description')
             const subjectRelevance = button.getAttribute('data-subjectRelevance')
             const localUpdateImg = button.getAttribute('data-localUpdateImg')
             const globalUpdateImg = button.getAttribute('data-globalUpdateImg')
@@ -123,6 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const topicIdInput = document.getElementById('topicId')
             const topicIdTInput = document.getElementById('topicTId')
             const nameTopicInput = document.getElementById('theme')
+            const descriptionInput = document.getElementById('description')
             const subjectRelevanceInput = document.getElementById('subjectRelevance')
             const localUpdateImgInput = document.querySelector('.uploaded-image-l')
             const globalUpdateImgInput = document.querySelector('.uploaded-image-g')
@@ -134,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
             topicIdInput.value = topicId
             topicIdTInput.value = topicId
             nameTopicInput.value = nameTopic
+            descriptionInput.value = description
             subjectRelevanceInput.value = subjectRelevance
             localUpdateImgInput.src = localUpdateImg
             localUpdateImgInput.style.display = 'block'
@@ -207,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
     function validarImagen(inputName) {
         return new Promise((resolve, reject) => {
-            var fileInput = document.getElementsByName(inputName)[0];
+            var fileInput = document.getElementsByName(inputName)[0]
     
             if (fileInput && fileInput.files.length > 0) {
                 var file = fileInput.files[0]

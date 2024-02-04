@@ -2,10 +2,12 @@
     namespace App\Http\Controllers;
     use App\Models\BibliographicSource;
     use App\Models\Idc;
+    use App\Models\IDCDates;
     use App\Models\Objetive;
     use App\Models\SourceObjetive;
     use App\Models\SourceSearch;
     use App\Models\User;
+    use Carbon\Carbon;
     use Illuminate\Http\Request;
 
     class TopicSearchReportController extends Controller
@@ -32,7 +34,7 @@
                     ->join('Team', 'Idc.idTeam', '=', 'Team.teamId')
                     ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
                     ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
-                    ->select('Idc.endDateSearchReport', 'Topic_Search_Report.state', 'Topic_Search_Report.storagePath',
+                    ->select('Topic_Search_Report.state', 'Topic_Search_Report.storagePath',
                     'Idc.idcId', 'Topic_Search_Report.updated_at', 'Research_Topic.researchTopicId', 'Research_Topic.themeName',
                     'Research_Topic.code', 'Subject.subjectId', 'Team.teamId', 'Topic_Search_Report.code as searchReportCode')
                     ->where('Topic_Search_Report.topicSearchReportId', $idTopicSearchReport)
@@ -71,7 +73,7 @@
                     ->join('Team', 'Idc.idTeam', '=', 'Team.teamId')
                     ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
                     ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
-                    ->select('Idc.endDateSearchReport', 'Topic_Search_Report.state', 'Topic_Search_Report.storagePath',
+                    ->select('Topic_Search_Report.state', 'Topic_Search_Report.storagePath',
                     'Idc.idcId', 'Topic_Search_Report.updated_at', 'Research_Topic.researchTopicId', 'Research_Topic.themeName',
                     'Research_Topic.code', 'Subject.subjectId', 'Team.teamId', 'Topic_Search_Report.code as searchReportCode')
                     ->where('Topic_Search_Report.topicSearchReportId', $idTopicSearchReport)

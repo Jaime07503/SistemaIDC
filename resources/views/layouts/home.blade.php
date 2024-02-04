@@ -11,7 +11,7 @@
 @section('content')
     <main class="main-content">
         <header class="head-content">
-            <h1 class="head-lbl">Cursos</h1>
+            <h1 class="head-lbl">Investigaciones de Cátedra</h1>
         </header>
         <section class="facultys-content">
             @foreach($facultys as $faculty)
@@ -33,11 +33,25 @@
                                             <li class="lt-inside-subject lt-item-subject--click">
                                                 <div class="lt-button-subject lt-button--click-subject">
                                                     <i class="fa-solid fa-chevron-down lt-arrow"></i>
-                                                    <a href="#" class="lt-link lt-link--inside-subject">{{$subjectC->nameSubject}}</a>
+                                                    <h2 class="faculty">{{$subjectC->nameSubject}}</h2>
                                                 </div>
                                                 <ul class="lt-show-researchTopics">
                                                     @foreach($subjectC->researchTopic as $researchTopicS)
-                                                        <a href="" class="lt-link lt-link--inside-researchTopic">{{$researchTopicS->themeName}}</a>
+                                                        <li class="lt-inside-researchTopic lt-item-researchTopic--click">
+                                                            <div class="lt-button-subject lt-button--click-subject">
+                                                                <i class="fa-solid fa-chevron-down lt-arrow"></i>
+                                                                <h2 class="faculty">{{ $researchTopicS->themeName }}</h2>
+                                                            </div>
+                                                            <ul class="lt-show-teams">
+                                                                @foreach($researchTopicS->team as $teamRT)
+                                                                    <a class="lt-link" href="{{ route('stagesProcess', ['researchTopicId' => $researchTopicS->researchTopicId, 
+                                                                        'teamId' => $teamRT->teamId, 'idcId' => $teamRT->idc->idcId]) }}"> <img src="{{ $researchTopicS->avatar }}" alt="Avatar tema" 
+                                                                        class="img-topic">
+                                                                        Equipo #{{ $teamRT->teamId }}
+                                                                    </a>
+                                                                @endforeach
+                                                            </ul>
+                                                        </li>
                                                     @endforeach
                                                 </ul>
                                             </li>

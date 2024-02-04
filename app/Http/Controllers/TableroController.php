@@ -12,7 +12,11 @@
         public function viewCourses()
         {
             $idUser = session('userId');
-            $role = session('role');
+            $role = auth()->user()->role;
+
+            if ($role === 'Administrador del Sistema' || $role === 'Administrador del Proceso') {
+                return redirect()->back();
+            }
 
             if (!$idUser)
             {
@@ -44,6 +48,7 @@
                     ->join('Idc', 't.teamId', '=', 'Idc.idTeam')
                     ->join('Research_Topic as rt', 'rt.researchTopicId', '=', 't.idResearchTopic')
                     ->where('Student_Team.idStudent', $idStudent)
+                    ->where('Idc.state', 'En proceso')
                     ->select('Student_Team.studentTeamId', 't.*', 'rt.*', 'Idc.idcId')
                     ->get();
 
@@ -84,7 +89,7 @@
                 $teams = Team::join('Research_Topic as rt', 'rt.researchTopicId', '=', 'Team.idResearchTopic')
                     ->join('Idc', 'Team.teamId', '=', 'Idc.idTeam')
                     ->where('Team.idTeacher', $teacher->teacherId)
-                    ->where('Team.state', 'Aprobado')
+                    ->where('Idc.state', 'En proceso')
                     ->select('Team.*', 'rt.*', 'Idc.idcId')
                     ->get();
 
@@ -106,7 +111,7 @@
                 $teams = Team::join('Research_Topic as rt', 'rt.researchTopicId', '=', 'Team.idResearchTopic')
                     ->join('Idc', 'Team.teamId', '=', 'Idc.idTeam')
                     ->where('Idc.idUser', $idUser)
-                    ->where('Team.state', 'Aprobado')
+                    ->where('Idc.state', 'En proceso')
                     ->select('Team.*', 'rt.*', 'Idc.idcId')
                     ->get();
 

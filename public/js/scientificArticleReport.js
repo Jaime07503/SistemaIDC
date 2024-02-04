@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
         textarea.addEventListener('keyup', e => {
             textarea.style.height = "2.95rem"; 
             let scHeight = e.target.scrollHeight;
-            console.log(scHeight);
             textarea.style.height = `${scHeight}px`;
         });
     });
@@ -156,6 +155,55 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    const wordCountInput = document.getElementById('wordCount');
+    const textareasSC = document.querySelectorAll(".textareaSC");
+
+    function countTotalWords() {
+        let totalWords = 0;
+        textareasSC.forEach(textarea => {
+            const words = textarea.value.trim().split(/\s+/).filter(word => word !== '').length;
+            totalWords += words;
+        });
+        return totalWords;
+    }
+
+    wordCountInput.value = countTotalWords();
+
+    textareasSC.forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            wordCountInput.value = countTotalWords();
+        });
+    });
+
+    function countWords(text) {
+        return text.split(/\s+/).length;
+    }
+    
+    function countWordsFromTextareas(textareas) {
+        let totalWords = 0;
+        textareas.forEach(textarea => {
+            const words = textarea.value.trim().split(/\s+/).filter(word => word !== '').length;
+            totalWords += words;
+        });
+        return totalWords;
+    }    
+
+    function countApprovedConclusionWords() {
+        let totalWords = 0;
+        const tableRows = document.querySelectorAll("#data-table-conclusion tbody tr");
+        tableRows.forEach(row => {
+            const stateElement = row.querySelector(".state");
+            if (stateElement) {
+                const state = stateElement.textContent.trim();
+                if (state === 'Aprobado') {
+                    const content = row.querySelector("[data-values='Conclusión']").textContent.trim();
+                    totalWords += countWords(content);
+                }
+            }
+        });
+        return totalWords;
+    }    
+
     const myForm = document.getElementById('myForm');
     const notification = document.getElementById('notification');
 
@@ -195,6 +243,25 @@ document.addEventListener("DOMContentLoaded", function () {
             event.preventDefault();
             return;
         }
+
+        let totalWords = countWordsFromTextareas(textareasSC);
+        totalWords += countApprovedConclusionWords();
+
+        // Conteo de palabras del contenido de la tabla
+        const tableRows = document.querySelectorAll("#data-table-contribute tbody tr");
+        tableRows.forEach(row => {
+            const stateElement = row.querySelector(".state");
+            if (stateElement) {
+                const state = stateElement.textContent.trim();
+                if (state === 'Aprobado') {
+                    const content = row.querySelector(".btn-edit").getAttribute("data-content");
+                    totalWords += countWords(content);
+                }
+            }
+        });
+
+        // Actualizar el valor del input hidden con el total de palabras
+        document.getElementById('wordCount').value = totalWords;
     })  
 
     const buttonsCT = document.querySelectorAll('#data-table-contribute tbody tr td .btn-edit')

@@ -1,9 +1,7 @@
 <?php
-    use App\Http\Controllers\AdministrationController;
     use App\Http\Controllers\FacultyController;
     use Illuminate\Support\Facades\Route;
     use App\Http\Controllers\AuthGoogleLoginController;
-    use App\Http\Controllers\BibliographicSourceController;
     use App\Http\Controllers\DocumentController;
     use App\Http\Controllers\EndProcessController;
     use App\Http\Controllers\FormPostulationController;
@@ -20,24 +18,31 @@
     use App\Http\Controllers\TeamController;
     use App\Http\Controllers\TopicSearchReportController;
     use App\Http\Controllers\CareerController;
+    use App\Http\Controllers\CommentsController;
+    use App\Http\Controllers\CycleController;
     use App\Http\Controllers\HistoryController;
     use App\Http\Controllers\HomeController;
+    use App\Http\Controllers\IDCDatesController;
     use App\Http\Controllers\NextIdcTopicsFormController;
     use App\Http\Controllers\SubjectController;
+    use App\Http\Controllers\UserController;
 
     // Private Routes
     Route::middleware(['auth'])->group(function () {
         Route::get('/tablero', [TableroController::class, 'getResearchTopics']);
 
-        Route::get('/perfil', function(){
-            return view('layouts.perfil');
-        });
+        Route::get('markAsRead', function() {
+            if (auth()->check()) {
+                auth()->user()->unreadNotifications->markAsRead();
+                return redirect()->back();
+            }
+        })->name('markAsRead');
     });
 
     Route::middleware(['auth'])->group(function () {
         Route::get('/perfil/{idUser}', [PerfilController::class, 'getInformation'])->name('perfil');
         Route::get('/formularioPostulacion', [FormPostulationController::class, 'getCareers']);
-        Route::get('/tablero', [TableroController::class, 'viewCourses']);
+        Route::get('/tablero', [TableroController::class, 'viewCourses'])->name('tablero');
         Route::get('/home', [HomeController::class, 'getFacultys'])->name('home');
         Route::get('/history/{idUser}', [HistoryController::class, 'getIdcs'])->name('history');
         Route::get('/stagesProcess/{researchTopicId}/{teamId}/{idcId}', [StagesProcessController::class, 'getResearchTopic'])->name('stagesProcess');
@@ -45,14 +50,17 @@
         Route::get('/searchInformation/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'getInformation'])->name('searchInformation');
         Route::get('/scientificArticle/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'getInformation'])->name('scientificArticle');
         Route::get('/endProcess/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'getInformation'])->name('endProcess');
+        Route::get('/approveResearchTopics', [ResearchTopicController::class, 'approveResearchTopic'])->name('approveResearchTopics');
+        Route::get('/approveTeam', [TeamController::class, 'approveTeam'])->name('approveTeam');
     });
 
     // Admin Routes
     Route::middleware('admin')->group(function () {
-        Route::get('/administration', [AdministrationController::class, 'getCareers'])->name('administration');
-        Route::get('/career', [CareerController::class, 'getCareers'])->name('career');
+        Route::get('/cycle', [CycleController::class, 'getCycles'])->name('cycle');
         Route::get('/faculty', [FacultyController::class, 'getCareers'])->name('faculty');
+        Route::get('/career', [CareerController::class, 'getCareers'])->name('career');
         Route::get('/subject', [SubjectController::class, 'getSubject'])->name('subject');
+        Route::get('/user', [UserController::class, 'getCareers'])->name('user');
      });
 
     // Public Routes
@@ -60,11 +68,15 @@
         return view('auth.login');
     })->name('login');
 
+    Route::get('/assignSubject', [SubjectController::class, 'getAssignSubject'])->name('assignSubject');
+    Route::get('/idcDates', [IDCDatesController::class, 'getDates'])->name('idcDates');
+
     //GET
     Route::get('/login-google', [AuthGoogleLoginController::class, 'redirectToGoogle']);
     Route::get('/google-callback', [AuthGoogleLoginController::class, 'handleGoogleCallback']);
     Route::get('/google-logout', [AuthGoogleLoginController::class, 'logout']);
     Route::get('/getSubjects/{career}', [FormPostulationController::class, 'getSubjects']);
+    Route::get('/getTeachers/{career}', [SubjectController::class, 'getTeachers']);
     Route::get('/researchTopics/{subjectId}', [ResearchTopicController::class, 'index'])->name('researchTopics');
     Route::get('/newResearchTopic/{subjectId}', [ResearchTopicController::class, 'getInformation'])->name('newResearchTopic');
     Route::get('/newTeam/{researchTopicId}', [TeamController::class, 'getInformation'])->name('newTeam');
@@ -77,7 +89,7 @@
     //POST
     Route::post('/addStudent', [FormPostulationController::class, 'addStudent'])->name('student.store');
     Route::post('/addPostulated', [ResearchTopicInformationController::class, 'store'])->name('studentSubject.store');
-    Route::post('/addResearchTopic', [ResearchTopicController::class, 'create'])->name('researchTopic.create');
+    Route::post('/addResearchTopic/{subjectId}', [ResearchTopicController::class, 'create'])->name('researchTopic.create');
     Route::post('/addTeam', [TeamController::class, 'create'])->name('team.create');
     Route::post('/addBibliographicSource', [TopicSearchReportController::class, 'create'])->name('source.create');
     Route::post('/addTopic', [NextIdcTopicReportController::class, 'create'])->name('topic.create');
@@ -88,13 +100,20 @@
     Route::post('/generate-word', [DocumentController::class, 'generateWord'])->name('generate-word');
     Route::post('/generate-scientific-article', [ScientificArticleReportController::class, 'generateWord'])->name('generate-scientific-article');
     Route::post('/generate-nextIdcReport', [NextIdcTopicsFormController::class, 'generateWord'])->name('generate-nextIdcReport');
-    Route::post('/addUser', [AdministrationController::class, 'addUser'])->name('user.create');
+    Route::post('/addUser', [UserController::class, 'addUser'])->name('user.create');
     Route::post('/updateAvatar/{idUser}', [PerfilController::class, 'updateAvatar'])->name('userAvatar.update');
     Route::post('/addFaculty', [FacultyController::class, 'addFaculty'])->name('faculty.create');
     Route::post('/addSubject', [SubjectController::class, 'addSubject'])->name('subject.create');
+    Route::post('/addCycle', [CycleController::class, 'addCycle'])->name('cycle.create');
+    Route::post('/assignTeacher', [SubjectController::class, 'assignTeacher'])->name('assignTeacher');
+    Route::post('/addDocument/{idcId}', [ProcessInfoController::class, 'addDocument'])->name('document.add');
+    Route::post('/approvedResearchTopic/{researchTopicId}', [ResearchTopicController::class, 'approvedTopic'])->name('researchTopic.approved');
+    Route::post('/addComments/{idcId}/{idNextIdcTopicReport}', [CommentsController::class, 'addComment'])->name('comment.create');
+    Route::post('/assignDate', [IDCDatesController::class, 'assignDates'])->name('datesIdc.assign');
 
     // UPDATE
     Route::get('/source/{idSource}', [TopicSearchReportController::class, 'updateSource'])->name('source.update');
+    Route::get('/subject/{subjectId}', [SubjectController::class, 'approvedSubject'])->name('subject.approved');
     Route::get('/updateObjetiveG/{idObjetive}', [TopicSearchReportController::class, 'updateObjetiveG'])->name('objetiveG.update');
     Route::get('/updateObjetiveE/{idObjetive}', [TopicSearchReportController::class, 'updateObjetiveE'])->name('objetiveE.update');
     Route::get('/updateDevelopment/{idDevelopment}', [ScientificArticleReportController::class, 'updateDevelopment'])->name('development.update');
@@ -102,9 +121,10 @@
     Route::get('/updateReference/{idReference}', [ScientificArticleReportController::class, 'updateReference'])->name('reference.update');
     Route::get('/updateTopic/{idTopic}', [NextIdcTopicReportController::class, 'updateTopic'])->name('topic.update');
     
+    Route::post('/editCycle',[CycleController::class, 'editCycle'])->name('editCycle');
     Route::post('/addCareer', [CareerController::class, 'addCareer'])->name('career.create');
     Route::post('/editCareer',[CareerController::class, 'editCareer'])->name('editcareer');
-    Route::post('/editUser',[AdministrationController::class, 'editUser'])->name('editUser');
+    Route::post('/editUser',[UserController::class, 'editUser'])->name('editUser');
     Route::post('/editSource', [TopicSearchReportController::class, 'editSource'])->name('source.edit');
     Route::post('/editObjetive', [TopicSearchReportController::class, 'editObjetive'])->name('objetive.edit');
     Route::post('/editTopic', [NextIdcTopicReportController::class, 'editTopic'])->name('topic.edit');
@@ -120,12 +140,19 @@
     Route::post('/correctedTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'correctedTopicSearchReport'])->name('topicSearchReport.corrected');
     Route::post('/declineTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'declineTopicSearchReport'])->name('topicSearchReport.decline');
 
+    Route::post('/changeCorrectTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'changeCorrectTopicSearchReport'])->name('topicSearchReport.changeCorrect');
+    Route::post('/changeCorrectedTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'changeCorrectedTopicSearchReport'])->name('topicSearchReport.changeCorrected');
+
     Route::post('/approveScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'approveScientificArticleReport'])->name('scientificArticleReport.approve');
     Route::post('/aprovedCorrectedScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'approveCorrectedScientificArticleReport'])->name('scientificArticleReport.approveCorrected');
     Route::post('/correctScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'correctScientificArticleReport'])->name('scientificArticleReport.correct');
     Route::post('/docImageScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'docImageScientificArticleReport'])->name('scientificArticleReport.docImage');
     Route::post('/correctedScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'correctedScientificArticleReport'])->name('scientificArticleReport.corrected');
     Route::post('/declineScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'declineScientificArticleReport'])->name('scientificArticleReport.decline');
+
+    Route::post('/changeCorrectScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'changeCorrectScientificArticleReport'])->name('scientificArticleReport.changeCorrect');
+    Route::post('/changeDocImageScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'changeDocImageScientificArticleReport'])->name('scientificArticleReport.changeDocImage');
+    Route::post('/changeCorrectedScientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleController::class, 'changeCorrectedScientificArticleReport'])->name('scientificArticleReport.changeCorrected');
     
     Route::post('/approveNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'approveNextIdcTopicReport'])->name('nextIdcTopicReport.approve');
     Route::post('/aprovedCorrectedNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'approveCorrectedNextIdcTopicReport'])->name('nextIdcTopicReport.approveCorrected');
@@ -133,8 +160,12 @@
     Route::post('/correctedNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'correctedNextIdcTopicReport'])->name('nextIdcTopicReport.corrected');
     Route::post('/declineNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'declineNextIdcTopicReport'])->name('nextIdcTopicReport.decline');
 
+    Route::post('/changeCorrectNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'changeCorrectNextIdcTopicReport'])->name('nextIdcTopicReport.changeCorrect');
+    Route::post('/changeCorrectedNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'changeCorrectedNextIdcTopicReport'])->name('nextIdcTopicReport.changeCorrected');
+
     //DELETE
-    Route::delete('/deleteUser', [AdministrationController::class, 'deleteUser'])->name('deleteUser');
+    Route::delete('/deleteCycle', [CycleController::class, 'deleteCycle'])->name('deleteCycle');
+    Route::delete('/deleteUser', [UserController::class, 'deleteUser'])->name('deleteUser');
     Route::delete('/deleteCareer', [CareerController::class, 'deleteCareer'])->name('deleteCareer');
     Route::delete('/deleteSource', [TopicSearchReportController::class, 'deleteSource'])->name('source.delete');
     Route::delete('/deleteObjetive', [TopicSearchReportController::class, 'deleteObjetive'])->name('objetive.delete');
@@ -144,4 +175,5 @@
     Route::delete('/deleteReference', [ScientificArticleReportController::class, 'deleteReference'])->name('reference.delete');
     Route::delete('/deleteSubject', [SubjectController::class, 'deleteSubject'])->name('deleteSubject');
     Route::delete('/deleteFaculty', [FacultyController::class, 'deleteFaculty'])->name('deleteFaculty');
+    Route::delete('/deleteDocument/{trainingDocumentId}', [ProcessInfoController::class, 'deleteDocument'])->name('document.delete');
 ?>

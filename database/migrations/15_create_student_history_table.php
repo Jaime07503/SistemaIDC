@@ -10,9 +10,9 @@
             Schema::create('Student_History', function (Blueprint $table) {
                 $table->increments('studentHistoryId');
                 $table->decimal('cum', 3, 1);
-                $table->string('enrolledSubject', 11);
-                $table->string('subjectApply', 100);
-                $table->string('previousIdc', 10);
+                $table->string('enrolledSubject', 12);
+                $table->string('subjectApply', 200);
+                $table->string('previousIdc', 30)->nullable();
                 $table->string('subjectPreviousIdc', 30)->nullable();
                 $table->unsignedBigInteger('idStudent');
                 $table->timestamps();

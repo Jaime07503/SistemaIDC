@@ -25,34 +25,23 @@
                 <h2>Temas de investigación</h2>
                 @if(session('role') === 'Docente' && $subject->teacher->idcQuantity === 0)
                     <a href="{{ route('newResearchTopic', ['subjectId' => $subject->subjectId]) }}" class="btn-postulate">
-                        <h3>Postular Tema</h3>
+                        <i class="fa-solid fa-bookmark"></i> Postular Tema</h3>
                     </a>
                 @endif
             </header>
-            <!-- Opciones para filtrar los temas de investigación -->
-            <div class="options-courses">
-                <!-- Listbox estado del tema de investigación -->
-                <div class="custom-listbox">
-                    <div class="listbox-header">
-                        <button id="listbox"><span class="selected-option">Todos</span></button>
-                        <i class="fa-solid fa-chevron-down arrow-down"></i>
-                    </div>
-                    <ul class="options">
-                        <li data-value="Todos" class="selected"><i class="fa-solid fa-check"></i> Todos</li>
-                        <li data-value="Aprobados">Aprobados</li>
-                        <li data-value="Por Aprobar">Por Aprobar</li>
-                    </ul>
-                </div>
-                <!-- Input búsqueda por nombre de tema de investigación -->
-                <input class="custom-input" type="text" placeholder="Buscar...">
-            </div>
+            <!-- Input búsqueda por nombre de tema de investigación -->
+            <input id="input-researchTopic" class="custom-input" type="text" placeholder="Buscar...">
             <!-- Temas de investigación -->
             @if(isset($noTopics))
-                <h3 class="empty">No hay temas de investigación</h3>
+                @if(auth()->user()->role === 'Docente')
+                    <h3 class="empty">No tienes temas de investigación <strong>Aprobados</strong> ó <strong>Postulados</strong></h3>
+                @else
+                    <h3 class="empty">No hay temas de investigación <strong>Aprobados</strong> ó <strong>Postulados</strong></h3>
+                @endif
             @else
                 <aside class="topics">
                     @foreach ($researchTopics as $topic)
-                        <div class="card">
+                        <div class="card cards-researchTopics">
                             <h3 class="card-title">{{ $topic->state }}</h3>
                             <img src="{{ $topic->avatar }}" class="card-image" alt="Imagen">
                             <a href="{{ route('researchTopicInformation', ['researchTopicId' => $topic->researchTopicId, 'subjectId' => $subject->subjectId]) }}" class="card-link">{{ $topic->themeName }}</a>

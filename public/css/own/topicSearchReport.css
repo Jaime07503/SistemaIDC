@@ -55,6 +55,7 @@ body {
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
 }
 
 .head-lbl {
@@ -115,6 +116,7 @@ h2 {
 
 .source-content {
     margin-bottom: 1.7rem;
+    border: 3px solid var(--texas-rose-50);
 }
 
 .info-team {
@@ -279,7 +281,7 @@ input:focus {
     text-align: center;
     outline: none;
     font-size: .9rem;
-    font-weight: 900;
+    font-weight: 100;
     height: 100%;
     border-radius: .5rem;
     padding: .3rem;
@@ -408,6 +410,7 @@ input:focus {
 	background: var(--white);
 	border-radius: .5rem;
     cursor: pointer;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 .container h3 {
     text-align: center;

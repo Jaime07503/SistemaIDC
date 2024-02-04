@@ -20,7 +20,7 @@
     --texas-rose-950: #411107;
 }
 
-html, body, div, form, h1, h2, h3, h4, input, i, ul, li, span {
+html, body, div, form, h1, h2, h3, h4, input, i, ul, li, span, button {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -66,6 +66,8 @@ body {
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .head-content h1 {
@@ -77,7 +79,7 @@ body {
 /* Historial de vistas */
 .history {
     display: flex;
-    gap: .5rem;
+    gap: .7rem;
     flex-wrap: wrap; 
     justify-content: start;
     align-items: center;
@@ -92,6 +94,7 @@ body {
     box-sizing: border-box;
     width: auto;
     border-radius: .5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .history-view:hover {
@@ -105,11 +108,14 @@ body {
 .information-content {
     width: 95%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(27rem, 1fr));
     gap: 1.5rem;
     background: var(--white);
     padding: 1rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    margin-bottom: 1.5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .title {
@@ -119,7 +125,14 @@ body {
     text-align: center;
 }
 
-.documents-content, .presentations-content, .videos-content {
+.title-ac {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: .5rem;
+}
+
+.documents-content, .presentations-content, .videos-content, .aditional-content {
     background: var(--white);
     border: 3px solid var(--texas-rose-50);
     border-radius: .5rem;
@@ -127,6 +140,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: .5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .documents {
@@ -145,6 +159,11 @@ body {
     color: var(--primary);
 }
 
+#icon-delete {
+    font-size: .92rem;
+    color: var(--gold);
+}
+
 .document a {
     font-size: .9rem;
     color: var(--primary);
@@ -152,6 +171,89 @@ body {
 
 .document a:hover {
     text-decoration: underline;
+}
+
+.contenedor-btn-file input[type="file"] {
+    appearance: none;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    z-index: -1;
+}
+.contenedor-btn-file {
+    display: inline-block;
+    position: relative;
+    background: var(--texas-rose-50);
+    color: var(--primary);
+    border: 0;
+    padding: 10px 20px;
+    border-radius: .5rem;
+    overflow: hidden;
+    transition: ease-out 120ms background-color;
+    border: 3px solid transparent;
+    font-weight: 900;
+    font-size: .9rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+}
+.contenedor-btn-file:hover {
+    background-color: var(--texas-rose-200);
+    border: 3px solid var(--primary);
+}
+.contenedor-btn-file:active {
+    border: 3px solid var(--primary);
+    border: 3px solid var(--primary);
+}
+.contenedor-btn-file > i {
+    margin-right: .4rem;
+}
+
+.contenedor-btn-file label {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.btn {
+    background: var(--texas-rose-100);
+    border: 3px solid var(--white);
+    color: var(--primary);
+    text-align: center;
+    outline: none;
+    font-size: .9rem;
+    font-weight: 900;
+    height: 100%;
+    border-radius: .5rem;
+    padding: .3rem;
+    cursor: pointer;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+}
+
+.btn:hover {
+    background-color: var(--texas-rose-200);
+    border: 3px solid var(--primary);
+}
+
+.btn:active {
+    border: 3px solid var(--primary);
+}
+
+.btn-delete {
+    background: var(--primary);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-delete:hover {
+    border: 3px solid var(--texas-rose-200);
+    color: var(--texas-rose-200);
+    background: var(--primary);
 }
 
 @media (max-width: 880px){

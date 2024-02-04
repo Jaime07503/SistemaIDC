@@ -1,18 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Variables
     const listboxes = document.querySelectorAll(".custom-listbox")
     var roleInput = document.getElementById('roleInput')
     var contractTypeInput = document.getElementById('contractTypeInput')
     var specialtyInput = document.getElementById('specialtyInput')
-    var roleInputEdit = document.getElementById('roleInputEdit');
-    var contractTypeInputEdit = document.getElementById('contractTypeInputEdit');
-    var specialtyInputEdit = document.getElementById('specialtyInputEdit');
+    var roleInputEdit = document.getElementById('roleInputEdit')
+    var contractTypeInputEdit = document.getElementById('contractTypeInputEdit')
+    var specialtyInputEdit = document.getElementById('specialtyInputEdit')
     let openListbox = null
 
-    // Custom Listbox
     listboxes.forEach(function (listbox) {
         handleListbox(listbox)
-    });
+    })
 
     function handleListbox(listbox) {
         const listboxHeader = listbox.querySelector(".listbox-header")
@@ -30,18 +28,18 @@ document.addEventListener("DOMContentLoaded", function () {
             listboxHeader.classList.toggle("active")
             optionsList.style.display = optionsList.style.display === "block" ? "none" : "block"
             arrowDown.style.transform = optionsList.style.display === "block" ? "rotate(180deg)" : "rotate(0deg)"
-            openListbox = listbox;
-        });
+            openListbox = listbox
+        })
 
         optionsList.addEventListener("click", function (event) {
             if (event.target.tagName === "LI") {
                 const selectedOption = event.target.textContent
                 selectedOptionSpan.textContent = selectedOption
+                selectedOptionSpan.setAttribute('data-value', selectedOptionSpan.textContent)
                 optionsList.style.display = "none"
                 arrowDown.style.transform = "rotate(0deg)"
                 listboxHeader.classList.remove("active")              
         
-                // Asignar valor a los campos de entrada según el tipo de listbox
                 if (listbox.classList.contains("role")) {
                     roleInput.value = selectedOptionSpan.textContent
                 } else if(listbox.classList.contains("contract")) {
@@ -56,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     specialtyInputEdit.value = selectedOptionSpan.textContent
                 }
         
-                // Mostrar u ocultar los listbox según la opción seleccionada
                 if ( selectedOption.trim() === 'Docente' ||
                     selectedOption.trim() === 'Coordinador' ||
                     listbox.classList.contains("contract") ||
@@ -72,15 +69,14 @@ document.addEventListener("DOMContentLoaded", function () {
         
                 markSelectedOption(event.target)
             }
-        });
+        })
 
-        // Función para agregar o quitar el ícono de verificación a la opción seleccionada
         function markSelectedOption(selectedListItem) {
             const options = optionsList.querySelectorAll("li")
             options.forEach(function (option) {
                 option.classList.remove("selected")
-                option.innerHTML = option.textContent // Limpiar el contenido HTML
-            });
+                option.innerHTML = option.textContent
+            })
 
             selectedListItem.classList.add("selected")
             selectedListItem.innerHTML = '<i class="fa-solid fa-check"></i> ' + selectedListItem.textContent
@@ -93,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btnAddUser.addEventListener('click', function () {
         openModal('myModalUser')
-    });
+    })
 
     const cerrarModals = document.querySelectorAll('.cerrarModal')
     cerrarModals.forEach(function (cerrarModal) {
@@ -102,27 +98,134 @@ document.addEventListener("DOMContentLoaded", function () {
             
             closeModal(modalId)
         })
-    });
+    })
 
     cancel.addEventListener('click', function () {
         closeModal('eliminarModal')
-    });
+    })
 
     window.addEventListener('click', function (event) {
         if (event.target === addUserModal) {
             closeModal('myModalUser')
         }
-    });
+    })
 
-    // Obtener todos los botones con la clase 'button-edit' y 'button-delete'
+    const searchInput = document.getElementById('searchInput')
+    const userListbox = document.getElementById('userListbox')
+    const tableRows = document.querySelectorAll('#data-table-users tbody tr')
+
+    searchInput.addEventListener('input', filterTable)
+
+    const optionsList = document.querySelector('.custom-listbox .options')
+    if (optionsList) {
+        optionsList.addEventListener('click', filterTable)
+    } 
+
+    function filterTable() {
+        const searchText = searchInput.value.trim().toLowerCase();
+        const selectedRol = userListbox.querySelector('.selected-option').textContent.trim().toLowerCase();
+    
+        tableRows.forEach(function(row) {
+            const nameText = row.querySelector('td[data-values="Nombre"]').textContent.trim().toLowerCase();
+            const emailText = row.querySelector('td[data-values="Correo"]').textContent.trim().toLowerCase();
+            const roleText = row.querySelector('td[data-values="Rol"]').textContent.trim().toLowerCase();
+    
+            const containsSearchText = nameText.includes(searchText) || emailText.includes(searchText) || roleText.includes(searchText);
+            const matchesSelectedRole = selectedRol === 'todos' || roleText === selectedRol;
+    
+            if (selectedRol === 'todos' || matchesSelectedRole) {
+                row.style.display = containsSearchText ? '' : 'none';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+    
+    const formAddUser = document.getElementById('formAddUser')    
+    formAddUser.addEventListener('submit', function (event) {
+        const inputUsers = document.querySelectorAll("#formAddUser .input-user")
+        for(const inputUser of inputUsers) {
+            if (inputUser.value.trim() === '') {
+                showNotification(`Por favor, completa el campo "${inputUser.placeholder}"`, true, '#notificationU')
+                event.preventDefault()
+                return
+            }
+        }
+
+        const emailInput = document.getElementById('emailInput');
+        const emailValue = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(emailValue)) {
+            showNotification('Por favor, ingresa un correo electrónico válido', true, '#notificationU');
+            event.preventDefault();
+            return;
+        }
+
+        if (!emailValue.endsWith('@catolica.edu.sv')) {
+            showNotification('Por favor, ingresa un correo electrónico con la extensión "@catolica.edu.sv"', true, '#notificationU');
+            event.preventDefault();
+            return;
+        }
+
+        const roleSpan = document.getElementById('role').getAttribute('data-value')
+        if (roleSpan.trim() === 'Rol') {
+            showNotification('Por favor, selecciona un Rol', true, '#notificationU')
+            event.preventDefault()
+            return
+        }
+    
+        if (roleSpan === 'Docente' || roleSpan === 'Coordinador') {
+            const contractType = document.getElementById('contractType').getAttribute('data-value').trim();
+            const specialty = document.getElementById('specialty').getAttribute('data-value').trim();
+    
+            if (contractType.trim() === 'Tipo de contrato') {
+                showNotification('Por favor, selecciona un Tipo de Contrato', true, '#notificationU');
+                event.preventDefault();
+                return;
+            }
+    
+            if (specialty.trim() === 'Especialidad') {
+                showNotification('Por favor, selecciona una Especialidad', true, '#notificationU');
+                event.preventDefault();
+                return;
+            }
+        }
+    })
+
+    const formEditUser = document.getElementById('formEditUser')    
+    formEditUser.addEventListener('submit', function (event) {
+        const inputUsers = document.querySelectorAll("#formEditUser .input-user")
+        for(const inputUser of inputUsers) {
+            if (inputUser.value.trim() === '') {
+                showNotification(`Por favor, completa el campo "${inputUser.placeholder}"`, true, '#notificationUE')
+                event.preventDefault()
+                return
+            }
+        }
+
+        const emailInput = document.getElementById('emailEditInput');
+        const emailValue = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(emailValue)) {
+            showNotification('Por favor, ingresa un correo electrónico válido', true, '#notificationUE');
+            event.preventDefault();
+            return;
+        }
+
+        if (!emailValue.endsWith('@catolica.edu.sv')) {
+            showNotification('Por favor, ingresa un correo electrónico con la extensión "@catolica.edu.sv"', true, '#notificationUE');
+            event.preventDefault();
+            return;
+        }
+    })
+
     const buttons = document.querySelectorAll('.btn-edit, .btn-delete')
-
-    // Asignar un evento de clic a cada botón
     buttons.forEach(function (button) {
         button.addEventListener('click', function () {
             const modalId = button.dataset.modal
 
-            // Obtener datos del usuario desde los atributos data-*
             const userId = button.getAttribute('data-userId')
             const teacherId = button.getAttribute('data-teacherId')
             const userName = button.getAttribute('data-userName')
@@ -131,11 +234,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const contractType = button.getAttribute('data-contractType')
             const specialty = button.getAttribute('data-specialty')
 
-            // Llenar los campos del formulario dentro de la ventana modal
             const userIdInput = document.getElementById('userIdEdit')
             const teacherIdInput = document.getElementById('teacherIdEdit')
-            const nameInput = document.getElementById('nameInput')
-            const emailInput = document.getElementById('emailInput')
+            const nameInput = document.getElementById('nameEditInput')
+            const emailInput = document.getElementById('emailEditInput')
             const roleInput = document.getElementById('roleInputEdit')
             const IdInput = document.getElementById('idInputs')
             const roleSpanEdit = document.getElementById('roleSpanEdit')
@@ -161,21 +263,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 specialtySpanEdit.innerText = specialty
 
             } else {
+                document.querySelector('.lst-role-edit').setAttribute("hidden", "false")
                 document.querySelector('.lst-contract-edit').setAttribute("hidden", "false")
                 document.querySelector('.lst-specialty-edit').setAttribute("hidden", "false")
             }
 
             openModal(modalId)
-        });
-    });
+        })
+    })
 
-    // Asignar un evento de clic a los elementos con la clase 'close'
     const closeButtons = document.querySelectorAll('.modal .close')
     closeButtons.forEach(function (closeButton) {
         closeButton.addEventListener('click', function () {
             const modalId = closeButton.closest('.modal').id
 
-            // Limpiar los campos del formulario al cerrar la ventana modal
             const nameInput = document.getElementById('nameInput')
             const emailInput = document.getElementById('emailInput')
             const roleInput = document.getElementById('roleInput')
@@ -185,8 +286,22 @@ document.addEventListener("DOMContentLoaded", function () {
             roleInput.value = ''
 
             closeModal(modalId)
-        });
-    });
+        })
+    })
+
+    function showNotification(message, isError = false, notificationId) {
+        const notification = document.querySelector(notificationId)
+    
+        if (notification) {
+            notification.textContent = message
+            notification.className = isError ? 'notificationM error' : 'notificationM'
+            notification.style.display = 'block'
+    
+            setTimeout(function () {
+                notification.style.display = 'none'
+            }, 3000)
+        }
+    }
 
     function openModal(modalId) {
         document.getElementById(modalId).style.display = 'block'
@@ -195,4 +310,4 @@ document.addEventListener("DOMContentLoaded", function () {
     function closeModal(modalId) {
         document.getElementById(modalId).style.display = 'none'
     }
-});
+})

@@ -6,33 +6,25 @@
     use App\Models\Subject;
     use App\Models\Team;
     use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\Redirect;
 
     class ResearchTopicInformationController extends Controller
     {
-        public function store(Request $request)
-        {
-            $idStudent = $request->input('idStudent');
-            $idSubject = $request->input('idSubject');
-            $researchTopicId = $request->input('researchTopicId');
-
-            StudentSubject::where('idStudent', $idStudent)
-                ->where('idSubject', $idSubject)
-                ->increment('applicationCount');
-
-            StudentResearchTopic::create([
-                'idStudent' => $idStudent,
-                'idResearchTopic' => $researchTopicId,
-                'state' => 'Postulado',
-            ]);
-
-            return Redirect::route('researchTopics', ['subjectId' => $idSubject]);
-        }
-
         public function getResearchTopicInformation($researchTopicId, $subjectId)
         {
-            $studentId = session('studentId');
+            $userId = auth()->user()->userId;
+            $role = auth()->user()->role;
+
             $subject = Subject::where('subjectId', $subjectId)->first();
+            if ($subject->idTeacher !== $userId) {
+                $isStudentOfSubject = StudentSubject::where('idStudent', $userId)
+                                                    ->where('idSubject', $subjectId)
+                                                    ->exists();
+                if (!$isStudentOfSubject) {
+                    return redirect()->back();
+                }
+            }
+            
+            $studentId = session('studentId');
             $researchTopic = ResearchTopic::where('researchTopicId', $researchTopicId)->first();
 
             $studentResearch = Subject::join('Student_Subject', function ($join) use ($subjectId, $studentId) {
@@ -52,23 +44,27 @@
             ->select('Research_Topic.*', 'Student_Research_Topic.state')
             ->first();
 
-            // Obtener todos los equipos (teams) asociados al $researchTopicId
-            $teams = Team::where('idResearchTopic', $researchTopicId)
-                ->with('studentTeam.student') // Cargar la relación studentTeam y, a través de ella, cargar la relación student
+            if($role === 'Estudiante') {
+                $teams = Team::where('idResearchTopic', $researchTopicId)
+                    ->whereHas('studentTeam', function ($query) use ($studentId) {
+                        $query->where('idStudent', $studentId);
+                    })
+                    ->with('studentTeam.student')
+                    ->get();
+            } else {
+                $teams = Team::where('idResearchTopic', $researchTopicId)
+                ->with('studentTeam.student') 
                 ->get();
+            }
 
-            // Inicializar un array para almacenar los resultados finales
             $result = [];
 
-            // Recorrer cada equipo para obtener los estudiantes asociados
             foreach ($teams as $team) {
-                // Obtener los estudiantes directamente de la relación cargada
                 $students = $team->studentTeam->pluck('student');
                 $userDetails = $students->map(function ($student) {
-                    return $student->user; // asumiendo que hay una relación user en el modelo Student
+                    return $student->user; 
                 });
 
-                // Agregar el equipo y los estudiantes al array de resultados
                 $result[] = [
                     'team' => $team,
                     'students' => $students,
@@ -76,7 +72,26 @@
                 ];
             }
                         
-            return view('layouts.researchTopicInformation', compact('researchTopic', 'subject','researchTopicId', 'studentResearch', 'postulatedSubject' , 'studentId', 'subjectId', 'result'));            
+            return view('layouts.researchTopicInformation', compact('researchTopic', 'subject', 'researchTopicId', 'studentResearch', 'postulatedSubject' , 'studentId', 'subjectId', 'result'));            
+        }
+
+        public function store(Request $request)
+        {
+            $idStudent = $request->input('idStudent');
+            $subjectId = $request->input('idSubject');
+            $researchTopicId = $request->input('researchTopicId');
+
+            StudentSubject::where('idStudent', $idStudent)
+                ->where('idSubject', $subjectId)
+                ->increment('applicationCount');
+
+            StudentResearchTopic::create([
+                'idStudent' => $idStudent,
+                'idResearchTopic' => $researchTopicId,
+                'state' => 'Postulado',
+            ]);
+
+            return redirect()->route('researchTopicInformation', compact('researchTopicId', 'subjectId'));
         }
     }
 ?>

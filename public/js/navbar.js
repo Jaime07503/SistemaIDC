@@ -1,25 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const menuBtn = document.getElementById('menu-btn');
-    const dropdownMenu = document.getElementById('dropdown-menu');
+    const menuBtn = document.getElementById('menu-btn')
+    const dropdownMenu = document.getElementById('dropdown-menu')
 
-    // menuBtn.addEventListener('click', function() {
-    //     dropdownMenu.style.display = (dropdownMenu.style.display === 'flex') ? 'none' : 'flex';
-    // });
+    if(menuBtn){
+        menuBtn.addEventListener('click', function() {
+            dropdownMenu.style.display = (dropdownMenu.style.display === 'flex') ? 'none' : 'flex'
+        })
+    }
 
-    // let listElements = document.querySelectorAll('.list-button--click');
+    let listElements = document.querySelectorAll('.list-button--click')
 
-    // listElements.forEach(listElement => {
-    //     listElement.addEventListener('click', ()=>{
-    //         listElement.classList.toggle('arrow');
+    listElements.forEach(listElement => {
+        listElement.addEventListener('click', ()=>{
+            listElement.classList.toggle('arrow')
 
-    //         let height = 0;
-    //         let menu = listElement.nextElementSibling;
+            let height = 0
+            let menu = listElement.nextElementSibling
             
-    //         if(menu.clientHeight == "0") {
-    //             height = menu.scrollHeight;
-    //         }
+            if(menu.clientHeight == "0") {
+                height = menu.scrollHeight
+            }
 
-    //         menu.style.height = `${height}px`;
-    //     })
-    // });
-});
+            menu.style.height = `${height}px`
+        })
+    })
+})

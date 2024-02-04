@@ -10,19 +10,13 @@
             Schema::create('Topic_Search_Report', function (Blueprint $table) {
                 $table->increments('topicSearchReportId');
                 $table->string('code')->nullable();
-                $table->string('orientation', 800)->nullable();
-                $table->string('induction', 1150)->nullable();
-                $table->string('searchPlan', 700)->nullable();
-                $table->string('meetings', 500)->nullable();
-                $table->string('criteria', 350)->nullable();
-                $table->string('teamValoration', 800)->nullable();
-                $table->string('teamComment', 300)->nullable();
-                $table->string('finalComment', 1000)->nullable();
                 $table->string('storagePath', 300)->nullable();
+                $table->string('nameCorrectDocument', 200)->nullable();
+                $table->string('correctDocumentStoragePath', 300)->nullable();
                 $table->string('nameCorrectedDocument', 200)->nullable();
                 $table->string('correctedDocumentStoragePath', 300)->nullable();
-                $table->string('previousState', 30)->nullable();
                 $table->string('state', 30)->nullable();
+                $table->string('previousState', 30)->nullable();
                 $table->unsignedBigInteger('idIdc');
                 $table->timestamps();
                 $table->foreign('idIdc')->references('idcId')->on('Idc')->onUpdate('cascade')->onDelete('cascade');

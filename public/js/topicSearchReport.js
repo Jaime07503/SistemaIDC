@@ -1,17 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let approvedSourcesCount = calculateApprovedSourceCount();
-    let approvedGeneralOCount = calculateApprovedOGCount();
-    let approvedSpecificOCount = calculateApprovedOECount();
+    let approvedSourcesCount = calculateApprovedSourceCount()
+    let approvedGeneralOCount = calculateApprovedOGCount()
+    let approvedSpecificOCount = calculateApprovedOECount()
 
-    const textareas = document.querySelectorAll(".textarea");
+    const textareas = document.querySelectorAll(".textarea")
     textareas.forEach(textarea => {
         textarea.addEventListener('keyup', e => {
-            textarea.style.height = "2.95rem"; 
-            let scHeight = e.target.scrollHeight;
-            console.log(scHeight);
-            textarea.style.height = `${scHeight}px`;
-        });
-    });
+            textarea.style.height = "2.95rem"
+            let scHeight = e.target.scrollHeight
+            console.log(scHeight)
+            textarea.style.height = `${scHeight}px`
+        })
+    })
 
     const fileContainers = document.querySelectorAll('.file-container')
     fileContainers.forEach(function (fileContainer) {

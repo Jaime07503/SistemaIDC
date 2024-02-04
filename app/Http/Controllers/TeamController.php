@@ -11,16 +11,22 @@
     use App\Models\Team;
     use App\Models\TopicSearchReport;
     use App\Models\User;
+    use App\Notifications\NewTeam;
     use Carbon\Carbon;
     use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\Redirect;
 
     class TeamController extends Controller
     {
         public function getInformation($researchTopicId)
         {
             $researchTopics = ResearchTopic::where('researchTopicId', $researchTopicId)->first();
-            $subject = Subject::find($researchTopics->idSubject);
+            $subject = Subject::join('Teacher', 'Subject.idTeacher', '=', 'Teacher.teacherId')
+                ->join('User', 'Teacher.idUser', '=', 'User.userId')
+                ->find($researchTopics->idSubject);
+    
+            if ($subject->userId !== auth()->user()->userId) {
+                return redirect()->back();
+            }
 
             $students = Student::join('User', 'Student.idUser', '=', 'User.userId')
                 ->join('Student_History', 'Student.studentId', '=', 'Student_History.idStudent')
@@ -41,10 +47,10 @@
 
         public function create(Request $request)
         {
-            // Variables
             $INITIAL_STATE = 'Sin Intento';
             $INITIAL_PATH = 'Por generar';
-            $INITIAL_STATE_IDC = 'Creado';
+            $UPLOAD_PATH = 'Por subir';
+            $INITIAL_STATE_IDC = 'En proceso';
             $INITIAL_TEAM_STATE = 'Postulado';
             $studentId = session('studentId');
             $researchTopicId = $request->input('idResearchTopic');
@@ -52,7 +58,6 @@
             $selectedStudentIds = explode(',', $request->input('selectedStudentIds', ''));
             $integrantQuantity = count($selectedStudentIds);
 
-            // Create team
             $team = new Team;
             $team->creationDate = Carbon::now();
             $team->integrantQuantity = $integrantQuantity;
@@ -61,7 +66,6 @@
             $team->idTeacher = $request->input('idTeacher');
             $team->save();
 
-            // Create all the StudenTeam with studentId
             foreach ($selectedStudentIds as $studentId) {
                 if (is_numeric($studentId)) {
                     $studentTeam = new StudentTeam;
@@ -71,64 +75,49 @@
                 }
             }
 
-            // Create Idc
             $idc = new Idc();
-            $idc->startDateSearchReport = '2024-01-22 23:59:59';
-            $idc->endDateSearchReport = '2024-02-29 23:59:59';
-            $idc->startDateScientificArticleReport = '2024-03-01 23:59:59';
-            $idc->endDateScientificArticleReport = '2024-04-30 23:59:59';
-            $idc->startDateNextIdcTopic = '2024-05-01 23:59:59';
-            $idc->endDateNextIdcTopic = '2024-06-15 23:59:59';
             $idc->badgeProcessCompleted = 'Por obtener';
             $idc->state = $INITIAL_STATE_IDC;
             $idc->idUser = 1;
             $idc->idTeam = $team->teamId;
             $idc->save();
 
-            // Create empty Topic Search Report
             $searchReport = new TopicSearchReport();
             $searchReport->code = '';
-            $searchReport->induction = '';
-            $searchReport->searchPlan = '';
-            $searchReport->meetings = '';
-            $searchReport->teamValoration = '';
-            $searchReport->finalComment = '';
             $searchReport->storagePath = $INITIAL_PATH;
             $searchReport->state = $INITIAL_STATE;
             $searchReport->previousState = $INITIAL_STATE;
+            $searchReport->nameCorrectDocument = '';
+            $searchReport->correctDocumentStoragePath = $UPLOAD_PATH;
             $searchReport->nameCorrectedDocument = '';
-            $searchReport->correctedDocumentStoragePath = '';
+            $searchReport->correctedDocumentStoragePath = $UPLOAD_PATH;
             $searchReport->idIdc = $idc->idcId;
             $searchReport->save();
 
-            // Create empty Scientific Article Report
             $scientificArticle = new ScientificArticleReport();
             $scientificArticle->code = '';
-            $scientificArticle->spanishSummary = '';
-            $scientificArticle->englishSummary = '';
-            $scientificArticle->keywords = '';
-            $scientificArticle->introduction = '';
-            $scientificArticle->methodology = '';
             $scientificArticle->numberOfWords = 0;
             $scientificArticle->storagePath = $INITIAL_PATH;
             $scientificArticle->state = $INITIAL_STATE;
             $scientificArticle->previousState = $INITIAL_STATE;
+            $scientificArticle->nameDocumentImage = '';
+            $scientificArticle->documentImageStoragePath = $UPLOAD_PATH;
+            $scientificArticle->nameCorrectDocument = '';
+            $scientificArticle->correctDocumentStoragePath = $UPLOAD_PATH;
             $scientificArticle->nameCorrectedDocument = '';
-            $scientificArticle->correctedDocumentStoragePath = '';
+            $scientificArticle->correctedDocumentStoragePath = $UPLOAD_PATH;
             $scientificArticle->idIdc = $idc->idcId;
             $scientificArticle->save();
 
-            // Create empty Next Idc Topic Report
             $nextIdcTopic = new NextIdcTopicReport();
             $nextIdcTopic->code = '';
-            $nextIdcTopic->introduction = '';
-            $nextIdcTopic->continueTopic = '';
-            $nextIdcTopic->proposeTopics = '';
             $nextIdcTopic->storagePath = $INITIAL_PATH;
             $nextIdcTopic->state = $INITIAL_STATE;
             $nextIdcTopic->previousState = $INITIAL_STATE;
+            $nextIdcTopic->nameCorrectDocument = '';
+            $nextIdcTopic->correctDocumentStoragePath = $UPLOAD_PATH;
             $nextIdcTopic->nameCorrectedDocument = '';
-            $nextIdcTopic->correctedDocumentStoragePath = '';
+            $nextIdcTopic->correctedDocumentStoragePath = $UPLOAD_PATH;
             $nextIdcTopic->idIdc = $idc->idcId;
             $nextIdcTopic->save();
 
@@ -139,54 +128,24 @@
             }
 
             $researchTopic = ResearchTopic::where('researchTopicId', $researchTopicId)->first();
+            $subject = Subject::where('subjectId', $subjectId)->first();
 
-            $studentResearch = Subject::join('Student_Subject', function ($join) use ($subjectId, $studentId) {
-                $join->on('Subject.subjectId', '=', 'Student_Subject.idSubject')
-                    ->where('Student_Subject.idStudent', '=', $studentId);
-            })
-            ->where('Subject.subjectId', $subjectId)
-            ->select('Subject.*', 'Student_Subject.applicationCount')
-            ->first();
-
-            $postulatedSubject = ResearchTopic::join('Student_Research_Topic', function ($join) use ($researchTopicId, $studentId) {
-                $join->on('Research_Topic.researchTopicId', '=', 'Student_Research_Topic.idResearchTopic')
-                    ->where('Student_Research_Topic.idStudent', '=', $studentId)
-                    ->where('Student_Research_Topic.idResearchTopic', '=', $researchTopicId);
-            })
-            ->where('Research_Topic.researchTopicId', $researchTopicId)
-            ->select('Research_Topic.*', 'Student_Research_Topic.state')
-            ->first();
-
-            // Obtener todos los equipos (teams) asociados al $researchTopicId
             $teams = Team::where('idResearchTopic', $researchTopicId)
-                ->with('studentTeam.student') // Cargar la relación studentTeam y, a través de ella, cargar la relación student
+                ->with('studentTeam.student')
                 ->get();
 
-            $students = null;
-            $team = null;
-             
-            // Inicializar un array para almacenar los resultados finales
-            $result = [];
-
-            // Recorrer cada equipo para obtener los estudiantes asociados
             foreach ($teams as $team) {
-                // Obtener los idStudent asociados a este equipo desde la tabla student_team
                 $studentTeamIds = StudentTeam::where('idTeam', $team->teamId)->pluck('idStudent')->toArray();
             
-                // Utilizar los IDs de los equipos en la consulta
-                $students = User::join('Student', 'User.userId', '=', 'Student.idUser')
-                    ->join('Student_Team', 'Student_Team.idStudent', '=', 'Student.studentId')
-                    ->whereIn('Student_Team.idTeam', $studentTeamIds)
-                    ->select('User.name', 'User.avatar')
-                    ->get();
-                }
+                $students = $team->studentTeam->pluck('student');
+            }
 
-                $result[] = [
-                'team' => $team,
-                'students' => $students,
-            ];
+            foreach ($students as $student) {
+                $user = User::find($student->idUser);
+                $user->notify(new NewTeam($researchTopicId, $subjectId));
+            }
 
-            return Redirect::route('researchTopicInformation', compact('researchTopic', 'researchTopicId', 'studentResearch', 'postulatedSubject' , 'studentId', 'subjectId', 'result'));
+            return redirect()->route('researchTopicInformation', compact('researchTopicId', 'subjectId'));
         }
     }
 ?>

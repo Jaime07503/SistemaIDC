@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('title')
-    {{ session('name')}}: Perfil público
+    {{ auth()->user()->name }}: Perfil público
 @endsection
 
 @section('styles')
@@ -32,8 +32,14 @@
                     <div class="data">
                         <h3 class="lbl3"><strong>Dirección Email</strong></h3>
                         <p class="paragraph">{{ $user->email }}</p>
-                        <!-- <h3 class="lbl3"><strong>Participaciones IDC</strong></h3>
-                        <p class="paragraph">{{ $user->email }}</p> -->
+                        @if(auth()->user()->role === 'Estudiante' || auth()->user()->role === 'Docente' || auth()->user()->role === 'Coordinador')
+                            <h3 class="lbl3"><strong>Participaciones IDC</strong></h3>
+                            <div class="badges">
+                                @for ($i = 0; $i < $user->participationsIdc; $i++)
+                                    <i class="fa-solid fa-certificate badge"></i>
+                                @endfor
+                            </div>
+                        @endif
                     </div>
                 </div>
                 <div class="income-information">
@@ -48,19 +54,21 @@
                     </div>
                 </div>
             </div>
-            <aside class="actives-idc">
-                <h2 class="lbl2">Detalles de las investigaciones de catedra</h2>
-                @foreach ($idcs as $idc)
-                    <div class="idc-link">
-                        <img class="avatarTopic" src="{{ $idc->avatar }}" alt="Avatar">
-                        <a class="link" href="{{ route('stagesProcess', ['researchTopicId' => $idc->researchTopicId, 
-                            'teamId' => $idc->teamId, 'idcId' => $idc->idcId]) }}">{{ $idc->themeName }} - Equipo #{{ $idc->teamId }}
-                        </a>
-                    </div>
-                @endforeach
-            </aside>
+            @if(auth()->user()->role === 'Estudiante' || auth()->user()->role === 'Docente' || auth()->user()->role === 'Coordinador')
+                <aside class="actives-idc">
+                    <h2 class="lbl2">Detalles de las investigaciones de catedra</h2>
+                    @foreach ($idcs as $idc)
+                        <div class="idc-link">
+                            <img class="avatarTopic" src="{{ $idc->avatar }}" alt="Avatar">
+                            <a class="link" href="{{ route('stagesProcess', ['researchTopicId' => $idc->researchTopicId, 
+                                'teamId' => $idc->teamId, 'idcId' => $idc->idcId]) }}">{{ $idc->themeName }} - Equipo #{{ $idc->teamId }}
+                            </a>
+                        </div>
+                    @endforeach
+                </aside>
+            @endif
         </section>
-        <!-- Modal Edit User -->
+        <!-- Modal Change User Avatar -->
         <div id="myModalEditUser" class="modal">
             <div class="modal-content">
                 <header class="head">
@@ -68,16 +76,18 @@
                     <button type="button" id="cerrarModalEditUser"><i class="fa-solid fa-xmark"></i></button>
                 </header>
                 <div class="basic-information">
-                    <form action="{{ route('userAvatar.update', ['idUser' => $user->userId]) }}" method="POST" enctype="multipart/form-data">
+                    <form id="formChangeAvatar" class="changeAvatar" action="{{ route('userAvatar.update', ['idUser' => $user->userId]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="container file-container" id="container">
-                            <input type="file" name="avatar" class="file-input" accept="image/*" hidden>
+                            <input type="file" name="avatar" class="file-input" accept="image/png, image/jpeg" hidden>
                             <div class="img-area" data-img="">
                                 <i class="fa-solid fa-cloud-arrow-up"></i>
                                 <h4>Avatar</h4>
                                 <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
+                                <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
                             </div>
                         </div>
+                        <div id="notificationU" class="notificationM"></div>
                         <button type="submit" class="btn" id="submitButton">Guardar</button>
                     </form>
                 </div>

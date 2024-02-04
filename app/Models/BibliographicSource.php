@@ -16,8 +16,8 @@
             'year',
             'averageType',
             'source',
-            'studentContribute',
             'link',
+            'studentContribute',
             'state'
         ];
 

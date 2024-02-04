@@ -5,6 +5,15 @@
     --white: #FFFFFF;
     --texas-rose-50: #fef7ec;
     --texas-rose-100: #fae9cb;
+    --texas-rose-200: #f6d091;
+    --texas-rose-300: #f0ad4e;
+    --texas-rose-400: #ed9732;
+    --texas-rose-500: #e6751a;
+    --texas-rose-600: #cc5513;
+    --texas-rose-700: #a93914;
+    --texas-rose-800: #8a2d16;
+    --texas-rose-900: #712716;
+    --texas-rose-950: #411107;
 }
 
 html, body, div, form, h1, h2, h3, h4, h5, input, i, button, ul, li, p, span {
@@ -64,7 +73,8 @@ body {
 
 .faculty {
     color: var(--primary);
-    font-size: 1rem;
+    font-size: 1.1rem;
+    font-weight: 100;
 }
 
 .lt-faculty {
@@ -72,7 +82,7 @@ body {
     flex-direction: column;
 }
 
-.lt-item-faculty, .lt-inside-career, .lt-inside-subject {
+.lt-item-faculty, .lt-inside-career, .lt-inside-subject, .lt-inside-researchTopic {
     list-style: none;
     width: 100%;
     overflow: hidden;
@@ -84,7 +94,7 @@ body {
 
 .lt-button-faculty, .lt-button-career, .lt-button-subject {
     display: flex;
-    gap: .5rem;
+    gap: 1rem;
     width: 100%;
     align-items: center;
 }
@@ -96,30 +106,38 @@ body {
 
 .lt-link {
     color: var(--primary);
-    display: block;
-    padding: .3rem 0;
+    display: inline-flex;
+    gap: 1rem;
+    padding: .5rem 0;
     text-decoration: none;
-    font-size: .9rem;
+    font-size: 1rem;
+}
+
+.lt-link:hover {
+    text-decoration: underline;
+}
+
+.img-topic {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
 }
 
 .lt-link--inside-faculty, .lt-link--inside-career, .lt-link--inside-subject {
     display: flex;
-    gap: .5rem;
+    gap: 1rem;
     align-items: center;
     text-align: left;
     margin-left: .7rem;
 }
 
-.lt-link--inside-faculty:hover {
-     text-decoration: underline;
-}
-
-.lt-show-careers, .lt-show-subjects, .lt-show-researchTopics {
-    transition: height .3s;
+.lt-show-careers, .lt-show-subjects, .lt-show-researchTopics, .lt-show-teams {
+    transition: height 0.3s ease;
     height: 0;
-    margin-left: .5rem;
+    margin-left: 1.5rem;
+    margin-top: .5rem;
 }
 
-.arrow .lt-arrow {
-    transform: rotate(180deg);
+.arrow {
+    transform: rotate(270deg);
 }

@@ -2,7 +2,7 @@
 <header class="header">
     <nav id="navbar">
         <div class="logo">
-            @if(session('role') === 'Administrador del sistema' || session('role') === 'Administrador del proceso' || session('role') === 'Coordinador')
+            @if(auth()->user()->role === 'Administrador del sistema' || auth()->user()->role === 'Administrador del proceso' || auth()->user()->role === 'Coordinador')
                 <div id="menu-btn" class="ico">
                     <span id="menu-icon" class="ic">
                         <i class="fa-solid fa-bars"></i>
@@ -15,11 +15,14 @@
             <div class="ic_notificaciones ico">
                 <span class="ic">
                     <i class="fa-regular fa-bell"></i>
+                    @if(count(auth()->user()->unreadNotifications) > 0)
+                        <span class="badge">{{ count(auth()->user()->unreadNotifications) }}</span>
+                    @endif
                 </span>
             </div>
             <div class="avatar-container">
-                @if (session('avatarUrl'))
-                    <img class="avatar" src="{{ session('avatarUrl') }}" alt="Avatar">
+                @if (auth()->user()->avatar)
+                    <img class="avatar" src="{{ auth()->user()->avatar }}" alt="Avatar">
                     <span class="ic_flecha ico"><i class="fa-solid fa-chevron-down"></i></span>
                 @endif
             </div>
@@ -29,30 +32,47 @@
     <!-- Menu Despegable -->
     <div class="dropdown-menu" id="dropdown-menu">
         <nav class="content-menu">
-            @if(session('role') === 'Administrador del sistema')
-                <ul class="list">
+            <ul class="list">
+                @if(auth()->user()->role === 'Administrador del sistema')
                     <li class="list-item list-item--click">
                         <div class="list-button list-button--click">
-                            <a href="#" class="nav-link">Administración</a>
+                            <h2 class="nav-link">Administración</h2>
                             <i class="fa-solid fa-chevron-down list-arrow"></i>
                         </div>
                         <ul class="list-show">
                             <li class="list-inside">
-                                <a href="#" class="nav-link nav-link--inside">Facultades</a>
+                                <a href="{{ route('cycle') }}" class="nav-link nav-link--inside">Ciclos</a>
                             </li>
                             <li class="list-inside">
-                                <a href="{{ route('career')}}" class="nav-link nav-link--inside">Carreras</a>
+                                <a href="{{ route('faculty') }}" class="nav-link nav-link--inside">Facultades</a>
                             </li>
                             <li class="list-inside">
-                                <a href="{{ route('subject')}}" class="nav-link nav-link--inside">Materias</a>
+                                <a href="{{ route('career') }}" class="nav-link nav-link--inside">Carreras</a>
                             </li>
                             <li class="list-inside">
-                                <a href="{{ route('administration') }}" class="nav-link nav-link--inside">Usuarios</a>
+                                <a href="{{ route('subject') }}" class="nav-link nav-link--inside">Materias</a>
+                            </li>
+                            <li class="list-inside">
+                                <a href="{{ route('user') }}" class="nav-link nav-link--inside">Usuarios</a>
                             </li>
                         </ul>
                     </li>
-                </ul>
-            @endif
+                @endif
+                <li class="list-item list-item--click">
+                    <div class="list-button list-button--click">
+                        <h2 class="nav-link">Asignación</h2>
+                        <i class="fa-solid fa-chevron-down list-arrow"></i>
+                    </div>
+                    <ul class="list-show">
+                        <li class="list-inside">
+                            <a href="{{ route('assignSubject') }}" class="nav-link nav-link--inside">Materias</a>
+                        </li>
+                        <li class="list-inside">
+                            <a href="{{ route('idcDates') }}" class="nav-link nav-link--inside">Fechas IDC</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
         </nav>
     </div>
 </header>

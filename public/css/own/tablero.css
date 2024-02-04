@@ -44,6 +44,8 @@ body {
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .head-title {
@@ -72,6 +74,8 @@ body {
     padding: 1rem;
     border-radius: .5rem;
     gap: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .teams-content {
@@ -84,110 +88,14 @@ body {
     border-radius: .5rem;
     gap: .5rem;
     margin-bottom: 1.5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 /* Filtros para los cursos */
 .head-lbl {
     color: var(--primary);
     font-size: 1rem;
-}
-
-.options-courses {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: .5rem;
-}
-
-.custom-listbox {
-    position: relative;
-    display: inline-block;
-    z-index: 2;
-    font-size: 1rem;
-}
-  
-.listbox-header {
-    cursor: pointer;
-    border: 3px solid transparent;
-    color: var(--primary);
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    border-radius: .5rem;
-    background: var(--texas-rose-50);
-}
-
-.listbox-header:hover {
-    background: var(--texas-rose-100);
-}
-
-.listbox-header:active {
-    background: var(--texas-rose-100);
-    border: 3px solid var(--primary);
-}
- 
-.active {
-    background: var(--texas-rose-100);
-    border: 3px solid var(--primary);
-}
-  
-.selected-option {
-    flex-grow: 1;
-    margin-right: .5rem;
-}
-  
-.arrow-down {
-    transition: transform 0.2s ease-in-out;
-    margin-right: .7rem;
-    font-size: .7rem;
-}
-  
-.options {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: var(--white);
-    z-index: 1;
-    margin-top: .5rem;
-    width: 9rem;
-    padding: .2rem;
-    border-radius: .5rem;
-    border: 1px solid var(--texas-rose-100);
-}
-  
-.options li {
-    padding: .5rem;
-    cursor: pointer;
-    color: var(--primary);
-    font-size: .9rem;
-}
-  
-.options li:hover {
-    background: var(--primary);
-    color: var(--white);
-    border-radius: .5rem;
-}
-
-.custom-listbox.active .options {
-    display: block;
-}
-
-#listbox {
-    height: 2.5rem;
-    border: transparent;
-    border-radius: .5rem;
-    font-size: .9rem;
-    outline: none;
-    display: block;
-    min-width: 0; 
-    width: auto;
-    padding: .5rem;
-    color: var(--primary);
-    background: transparent;
 }
 
 .custom-input {
@@ -297,7 +205,7 @@ body {
     }
 
     .head-title {
-        font-size: 3rem;
+        font-size: 2.5rem;
         text-align: center;
     }
     

@@ -10,11 +10,9 @@
             Schema::create('Next_Idc_Topic_Report', function (Blueprint $table) {
                 $table->increments('nextIdcTopicReportId');
                 $table->string('code')->nullable();
-                $table->string('introduction', 400)->nullable();
-                $table->string('continueTopic', 850)->nullable();
-                $table->string('proposeTopics', 850)->nullable();
-                $table->string('conclusion', 800)->nullable();
                 $table->string('storagePath', 300)->nullable();
+                $table->string('nameCorrectDocument', 200)->nullable();
+                $table->string('correctDocumentStoragePath', 300)->nullable();
                 $table->string('nameCorrectedDocument', 200)->nullable();
                 $table->string('correctedDocumentStoragePath', 300)->nullable();
                 $table->string('state', 30)->nullable();

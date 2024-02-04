@@ -11,11 +11,9 @@
 
         protected $fillable = [
             'nextIdcTopicReportId',
-            'code',
-            'introduction',
-            'continueTopic',
-            'proposeTopics',
             'storagePath',
+            'nameCorrectDocument',
+            'correctDocumentStoragePath',
             'nameCorrectedDocument',
             'correctedDocumentStoragePath',
             'state',

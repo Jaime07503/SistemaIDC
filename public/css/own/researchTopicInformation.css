@@ -71,12 +71,14 @@ h3 {
     padding: 15px;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 /* Historial de Vistas */
 .history {
     display: flex;
-    gap: .5rem;
+    gap: .7rem;
     flex-wrap: wrap; 
     justify-content: start;
     align-items: center;
@@ -91,6 +93,7 @@ h3 {
     box-sizing: border-box;
     width: auto;
     border-radius: .5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .history-view:hover {
@@ -111,6 +114,8 @@ h3 {
     border-radius: .5rem;
     gap: .5rem;
     margin-bottom: 1.5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .information {
@@ -138,6 +143,7 @@ h3 {
     height: 100%;
     width: 49%;
     border-radius: .5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 /* Equipos de investigación */
@@ -181,7 +187,7 @@ h3 {
     gap: 0.5rem;
     border-radius: .5rem;
     padding: 1rem;
-    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .head {
@@ -202,7 +208,7 @@ h3 {
     display: flex;
     flex-direction: column;
     border-radius: .5rem;
-    box-shadow: 0 0.2rem 0.4rem 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .team-content h4 {
@@ -228,8 +234,9 @@ h3 {
     align-items: center;
     justify-content: center;
     gap: .5rem;
-    width: 5.5rem;
+    width: 9rem;
     color: var(--primary);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .btn-postulate:hover {
