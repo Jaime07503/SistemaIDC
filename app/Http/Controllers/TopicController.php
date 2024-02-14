@@ -1,10 +1,29 @@
 <?php
+    namespace App\Http\Controllers;
+    use App\Models\Subject;
+    use App\Models\Topic;
 
-namespace App\Http\Controllers;
+    class TopicController extends Controller
+    {
+        public function getTopics($subjectId) {
+            $subject = Subject::join('Teacher', 'Subject.idTeacher', '=', 'Teacher.teacherId')
+                ->join('User', 'Teacher.idUser', '=', 'User.userId')
+                ->find($subjectId);
 
-use Illuminate\Http\Request;
+            $researchTopics = Topic::where('subject', $subject->nameSubject)
+                ->where('state', 'Seleccionado')
+                ->get();
 
-class TopicController extends Controller
-{
-    //
-}
+            return view('layouts.topicsApproveIdc', compact('researchTopics', 'subject'));
+        }
+
+        public function approvedTopicIdc($topicId) {
+            $APPROVE_STATE = 'Aprobado';
+            $researchTopic = Topic::find($topicId);
+            $researchTopic->state = $APPROVE_STATE;
+            $researchTopic->save();
+
+            return redirect()->route('approveResearchTopics');
+        }
+    }
+?>

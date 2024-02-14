@@ -15,7 +15,7 @@
                 $table->string('averageType', 150);
                 $table->string('source', 100);
                 $table->string('link', 1000);
-                $table->string('studentContribute', 300);
+                $table->integer('studentContribute');
                 $table->string('state', 30);
                 $table->timestamps();
             });

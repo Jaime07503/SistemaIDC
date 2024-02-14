@@ -10,14 +10,14 @@
 
 @section('content')
     <main class="main-content">
-        <div class="head-content">
+        <header class="head-content">
             <h1>Administración de Facultades</h1>
             <div class="history">
-                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" href="{{ route('home') }}">Inicio del Sitio</a>
                 <a class="history-view">Facultades</a>
             </div>
-        </div>
-        <div class="info-user">
+        </header>
+        <section class="info-user">
             <div class="head">
                 <h2>Facultades</h2>
             </div>
@@ -29,34 +29,38 @@
 
             <!-- Facultys Table -->
             <div class="users-content">
-                <table id="data-table-faculty" class="table content-table">
-                    <thead>
-                        <tr>
-                            <th>Facultad</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($facultys as $faculty)
+                @if(isset($noFacultys))
+                    <h3 class="empty">No hay <strong>Facultades creadas</strong> aún</h3>
+                @else
+                    <table id="data-table-faculty" class="table content-table">
+                        <thead>
                             <tr>
-                                <td data-values="Facultad">{{ $faculty->nameFaculty }}</td>
-                                <td data-values="Acciones">
-                                    <button class="btn-edit btn" data-modal="editarModal"
-                                        data-facultyId="{{ $faculty->facultyId }}"
-                                        data-nameFaculty="{{ $faculty->nameFaculty }}"
-                                    >
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </button>
-                                    <button class="btn-delete btn" data-modal="eliminarModal"
-                                        data-facultyId="{{ $faculty->facultyId }}"
-                                    >
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
+                                <th>Facultad</th>
+                                <th>Acciones</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach($facultys as $faculty)
+                                <tr>
+                                    <td data-values="Facultad">{{ $faculty->nameFaculty }}</td>
+                                    <td data-values="Acciones">
+                                        <button class="btn-edit btn" data-modal="editarModal"
+                                            data-facultyId="{{ $faculty->facultyId }}"
+                                            data-nameFaculty="{{ $faculty->nameFaculty }}"
+                                        >
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+                                        <button class="btn-delete btn" data-modal="eliminarModal"
+                                            data-facultyId="{{ $faculty->facultyId }}"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
 
                 <!-- Add Faculty Modal -->
                 <div id="myModalFaculty" class="modal">
@@ -65,10 +69,10 @@
                             <h2>Nueva Facultad</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form id="formAddFaculty" action="{{ url('/addFaculty') }}" method="POST" id="formFaculty" class="addFaculty">
+                        <form id="formAddFaculty" action="{{ route('faculty.create') }}" method="POST" id="formFaculty" class="addFaculty">
                             @csrf
                             <div class="input-box">
-                                <input class="input-faculty" type="text" name="nameFaculty" id="nameFacultyInput" placeholder="Nombre de la facultad" autocomplete="off" maxlength="200">
+                                <input class="input-faculty" type="text" name="nameFaculty" id="nameFacultyInput" placeholder="Facultad" autocomplete="off" maxlength="200">
                             </div>
                             <div id="notificationF" class="notificationM"></div>
 
@@ -81,13 +85,13 @@
                 <div class="modal" id="editarModal">
                     <div class="modal-content">
                         <header class="head">
-                            <h2>Datos de la facultad</h2>
+                            <h2>Datos de la Facultad</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form id="formEditFaculty" action="{{ route('editFaculty') }}" method="POST">
+                        <form id="formEditFaculty" action="{{ route('faculty.edit') }}" method="POST">
                             @csrf
                             <div class="input-box">
-                                <input class="input-faculty" type="text" name="nameFaculty" id="nameFaculty" placeholder="Nombre de la facultad" autocomplete="off" maxlength="200">
+                                <input class="input-faculty" type="text" name="nameFaculty" id="nameFaculty" placeholder="Facultad" autocomplete="off" maxlength="200">
                             </div>
                             <input hidden type="text" name="facultyId" id="facultyEditId">
                             <div id="notificationFE" class="notificationM"></div>
@@ -101,11 +105,11 @@
                 <div class="modal" id="eliminarModal">
                     <div class="modal-content">
                         <header class="head">
-                            <h2>¿Realmente deseas eliminar la facultad?</h2>
+                            <h2>¿Realmente deseas eliminar la Facultad?</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
                         <div class="optionDeleteUser">
-                            <form action="{{ route('deleteFaculty') }}" method="POST">
+                            <form action="{{ route('faculty.delete') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="facultyId" id="facultyId" class="error-input" autocomplete="off">
@@ -116,7 +120,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 @endsection
 

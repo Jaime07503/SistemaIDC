@@ -7,21 +7,27 @@
 
     class UserController extends Controller
     {
-        public function getCareers()
+        public function getUsers()
         {
-            $careers = Career::whereHas('Faculty', function ($query) {
-                $query->where('nameFaculty', 'Ingeniería y Arquitectura');
-            })->select('nameCareer')->get();
+            $careers = Career::select('nameCareer')
+                ->get();
 
-            $users = User::get();
+            $users = User::select('userId', 'name', 'avatar', 'email', 'role','state')
+                ->get();
 
             foreach ($users as $user) {
                 if ($user->role == 'Docente') {
-                    $docenteInfo = Teacher::where('idUser', $user->userId)->first();
-                    $user->teacherId = $docenteInfo->teacherId;
-                    $user->contractType = $docenteInfo->contractType;
-                    $user->specialty = $docenteInfo->specialty;
+                    $teacherInformation = Teacher::where('idUser', $user->userId)->first();
+                    $user->teacherId = $teacherInformation->teacherId;
+                    $user->contractType = $teacherInformation->contractType;
+                    $user->specialty = $teacherInformation->specialty;
+                    $user->title = $teacherInformation->title;
+                    $user->idcQuantity = $teacherInformation->idcQuantity;
                 }
+            }
+
+            if ($users->isEmpty()) {
+                return view('layouts.user', compact('careers'))->with('noUsers', true);
             }
 
             return view('layouts.user', compact('careers', 'users'));
@@ -41,8 +47,8 @@
                 $teacher = new Teacher();
                 $teacher->contractType = $request->input('contractType');
                 $teacher->specialty = $request->input('specialty');
-                $teacher->title = 'Ing.';
-                $teacher->idcQuantity = 0;
+                $teacher->title = $request->input('title');
+                $teacher->idcQuantity = $request->input('idcQuantity');
                 $teacher->idUser = $user->userId;
                 $teacher->save();
             }
@@ -57,16 +63,16 @@
             $user = User::find($userId);
             $user->name = $request->input('name');
             $user->email = $request->input('email');
-            $user->role = $request->input('role');
+            $user->save();
 
             if ($request->input('role') === 'Docente') {
                 $teacher = Teacher::find($teacherId);
                 $teacher->contractType = $request->input('contractType');
                 $teacher->specialty = $request->input('specialty');
+                $teacher->title = $request->input('title');
+                $teacher->idcQuantity = $request->input('idcQuantity');
                 $teacher->save();
             }
-
-            $user->save();
 
             return redirect()->route('user');
         }
@@ -74,7 +80,6 @@
         public function deleteUser(Request $request) {
             $userId = $request->input('userId');
             $user = User::find($userId);
-
             $user->delete();
 
             return redirect()->route('user');

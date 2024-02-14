@@ -14,7 +14,7 @@
         <header class="head-content">
             <h1 class="head-lbl">{{ $subject->nameSubject.' - '.$subject->section.' - '.$subject->teacher->user->name}}</h1>
             <nav class="history">
-                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" href="{{ route('tablero') }}">Tablero</a>
                 <a class="history-view">Mis cursos</a>
                 <a class="history-view" href="">{{ $subject->code }}</a>
             </nav>
@@ -26,6 +26,10 @@
                 @if(session('role') === 'Docente' && $subject->teacher->idcQuantity === 0)
                     <a href="{{ route('newResearchTopic', ['subjectId' => $subject->subjectId]) }}" class="btn-postulate">
                         <i class="fa-solid fa-bookmark"></i> Postular Tema</h3>
+                    </a>
+                @else
+                    <a href="{{ route('topicsApproveIdc', ['subjectId' => $subject->subjectId]) }}" class="btn-postulate">
+                        <i class="fa-solid fa-hand-pointer"></i> Seleccionar Temas</h3>
                     </a>
                 @endif
             </header>
@@ -39,7 +43,7 @@
                     <h3 class="empty">No hay temas de investigación <strong>Aprobados</strong> ó <strong>Postulados</strong></h3>
                 @endif
             @else
-                <aside class="topics">
+                <div class="topics">
                     @foreach ($researchTopics as $topic)
                         <div class="card cards-researchTopics">
                             <h3 class="card-title">{{ $topic->state }}</h3>
@@ -47,7 +51,7 @@
                             <a href="{{ route('researchTopicInformation', ['researchTopicId' => $topic->researchTopicId, 'subjectId' => $subject->subjectId]) }}" class="card-link">{{ $topic->themeName }}</a>
                         </div>
                     @endforeach
-                </aside>
+                </div>
             @endif
         </section>
     </main>

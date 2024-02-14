@@ -66,7 +66,7 @@
                     <input type="text" hidden name="idTeacher" value="{{ $subject->idTeacher }}">
                     <input type="text" hidden name="subjectId" value="{{ $subject->subjectId }}">
                     <input type="hidden" name="selectedStudentIds" id="selectedStudentIds">
-                    <button type="submit" class="btn" id="submitButton"><i class="fa-solid fa-people-group"></i>Postular Equipo</button>
+                    <button type="submit" class="btn" id="submitButton"><i class="fa-solid fa-people-group"></i> Postular Equipo</button>
                 </form>
             @endif
         </section>

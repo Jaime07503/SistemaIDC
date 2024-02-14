@@ -68,19 +68,19 @@
 }
 
 .ic_notificaciones {
-    position: relative; /* Agregar posición relativa */
+    position: relative;
 }
 
 .ic_notificaciones .badge {
-    position: absolute; /* Hacer que el conteo sea posicionado absolutamente */
-    top: 0; /* Ajustar la posición vertical */
-    right: 4px; /* Ajustar la posición horizontal */
-    color: var(--primary); /* Color del texto */
-    border-radius: 50%; /* Hacer el badge circular */
-    padding: .3rem; /* Ajustar el relleno */
-    font-size: .8rem; /* Tamaño del texto */
+    position: absolute; 
+    top: 0;
+    right: 4px;
+    color: var(--primary); 
+    border-radius: 50%;
+    padding: .3rem;
+    font-size: .8rem;
     font-weight: 900;
-    pointer-events: none; /* Evitar que el badge afecte al hover */
+    pointer-events: none;
 }
 
 .ic {
@@ -97,88 +97,6 @@
 
 .ic_flecha {
     margin: 0 5px;
-}
-
-#dropdown-menu {
-    display: none;
-    position: fixed;
-    top: 70px;
-    left: 0;
-    background-color: var(--white);
-    z-index: 1000;
-}
-
-#menu-btn {
-    cursor: pointer;
-}
-
-.content-menu {
-    width: 15rem;   
-}
-
-.nav-link {
-    color: var(--white);
-    display: block;
-    text-decoration: none;
-    font-size: 1rem;
-}
-
-.nav-link--inside {
-    padding: .5rem;
-    text-align: left;
-}
-
-.nav-link--inside:hover {
-    background: #C00000;
-}
-
-.list {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background: var(--primary);
-}
-
-.list-item {
-    list-style: none;
-    width: 100%;
-    text-align: center;
-    overflow: hidden;
-}
-
-.list-item--click {
-    cursor: pointer;
-}
-
-.list-button {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    width: 100%;
-    padding: .7rem;
-}
-
-.list-icon, .list-arrow {
-    font-size: .7rem;
-    color: var(--white);
-}
-
-.list-show {
-    width: 90%;
-    margin-left: auto;
-    border-left: 2px solid var(--white);
-    list-style: none;
-    transition: height .4s;
-    height: 0;
-}
-
-.arrow .list-arrow-nav {
-    transform: rotate(180deg);
-}
-
-.list-arrow-nav {
-    transition: transform .3s;
 }
 
 @media (max-width: 635px){

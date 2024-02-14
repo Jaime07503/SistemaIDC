@@ -1,7 +1,5 @@
 <?php
-
     namespace App\Http\Controllers;
-
     use App\Models\Career;
     use Illuminate\Http\Request;
     use App\Models\Faculty;
@@ -10,15 +8,22 @@
     {
         public function getCareers()
         {
-            $careers = Career::join('Faculty', 'Career.idFaculty', '=', 'Faculty.facultyId')->get();
-            $facultys = Faculty::all();
+            $facultys = Faculty::select('facultyId', 'nameFaculty')
+                ->get();
+
+            $careers = Career::join('Faculty', 'Career.idFaculty', '=', 'Faculty.facultyId')
+                ->select('careerId', 'nameCareer', 'idFaculty', 'facultyId', 'nameFaculty')
+                ->get();
+
+            if ($careers->isEmpty()) {
+                return view('layouts.career', compact('facultys'))->with('noCareers', true);
+            }
 
             return view('layouts.career', compact('careers', 'facultys'));
         }
 
         public function addCareer(Request $request)
         {
-            // Create new Career
             $career = new Career();
             $career->nameCareer = $request->input('nameCareer');
             $career->idFaculty = $request->input('idFaculty');
@@ -29,23 +34,20 @@
 
         public function editCareer(Request $request)
         {
-            //Edit career by careerId
             $careerId = $request->input('careerId');
-
             $career = Career::find($careerId);
             $career->nameCareer = $request->input('nameCareerInput');
             $career->idFaculty = $request->input('idFaculty');
             $career->save();
 
-            return redirect()->route('career')->with('success', 'Carrera actualizada');
+            return redirect()->route('career');
         }
 
         public function deleteCareer(Request $request) {
-            // Buscar el usuario por ID
             $careerId = $request->input('careerId');
             $career = Career::find($careerId);
-            // Eliminar la carrera
             $career->delete();
+
             return redirect()->route('career');
         }
     }

@@ -360,6 +360,15 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     })
 
+    var sectionInput = document.getElementById('sectionInput')
+    sectionInput.addEventListener('input', function() {
+        var inputValue = this.value
+        
+        var sanitizedValue = inputValue.replace(/[^A-Z]/g, '')
+        
+        this.value = sanitizedValue
+    })
+
     function openModal(modalId) {
         document.getElementById(modalId).style.display = 'block'
     }

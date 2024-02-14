@@ -2,12 +2,10 @@
     namespace App\Http\Controllers;
     use App\Models\BibliographicSource;
     use App\Models\Idc;
-    use App\Models\IDCDates;
     use App\Models\Objetive;
     use App\Models\SourceObjetive;
     use App\Models\SourceSearch;
     use App\Models\User;
-    use Carbon\Carbon;
     use Illuminate\Http\Request;
 
     class TopicSearchReportController extends Controller
@@ -20,16 +18,19 @@
                     ->orderby('state')
                     ->orderByDesc('year')
                     ->get();
+
                 $objetivesG = Objetive::join('Source_Objetive', 'Objetive.objetiveId', '=', 'Source_Objetive.idObjetive')
                     ->where('type', 'General')
                     ->where('idTopicSearchReport', $idTopicSearchReport)
                     ->orderby('state')
                     ->get();
+
                 $objetivesE = Objetive::join('Source_Objetive', 'Objetive.objetiveId', '=', 'Source_Objetive.idObjetive')
                     ->where('type', 'Especifico')
                     ->where('idTopicSearchReport', $idTopicSearchReport)
                     ->orderby('state')
                     ->get();
+
                 $topicSearchReport = Idc::join('Topic_Search_Report', 'Idc.idcId', '=', 'Topic_Search_Report.idIdc')
                     ->join('Team', 'Idc.idTeam', '=', 'Team.teamId')
                     ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
@@ -39,6 +40,7 @@
                     'Research_Topic.code', 'Subject.subjectId', 'Team.teamId', 'Topic_Search_Report.code as searchReportCode')
                     ->where('Topic_Search_Report.topicSearchReportId', $idTopicSearchReport)
                     ->first();
+
                 $students = Idc::join('Team', 'Idc.idTeam', '=', 'Team.teamId')
                     ->join('Student_Team', 'Team.teamId', '=', 'Student_Team.idTeam')
                     ->join('Student', 'Student_Team.idStudent', '=', 'Student.studentId')
@@ -47,28 +49,34 @@
                     ->select('User.name')
                     ->get();
 
+                if($topicSearchReport->state !== 'Sin Intento') {
+                    return redirect()->back();
+                }
+
                 return view('layouts.topicSearchReport', compact('sources', 'objetivesG', 'objetivesE', 'students','role', 'idcId', 'idTopicSearchReport', 'topicSearchReport'));
-            } else {
-                $userId = session('userId');
-                $user = User::find($userId);
+            } 
+            else {
                 $sources = BibliographicSource::join('Source_Search', 'Bibliographic_Source.bibliographicSourceId', '=', 'Source_Search.idBibliographicSource')
                     ->where('idTopicSearchReport', $idTopicSearchReport)
-                    ->where('studentContribute', $user->name)
+                    ->where('studentContribute', auth()->user()->userId)
                     ->orderby('state')
                     ->orderByDesc('year')
                     ->get();
+
                 $objetivesG = Objetive::join('Source_Objetive', 'Objetive.objetiveId', '=', 'Source_Objetive.idObjetive')
                     ->where('type', 'General')
                     ->where('idTopicSearchReport', $idTopicSearchReport)
-                    ->where('studentContribute', $user->name)
+                    ->where('studentContribute', auth()->user()->userId)
                     ->orderby('state')
                     ->get();
+
                 $objetivesE = Objetive::join('Source_Objetive', 'Objetive.objetiveId', '=', 'Source_Objetive.idObjetive')
                     ->where('type', 'Especifico')
                     ->where('idTopicSearchReport', $idTopicSearchReport)
-                    ->where('studentContribute', $user->name)
+                    ->where('studentContribute', auth()->user()->userId)
                     ->orderby('state')
                     ->get();
+
                 $topicSearchReport = Idc::join('Topic_Search_Report', 'Idc.idcId', '=', 'Topic_Search_Report.idIdc')
                     ->join('Team', 'Idc.idTeam', '=', 'Team.teamId')
                     ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
@@ -78,6 +86,10 @@
                     'Research_Topic.code', 'Subject.subjectId', 'Team.teamId', 'Topic_Search_Report.code as searchReportCode')
                     ->where('Topic_Search_Report.topicSearchReportId', $idTopicSearchReport)
                     ->first();
+
+                if($topicSearchReport->state !== 'Sin Intento') {
+                    return redirect()->back();
+                }
 
                 return view('layouts.topicSearchReport', compact('sources', 'objetivesG', 'objetivesE', 'role', 'idcId', 'idTopicSearchReport', 'topicSearchReport'));
             }
@@ -94,7 +106,7 @@
             $bibliographicSource->author = $request->input('author');
             $bibliographicSource->year = $request->input('year');
             $bibliographicSource->averageType = $request->input('averageType');
-            $bibliographicSource->studentContribute = $user->name;
+            $bibliographicSource->studentContribute = $user->userId;
             $bibliographicSource->link = $request->input('link');
             $bibliographicSource->source = $request->input('source');
             $bibliographicSource->state = 'Por Aprobar';
@@ -112,11 +124,12 @@
             $idcId = $request->input('idcId');
             $idTopicSearchReport = $request->input('idTopicSearchReport');
             $userId = session('userId');
+
             $user = User::find($userId);
             $objetive = new Objetive();
             $objetive->objetive = $request->input('objetive');
             $objetive->type = $request->input('type');
-            $objetive->studentContribute = $user->name;
+            $objetive->studentContribute = $user->userId;
             $objetive->state = 'Por aprobar';
             $objetive->save();
 

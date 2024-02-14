@@ -13,19 +13,18 @@
             'idcId',
             'badgeProcessCompleted',
             'state',
-            'idUser',
             'idTeam'
         ];
 
         //Relationships with other tables
-        public function user()
-        {
-            return $this->belongsTo(User::class, 'idUser');
-        }
-
         public function team()
         {
             return $this->belongsTo(Team::class, 'idTeam');
+        }
+
+        public function trainingDocument() 
+        {
+            return $this->hasMany(TrainingDocument::class);    
         }
 
         public function topicSearchReport()

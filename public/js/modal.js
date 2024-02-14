@@ -13,27 +13,31 @@ document.addEventListener('DOMContentLoaded', function () {
         modalNotificationVisible = false
     }
 
-    avatarContainer.addEventListener('click', function (event) {
-        event.stopPropagation()
-        if (modalUserVisible) {
-            cerrarTodasModales()
-        } else {
-            cerrarTodasModales()
-            avatarModal.style.display = 'block'
-            modalUserVisible = true
-        }
-    })
+    if (avatarContainer) {
+        avatarContainer.addEventListener('click', function (event) {
+            event.stopPropagation()
+            if (modalUserVisible) {
+                cerrarTodasModales()
+            } else {
+                cerrarTodasModales()
+                avatarModal.style.display = 'block'
+                modalUserVisible = true
+            }
+        })
+    }
 
-    notificationUser.addEventListener('click', function (event) {
-        event.stopPropagation()
-        if (modalNotificationVisible) {
-            cerrarTodasModales()
-        } else {
-            cerrarTodasModales()
-            notificationModal.style.display = 'block'
-            modalNotificationVisible = true
-        }
-    })
+    if (notificationUser) {
+        notificationUser.addEventListener('click', function (event) {
+            event.stopPropagation()
+            if (modalNotificationVisible) {
+                cerrarTodasModales()
+            } else {
+                cerrarTodasModales()
+                notificationModal.style.display = 'block'
+                modalNotificationVisible = true
+            }
+        })
+    }
 
     var modalLinks = avatarModal.querySelectorAll('.enlace-div')
     modalLinks.forEach(function (link) {
@@ -43,8 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
     document.addEventListener('click', function (event) {
-        if ((modalUserVisible || modalNotificationVisible) && event.target !== avatarModal && !avatarModal.contains(event.target) 
-        && event.target !== notificationModal && !notificationModal.contains(event.target)) {
+        if ((modalUserVisible || modalNotificationVisible)
+            && event.target !== avatarModal && !avatarModal.contains(event.target)
+            && event.target !== notificationModal && !notificationModal.contains(event.target)) {
             cerrarTodasModales()
         }
     })

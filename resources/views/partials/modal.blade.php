@@ -43,10 +43,14 @@
                 <h2 class="empty-notification">No tienes notificaciones</h2>
             @else
                 @foreach(auth()->user()->unreadNotifications as $notification)
-                    <div class="notification">
-                        @if($notification->data['type'] === 'NT')
+                    <div class="notificationContent">
+                        @if($notification->data['type'] === 'PT' || $notification->data['type'] === 'AT')
                             <a href="{{ route('researchTopicInformation', ['researchTopicId' => $notification->data['researchTopicId'], 
                                 'subjectId' => $notification->data['subjectId']]) }}" class="link">
+                                {{ $notification->data['title'] }} - {{ $notification->created_at->locale('es')->diffForHumans() }}
+                            </a>
+                        @elseif($notification->data['type'] === 'PRT' || $notification->data['type'] === 'ART')
+                            <a href="{{ route('researchTopics', ['subjectId' => $notification->data['subjectId']]) }}" class="link">
                                 {{ $notification->data['title'] }} - {{ $notification->created_at->locale('es')->diffForHumans() }}
                             </a>
                         @elseif($notification->data['type'] === 'TSR' || $notification->data['type'] === 'TSRAPP' || $notification->data['type'] === 'CHTSRCRT'

@@ -31,6 +31,10 @@
                     ->where('Idc.idcId', $idcId)
                     ->first();
 
+                if($nextIdcTopicReport->state !== 'Sin Intento') {
+                    return redirect()->back();
+                }
+
                 // $now = Carbon::now();
 
                 // if ($now < Carbon::parse($dates->startDateNextIdcTopic)) {
@@ -44,7 +48,7 @@
 
                 $topics = Topic::join('Report_Topic', 'Topic.topicId', '=', 'Report_Topic.idTopic')
                     ->where('idNextIdcTopicReport', $idNextIdcTopicReport)
-                    ->where('studentContribute', $user->name)
+                    ->where('studentContribute', $user->userId)
                     ->orderby('state')
                     ->get();
 
@@ -58,6 +62,10 @@
                     'Subject.subjectId')
                     ->where('Idc.idcId', $idcId)
                     ->first();
+                    
+                if($nextIdcTopicReport->state !== 'Sin Intento') {
+                    return redirect()->back();
+                }
 
                 // $now = Carbon::now();
 
@@ -95,7 +103,8 @@
             $topic->updatedInformation = $request->input('updatedInformation');
             $topic->localRelevance = $request->input('localRelevance');
             $topic->globalRelevance = $request->input('globalRelevance');
-            $topic->studentContribute = $user->name;
+            $topic->subject = '';
+            $topic->studentContribute = $user->userId;
             $topic->state = 'Por aprobar';
             $topic->save();
 

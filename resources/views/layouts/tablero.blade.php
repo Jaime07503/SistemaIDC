@@ -18,7 +18,7 @@
             </div>
             <img src="{{ asset('images/idc_logo.webp') }}" class="image-idc" alt="Logo IDC">
         </header>
-        @if(session('role') === 'Docente' || session('role') === 'Estudiante')
+        @if(auth()->user()->role === 'Docente' || auth()->user()->role === 'Estudiante')
             <!-- Vista general del curso -->
             <section class="courses-content">
                 <h2 class="head-lbl">Vista general del curso</h2>
@@ -31,15 +31,17 @@
                     @if(isset($noCourses))
                         <h3 class="empty">No tienes cursos disponibles</h3>
                     @else
-                        <aside class="courses">
+                        <div class="courses">
                             @foreach ($courses as $course)
                                 <div class="card card-courses">
                                     <h3 class="card-title">{{ $course->cycle }}</h3>
                                     <img src="{{ $course->avatar }}" class="card-image" alt="Imagen">
-                                    <a href="{{ route('researchTopics', ['subjectId' => $course->subjectId]) }}" class="card-link">{{ $course->nameSubject }} - {{ $course->section }} - {{ $course->name }}</a>
+                                    <a href="{{ route('researchTopics', ['subjectId' => $course->subjectId]) }}" class="card-link">
+                                        {{ $course->nameSubject }} - {{ $course->section }} - {{ $course->name }}
+                                    </a>
                                 </div>
                             @endforeach
-                        </aside>
+                        </div>
                     @endif
                 @endif
             </section>
@@ -54,27 +56,28 @@
                 @if(auth()->user()->role === 'Docente')
                     <h3 class="empty">No tienes <strong>Equipos Aprobados</strong></h3>
                 @else
-                    <h3 class="empty">No perteneces a un <strong>Equipo</strong> aún</h3>
+                    <h3 class="empty">No perteneces a <strong>Equipos Aprobados</strong></h3>
                 @endif
             @else
                 @if(isset($noTeams))
                     @if(auth()->user()->role === 'Docente')
                         <h3 class="empty">No tienes <strong>Equipos Aprobados</strong></h3>
                     @else
-                        <h3 class="empty">No perteneces a un <strong>Equipo</strong> aún</h3>
+                        <h3 class="empty">No perteneces a <strong>Equipos Aprobados</strong></h3>
                     @endif
                 @else
-                    <aside class="teams">
+                    <div class="teams">
                         @foreach ($teams as $team)
                             <div class="card card-teams">
                                 <h5 class="card-title">Equipo #{{ $team->teamId}}</h5>
                                 <img src="{{ $team->avatar }}" alt="Imagen" class="card-image">
                                 <a href="{{ route('stagesProcess', ['researchTopicId' => $team->researchTopicId, 
-                                    'teamId' => $team->teamId, 'idcId' => $team->idcId]) }}" class="card-link">{{ $team->themeName }}
+                                'teamId' => $team->teamId, 'idcId' => $team->idcId]) }}" class="card-link">
+                                    {{ $team->themeName }}
                                 </a>
                             </div>
                         @endforeach
-                    </aside>
+                    </div>
                 @endif
             @endif
         </section>

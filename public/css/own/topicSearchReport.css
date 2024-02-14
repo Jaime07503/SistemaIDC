@@ -56,6 +56,7 @@ body {
     margin-top: 6rem;
     border-radius: .5rem;
     border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .head-lbl {
@@ -66,7 +67,7 @@ body {
 /* Historial de vistas */
 .history {
     display: flex;
-    gap: .5rem;
+    gap: .7rem;
     flex-wrap: wrap; 
     justify-content: start;
     align-items: center;
@@ -81,6 +82,7 @@ body {
     box-sizing: border-box;
     width: auto;
     border-radius: .5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .history-view:hover {
@@ -117,6 +119,7 @@ h2 {
 .source-content {
     margin-bottom: 1.7rem;
     border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .info-team {
@@ -276,16 +279,17 @@ input:focus {
 
 .btn {
     background: var(--texas-rose-100);
-    border: 3px solid var(--white);
+    border: 3px solid transparent;
     color: var(--primary);
     text-align: center;
     outline: none;
     font-size: .9rem;
-    font-weight: 100;
+    font-weight: 900;
     height: 100%;
     border-radius: .5rem;
     padding: .3rem;
     cursor: pointer;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .btn:hover {
@@ -332,6 +336,7 @@ input:focus {
     max-width: 250px;
     display: inline-block;
     text-decoration: none;
+    font-size: .9rem;
 }
 
 .link:hover {
@@ -538,6 +543,14 @@ input:focus {
 
 .textareaEdit {
     height: 65px;
+}
+
+.empty {
+    font-size: .9rem;
+    color: var(--primary);
+    margin: auto;
+    font-weight: 100;
+    text-align: center;
 }
 
 /* Scroll */

@@ -24,7 +24,7 @@
                 ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
                 ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
                 ->select('Next_Idc_Topic_Report.storagePath', 'Next_Idc_Topic_Report.code as nextIdcTopicReportCode', 'Idc.idcId',
-                'Next_Idc_Topic_Report.creationDate', 'Next_Idc_Topic_Report.state', 'Next_Idc_Topic_Report.previousState',
+                'Next_Idc_Topic_Report.state', 'Next_Idc_Topic_Report.previousState',
                 'Next_Idc_Topic_Report.correctDocumentStoragePath', 'Next_Idc_Topic_Report.nameCorrectDocument', 
                 'Next_Idc_Topic_Report.correctedDocumentStoragePath', 'Next_Idc_Topic_Report.nameCorrectedDocument', 
                 'Research_Topic.researchTopicId', 'Research_Topic.code', 'Research_Topic.themeName', 'Team.teamId',
@@ -137,7 +137,7 @@
                 $user->notify(new ApproveNTR($nextIdcTopicReport, $idcId));
             }
 
-            return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function approveCorrectedNextIdcTopicReport($idcId, $idNextIdcTopicReport) {
@@ -179,7 +179,7 @@
                 $user->notify(new ApproveNTR($nextIdcTopicReport, $idcId));
             }
 
-            return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function correctNextIdcTopicReport($idcId, $idNextIdcTopicReport, Request $request) {
@@ -210,7 +210,7 @@
             $user = User::find($teacher->userId);
             $user->notify(new CorrectDocumentNTR($nextIdcTopicReport, $idcId));
 
-            return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function correctedNextIdcTopicReport($idcId, $idNextIdcTopicReport, Request $request) {
@@ -231,12 +231,14 @@
             $nextIdcTopicReport->state = $CORRECTED_STATE;
             $nextIdcTopicReport->save();
 
-            $coordinator = Idc::select('Idc.idUser')
-                ->where('Idc.idcId', $idcId)
-                ->first();
-                
-            $user = User::find($coordinator->idUser);
-            $user->notify(new CorrectedDocumentNTR($nextIdcTopicReport, $idcId));
+            $processAdmins = User::select('userId')
+                ->where('role', 'Administrador del Proceso')
+                ->get();
+
+            foreach ($processAdmins as $processAdmin) {
+                $user = User::find($processAdmin->userId);
+                $user->notify(new CorrectedDocumentNTR($nextIdcTopicReport, $idcId));
+            }
 
             return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
         }
@@ -267,7 +269,7 @@
             $user = User::find($teacher->userId);
             $user->notify(new ChangeCorrectDocumentNTR($nextIdcTopicReport, $idcId));
 
-            return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function changeCorrectedNextIdcTopicReport($idcId, $idNextIdcTopicReport, Request $request) {
@@ -286,12 +288,14 @@
 
             $nextIdcTopicReport->save();
 
-            $coordinator = Idc::select('Idc.idUser')
-                ->where('Idc.idcId', $idcId)
-                ->first();
-                
-            $user = User::find($coordinator->idUser);
-            $user->notify(new changeCorrectedDocumentNTR($nextIdcTopicReport, $idcId));
+            $processAdmins = User::select('userId')
+                ->where('role', 'Administrador del Proceso')
+                ->get();
+
+            foreach ($processAdmins as $processAdmin) {
+                $user = User::find($processAdmin->userId);
+                $user->notify(new changeCorrectedDocumentNTR($nextIdcTopicReport, $idcId));
+            }
 
             return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
         }
@@ -334,7 +338,7 @@
                 $user->notify(new DeclineNTR($nextIdcTopicReport, $idcId));
             }
 
-            return redirect()->route('endProcess', compact('idcId', 'idNextIdcTopicReport'));
+            return redirect()->route('generateDocuments');
         }
     }
 ?>

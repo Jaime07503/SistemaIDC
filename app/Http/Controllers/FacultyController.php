@@ -5,9 +5,14 @@
 
     class FacultyController extends Controller
     {
-        public function getCareers()
+        public function getFacultys()
         {
-            $facultys = Faculty::all();
+            $facultys = Faculty::select('facultyId', 'nameFaculty')
+                ->get();
+
+            if ($facultys->isEmpty()) {
+                return view('layouts.faculty')->with('noFacultys', true);
+            }
 
             return view('layouts.faculty', compact('facultys'));
         }
@@ -16,7 +21,6 @@
         {
             $faculty = new Faculty();
             $faculty->nameFaculty = $request->input('nameFaculty');
-
             $faculty->save();
 
             return redirect()->route('faculty');
@@ -25,10 +29,8 @@
         public function editFaculty(Request $request)
         {
             $facultyId = $request ->input('facultyId');
-
             $faculty = Faculty::find($facultyId);
             $faculty->nameFaculty = $request->input('nameFaculty');
-
             $faculty->save();
 
             return redirect()->route('faculty');
@@ -36,9 +38,7 @@
 
         public function deleteFaculty(Request $request) {
             $facultyId = $request->input('facultyId');
-
             $faculty = Faculty::find($facultyId);
-
             $faculty->delete();
             
             return redirect()->route('faculty');

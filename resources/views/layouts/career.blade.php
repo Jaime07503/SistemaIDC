@@ -13,7 +13,7 @@
         <div class="head-content">
             <h1>Administración de Carreras</h1>
             <div class="history">
-                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" href="{{ route('home') }}">Inicio del Sitio</a>
                 <a class="history-view">Carreras</a>
             </div>
         </div>
@@ -45,38 +45,42 @@
 
             <!-- Careers Table -->
             <div class="users-content">
-                <table id="data-table-careers" class="table content-table">
-                    <thead>
-                        <tr>
-                            <th>Carrera</th>
-                            <th>Facultad</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($careers as $career)
+                @if(isset($noCareers))
+                    <h3 class="empty">No hay <strong>Carreras creadas</strong> aún</h3>
+                @else
+                    <table id="data-table-careers" class="table content-table">
+                        <thead>
                             <tr>
-                                <td data-values="Carrera">{{ $career->nameCareer }}</td>
-                                <td data-values="Facultad">{{ $career->nameFaculty }}</td>
-                                <td data-values="Acciones">
-                                    <button class="btn-edit btn" data-modal="editarModal"
-                                        data-nameFaculty="{{ $career->nameFaculty }}"
-                                        data-careerId="{{ $career->careerId }}"
-                                        data-nameCareer="{{ $career->nameCareer }}"
-                                        data-idFaculty="{{ $career->idFaculty }}"
-                                    >
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </button>
-                                    <button class="btn-delete btn" data-modal="eliminarModal"
-                                        data-careerId="{{ $career->careerId }}"
-                                    >
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
+                                <th>Carrera</th>
+                                <th>Facultad</th>
+                                <th>Acciones</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach($careers as $career)
+                                <tr>
+                                    <td data-values="Carrera">{{ $career->nameCareer }}</td>
+                                    <td data-values="Facultad">{{ $career->nameFaculty }}</td>
+                                    <td data-values="Acciones">
+                                        <button class="btn-edit btn" data-modal="editarModal"
+                                            data-nameFaculty="{{ $career->nameFaculty }}"
+                                            data-careerId="{{ $career->careerId }}"
+                                            data-nameCareer="{{ $career->nameCareer }}"
+                                            data-idFaculty="{{ $career->idFaculty }}"
+                                        >
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+                                        <button class="btn-delete btn" data-modal="eliminarModal"
+                                            data-careerId="{{ $career->careerId }}"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
 
                 <!-- Add Career Modal -->
                 <div id="myModalUser" class="modal">
@@ -85,10 +89,10 @@
                             <h2>Nueva Carrera</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form id="formAddCareer" action="{{ url('/addCareer') }}" method="POST" id="formCareer" class="addCareer">
+                        <form id="formAddCareer" action="{{ route('career.create') }}" method="POST" id="formCareer" class="addCareer">
                             @csrf
                             <div class="input-box">
-                                <input class="input-career" type="text" name="nameCareer" id="nameCareerInput" placeholder="Nombre de la Carrera" autocomplete="off" maxlength="200s">
+                                <input class="input-career" type="text" name="nameCareer" id="nameCareerInput" placeholder="Carrera" autocomplete="off" maxlength="200">
                             </div>
 
                             <div class="custom-listbox faculty-lst">
@@ -114,13 +118,13 @@
                 <div class="modal" id="editarModal">
                     <div class="modal-content">
                         <header class="head">
-                            <h2>Datos de la carrera</h2>
+                            <h2>Datos de la Carrera</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form id="formEditCareer" action="{{ url('/editCareer') }}" method="POST">
+                        <form id="formEditCareer" action="{{ route('career.edit') }}" method="POST">
                             @csrf
                             <div class="input-box">
-                                <input class="input-career" type="text" name="nameCareerInput" id="nameCareerEditInput" placeholder="Nombre de la Carrera" autocomplete="off" maxlength="200s">
+                                <input class="input-career" type="text" name="nameCareerInput" id="nameCareerEditInput" placeholder="Carrera" autocomplete="off" maxlength="200">
                             </div>
                             <!-- Listbox -->
                             <div class="custom-listbox">
@@ -130,7 +134,7 @@
                                 </div>
                                 <ul class="options optionsEdit">
                                     @foreach ($facultys as $faculty)
-                                        <li data-value="{{$faculty->facultyId}}">{{$faculty->nameFaculty}} </li>
+                                        <li data-value="{{ $faculty->facultyId }}">{{ $faculty->nameFaculty }} </li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -147,11 +151,11 @@
                 <div class="modal" id="eliminarModal">
                     <div class="modal-content">
                         <header class="head">
-                            <h2>¿Realmente deseas eliminar la carrera?</h2>
+                            <h2>¿Realmente deseas eliminar la Carrera?</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
                         <div class="optionDeleteUser">
-                            <form action="{{ route('deleteCareer') }}" method="POST">
+                            <form action="{{ route('career.delete') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="careerId" id="idInputs" class="error-input" autocomplete="off">

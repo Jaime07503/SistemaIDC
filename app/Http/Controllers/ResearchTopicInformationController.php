@@ -15,14 +15,23 @@
             $role = auth()->user()->role;
 
             $subject = Subject::where('subjectId', $subjectId)->first();
-            if ($subject->idTeacher !== $userId) {
-                $isStudentOfSubject = StudentSubject::where('idStudent', $userId)
-                                                    ->where('idSubject', $subjectId)
-                                                    ->exists();
-                if (!$isStudentOfSubject) {
-                    return redirect()->back();
-                }
-            }
+
+            // if ($subject->idTeacher !== $userId) {
+            //     $isStudentOfSubject = StudentSubject::where('idStudent', $userId)
+            //                                         ->where('idSubject', $subjectId)
+            //                                         ->exists();
+            //     if (!$isStudentOfSubject) {
+            //         return redirect()->back();
+            //     }
+            // } else {
+            //     $isStudentOfSubject = StudentSubject::where('idStudent', session('studentId'))
+            //         ->where('idSubject', $subjectId)
+            //         ->exists();
+
+            //     if (!$isStudentOfSubject) {
+            //         return redirect()->back();
+            //     }
+            // }
             
             $studentId = session('studentId');
             $researchTopic = ResearchTopic::where('researchTopicId', $researchTopicId)->first();
@@ -71,7 +80,7 @@
                     'user' => $userDetails,
                 ];
             }
-                        
+
             return view('layouts.researchTopicInformation', compact('researchTopic', 'subject', 'researchTopicId', 'studentResearch', 'postulatedSubject' , 'studentId', 'subjectId', 'result'));            
         }
 

@@ -26,25 +26,14 @@
                     <h3>Información del Tema de Investigación</h3>
                 </header>
                 <div class="information">
-                    <textarea class="textarea textareaTopicA" name="code" placeholder="Código" maxlength="80"></textarea>
                     <textarea class="textarea textareaTopicA" name="themeName" placeholder="Tema" maxlength="300"></textarea>
                     <textarea class="textarea textareaTopicA" name="description" placeholder="Descripción" maxlength="500"></textarea>
-
-                    <div class="container file-container" id="container">
-                        <input type="file" name="Avatar" class="file-input" accept="image/png, image/jpeg" hidden>
-                        <div class="img-area" data-img="">
-                            <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <h4>Avatar</h4>
-                            <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
-                            <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
-                        </div>
-                    </div>
 
                     <div class="container file-container" id="container2">
                         <input type="file" name="Imagen-Importancia-Local" class="file-input" accept="image/png, image/jpeg" hidden>
                         <div class="img-area" data-img="">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <h4>Importancia Local</h4>
+                            <h4>Importancia Local (Opcional)</h4>
                             <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
                             <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
                         </div>
@@ -54,7 +43,7 @@
                         <input type="file" name="Imagen-Importancia-Global" class="file-input" accept="image/png, image/jpeg" hidden>
                         <div class="img-area" data-img="">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <h4>Importancia Global</h4>
+                            <h4>Importancia Global (Opcional)</h4>
                             <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
                             <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
                         </div>

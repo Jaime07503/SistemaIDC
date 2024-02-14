@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const textareas = document.querySelectorAll(".textarea");
+    textareas.forEach(textarea => {
+        textarea.addEventListener('keyup', e => {
+            textarea.style.height = "2.95rem"; 
+            let scHeight = e.target.scrollHeight;
+            console.log(scHeight);
+            textarea.style.height = `${scHeight}px`;
+        });
+    });
+
     const fileContainers = document.querySelectorAll('.file-container')
     fileContainers.forEach(function (fileContainer) {
         const inputFile = fileContainer.querySelector('.file-input')

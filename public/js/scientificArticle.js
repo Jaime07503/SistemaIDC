@@ -1,15 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('formSARC')
-    const fileInput = document.getElementById('btn-file-SARC')
-    
-    if (form && fileInput) {
-        fileInput.addEventListener('change', function() {
-            if (fileInput.files.length > 0) {
-                form.submit()
-            }
-        })
-    }
-
     const formDI = document.getElementById('formSARDI')
     const fileInputDI = document.getElementById('btn-file-SARDI')
     
@@ -28,17 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
         fileInputSC.addEventListener('change', function() {
             if (fileInputSC.files.length > 0) {
                 formSC.submit()
-            }
-        })
-    }
-
-    const formSARDC = document.getElementById('formSARDC')
-    const fileInputSARDC = document.getElementById('btn-file-SARDC')
-    
-    if (formSARDC && fileInputSARDC) {
-        fileInputSARDC.addEventListener('change', function() {
-            if (fileInputSARDC.files.length > 0) {
-                formSARDC.submit()
             }
         })
     }

@@ -12,10 +12,10 @@
     <main class="main-content">
         <header class="head-content">
             <h1>Administración de Ciclos</h1>
-            <div class="history">
-                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+            <nav class="history">
+                <a class="history-view" href="{{ route('home') }}">Inicio del Sitio</a>
                 <a class="history-view">Ciclos</a>
-            </div>
+            </nav>
         </header>
         <section class="cycle-content">
             <h2>Ciclos</h2>
@@ -27,37 +27,43 @@
 
             <!-- Cycles Table -->
             <div class="cycles-content">
-                <table id="data-table-cycle" class="table content-table">
-                    <thead>
-                        <tr>
-                            <th>Ciclo</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($cycles as $cycle)
+                @if(isset($noCycles))
+                    <h3 class="empty">No hay <strong>Ciclos creados</strong></h3>
+                @else
+                    <table id="data-table-cycle" class="table content-table">
+                        <thead>
                             <tr>
-                                <td data-values="Ciclo">{{ $cycle->cycle }}</td>
-                                <td data-values="Estado">{{ $cycle->state }}</td>
-                                <td data-values="Acciones">
-                                    <button class="btn-edit btn" data-modal="editarModal"
-                                        data-cycleId="{{ $cycle->cycleId }}"
-                                        data-nameCycle="{{ $cycle->cycle }}"
-                                        data-state="{{ $cycle->state }}"
-                                    >
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </button>
-                                    <button class="btn-delete btn" data-modal="eliminarModal"
-                                        data-cycleId="{{ $cycle->cycleId }}"
-                                    >
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
+                                <th>Ciclo</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach($cycles as $cycle)
+                                <tr>
+                                    <td data-values="Ciclo">{{ $cycle->cycle }}</td>
+                                    <td data-values="Estado">{{ $cycle->state }}</td>
+                                    <td data-values="Acciones">
+                                        @if($cycle->state !== 'Activo')
+                                            <button class="btn-edit btn" data-modal="editarModal"
+                                                data-cycleId="{{ $cycle->cycleId }}"
+                                                data-nameCycle="{{ $cycle->cycle }}"
+                                                data-state="{{ $cycle->state }}"
+                                            >
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
+                                            <button class="btn-delete btn" data-modal="eliminarModal"
+                                                data-cycleId="{{ $cycle->cycleId }}"
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>                    
+                @endif
 
                 <!-- Add Cycle Modal -->
                 <div id="myModalCycle" class="modal">
@@ -66,7 +72,7 @@
                             <h2>Nuevo Ciclo</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form id="formAddCycle" class="forms" action="{{ url('/addCycle') }}" method="POST" id="formCycle" class="addCycle">
+                        <form id="formAddCycle" class="forms" action="{{ route('cycle.create') }}" method="POST" id="formCycle" class="addCycle">
                             @csrf
                             <div class="input-box">
                                 <input class="input-cycle" type="text" name="nameCycle" id="nameCycleInput" placeholder="Ciclo" autocomplete="off" maxlength="40">
@@ -94,10 +100,10 @@
                 <div class="modal" id="editarModal">
                     <div class="modal-content">
                         <header class="head">
-                            <h2>Datos del ciclo</h2>
+                            <h2>Datos del Ciclo</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form id="formEditCycle" class="forms" action="{{ route('editCycle') }}" method="POST">
+                        <form id="formEditCycle" class="forms" action="{{ route('cycle.edit') }}" method="POST">
                             @csrf
                             <div class="input-box">
                                 <input class="input-cycle" type="text" name="nameCycle" id="nameCycle" placeholder="Ciclo" autocomplete="off" maxlength="40">
@@ -110,7 +116,7 @@
                                 </div>
                                 <ul class="options optionsEdit">
                                     <li data-value="Activo">Activo</li>
-                                    <li data-value="Inactivo"> Inactivo</li>
+                                    <li data-value="Inactivo">Inactivo</li>
                                 </ul>
                             </div>
                             <input hidden type="text" name="state" id="stateInputEdit">
@@ -126,11 +132,11 @@
                 <div class="modal" id="eliminarModal">
                     <div class="modal-content">
                         <header class="head">
-                            <h2>¿Realmente deseas eliminar el ciclo?</h2>
+                            <h2>¿Realmente deseas eliminar el Ciclo?</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
                         <div class="optionDeleteCycle">
-                            <form action="{{ route('deleteCycle') }}" method="POST">
+                            <form action="{{ route('cycle.delete') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="cycleId" id="cycleId" class="error-input" autocomplete="off">

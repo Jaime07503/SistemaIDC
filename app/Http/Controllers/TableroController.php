@@ -1,5 +1,6 @@
 <?php
     namespace App\Http\Controllers;
+    use App\Models\Cycle;
     use App\Models\Student;
     use App\Models\StudentSubject;
     use App\Models\StudentTeam;
@@ -11,7 +12,7 @@
     {
         public function viewCourses()
         {
-            $idUser = session('userId');
+            $idUser = auth()->user()->userId;
             $role = auth()->user()->role;
 
             if ($role === 'Administrador del Sistema' || $role === 'Administrador del Proceso') {
@@ -35,9 +36,12 @@
 
                 $subjectsIds = StudentSubject::where('idStudent', $idStudent)->pluck('idSubject');
 
+                $cycle = Cycle::where('state', 'Activo')->first();
+
                 $courses = Subject::join('Cycle', 'Subject.idCycle', '=', 'Cycle.cycleId')
                     ->join('Teacher', 'Subject.idTeacher', '=', 'Teacher.teacherId')
                     ->join('User', 'Teacher.idUser', '=', 'User.userId')
+                    ->where('idCycle', $cycle->cycleId)
                     ->whereIn('subjectId', $subjectsIds)
                     ->select('User.name', 'Subject.subjectId', 'Subject.nameSubject', 'Subject.section', 
                     'Subject.avatar', 'Cycle.cycle')
@@ -76,11 +80,14 @@
                     return redirect('/login')->with('error', 'Falló el intento de ingreso. Motivo: No se encontró una cuenta con su dirección de correo electrónico.');
                 }
 
+                $cycle = Cycle::where('state', 'Activo')->first();
+
                 $courses = Subject::join('Cycle', 'Subject.idCycle', '=', 'Cycle.cycleId')
                     ->join('Teacher', 'Subject.idTeacher', '=', 'Teacher.teacherId')
                     ->join('User', 'Teacher.idUser', '=', 'User.userId')
                     ->where('idTeacher', $teacher->teacherId)
-                    ->where('idCycle', 1)
+                    ->where('idCycle', $cycle->cycleId)
+                    ->where('Subject.approvedIdc', 'Aprobado')
                     ->select('User.name', 'User.avatar as userAvatar', 'User.role', 'Subject.subjectId', 'Subject.nameSubject', 'Subject.section', 
                     'Subject.avatar', 'Cycle.cycle')
                     ->orderBy('nameSubject')

@@ -1,6 +1,5 @@
 <?php
     namespace App\Models;
-
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +18,7 @@
             'updatedInformation',
             'localRelevance',
             'globalRelevance',
+            'subject',
             'studentContribute',
             'state'
         ];

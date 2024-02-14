@@ -42,7 +42,6 @@
 
             $nextIdcTopicReport = NextIdcTopicReport::find($idNextIdcTopicReport);
             $nextIdcTopicReport->code = $fileName;
-            $nextIdcTopicReport->creationDate = $fechaCarbon;
             $nextIdcTopicReport->storagePath = 'documents/'.$fileName;
             $nextIdcTopicReport->state = $CREATE_STATE;
             $nextIdcTopicReport->save();
@@ -91,8 +90,10 @@
             // a. Primer tema
             $templateProcessor->setValue('topicOne', $datosTopics[0]['nameTopic']);
             $templateProcessor->setValue('subjectRelevance', $datosTopics[0]['subjectRelevance']);
-            $templateProcessor->setImageValue('globalUpdateImg', array('path' => $datosTopics[0]['globalUpdateImg'], 'width' => 575, 'height' => 290, 'ratio' => false));
-            $templateProcessor->setImageValue('localUpdateImg', array('path' => $datosTopics[0]['localUpdateImg'], 'width' => 575, 'height' => 290, 'ratio' => false));
+            $templateProcessor->setImageValue('globalUpdateImg', array('path' => $datosTopics[0]['globalUpdateImg'], 
+            'width' => 575, 'height' => 290, 'ratio' => false));
+            $templateProcessor->setImageValue('localUpdateImg', array('path' => $datosTopics[0]['localUpdateImg'], 
+            'width' => 575, 'height' => 290, 'ratio' => false));
             $templateProcessor->setValue('updatedInformation', $datosTopics[0]['updatedInformation']);
             $templateProcessor->setValue('localRelevance', $datosTopics[0]['localRelevance']);
             $templateProcessor->setValue('globalRelevance', $datosTopics[0]['globalRelevance']);
@@ -100,8 +101,10 @@
             // b. Segundo tema
             $templateProcessor->setValue('topicTwo', $datosTopics[1]['nameTopic']);
             $templateProcessor->setValue('subjectRelevance2', $datosTopics[1]['subjectRelevance']);
-            $templateProcessor->setImageValue('globalUpdateImg2', array('path' => $datosTopics[1]['globalUpdateImg'], 'width' => 575, 'height' => 290, 'ratio' => false));
-            $templateProcessor->setImageValue('localUpdateImg2', array('path' => $datosTopics[1]['localUpdateImg'], 'width' => 575, 'height' => 290, 'ratio' => false));
+            $templateProcessor->setImageValue('globalUpdateImg2', array('path' => $datosTopics[1]['globalUpdateImg'], 
+            'width' => 575, 'height' => 290, 'ratio' => false));
+            $templateProcessor->setImageValue('localUpdateImg2', array('path' => $datosTopics[1]['localUpdateImg'], 
+            'width' => 575, 'height' => 290, 'ratio' => false));
             $templateProcessor->setValue('updatedInformation2', $datosTopics[1]['updatedInformation']);
             $templateProcessor->setValue('localRelevance2', $datosTopics[1]['localRelevance']);
             $templateProcessor->setValue('globalRelevance2', $datosTopics[1]['globalRelevance']);
@@ -109,8 +112,10 @@
             // c. Tercer tema
             $templateProcessor->setValue('topicThree', $datosTopics[2]['nameTopic']);
             $templateProcessor->setValue('subjectRelevance3', $datosTopics[2]['subjectRelevance']);
-            $templateProcessor->setImageValue('globalUpdateImg3', array('path' => $datosTopics[2]['globalUpdateImg'], 'width' => 575, 'height' => 290, 'ratio' => false));
-            $templateProcessor->setImageValue('localUpdateImg3', array('path' => $datosTopics[2]['localUpdateImg'], 'width' => 575, 'height' => 290, 'ratio' => false));
+            $templateProcessor->setImageValue('globalUpdateImg3', array('path' => $datosTopics[2]['globalUpdateImg'], 
+            'width' => 575, 'height' => 290, 'ratio' => false));
+            $templateProcessor->setImageValue('localUpdateImg3', array('path' => $datosTopics[2]['localUpdateImg'], 
+            'width' => 575, 'height' => 290, 'ratio' => false));
             $templateProcessor->setValue('updatedInformation3', $datosTopics[2]['updatedInformation']);
             $templateProcessor->setValue('localRelevance3', $datosTopics[2]['localRelevance']);
             $templateProcessor->setValue('globalRelevance3', $datosTopics[2]['globalRelevance']);
@@ -134,13 +139,6 @@
             
                 $students = $team->studentTeam->pluck('student');
             }
-
-            $coordinator = Idc::select('Idc.idUser')
-                ->where('Idc.idcId', $idcId)
-                ->first();
-                
-            $user = User::find($coordinator->idUser);
-            $user->notify(new GenerateNTR($nextIdcTopicReport, $idcId));
 
             foreach ($students as $student) {
                 $user = User::find($student->idUser);

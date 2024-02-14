@@ -35,7 +35,7 @@
                 </div>
                 <div class="second-section">
                     <strong><h2>Plan de búsqueda de información</h2></strong>
-                    <textarea class="textarea" name="searchPlan" placeholder="Plan de búsqueda" min="600" maxlength="700"></textarea>
+                    <textarea class="textarea" name="searchPlan" placeholder="Plan de búsqueda" min="550" maxlength="700"></textarea>
                     <div class="container file-container" id="container3">
                         <input type="file" name="Imagen-Diagrama" class="file-input" accept="image/png, image/jpeg" hidden>
                         <div class="img-area" data-img="">
@@ -52,7 +52,6 @@
                     <table id="data-table-objetivesG" class="table content-table">
                         <thead>
                             <tr>
-                                <th>Contribuyente</th>
                                 <th>Objetivo general</th>
                                 <th>Estado</th>
                             </tr>
@@ -60,7 +59,6 @@
                         <tbody>
                             @foreach($objetivesG as $objetive)
                                 <tr>
-                                    <td data-values="Contribuyente">{{ $objetive->studentContribute }}</td>
                                     <td data-values="Objetivo general">{{ $objetive->objetive }}</td>
                                     <td data-values="Estado">
                                         @if($objetive->state !== 'Aprobado')
@@ -81,7 +79,6 @@
                     <table id="data-table-objetivesE" class="table content-table">
                         <thead>
                             <tr>
-                                <th>Contribuyente</th>
                                 <th>Objetivo especifico</th>
                                 <th>Estado</th>
                             </tr>
@@ -89,7 +86,6 @@
                         <tbody>
                             @foreach($objetivesE as $objetive)
                                 <tr>
-                                    <td data-values="Contribuyente">{{ $objetive->studentContribute }}</td>
                                     <td data-values="Objetivo especifico">{{ $objetive->objetive }}</td>
                                     <td data-values="Estado">
                                         @if($objetive->state !== 'Aprobado')
@@ -114,7 +110,6 @@
                     <table id="data-table-sources" class="table content-table export-table">
                         <thead>
                             <tr>
-                                <th>Contribuyente</th>
                                 <th>Tema</th>
                                 <th>Año</th>
                                 <th>Tipo de medio</th>
@@ -125,7 +120,6 @@
                         <tbody>
                             @foreach($sources as $source)
                                 <tr>
-                                    <td data-values="Contribuyente">{{ $source->studentContribute }}</td>
                                     <td data-values="Tema">{{ $source->theme }}</td>
                                     <td data-values="Año">{{ $source->year }}</td>
                                     <td data-values="Tipo de medio">{{ $source->averageType }}</td>
@@ -207,7 +201,7 @@
                 </div>
                 <input name="idcId" type="text" hidden value="{{ $idcId }}">
                 <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
-                <button type="submit" class="btn">Generar Documento</button>
+                <button type="submit" class="btn">Generar Documento <i class="fa-regular fa-file-word"></i></button>
             </form>
             <div id="notification" class="notification"></div>
         @else
@@ -217,46 +211,50 @@
                     <button type="button" id="btnAddInfo" class="btn"><i class="fa-solid fa-square-plus"></i> Agregar</button>
                 </div>
                 <div>
-                    <table id="data-table-sources" class="table content-table">
-                        <thead>
-                            <tr>
-                                <th>Año</th>
-                                <th>Autor</th>
-                                <th>Tema</th>
-                                <th>Tipo de medio</th>
-                                <th>Enlace</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($sources as $source)
+                    @if($sources->isEmpty())
+                        <h3 class="empty">No haz añadido <strong>Fuentes Bibliográficas</strong></h3>
+                    @else
+                        <table id="data-table-sources" class="table content-table">
+                            <thead>
                                 <tr>
-                                    <td data-values="Año">{{ $source->year }}</td>
-                                    <td data-values="Autor">{{ $source->author }}</td>
-                                    <td data-values="Tema">{{ $source->theme }}</td>
-                                    <td data-values="Tipo de medio">{{ $source->averageType }}</td>
-                                    <td data-values="Enlace"><a href="{{ $source->link }}" target="_blank" rel="noreferrer" class="link">{{ $source->link }}</a></td>
-                                    <td data-values="Estado">{{ $source->state }}</td>
-                                    <td data-values="Acciones">
-                                        @if($source->state !== 'Aprobado')
-                                            <button type="button" class="btn btn-edit" data-modal="editarModalSource" data-bibliographicSourceid="{{ $source->bibliographicSourceId }}"
-                                                data-year="{{ $source->year }}" data-author="{{ $source->author }}" data-theme="{{ $source->theme }}"
-                                                data-averageType="{{ $source->averageType }}" data-source="{{ $source->source }}" data-link="{{ $source->link }}" data-state="{{ $source->state }}"
-                                            >
-                                                <i class="fa-regular fa-pen-to-square"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-delete" data-modal="eliminarModalSource" 
-                                                data-bibliographicSourceid="{{ $source->bibliographicSourceId }}"
-                                            >
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        @endif
-                                    </td>
+                                    <th>Año</th>
+                                    <th>Autor</th>
+                                    <th>Tema</th>
+                                    <th>Tipo de medio</th>
+                                    <th>Enlace</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach($sources as $source)
+                                    <tr>
+                                        <td data-values="Año">{{ $source->year }}</td>
+                                        <td data-values="Autor">{{ $source->author }}</td>
+                                        <td data-values="Tema">{{ $source->theme }}</td>
+                                        <td data-values="Tipo de medio">{{ $source->averageType }}</td>
+                                        <td data-values="Enlace"><a href="{{ $source->link }}" target="_blank" rel="noreferrer" class="link">{{ $source->link }}</a></td>
+                                        <td data-values="Estado">{{ $source->state }}</td>
+                                        <td data-values="Acciones">
+                                            @if($source->state !== 'Aprobado')
+                                                <button type="button" class="btn btn-edit" data-modal="editarModalSource" data-bibliographicSourceid="{{ $source->bibliographicSourceId }}"
+                                                    data-year="{{ $source->year }}" data-author="{{ $source->author }}" data-theme="{{ $source->theme }}"
+                                                    data-averageType="{{ $source->averageType }}" data-source="{{ $source->source }}" data-link="{{ $source->link }}" data-state="{{ $source->state }}"
+                                                >
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-delete" data-modal="eliminarModalSource" 
+                                                    data-bibliographicSourceid="{{ $source->bibliographicSourceId }}"
+                                                >
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
 
                     <!-- Modal add Source -->
                     <div id="myModalInfo" class="modal">
@@ -346,35 +344,39 @@
                         </form>
                     </div>
                 </div>
-                <table id="data-table-objetivesG" class="table content-table">
-                    <thead>
-                        <tr>
-                            <th>Objetivo general</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($objetivesG as $objetive)
+                @if($objetivesG->isEmpty())
+                     <h3 class="empty">No haz añadido <strong>Objetivos Generales</strong></h3>
+                @else
+                    <table id="data-table-objetivesG" class="table content-table">
+                        <thead>
                             <tr>
-                                <td data-values="Objetivo general">{{ $objetive->objetive }}</td>
-                                <td data-values="Estado">{{ $objetive->state }}</td>
-                                <td data-values="Acciones">
-                                    @if($objetive->state !== 'Aprobado')
-                                        <button type="button" class="btn btn-edit" data-modal="editarModalObjetiveG" data-objetiveId="{{ $objetive->objetiveId }}" 
-                                            data-objetive="{{ $objetive->objetive }}" data-state="{{ $objetive->state }}"
-                                        >
-                                            <i class="fa-regular fa-pen-to-square"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-delete" data-modal="eliminarModalObjetiveG" data-objetiveId="{{ $objetive->objetiveId }}">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    @endif
-                                </td>
+                                <th>Objetivo general</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach($objetivesG as $objetive)
+                                <tr>
+                                    <td data-values="Objetivo general">{{ $objetive->objetive }}</td>
+                                    <td data-values="Estado">{{ $objetive->state }}</td>
+                                    <td data-values="Acciones">
+                                        @if($objetive->state !== 'Aprobado')
+                                            <button type="button" class="btn btn-edit" data-modal="editarModalObjetiveG" data-objetiveId="{{ $objetive->objetiveId }}" 
+                                                data-objetive="{{ $objetive->objetive }}" data-state="{{ $objetive->state }}"
+                                            >
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-delete" data-modal="eliminarModalObjetiveG" data-objetiveId="{{ $objetive->objetiveId }}">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
                 <!-- Edit general objetive modal -->
                 <div id="editarModalObjetiveG" class="modal">
                     <div class="modal-content">
@@ -435,36 +437,40 @@
                         </form>
                     </div>
                 </div>
-                <table id="data-table-objetivesE" class="table content-table">
-                    <thead>
-                        <tr>
-                            <th>Objetivo específico</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($objetivesE as $objetive)
-                                <td data-values="Objetivo específico">{{ $objetive->objetive }}</td>
-                                <td data-values="Estado">{{ $objetive->state }}</td>
-                                <td data-values="Acciones">
-                                    @if($objetive->state !== 'Aprobado')
-                                        <button type="button" class="btn btn-edit" data-modal="editarModalObjetiveE" data-objetiveId="{{ $objetive->objetiveId }}" 
-                                            data-objetive="{{ $objetive->objetive }}" data-state="{{ $objetive->state }}"
-                                        >
-                                            <i class="fa-regular fa-pen-to-square"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-delete" data-modal="eliminarModalObjetiveE" data-objetiveId="{{ $objetive->objetiveId }}" 
-                                            data-objetive="{{ $objetive->objetive }}" data-state="{{ $objetive->state }}"
-                                        >
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-                                    @endif
-                                </td>
+                @if($objetivesE->isEmpty())
+                    <h3 class="empty">No haz añadido <strong>Objetivos Específicos</strong></h3>
+                @else
+                    <table id="data-table-objetivesE" class="table content-table">
+                        <thead>
+                            <tr>
+                                <th>Objetivo específico</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach($objetivesE as $objetive)
+                                    <td data-values="Objetivo específico">{{ $objetive->objetive }}</td>
+                                    <td data-values="Estado">{{ $objetive->state }}</td>
+                                    <td data-values="Acciones">
+                                        @if($objetive->state !== 'Aprobado')
+                                            <button type="button" class="btn btn-edit" data-modal="editarModalObjetiveE" data-objetiveId="{{ $objetive->objetiveId }}" 
+                                                data-objetive="{{ $objetive->objetive }}" data-state="{{ $objetive->state }}"
+                                            >
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-delete" data-modal="eliminarModalObjetiveE" data-objetiveId="{{ $objetive->objetiveId }}" 
+                                                data-objetive="{{ $objetive->objetive }}" data-state="{{ $objetive->state }}"
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
                 <!-- Edit specific objetive modal -->
                 <div id="editarModalObjetiveE" class="modal">
                     <div class="modal-content">

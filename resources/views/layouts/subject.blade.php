@@ -13,7 +13,7 @@
         <div class="head-content">
             <h1>Administración de materias</h1>
             <div class="history">
-                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" href="{{ route('home') }}">Inicio del Sitio</a>
                 <a class="history-view" >Materias</a>
             </div>
         </div>
@@ -45,50 +45,58 @@
 
             <!-- Subjects Table -->
             <div class="users-content">
-                <table id="data-table-subjects" class="table content-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Sección</th>
-                            <th>Ciclo</th>
-                            <th>Carrera</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($unassignedSubjects as $unassignedSubject)
-                            <tr>
-                                <td data-values="Nombre">{{ $unassignedSubject->nameSubject }}</td>
-                                <td data-values="Sección">{{ $unassignedSubject->section }}</td>
-                                <td data-values="Ciclo">{{ $unassignedSubject->cycle }}</td>
-                                <td data-values="Carrera">{{ $unassignedSubject->nameCareer }}</td>
-                                <td data-values="Estado">{{ $unassignedSubject->state }}</td>
-                                <td data-values="Acciones">
-                                    <button class="btn-edit btn" data-modal="editarModal"
-                                        data-subjectId="{{ $unassignedSubject->subjectId }}"
-                                        data-nameSubject="{{ $unassignedSubject->nameSubject }}"
-                                        data-code="{{ $unassignedSubject->code }}"
-                                        data-section="{{ $unassignedSubject->section }}"
-                                        data-avatar="{{ $unassignedSubject->avatar }}"
-                                        data-cycleId="{{ $unassignedSubject->cycleId }}"
-                                        data-cycle="{{ $unassignedSubject->cycle }}"
-                                        data-careerId="{{ $unassignedSubject->careerId }}"
-                                        data-nameCareer="{{ $unassignedSubject->nameCareer }}"
-                                        data-state="{{ $unassignedSubject->state }}"
-                                    >
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </button>
-                                    <button class="btn-delete btn" data-modal="eliminarModal"
-                                        data-subjectId="{{ $unassignedSubject->subjectId }}"
-                                    >
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if(isset($noContent))
+                    <h3 class="empty">No hay <strong>Materias sin asignar Docente</strong></h3>
+                @else
+                    @if(isset($noUnassignedSubjects))
+                        <h3 class="empty">No hay <strong>Materias sin asignar Docente</strong></h3>
+                    @else
+                        <table id="data-table-subjects" class="table content-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Sección</th>
+                                    <th>Ciclo</th>
+                                    <th>Carrera</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($unassignedSubjects as $unassignedSubject)
+                                    <tr>
+                                        <td data-values="Nombre">{{ $unassignedSubject->nameSubject }}</td>
+                                        <td data-values="Sección">{{ $unassignedSubject->section }}</td>
+                                        <td data-values="Ciclo">{{ $unassignedSubject->cycle }}</td>
+                                        <td data-values="Carrera">{{ $unassignedSubject->nameCareer }}</td>
+                                        <td data-values="Estado">{{ $unassignedSubject->state }}</td>
+                                        <td data-values="Acciones">
+                                            <button class="btn-edit btn" data-modal="editarModal"
+                                                data-subjectId="{{ $unassignedSubject->subjectId }}"
+                                                data-nameSubject="{{ $unassignedSubject->nameSubject }}"
+                                                data-code="{{ $unassignedSubject->code }}"
+                                                data-section="{{ $unassignedSubject->section }}"
+                                                data-avatar="{{ $unassignedSubject->avatar }}"
+                                                data-cycleId="{{ $unassignedSubject->cycleId }}"
+                                                data-cycle="{{ $unassignedSubject->cycle }}"
+                                                data-careerId="{{ $unassignedSubject->careerId }}"
+                                                data-nameCareer="{{ $unassignedSubject->nameCareer }}"
+                                                data-state="{{ $unassignedSubject->state }}"
+                                            >
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
+                                            <button class="btn-delete btn" data-modal="eliminarModal"
+                                                data-subjectId="{{ $unassignedSubject->subjectId }}"
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                @endif
 
                 <!-- Add Subject Modal -->
                 <div id="myModalCareer" class="modal">
@@ -97,15 +105,10 @@
                             <h2>Nueva Materia</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form id="formAddCareer" action="{{ url('/addSubject') }}" method="POST" id="formUser" class="addUser" enctype="multipart/form-data">
+                        <form id="formAddCareer" action="{{ route('subject.create') }}" method="POST" id="formUser" class="addUser" enctype="multipart/form-data">
                             @csrf
-
                             <div class="input-box">
-                                <input class="input-add-subject" type="text" name="code" id="codeInput" placeholder="Código" autocomplete="off" maxlength="80">
-                            </div>
-
-                            <div class="input-box">
-                                <input class="input-add-subject" type="text" name="nameSubject" id="nameInput" placeholder="Nombre de la materia" autocomplete="off" maxlength="200">
+                                <input class="input-add-subject" type="text" name="nameSubject" id="nameInput" placeholder="Materia" autocomplete="off" maxlength="200">
                             </div>
 
                             <div class="input-box">
@@ -173,17 +176,17 @@
                 <div class="modal" id="editarModal">
                     <div class="modal-content">
                         <header class="head">
-                            <h2>Datos de la materia</h2>
+                            <h2>Datos de la Materia</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form id="formEditSubject" action="{{ url('/editSubject') }}" method="POST" enctype="multipart/form-data">
+                        <form id="formEditSubject" action="{{ route('subject.edit') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="input-box">
                                 <input class="input-edit-subject" type="text" name="code" id="codigoInput" placeholder="Código" autocomplete="off" maxlength="80">
                             </div>
 
                             <div class="input-box">
-                                <input class="input-edit-subject" type="text" name="nameSubject" id="materiaInput" placeholder="Nombre de la materia" autocomplete="off" maxlength="200">
+                                <input class="input-edit-subject" type="text" name="nameSubject" id="materiaInput" placeholder="Materia" autocomplete="off" maxlength="200">
                             </div>
 
                             <div class="input-box">
@@ -252,11 +255,11 @@
                 <div class="modal" id="eliminarModal">
                     <div class="modal-content">
                         <header class="head">
-                            <h2>¿Realmente deseas eliminar la materia?</h2>
+                            <h2>¿Realmente deseas eliminar la Materia?</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
                         <div class="optionDeleteUser">
-                            <form action="{{ route('deleteSubject') }}" method="POST">
+                            <form action="{{ route('subject.delete') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="subjectId" id="subjectId" class="error-input" autocomplete="off">
@@ -294,40 +297,48 @@
 
             <!-- Subjects Table -->
             <div class="users-content">
-                <table id="data-table-assignSubjects" class="table content-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Sección</th>
-                            <th>Aprobado IDC</th>
-                            <th>Ciclo</th>
-                            <th>Carrera</th>
-                            <th>Docente</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($assignedSubjects as $assignedSubject)
-                            <tr>
-                                <td data-values="Nombre">{{ $assignedSubject->nameSubject }}</td>
-                                <td data-values="Sección">{{ $assignedSubject->section }}</td>
-                                <td data-values="IDC">{{ $assignedSubject->approvedIdc }}</td>
-                                <td data-values="Ciclo">{{ $assignedSubject->cycle }}</td>
-                                <td data-values="Carrera">{{ $assignedSubject->nameCareer }}</td>
-                                <td data-values="Docente">{{ $assignedSubject->name }}</td>
-                                <td data-values="Estado">{{ $assignedSubject->state }}</td>
-                                <td data-values="Acciones">
-                                    <button class="btn-delete btn" data-modal="eliminarModal"
-                                        data-subjectId="{{ $assignedSubject->subjectId }}"
-                                    >
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if(isset($noContent))
+                    <h3 class="empty">No hay <strong>Materias asignadas a Docente</strong></h3>
+                @else
+                    @if(isset($noAssignedSubjects))
+                        <h3 class="empty">No hay <strong>Materias asignadas a Docente</strong></h3>
+                    @else
+                        <table id="data-table-assignSubjects" class="table content-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Sección</th>
+                                    <th>IDC</th>
+                                    <th>Ciclo</th>
+                                    <th>Carrera</th>
+                                    <th>Docente</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($assignedSubjects as $assignedSubject)
+                                    <tr>
+                                        <td data-values="Nombre">{{ $assignedSubject->nameSubject }}</td>
+                                        <td data-values="Sección">{{ $assignedSubject->section }}</td>
+                                        <td data-values="IDC">{{ $assignedSubject->approvedIdc }}</td>
+                                        <td data-values="Ciclo">{{ $assignedSubject->cycle }}</td>
+                                        <td data-values="Carrera">{{ $assignedSubject->nameCareer }}</td>
+                                        <td data-values="Docente">{{ $assignedSubject->name }}</td>
+                                        <td data-values="Estado">{{ $assignedSubject->state }}</td>
+                                        <td data-values="Acciones">
+                                            <button class="btn-delete btn" data-modal="eliminarModal"
+                                                data-subjectId="{{ $assignedSubject->subjectId }}"
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                @endif
             </div>
         </div>
     </main>

@@ -10,6 +10,7 @@
             Schema::create('Topic_Search_Report', function (Blueprint $table) {
                 $table->increments('topicSearchReportId');
                 $table->string('code')->nullable();
+                $table->timestamp('creationDate')->nullable();
                 $table->string('storagePath', 300)->nullable();
                 $table->string('nameCorrectDocument', 200)->nullable();
                 $table->string('correctDocumentStoragePath', 300)->nullable();

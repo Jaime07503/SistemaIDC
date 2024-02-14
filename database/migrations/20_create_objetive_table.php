@@ -11,7 +11,7 @@
                 $table->increments('objetiveId');
                 $table->string('objetive', 300);
                 $table->string('type', 50);
-                $table->string('studentContribute', 100);
+                $table->integer('studentContribute');
                 $table->string('state', 30);
                 $table->timestamps();
             });

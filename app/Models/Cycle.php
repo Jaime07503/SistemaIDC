@@ -21,16 +21,9 @@
             return $this->hasMany(Subject::class);
         }
 
-        public function researchTopics()
+        public function idcDates()
         {
-            return $this->hasManyThrough(
-                ResearchTopic::class,
-                Subject::class,
-                'idCycle', 
-                'idSubject', 
-                'cycleId',
-                'subjectId'
-            );
+           return $this->hasOne(IDCDates::class);
         }
     }
 ?>

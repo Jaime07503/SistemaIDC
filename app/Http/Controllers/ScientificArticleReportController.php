@@ -1,10 +1,8 @@
 <?php
     namespace App\Http\Controllers;
     use App\Models\ArticleConclusion;
-    use App\Models\ArticleDevelopment;
     use App\Models\ArticleReference;
     use App\Models\Conclusion;
-    use App\Models\Development;
     use App\Models\Idc;
     use App\Models\IDCDates;
     use App\Models\Reference;
@@ -26,140 +24,39 @@
 
             $dates = IDCDates::select('Idc_Date.startDateScientificArticleReport', 'Idc_Date.endDateScientificArticleReport')->first();
 
-            if($role !== 'Estudiante') {
-                $scientificArticleReport = Idc::join('Team', 'Idc.idTeam', '=', 'Team.teamId')
-                    ->join('Scientific_Article_Report', 'Idc.idcId', '=', 'Scientific_Article_Report.idIdc')
-                    ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
-                    ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
-                    ->select('Idc.idcId', 'Research_Topic.researchTopicId', 'Research_Topic.themeName', 'Research_Topic.code',
-                    'Team.teamId', 'Subject.subjectId',  'Scientific_Article_Report.state', 'Scientific_Article_Report.previousState',
-                    'Scientific_Article_Report.code AS scientificArticleCode',
-                    'Scientific_Article_Report.updated_at', 'Scientific_Article_Report.storagePath')
-                    ->where('Idc.idcId', $idcId)
-                    ->first();
+            $scientificArticleReport = Idc::join('Team', 'Idc.idTeam', '=', 'Team.teamId')
+                ->join('Scientific_Article_Report', 'Idc.idcId', '=', 'Scientific_Article_Report.idIdc')
+                ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
+                ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
+                ->select('Idc.idcId', 'Research_Topic.researchTopicId', 'Research_Topic.themeName', 'Research_Topic.code',
+                'Team.teamId', 'Subject.subjectId',  'Scientific_Article_Report.state', 'Scientific_Article_Report.previousState',
+                'Scientific_Article_Report.code AS scientificArticleCode', 'Scientific_Article_Report.spanishSummary', 'Scientific_Article_Report.englishSummary',
+                'Scientific_Article_Report.keywords', 'Scientific_Article_Report.introduction', 'Scientific_Article_Report.methodology', 'Scientific_Article_Report.subtitle',
+                'Scientific_Article_Report.secondSubtitle', 'Scientific_Article_Report.thirdSubtitle', 'Scientific_Article_Report.updated_at', 'Scientific_Article_Report.storagePath')
+                ->where('Idc.idcId', $idcId)
+                ->first();
 
-                $contents = Development::join('Article_Development', 'Development.developmentId', '=', 'Article_Development.idDevelopment')
-                    ->where('idScientificArticleReport', $idScientificArticleReport)
-                    ->orderby('state')
-                    ->get();
+            $references = Reference::join('Article_Reference', 'Reference.referenceId', '=', 'Article_Reference.idReference')
+                ->where('idScientificArticleReport', $idScientificArticleReport)
+                ->orderby('state')
+                ->get();
 
-                $references = Reference::join('Article_Reference', 'Reference.referenceId', '=', 'Article_Reference.idReference')
-                    ->where('idScientificArticleReport', $idScientificArticleReport)
-                    ->orderby('state')
-                    ->get();
+            $conclusions = Conclusion::join('Article_Conclusion', 'Conclusion.conclusionId', '=', 'Article_Conclusion.idConclusion')
+                ->where('idScientificArticleReport', $idScientificArticleReport)
+                ->orderby('state')
+                ->get();
 
-                $conclusions = Conclusion::join('Article_Conclusion', 'Conclusion.conclusionId', '=', 'Article_Conclusion.idConclusion')
-                    ->where('idScientificArticleReport', $idScientificArticleReport)
-                    ->orderby('state')
-                    ->get();
-
-                // $now = Carbon::now();
-
-                // if ($now < Carbon::parse($dates->startDateScientificArticleReport)) {
-                //     return redirect()->back();
-                // }
-
-                return view('layouts.scientificArticleReport', compact('role', 'idcId', 'idScientificArticleReport', 'scientificArticleReport', 'contents', 'references', 'conclusions'));
-            } else {
-                $userId = session('userId');
-                $user = User::find($userId);
-
-                $scientificArticleReport = Idc::join('Team', 'Idc.idTeam', '=', 'Team.teamId')
-                    ->join('Scientific_Article_Report', 'Idc.idcId', '=', 'Scientific_Article_Report.idIdc')
-                    ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
-                    ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
-                    ->select('Idc.idcId', 'Research_Topic.researchTopicId', 'Research_Topic.themeName', 'Research_Topic.code',
-                    'Team.teamId', 'Subject.subjectId',  'Scientific_Article_Report.state', 'Scientific_Article_Report.code AS scientificArticleCode',
-                    'Scientific_Article_Report.updated_at', 'Scientific_Article_Report.storagePath')
-                    ->where('Idc.idcId', $idcId)
-                    ->first();
-
-                $contents = Development::join('Article_Development', 'Development.developmentId', '=', 'Article_Development.idDevelopment')
-                    ->where('idScientificArticleReport', $idScientificArticleReport)
-                    ->where('studentContribute', $user->name)
-                    ->orderby('state')
-                    ->get();
-
-                $references = Reference::join('Article_Reference', 'Reference.referenceId', '=', 'Article_Reference.idReference')
-                    ->where('idScientificArticleReport', $idScientificArticleReport)
-                    ->where('studentContribute', $user->name)
-                    ->orderby('state')
-                    ->get();
-
-                $conclusions = Conclusion::join('Article_Conclusion', 'Conclusion.conclusionId', '=', 'Article_Conclusion.idConclusion')
-                    ->where('idScientificArticleReport', $idScientificArticleReport)
-                    ->where('studentContribute', $user->name)
-                    ->orderby('state')
-                    ->get();
-
-                // $now = Carbon::now();
-
-                // if ($now < Carbon::parse($dates->startDateScientificArticleReport)) {
-                //     return redirect()->back();
-                // }
-
-                return view('layouts.scientificArticleReport', compact('role', 'idcId', 'idScientificArticleReport', 'scientificArticleReport', 'contents', 'references', 'conclusions'));
+            if($scientificArticleReport->state !== 'Sin Intento') {
+                return redirect()->back();
             }
-        }
 
-        public function createDevelopment(Request $request) {
-            $idcId = $request->input('idcId');
-            $idScientificArticleReport = $request->input('idScientificArticleReport');
-            $userId = session('userId');
-            $user = User::find($userId);
-            $INIT_STATE = 'Por aprobar';
+            // $now = Carbon::now();
 
-            $development = new Development();
-            $development->subtitle = $request->input('subtitle');
-            $development->content = $request->input('content');
-            $development->studentContribute = $user->name;
-            $development->state = $INIT_STATE;
-            $development->save();
+            // if ($now < Carbon::parse($dates->startDateScientificArticleReport)) {
+            //     return redirect()->back();
+            // }
 
-            $articleDevelopment = new ArticleDevelopment();
-            $articleDevelopment->idScientificArticleReport = $idScientificArticleReport;
-            $articleDevelopment->idDevelopment = $development->developmentId;
-            $articleDevelopment->save(); 
-
-            return redirect()->route('scientificArticleReport', compact('idcId', 'idScientificArticleReport'));
-        }
-
-        public function updateDevelopment($idDevelopment) {
-            $APROVED_STATE = 'Aprobado';
-
-            try {
-                $development = Development::find($idDevelopment);
-                $development->state = $APROVED_STATE;
-                $development->save();
-        
-                return $development->state;
-            } catch (\Exception $e) {
-                return response()->json(['error' => $e->getMessage()], 500);
-            }
-        }
-
-        public function editDevelopment(Request $request) {
-            $idcId = $request->input('idcId');
-            $idScientificArticleReport = $request->input('idScientificArticleReport');
-            $developmentId = $request->input('developmentId');
-
-            $development = Development::find($developmentId);
-            $development->subtitle = $request->input('subtitle');
-            $development->content = $request->input('content');
-            $development->save();
-
-            return redirect()->route('scientificArticleReport', compact('idcId', 'idScientificArticleReport'));
-        }
-
-        public function deleteDevelopment(Request $request) {
-            $idcId = $request->input('idcId');
-            $idScientificArticleReport = $request->input('idScientificArticleReport');
-            $developmentId = $request->input('developmentId');
-            $development = Development::find($developmentId);
-
-            $development->delete();
-
-            return redirect()->route('scientificArticleReport', compact('idcId', 'idScientificArticleReport'));
+            return view('layouts.scientificArticleReport', compact('role', 'idcId', 'idScientificArticleReport', 'scientificArticleReport', 'references', 'conclusions'));
         }
 
         public function editConclusion(Request $request) {
@@ -217,8 +114,8 @@
 
             $conclusion = new Conclusion();
             $conclusion->conclusion = $request->input('conclusion');
-            $conclusion->studentContribute = $user->name;
             $conclusion->state = $INIT_STATE;
+            $conclusion->studentContribute = auth()->user()->userId;
             $conclusion->save();
 
             $articleConclusion = new ArticleConclusion();
@@ -252,8 +149,8 @@
             
             $reference = new Reference();
             $reference->reference = $request->input('reference');
-            $reference->studentContribute = $user->name;
             $reference->state = $INIT_STATE;
+            $reference->studentContribute = auth()->user()->userId;
             $reference->save();
 
             $articleReference = new ArticleReference();
@@ -278,6 +175,21 @@
             }
         }
 
+        public function saveProgress(Request $request ,$idScientificArticleReport) {
+            $scientificArticle = ScientificArticleReport::find($idScientificArticleReport);
+            $scientificArticle->spanishSummary = $request->input('spanishSummary');
+            $scientificArticle->englishSummary = $request->input('englishSummary');
+            $scientificArticle->keywords = $request->input('keywords');
+            $scientificArticle->introduction = $request->input('introduction');
+            $scientificArticle->methodology = $request->input('methodology');
+            $scientificArticle->subtitle = $request->input('subtitle');
+            $scientificArticle->secondSubtitle = $request->input('secondSubtitle');
+            $scientificArticle->thirdSubtitle = $request->input('thirdSubtitle');
+            $scientificArticle->save();
+
+            return redirect()->back();
+        }
+
         public function generateWord(Request $request) {
             // Obtenemos datos del formulario
             $REVISION_STATE = 'En revisión';
@@ -289,6 +201,7 @@
             $fechaActual = new DateTime();
             $fechaCarbon = Carbon::parse($fechaActual);
             $fechaFormateada = $fechaCarbon->locale('es')->isoFormat('D [de] MMMM [de] YYYY');
+            $fechaFormateadaConHora = $fechaCarbon->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] H:mm');
 
             $topic = ResearchTopic::join('Team', 'Research_Topic.researchTopicId', '=', 'Team.idResearchTopic')
                 ->join('Idc', 'Team.teamId', '=', 'Idc.idTeam')
@@ -305,13 +218,13 @@
 
             $scientificArticle = ScientificArticleReport::find($idScientificArticleReport);
             $scientificArticle->code = $fileName;
-            $scientificArticle->numberOfWords = $data['numbersOfWords'];
             $scientificArticle->creationDate = $fechaCarbon;
+            $scientificArticle->numberOfWords = $data['numbersOfWords'];
             $scientificArticle->storagePath = 'documents/'.$fileName;
             $scientificArticle->state = $REVISION_STATE;
             $scientificArticle->save();
 
-            // Cargamos la plantilla del primer informe
+            // Cargamos la plantilla del segundo informe
             $templatePath = public_path('documents/Segundo_Informe_Plantilla.docx');
             $templateProcessor = new TemplateProcessor($templatePath);
 
@@ -331,23 +244,18 @@
 
             // Datos del Artículo Cientifíco
             // 1. Resumenes
-            $templateProcessor->setValue('spanishSummary', $data['spanishSummary']);
-            $templateProcessor->setValue('englishSummary', $data['englishSummary']);
-            $templateProcessor->setValue('keywords', $data['keywords']);
+            $templateProcessor->setValue('spanishSummary', $scientificArticle['spanishSummary']);
+            $templateProcessor->setValue('englishSummary', $scientificArticle['englishSummary']);
+            $templateProcessor->setValue('keywords', $scientificArticle['keywords']);
 
             // 2. Introducción y metodología
-            $templateProcessor->setValue('introduction', $data['introduction']);
-            $templateProcessor->setValue('methodology', $data['methodology']);
+            $templateProcessor->setValue('introduction', $scientificArticle['introduction']);
+            $templateProcessor->setValue('methodology', $scientificArticle['methodology']);
 
             // 3. Desarrollo
-            $development = Development::join('Article_Development', 'Development.developmentId', '=', 'Article_Development.idDevelopment')
-                ->where('Article_Development.idScientificArticleReport', $idScientificArticleReport)
-                ->where('Development.state', 'Aprobado')
-                ->select('Development.subtitle as sub-title', 'Development.content')
-                ->get();
-
-            $datosDevelopments = json_decode($development, true);
-            $templateProcessor->cloneBlock('block_development', 0, true, false, $datosDevelopments);
+            $templateProcessor->setValue('subtitle', $scientificArticle['subtitle']);
+            $templateProcessor->setValue('secondSubtitle', $scientificArticle['secondSubtitle']);
+            $templateProcessor->setValue('thirdSubtitle', $scientificArticle['thirdSubtitle']);
 
             // 4. Conclusiones
             $conclusions = Conclusion::join('Article_Conclusion', 'Conclusion.conclusionId', '=', 'Article_Conclusion.idConclusion')
@@ -384,13 +292,6 @@
             
                 $students = $team->studentTeam->pluck('student');
             }
-
-            $coordinator = Idc::select('Idc.idUser')
-                ->where('Idc.idcId', $idcId)
-                ->first();
-                
-            $user = User::find($coordinator->idUser);
-            $user->notify(new GenerateSAR($scientificArticle, $idcId));
 
             foreach ($students as $student) {
                 $user = User::find($student->idUser);

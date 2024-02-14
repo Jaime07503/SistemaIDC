@@ -120,7 +120,7 @@ h3 {
 
 .information {
     display: flex;
-    align-items: center;
+    align-items: start;
     flex-direction: column;
     gap: 0.3rem;
 }

@@ -186,7 +186,7 @@ body {
     background: var(--texas-rose-50);
     color: var(--primary);
     border: 0;
-    padding: 10px 20px;
+    padding: .5rem;
     border-radius: .5rem;
     overflow: hidden;
     transition: ease-out 120ms background-color;
@@ -220,7 +220,7 @@ body {
 
 .btn {
     background: var(--texas-rose-100);
-    border: 3px solid var(--white);
+    border: 3px solid transparent;
     color: var(--primary);
     text-align: center;
     outline: none;
@@ -254,6 +254,14 @@ body {
     border: 3px solid var(--texas-rose-200);
     color: var(--texas-rose-200);
     background: var(--primary);
+}
+
+.empty {
+    font-size: .9rem;
+    color: var(--primary);
+    margin: auto;
+    font-weight: 100;
+    text-align: center;
 }
 
 @media (max-width: 880px){

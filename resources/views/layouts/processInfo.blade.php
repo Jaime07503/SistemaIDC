@@ -75,7 +75,7 @@
                         <form id="formAditionalDocument" action="{{ route('document.add', ['idcId' => $researchTopic->idcId]) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <button type="button" class="contenedor-btn-file">
-                                <i class="fas fa-file"></i>
+                                <i class="fa-solid fa-paperclip"></i>
                                 Adjuntar archivo
                                 <label for="btn-file-ad"></label>
                                 <input type="text" name="researchTopicId" hidden value="{{ $researchTopic->researchTopicId }}">
@@ -86,28 +86,32 @@
                 </header>
                 <div class="documents-specifics">
                     <div class="documents">
-                        @foreach($documents as $document)
-                            <div class="document">
-                                @if($document->documentType === 'Word')
-                                    <i class="fa-regular fa-file-word"></i>
-                                @elseif($document->documentType === 'PowerPoint')
-                                    <i class="fa-regular fa-file-powerpoint"></i>
-                                @elseif($document->documentType === 'PDF')
-                                    <i class="fa-regular fa-file-pdf"></i>
-                                @endif
-                                <a href="{{ asset($document->storagePath) }}">{{ $document->nameDocument }}</a>
-                                @if(auth()->user()->role === 'Docente')
-                                    <form action="{{ route('document.delete', ['trainingDocumentId' => $document->trainingDocumentId]) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <input type="text" name="researchTopicId" hidden value="{{ $researchTopic->researchTopicId }}">
-                                        <button class="btn btn-delete">
-                                            <i class="fa-solid fa-trash" id="icon-delete"></i>
-                                        </button>
-                                    </form>
-                                @endif
-                            </div>
-                        @endforeach
+                        @if(isset($noDocuments))
+                            <h3 class="empty">No hay <strong>Documentos Adicionales</strong></h3>
+                        @else
+                            @foreach($documents as $document)
+                                <div class="document">
+                                    @if($document->documentType === 'Word')
+                                        <i class="fa-regular fa-file-word"></i>
+                                    @elseif($document->documentType === 'PowerPoint')
+                                        <i class="fa-regular fa-file-powerpoint"></i>
+                                    @elseif($document->documentType === 'PDF')
+                                        <i class="fa-regular fa-file-pdf"></i>
+                                    @endif
+                                    <a href="{{ asset($document->storagePath) }}">{{ $document->nameDocument }}</a>
+                                    @if(auth()->user()->role === 'Docente')
+                                        <form action="{{ route('document.delete', ['trainingDocumentId' => $document->trainingDocumentId]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="text" name="researchTopicId" hidden value="{{ $researchTopic->researchTopicId }}">
+                                            <button class="btn btn-delete">
+                                                <i class="fa-solid fa-trash" id="icon-delete"></i>
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
             </section>

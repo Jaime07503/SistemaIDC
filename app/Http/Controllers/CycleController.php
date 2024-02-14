@@ -7,8 +7,13 @@
     {
         public function getCycles() 
         {
-            $cycles = Cycle::orderby('state')
+            $cycles = Cycle::select('cycleId', 'cycle', 'state')
+                ->orderby('state')
                 ->get();
+
+            if ($cycles->isEmpty()) {
+                return view('layouts.cycle')->with('noCycles', true);
+            }
 
             return view('layouts.cycle', compact('cycles'));
         }
@@ -17,19 +22,23 @@
         {
             $state = $request->input('state');
 
-           // Verificar si hay algún ciclo activo
-            $existingActiveCycle = Cycle::where('state', 'Activo')->first();
-            if ($existingActiveCycle) {
-                // Si hay un ciclo activo, cambiar su estado a Inactivo
-                $existingActiveCycle->state = 'Inactivo';
-                $existingActiveCycle->save();
-            }
+            if($state === 'Activo') {
+                $existingActiveCycle = Cycle::where('state', 'Activo')->first();
+                if ($existingActiveCycle) {
+                    $existingActiveCycle->state = 'Inactivo';
+                    $existingActiveCycle->save();
+                }
 
-            // Crear el nuevo ciclo
-            $cycle = new Cycle();
-            $cycle->cycle = $request->input('nameCycle');
-            $cycle->state = $state; // Establecer el estado apropiado
-            $cycle->save();
+                $cycle = new Cycle();
+                $cycle->cycle = $request->input('nameCycle');
+                $cycle->state = $state;
+                $cycle->save();
+            } else {
+                $cycle = new Cycle();
+                $cycle->cycle = $request->input('nameCycle');
+                $cycle->state = $state;
+                $cycle->save();
+            }
 
             return redirect()->route('cycle');
         }
@@ -39,28 +48,30 @@
             $cycleId = $request->input('cycleId');
             $state = $request->input('state');
 
-            // Verificar si hay algún ciclo activo excepto el que se está editando
-            $existingActiveCycle = Cycle::where('state', 'Activo')->first();
-            if ($existingActiveCycle) {
-                // Si hay un ciclo activo, cambiar su estado a Inactivo
-                $existingActiveCycle->state = 'Inactivo';
-                $existingActiveCycle->save();
-            }
+            if($state === 'Activo') {
+                $existingActiveCycle = Cycle::where('state', 'Activo')->first();
+                if ($existingActiveCycle) {
+                    $existingActiveCycle->state = 'Inactivo';
+                    $existingActiveCycle->save();
+                }
 
-            // Encontrar el ciclo a editar
-            $cycle = Cycle::find($cycleId);
-            $cycle->cycle = $request->input('nameCycle');
-            $cycle->state = $state; // Establecer el estado apropiado
-            $cycle->save();
+                $cycle = Cycle::find($cycleId);
+                $cycle->cycle = $request->input('nameCycle');
+                $cycle->state = $state;
+                $cycle->save();
+            } else {
+                $cycle = Cycle::find($cycleId);
+                $cycle->cycle = $request->input('nameCycle');
+                $cycle->state = $state;
+                $cycle->save();
+            }
 
             return redirect()->route('cycle');
         }
 
         public function deleteCycle(Request $request) {
             $cycleId = $request->input('cycleId');
-
             $cycle = Cycle::find($cycleId);
-
             $cycle->delete();
             
             return redirect()->route('cycle');

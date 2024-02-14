@@ -1,5 +1,6 @@
 <?php
     namespace App\Http\Controllers;
+    use App\Models\Cycle;
     use App\Models\Student;
     use App\Models\StudentTeam;
     use App\Models\Teacher;
@@ -18,13 +19,18 @@
             }
 
             if($user->role === 'Estudiante'){
-                $student = Student::where('idUser' ,$user->userId)
-                    ->first();
+                $userInfo = Student::where('idUser', $user->userId)->first();
+                
+                $cycle = Cycle::where('state', 'Activo')->first();
 
                 $idcs = StudentTeam::join('Team as t', 't.teamId', '=', 'Student_Team.idTeam')
                     ->join('Idc', 't.teamId', '=', 'Idc.idTeam')
                     ->join('Research_Topic as rt', 'rt.researchTopicId', '=', 't.idResearchTopic')
-                    ->where('Student_Team.idStudent', $student->studentId)
+                    ->join('Subject as s', 'rt.idSubject', '=', 's.subjectId')
+                    ->where('Student_Team.idStudent', $userInfo->studentId)
+                    ->where('Idc.state', 'En proceso')
+                    ->where('idCycle', $cycle->cycleId)
+                    ->where('t.state', 'Aprobado')
                     ->select('Student_Team.studentTeamId', 't.*', 'rt.*', 'Idc.idcId')
                     ->get();
                 
@@ -44,19 +50,53 @@
                         $formattedFL = "El usuario aún no ha iniciado sesión.";
                         $formattedLL = "El usuario aún no ha iniciado sesión.";
                     }
+                
+                if($idcs->isEmpty()) {
+                    return view('layouts.perfil', compact('user', 'userInfo', 'formattedFL', 'formattedLL'))->with('noIdcs', true);
+                } 
 
-                return view('layouts.perfil', compact('user', 'idcs', 'formattedFL', 'formattedLL'));
-            }else if($user->role === 'Docente'){
-                $teacher = Teacher::where('idUser', $user->userId)
+                return view('layouts.perfil', compact('user', 'userInfo', 'idcs', 'formattedFL', 'formattedLL'));
+            }
+            else if($user->role === 'Docente'){
+                $userInfo = Teacher::where('idUser', $user->userId)
                     ->first();
 
+                $cycle = Cycle::where('state', 'Activo')->first();
+
                 $idcs = Team::join('Research_Topic as rt', 'rt.researchTopicId', '=', 'Team.idResearchTopic')
                     ->join('Idc', 'Team.teamId', '=', 'Idc.idTeam')
-                    ->where('Team.idTeacher', $teacher->teacherId)
+                    ->join('Subject as s', 'rt.idSubject', '=', 's.subjectId')
+                    ->where('Team.idTeacher', $userInfo->teacherId)
+                    ->where('Idc.state', 'En proceso')
+                    ->where('idCycle', $cycle->cycleId)
                     ->where('Team.state', 'Aprobado')
                     ->select('Team.*', 'rt.*', 'Idc.idcId')
                     ->get();
 
+                $firstLogin = $user->firstLogin ? Carbon::parse($user->firstLogin) : null;
+                $lastLogin = $user->lastLogin ? Carbon::parse($user->lastLogin) : null;
+
+                if ($firstLogin && $lastLogin) {
+                    $formattedFL = $firstLogin->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] HH:mm');
+                    $formattedLL = $lastLogin->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] HH:mm');
+                } elseif ($firstLogin) {
+                    $formattedFL = $firstLogin->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] HH:mm');
+                    $formattedLL = "El usuario aún no ha cerrado sesión.";
+                } elseif ($lastLogin) {
+                    $formattedFL = "El usuario aún no ha iniciado sesión.";
+                    $formattedLL = $lastLogin->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] HH:mm');
+                } else {
+                    $formattedFL = "El usuario aún no ha iniciado sesión.";
+                    $formattedLL = "El usuario aún no ha iniciado sesión.";
+                }
+
+                if($idcs->isEmpty()) {
+                    return view('layouts.perfil', compact('user', 'userInfo', 'formattedFL', 'formattedLL'))->with('noIdcs', true);
+                } 
+
+                return view('layouts.perfil', compact('user', 'userInfo', 'idcs', 'formattedFL', 'formattedLL'));
+            } 
+            else {
                     $firstLogin = $user->firstLogin ? Carbon::parse($user->firstLogin) : null;
                     $lastLogin = $user->lastLogin ? Carbon::parse($user->lastLogin) : null;
 
@@ -74,33 +114,7 @@
                         $formattedLL = "El usuario aún no ha iniciado sesión.";
                     }
 
-                return view('layouts.perfil', compact('user', 'idcs', 'formattedFL', 'formattedLL'));
-            } else {
-                $idcs = Team::join('Research_Topic as rt', 'rt.researchTopicId', '=', 'Team.idResearchTopic')
-                    ->join('Idc', 'Team.teamId', '=', 'Idc.idTeam')
-                    ->where('Idc.idUser', $idUser)
-                    ->where('Team.state', 'Aprobado')
-                    ->select('Team.*', 'rt.*', 'Idc.idcId')
-                    ->get();
-
-                    $firstLogin = $user->firstLogin ? Carbon::parse($user->firstLogin) : null;
-                    $lastLogin = $user->lastLogin ? Carbon::parse($user->lastLogin) : null;
-
-                    if ($firstLogin && $lastLogin) {
-                        $formattedFL = $firstLogin->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] HH:mm');
-                        $formattedLL = $lastLogin->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] HH:mm');
-                    } elseif ($firstLogin) {
-                        $formattedFL = $firstLogin->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] HH:mm');
-                        $formattedLL = "El usuario aún no ha cerrado sesión.";
-                    } elseif ($lastLogin) {
-                        $formattedFL = "El usuario aún no ha iniciado sesión.";
-                        $formattedLL = $lastLogin->locale('es')->isoFormat('D [de] MMMM [de] YYYY [a las] HH:mm');
-                    } else {
-                        $formattedFL = "El usuario aún no ha iniciado sesión.";
-                        $formattedLL = "El usuario aún no ha iniciado sesión.";
-                    }
-
-                return view('layouts.perfil', compact('user', 'idcs', 'formattedFL', 'formattedLL'));
+                return view('layouts.perfil', compact('user', 'formattedFL', 'formattedLL'));
             }
         }
 

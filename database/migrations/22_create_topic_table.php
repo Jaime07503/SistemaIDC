@@ -17,7 +17,8 @@
                 $table->string('updatedInformation', 400);
                 $table->string('localRelevance', 400);
                 $table->string('globalRelevance', 500);
-                $table->string('studentContribute', 200);
+                $table->string('subject', 200);
+                $table->integer('studentContribute');
                 $table->string('state', 30);
                 $table->timestamps();
             });

@@ -13,7 +13,7 @@
         <div class="head-content">
             <h1>Administración de Usuarios</h1>
             <div class="history">
-                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" href="{{ url('/home') }}">Inicio del Sitio</a>
                 <a class="history-view">Usuarios</a>
             </div>
         </div>
@@ -33,7 +33,6 @@
                             <li data-value="Todos" class="selected"><i class="fa-solid fa-check"></i> Todos</li>
                             <li data-value="Estudiantes"> Estudiante</li>
                             <li data-value="Docentes"> Docente</li>
-                            <li data-value="Coordinadores">Coordinador</li>
                             <li data-value="Administrador del proceso"> Administrador del proceso</li>
                             <li data-value="Administrador del sistema"> Administrador del sistema</li>
                         </ul>
@@ -47,50 +46,57 @@
 
             <!-- Users Table -->
             <div class="users-content">
-                <table id="data-table-users" class="table content-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Rol</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($users as $user)
+                @if(isset($noUsers))
+                    <h3 class="empty">No hay <strong>Usuarios Creados</strong> aún</h3>
+                @else
+                    <table id="data-table-users" class="table content-table">
+                        <thead>
                             <tr>
-                                <td data-values="Nombre"><img class="avatar" src="{{ $user->avatar }}" alt="Avatar">{{ $user->name }}</td>
-                                <td data-values="Correo">{{ $user->email }}</td>
-                                <td data-values="Rol">{{ $user->role }}</td>
-                                <td data-values="Estado">{{ $user->state }}</td>
-                                <td data-values="Acciones">
-                                    <button class="btn-edit btn" 
-                                        data-modal="editarModal"
-                                        data-userId="{{ $user->userId }}"
-                                        data-userName="{{ $user->name }}"
-                                        data-userEmail="{{ $user->email }}"
-                                        data-userRole="{{ $user->role }}"
-                                        data-userCareer="{{ $user->career }}"
-                                        @if($user->role == 'Docente')
-                                            data-teacherId="{{ $user->teacherId }}"
-                                            data-contractType="{{ $user->contractType }}"
-                                            data-specialty="{{ $user->specialty }}"
-                                        @endif
-                                    >
-                                        <i class="fa-regular fa-pen-to-square"></i>
-                                    </button>
-                                    <button class="btn-delete btn" 
-                                        data-modal="eliminarModal"
-                                        data-userId="{{ $user->userId }}"
-                                    >
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </td>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach($users as $user)
+                                <tr>
+                                    <td data-values="Nombre"><img class="avatar" src="{{ $user->avatar }}" alt="Avatar">{{ $user->name }}</td>
+                                    <td data-values="Correo">{{ $user->email }}</td>
+                                    <td data-values="Rol">{{ $user->role }}</td>
+                                    <td data-values="Estado">{{ $user->state }}</td>
+                                    <td data-values="Acciones">
+                                        <button class="btn-edit btn" 
+                                            data-modal="editarModal"
+                                            data-userId="{{ $user->userId }}"
+                                            data-userName="{{ $user->name }}"
+                                            data-userEmail="{{ $user->email }}"
+                                            data-userRole="{{ $user->role }}"
+                                            @if($user->role == 'Docente')
+                                                data-teacherId="{{ $user->teacherId }}"
+                                                data-contractType="{{ $user->contractType }}"
+                                                data-specialty="{{ $user->specialty }}"
+                                                data-title=" {{ $user->title }}"
+                                                data-idcQuantity=" {{ $user->idcQuantity }}"
+                                            @endif
+                                        >
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+                                        @if($user->role !== 'Administrador del Sistema')
+                                            <button class="btn-delete btn" 
+                                                data-modal="eliminarModal"
+                                                data-userId="{{ $user->userId }}"
+                                            >
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
 
                 <!-- Add User Modal -->
                 <div id="myModalUser" class="modal">
@@ -118,7 +124,6 @@
                                     <ul class="options optionsEdit">
                                         <li data-value="Estudiante">Estudiante</li>
                                         <li data-value="Docente">Docente</li>
-                                        <li data-value="Coordinador">Coordinador</li>
                                         <li data-value="Administrador del Proceso">Administrador del Proceso</li>
                                         <li data-value="Administrador del Sistema">Administrador del Sistema</li>
                                     </ul>
@@ -154,6 +159,24 @@
                                 </div>
                             </div>
                             <input hidden type="text" name="specialty" id="specialtyInput">
+
+                            <div class="options-courses lst-title" hidden>
+                                <div class="custom-listbox title">
+                                    <div class="listbox-header listbox-header-edit">
+                                        <button class="listbox" type="button"><span class="selected-option" data-value="Título" id="title">Título</span></button>
+                                        <i class="fa-solid fa-chevron-down arrow-down"></i>
+                                    </div>
+                                    <ul class="options optionsEdit">
+                                        <li data-value="Licenciado">Lic.</li>
+                                        <li data-value="Ingeniero">Ing.</li>
+                                        <li data-value="Master">Ma.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input hidden type="text" name="title" id="titleInput">
+                            
+                            <input hidden id="idcQuantity" type="text" name="idcQuantity" placeholder="Participaciones en IDC" maxlength="2" autocomplete="off">
+
                             <div id="notificationU" class="notificationM"></div>
 
                             <button type="submit" class="btn" id="submitButton">Crear</button>
@@ -168,7 +191,7 @@
                             <h2>Datos del Usuario</h2>
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
-                        <form id="formEditUser" action="{{ route('editUser') }}" method="POST">
+                        <form id="formEditUser" action="{{ route('user.edit') }}" method="POST">
                             @csrf
                             <div class="input-box">
                                 <input class="input-user" type="text" name="name" id="nameEditInput" autocomplete="off" placeholder="Nombre completo" maxlength="100">
@@ -176,18 +199,6 @@
                             <div class="input-box">
                                 <input class="input-user" type="text" name="email" id="emailEditInput" autocomplete="off" placeholder="Correo" maxlength="320">
                             </div>
-                            <div class="options-courses lst-role-edit">
-                                <div class="custom-listbox role-edit">
-                                    <div class="listbox-header listbox-header-edit">
-                                        <button class="listbox" type="button"><span class="selected-option" id="roleSpanEdit"></span></button>
-                                        <i class="fa-solid fa-chevron-down arrow-down"></i>
-                                    </div>
-                                    <ul class="options optionsEdit">
-                                        <li data-value="Coordinador">Coordinador</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <input hidden type="text" name="role" id="roleInputEdit">
 
                             <div class="options-courses lst-contract-edit" hidden>
                                 <div class="custom-listbox contract-edit">
@@ -217,6 +228,26 @@
                                 </div>
                             </div>
                             <input hidden type="text" name="specialty" id="specialtyInputEdit">
+
+                            <div class="options-courses lst-title-edit" hidden>
+                                <div class="custom-listbox title-edit">
+                                    <div class="listbox-header listbox-header-edit">
+                                        <button class="listbox" type="button"><span class="selected-option" data-value="Título" id="titleSpanEdit">Título</span></button>
+                                        <i class="fa-solid fa-chevron-down arrow-down"></i>
+                                    </div>
+                                    <ul class="options optionsEdit">
+                                        <li data-value="Licenciado">Lic.</li>
+                                        <li data-value="Ingeniero">Ing.</li>
+                                        <li data-value="Master">Ma.</li>
+                                        <li data-value="Arquitecto">Arq.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <input hidden type="text" name="title" id="titleInputEdit">
+
+                            <input hidden id="idcQuantityEdit" type="text" name="idcQuantity" placeholder="Participaciones en IDC" maxlength="2" autocomplete="off">
+
+                            <input hidden type="text" name="role" id="roleInputEdit">
                             <input hidden type="text" name="userId" id="userIdEdit">
                             <input hidden type="text" name="teacherId" id="teacherIdEdit">
                             <div id="notificationUE" class="notificationM"></div>
@@ -234,7 +265,7 @@
                             <button type="button" class="cerrarModal"><i class="fa-solid fa-xmark"></i></button>
                         </header>
                         <div class="optionDeleteUser">
-                            <form action="{{ route('deleteUser') }}" method="POST">
+                            <form action="{{ route('user.delete') }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="userId" id="idInputs" class="error-input" autocomplete="off">

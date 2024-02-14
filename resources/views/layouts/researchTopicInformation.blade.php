@@ -26,10 +26,13 @@
             <!-- Información del tema de investigación -->
             <div class="information">
                 <p class="information-paragraph">{{ $researchTopic->description }}</p>
-                <p class="information-paragraph">{{ $researchTopic->currentInformation }}</p>
                 <div class="information-images">
+                @if($researchTopic->importanceRegional !== null)
                     <img src="{{ $researchTopic->importanceRegional }}" alt="" class="information-images-importance">
+                @endif
+                @if($researchTopic->importanceGlobal !== null)
                     <img src="{{ $researchTopic->importanceGlobal }}" alt="" class="information-images-importance">
+                @endif
                 </div>
             </div>
             <!-- Información de los equipos de investigación -->
@@ -57,9 +60,9 @@
                                     <button type="submit" class="btn-postulate"><i class="fa-regular fa-address-card"></i>Postularse</button>
                                 </form>
                             @else
-                                @if($postulatedSubject && ($postulatedSubject->state === 'Postulado' || $postulatedSubject->state === 'Aprobado'))
+                                @if($postulatedSubject && ($postulatedSubject->state === 'Postulado'))
                                     <!-- Postularse al tema (Estudiante) -->
-                                    <h2 class="state">{{ $postulatedSubject->state }}</h2>
+                                    <h2 class="state"><i class="fa-regular fa-address-card"></i> {{ $postulatedSubject->state }}</h2>
                                 @endif
                             @endif
                         @endif

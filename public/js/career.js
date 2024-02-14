@@ -98,15 +98,15 @@ document.addEventListener("DOMContentLoaded", function () {
     function filterTable() {
         const searchText = searchInput.value.trim().toLowerCase()
         const selectedFaculty = facultyListbox.querySelector('.selected-option').textContent.trim().toLowerCase()
-
+    
         tableRows.forEach(function(row) {
             const careerText = row.querySelector('td[data-values="Carrera"]').textContent.trim().toLowerCase()
             const facultyText = row.querySelector('td[data-values="Facultad"]').textContent.trim().toLowerCase()
-
+    
             const containsSearchText = careerText.includes(searchText) || facultyText.includes(searchText)
-            const matchesSelectedFaculty = selectedFaculty === 'Todos' || facultyText === selectedFaculty
-
-            if (selectedFaculty === 'Todos' || matchesSelectedFaculty) {
+            const matchesSelectedFaculty = selectedFaculty === 'todos' || facultyText === selectedFaculty
+    
+            if (selectedFaculty === 'todos' || matchesSelectedFaculty) {
                 row.style.display = containsSearchText ? '' : 'none'
             } else {
                 row.style.display = 'none'

@@ -6,7 +6,7 @@
     --texas-rose-100: #fae9cb;
 }
 
-.modalUser, .notificationUser {
+.modalUser, .notificationUser, #dropdown-menu {
     display: none;
     position: fixed;
     z-index: 1;
@@ -22,6 +22,11 @@
 .notificationUser {
     right: 5rem;
     width: 20rem;
+}
+
+#dropdown-menu {
+    right: 8rem;
+    width: 14rem;
 }
 
 .modal-content-user, .notification-content-user {
@@ -77,7 +82,7 @@
     flex-direction: column;
 }
 
-.notification {
+.notificationContent {
     padding: .3rem .5rem;
     text-align: center;
 }
@@ -119,4 +124,67 @@
     padding: .5rem;
     font-weight: 100;
     text-align: center;
+}
+
+.nav-link {
+    color: var(--primary);
+    display: block;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.nav-link--inside {
+    padding: .5rem;
+    text-align: left;
+}
+
+.nav-link--inside:hover {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-item {
+    list-style: none;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.list-item--click {
+    cursor: pointer;
+}
+
+.list-button {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    width: 100%;
+    padding: .7rem;
+}
+
+.list-icon, .list-arrow {
+    font-size: .7rem;
+    color: var(--white);
+}
+
+.list-show {
+    width: 90%;
+    margin-left: auto;
+    border-left: 2px solid var(--primary);
+    list-style: none;
+    transition: height .4s;
+    height: 0;
+}
+
+.arrow .list-arrow-nav {
+    transform: rotate(180deg);
+}
+
+.list-arrow-nav {
+    transition: transform .3s;
 }

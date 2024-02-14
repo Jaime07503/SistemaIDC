@@ -23,7 +23,7 @@
         <!-- Vista general de las etapas del proceso -->
         <section class="stages-content">
             <!-- Etapas del proceso -->
-            <aside class="stages">
+            <div class="stages">
                 <div class="stage-card">
                     <img src="{{ asset('images/robot.webp') }}" alt="Imagen de informacion del proceso" class="stage-image">
                     <a href="{{ route('processInfo', ['researchTopicId' => $researchTopic->researchTopicId]) }}" 
@@ -55,7 +55,7 @@
                         Finalización del Proceso
                     </a>
                 </div>
-            </aside>
+            </div>
         </section>
     </main>
 @endsection

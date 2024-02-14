@@ -43,17 +43,8 @@ h1 {
 
 h2 {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: var(--primary);
-}
-
-::-webkit-scrollbar {
-    width: 0.3rem;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--gold);
-    border-radius: 0.3rem;
 }
 
 .main-content {
@@ -74,6 +65,7 @@ h2 {
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
     box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
@@ -235,6 +227,11 @@ h2 {
     border-radius: .5rem;
     gap: .5rem;
     box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+    border: 3px solid var(--texas-rose-50);
+}
+
+.researchTopics-content:last-child {
+    margin-bottom: 1.5rem;
 }
 
 .content-table {
@@ -262,14 +259,6 @@ h2 {
 
 .content-table tbody tr {
     border-bottom: 1px solid var(--texas-rose-200);
-}
-
-.content-table tbody tr td:first-child {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: .5rem;
-
 }
 
 .content-table tbody tr.active-row {
@@ -317,4 +306,21 @@ h2 {
 .btn-approve:hover {
     border: 3px solid var(--primary);
     color: var(--primary);
+}
+
+.empty {
+    font-size: .9rem;
+    color: var(--primary);
+    margin: auto;
+    font-weight: 100;
+    text-align: center;
+}
+
+::-webkit-scrollbar {
+    width: 0.3rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 0.3rem;
 }

@@ -20,6 +20,10 @@
                 ->where('Idc.idcId', $researchTopic->idcId)
                 ->get();
 
+            if($documents->isEmpty()) {
+                return view('layouts.processInfo', compact('researchTopic'))->with('noDocuments', true);
+            }
+
             return view('layouts.processInfo', compact('researchTopic', 'documents'));
         }
 

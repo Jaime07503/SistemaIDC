@@ -13,9 +13,7 @@
     {
         public function getCareers()
         {
-            $careers = Career::whereHas('Faculty', function ($query) {
-                $query->where('nameFaculty', 'Ingeniería y Arquitectura');
-            })->select('nameCareer')->get();
+            $careers = Career::select('nameCareer')->get();
 
             return view('layouts.formularioPostulacion', compact('careers'));
         }
@@ -35,15 +33,18 @@
         
         public function addStudent(Request $request)
         {            
-            // Create new Student
             $student = new Student;
             $student->carnet = $request->input('carnet');
             $student->career = $request->input('career');
+            if($request->input('previousIDC') !== null) {
+                $student->idcQuantity = 1;
+            } else {
+                $student->idcQuantity = 0;
+            }
             $student->state = 'Activo';
             $student->idUser = auth()->user()->userId;
             $student->save();
 
-            // Create new StudentHistory
             $studentHistory = new StudentHistory;
             $studentHistory->cum = $request->input('cum');
             $studentHistory->enrolledSubject = $request->input('selectedMaterias');
@@ -52,7 +53,6 @@
             $studentHistory->idStudent = $student->studentId;
             $studentHistory->save();
 
-            // Add register in StudentSubject
             $selectedMaterias = $request->input('selectedMaterias');
             $idStudent = $student->studentId;
 
@@ -85,7 +85,7 @@
 
             if($result) 
             {
-                return redirect('/tablero')->with('success', 'El estudiante ha sido guardado con éxito');
+                return redirect('/tablero');
             }
         }
     }

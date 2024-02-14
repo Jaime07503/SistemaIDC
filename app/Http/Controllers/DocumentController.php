@@ -1,18 +1,18 @@
 <?php
     namespace App\Http\Controllers;
+    use DateTime;
+    use Carbon\Carbon;
     use App\Models\BibliographicSource;
     use App\Models\Idc;
     use App\Models\Objetive;
     use App\Models\ResearchTopic;
     use App\Models\StudentTeam;
     use App\Models\Team;
-    use DateTime;
     use App\Models\TopicSearchReport;
     use App\Models\User;
     use App\Notifications\GenerateTSR;
     use Illuminate\Http\Request;
     use PhpOffice\PhpWord\TemplateProcessor as TemplateProcessor;
-    use Carbon\Carbon;
     
     class DocumentController extends Controller
     {
@@ -46,8 +46,8 @@
             $filePath = public_path('documents/' . $fileName);
 
             $topicSearchReport = TopicSearchReport::find($idTopicSearchReport);
-            $topicSearchReport->code = $fileName;
             $topicSearchReport->creationDate = $fechaCarbon;
+            $topicSearchReport->code = $fileName;
             $topicSearchReport->storagePath = 'documents/'.$fileName;
             $topicSearchReport->state = $REVISION_STATE;
             $topicSearchReport->save();
@@ -85,15 +85,18 @@
                 $imagen = $request->file('Imagen-Diagrama');
             
                 if ($imagen->isValid() && strpos($imagen->getMimeType(), 'image/') === 0) {
-                    $templateProcessor->setImageValue('imageDiagram', array('path' => $imagen->getPathname(), 'width' => 550, 'height' => 300, 'ratio' => false));
+                    $templateProcessor->setImageValue('imageDiagram', array('path' => $imagen->getPathname(), 
+                    'width' => 550, 'height' => 300, 'ratio' => false));
                 }
             } 
 
             // 3. Tabla de volcado de del resultado de investigación inicial
-            $sources = BibliographicSource::join('Source_Search', 'Bibliographic_Source.bibliographicSourceId', '=', 'Source_Search.idBibliographicSource')
+            $sources = BibliographicSource::join('Source_Search', 
+                'Bibliographic_Source.bibliographicSourceId', '=', 'Source_Search.idBibliographicSource')
                 ->where('idTopicSearchReport', $idTopicSearchReport)
-                ->select('Bibliographic_Source.source as sourceII', 'Bibliographic_Source.author as authorII', 'Bibliographic_Source.year as yearII',
-                'Bibliographic_Source.averageType as averageTypeII', 'Bibliographic_Source.link as linkII', 'Bibliographic_Source.bibliographicSourceId as s')
+                ->select('Bibliographic_Source.source as sourceII', 'Bibliographic_Source.author as authorII', 
+                'Bibliographic_Source.year as yearII','Bibliographic_Source.averageType as averageTypeII', 
+                'Bibliographic_Source.link as linkII', 'Bibliographic_Source.bibliographicSourceId as s')
                 ->get();
 
             $datosSources = json_decode($sources, true);
@@ -184,13 +187,6 @@
             
                 $students = $team->studentTeam->pluck('student');
             }
-
-            $coordinator = Idc::select('Idc.idUser')
-                ->where('Idc.idcId', $idcId)
-                ->first();
-                
-            $user = User::find($coordinator->idUser);
-            $user->notify(new GenerateTSR($topicSearchReport, $idcId));
 
             foreach ($students as $student) {
                 $user = User::find($student->idUser);

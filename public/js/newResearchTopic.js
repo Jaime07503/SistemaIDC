@@ -78,42 +78,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 return 
             }
         }
-    
-        Promise.all([validarImagenWrapper('Avatar'), validarImagenWrapper('Imagen-Importancia-Local'), validarImagenWrapper('Imagen-Importancia-Global')])
-            .then(() => {
-                document.getElementById('formAddResearchTopic').submit()
-            })
-            .catch(error => {
-                showNotification(`${error.message} en el campo "${error.inputName}"`, true, '#notificationT')
-            })
-    })
 
-    async function validarImagenWrapper(inputName) {
-        try {
-            await validarImagen(inputName)
-        } catch (error) {
-            error.inputName = inputName
-            throw error
-        }
-    }
-    
-    function validarImagen(inputName) {
-        return new Promise((resolve, reject) => {
-            var fileInput = document.getElementsByName(inputName)[0]
-    
-            if (fileInput && fileInput.files.length > 0) {
-                var file = fileInput.files[0]
-    
-                var reader = new FileReader()
-                reader.onload = function (e) {
-                    resolve()
-                }
-                reader.readAsDataURL(file)
-            } else {
-                reject({ message: 'Por favor, selecciona una imagen', inputName: inputName })
-            }
-        })
-    }
+        this.submit()
+    })
 
     function showNotification(message, isError = false, notificationId) {
         const notification = document.querySelector(notificationId)

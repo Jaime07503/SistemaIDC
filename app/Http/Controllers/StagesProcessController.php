@@ -1,8 +1,7 @@
 <?php
     namespace App\Http\Controllers;
-
-use App\Models\IDCDates;
-use App\Models\ResearchTopic;
+    use App\Models\IDCDates;
+    use App\Models\ResearchTopic;
     use Carbon\Carbon;
 
     class StagesProcessController extends Controller

@@ -10,6 +10,15 @@
             Schema::create('Scientific_Article_Report', function (Blueprint $table) {
                 $table->increments('scientificArticleReportId');
                 $table->string('code')->nullable();
+                $table->timestamp('creationDate')->nullable();
+                $table->string('spanishSummary', 850)->nullable();
+                $table->string('englishSummary', 850)->nullable();
+                $table->string('keywords', 160)->nullable();
+                $table->string('introduction', 1450)->nullable();
+                $table->string('methodology', 500)->nullable();
+                $table->string('subtitle', 4000)->nullable();
+                $table->string('secondSubtitle', 4000)->nullable();
+                $table->string('thirdSubtitle', 4000)->nullable();
                 $table->integer('numberOfWords')->nullable();  
                 $table->string('storagePath', 300)->nullable();
                 $table->string('nameDocumentImage', 200)->nullable();

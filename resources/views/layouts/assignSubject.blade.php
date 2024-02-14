@@ -10,14 +10,14 @@
 
 @section('content')
     <main class="main-content">
-        <div class="head-content">
+        <header class="head-content">
             <h1>Asignación de Materias a Docentes</h1>
             <div class="history">
-                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" href="{{ url('/home') }}">Inicio del Sitio</a>
                 <a class="history-view">Asignación de Materias</a>
             </div>
-        </div>
-        <div class="info-user">
+        </header>
+        <section class="info-user">
             <div class="head">
                 <h2>Materias sin Asignar</h2>
             </div>
@@ -42,38 +42,46 @@
             </div>
             <!-- UnassignedSubjects Table-->
             <div class="subject-content">
-                <table id="data-table-subjects" class="table content-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Sección</th>
-                            <th>Ciclo</th>
-                            <th>Carrera</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($unassignedSubjects as $unassignedSubject)
-                            <tr>
-                                <td data-values="Nombre">{{ $unassignedSubject->nameSubject }}</td>
-                                <td data-values="Sección">{{ $unassignedSubject->section }}</td>
-                                <td data-values="Ciclo">{{ $unassignedSubject->cycle }}</td>
-                                <td data-values="Carrera">{{ $unassignedSubject->nameCareer }}</td>
-                                <td data-values="Estado">{{ $unassignedSubject->state }}</td>
-                                <td data-values="Acciones">
-                                    <button class="btn-edit btn" data-modal="asignarSubjectModal"
-                                        data-subjectId="{{ $unassignedSubject->subjectId }}"
-                                        data-nameCareer="{{ $unassignedSubject->nameCareer }}"
-                                        data-approvedIdc="{{ $unassignedSubject->approvedIdc }}"
-                                    >
-                                        <i class="fa-solid fa-arrow-pointer"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if(isset($noContent))
+                    <h3 class="empty">No hay <strong>Materias sin asignar Docente</strong></h3>
+                @else
+                    @if(isset($noUnassignedSubjects))
+                        <h3 class="empty">No hay <strong>Materias sin asignar Docente</strong></h3>
+                    @else
+                        <table id="data-table-subjects" class="table content-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Sección</th>
+                                    <th>Ciclo</th>
+                                    <th>Carrera</th>
+                                    <th>Estado</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($unassignedSubjects as $unassignedSubject)
+                                    <tr>
+                                        <td data-values="Nombre">{{ $unassignedSubject->nameSubject }}</td>
+                                        <td data-values="Sección">{{ $unassignedSubject->section }}</td>
+                                        <td data-values="Ciclo">{{ $unassignedSubject->cycle }}</td>
+                                        <td data-values="Carrera">{{ $unassignedSubject->nameCareer }}</td>
+                                        <td data-values="Estado">{{ $unassignedSubject->state }}</td>
+                                        <td data-values="Acciones">
+                                            <button class="btn-edit btn" data-modal="asignarSubjectModal"
+                                                data-subjectId="{{ $unassignedSubject->subjectId }}"
+                                                data-nameCareer="{{ $unassignedSubject->nameCareer }}"
+                                                data-approvedIdc="{{ $unassignedSubject->approvedIdc }}"
+                                            >
+                                                <i class="fa-solid fa-arrow-pointer"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                @endif
 
                 <!-- AssignSubject Modal -->
                 <div class="modal" id="asignarSubjectModal">
@@ -102,8 +110,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="info-user">
+        </section>
+        <section class="info-user">
             <div class="head">
                 <h2>Materias Asignadas</h2>
             </div>
@@ -129,45 +137,53 @@
 
             <!-- AssignedSubjects Table -->
             <div class="users-content">
-                <table id="data-table-assignSubjects" class="table content-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Sección</th>
-                            <th>Ciclo</th>
-                            <th>Carrera</th>
-                            <th>Docente</th>
-                            <th>Estado</th>
-                            <th>IDC</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($assignedSubjects as $assignedSubject)
-                            <tr>
-                                <td data-values="Nombre">{{ $assignedSubject->nameSubject }}</td>
-                                <td data-values="Sección">{{ $assignedSubject->section }}</td>
-                                <td data-values="Ciclo">{{ $assignedSubject->cycle }}</td>
-                                <td data-values="Carrera">{{ $assignedSubject->nameCareer }}</td>
-                                <td data-values="Docente">{{ $assignedSubject->name }}</td>
-                                <td data-values="Estado">{{ $assignedSubject->state }}</td>
-                                <td data-values="IDC">
-                                    @if($assignedSubject->approvedIdc !== 'Aprobado')
-                                        <button type="button" class="btn btn-aproved-subject" data-values="{{ $assignedSubject->subjectId }}">
-                                            Aprobar
-                                        </button>
-                                        <h4 style="font-weight: 100; display: none" 
-                                            id="state-subject-{{ $assignedSubject->subjectId }}">{{ $assignedSubject->approvedIdc }}
-                                        </h4>   
-                                    @else 
-                                        <h4 style="font-weight: 100;">{{ $assignedSubject->approvedIdc}}</h4>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @if(isset($noContent))
+                    <h3 class="empty">No hay <strong>Materias asignadas a Docente</strong></h3>
+                @else
+                    @if(isset($noAssignedSubjects))
+                        <h3 class="empty">No hay <strong>Materias asignadas a Docente</strong></h3>
+                    @else
+                        <table id="data-table-assignSubjects" class="table content-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Sección</th>
+                                    <th>Ciclo</th>
+                                    <th>Carrera</th>
+                                    <th>Docente</th>
+                                    <th>Estado</th>
+                                    <th>IDC</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($assignedSubjects as $assignedSubject)
+                                    <tr>
+                                        <td data-values="Nombre">{{ $assignedSubject->nameSubject }}</td>
+                                        <td data-values="Sección">{{ $assignedSubject->section }}</td>
+                                        <td data-values="Ciclo">{{ $assignedSubject->cycle }}</td>
+                                        <td data-values="Carrera">{{ $assignedSubject->nameCareer }}</td>
+                                        <td data-values="Docente">{{ $assignedSubject->name }}</td>
+                                        <td data-values="Estado">{{ $assignedSubject->state }}</td>
+                                        <td data-values="IDC">
+                                            @if($assignedSubject->approvedIdc !== 'Aprobado')
+                                                <button type="button" class="btn btn-aproved-subject" data-values="{{ $assignedSubject->subjectId }}">
+                                                    Aprobar
+                                                </button>
+                                                <h4 style="font-weight: 100; display: none" 
+                                                    id="state-subject-{{ $assignedSubject->subjectId }}">{{ $assignedSubject->approvedIdc }}
+                                                </h4>   
+                                            @else 
+                                                <h4 style="font-weight: 100;">{{ $assignedSubject->approvedIdc}}</h4>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                @endif
             </div>
-        </div>
+        </section>
     </main>
 @endsection
 

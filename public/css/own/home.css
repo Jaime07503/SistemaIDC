@@ -46,98 +46,97 @@ body {
 /* Encabezado */
 .head-content {
     display: flex;
-    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
     background-color: var(--white);
     width: 95%;
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
-.head-lbl {
-    font-size: 1.7rem;
+.head-title {
+    font-size: 3.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-align: center;
+}
+
+.greeting {
     color: var(--primary);
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+.image-idc {
+    width: 10rem;
 }
 
 /*  */
 .facultys-content {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--white);
+    margin-bottom: 1.5rem;
     width: 95%;
+    background: var(--white);
     padding: 1rem;
     border-radius: .5rem;
-    gap: .5rem;
-    margin-bottom: 1.5rem;
-}
-
-.faculty {
-    color: var(--primary);
-    font-size: 1.1rem;
-    font-weight: 100;
-}
-
-.lt-faculty {
     display: flex;
     flex-direction: column;
+    gap: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
-.lt-item-faculty, .lt-inside-career, .lt-inside-subject, .lt-inside-researchTopic {
-    list-style: none;
-    width: 100%;
-    overflow: hidden;
-}
-
-.lt-item-faculty--click, .lt-item-career--click, .lt-item-subject--click {
-    cursor: pointer;
-}
-
-.lt-button-faculty, .lt-button-career, .lt-button-subject {
-    display: flex;
-    gap: 1rem;
-    width: 100%;
-    align-items: center;
-}
-
-.lt-arrow {
-    font-size: .7rem;
+.head-lbl {
     color: var(--primary);
-}
-
-.lt-link {
-    color: var(--primary);
-    display: inline-flex;
-    gap: 1rem;
-    padding: .5rem 0;
-    text-decoration: none;
     font-size: 1rem;
 }
 
-.lt-link:hover {
+/* Acciones */
+.stages {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: 1rem;
+}
+
+/* Accion */
+.stage-card {
+    background: var(--white);
+    border-radius: .5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+}
+
+.stage-image {
+    height: 18rem;
+    width: 100%;
+    border-radius: .5rem .5rem 0 0;
+}
+
+.stage-link {
+    display: block;
+    color: var(--primary);
+    font-size: .9rem;
+    padding: .5rem;
+    text-align: center;
+    text-decoration: none;
+}
+
+.stage-link:hover {
     text-decoration: underline;
 }
 
-.img-topic {
-    width: 1.5rem;
-    height: 1.5rem;
-    border-radius: 50%;
+.stage-icon {
+    font-size: 1rem;
+    color: var(--primary);
 }
 
-.lt-link--inside-faculty, .lt-link--inside-career, .lt-link--inside-subject {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    text-align: left;
-    margin-left: .7rem;
+/* Scroll */
+::-webkit-scrollbar {
+    width: .4rem;
 }
 
-.lt-show-careers, .lt-show-subjects, .lt-show-researchTopics, .lt-show-teams {
-    transition: height 0.3s ease;
-    height: 0;
-    margin-left: 1.5rem;
-    margin-top: .5rem;
-}
-
-.arrow {
-    transform: rotate(270deg);
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: .5rem;
 }

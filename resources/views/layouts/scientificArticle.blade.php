@@ -166,52 +166,6 @@
                                 </form>
                             </td>
                         </tr>
-                    @elseif($scientificArticle->state === 'Debe corregirse' && session('role') === 'Coordinador')
-                        @if($scientificArticle->documentImageStoragePath !== 'Sin Intento')
-                            <tr>
-                                <td><strong>Archivo con imágenes</strong></td>
-                                <td>
-                                    <strong>
-                                        <a href="{{ asset($scientificArticle->documentImageStoragePath) }}" class="link-document">
-                                            <i class="fa-regular fa-file-word"></i> {{ $scientificArticle->nameDocumentImage }}
-                                        </a>
-                                    </strong>
-                                </td>
-                            </tr>
-                        @else
-                            <tr>
-                                <td><strong>Archivo con imágenes</strong></td>
-                                <td>{{ $scientificArticle->documentImageStoragePath }}</td>
-                            </tr>
-                        @endif
-                        <tr>
-                            <td>
-                                <strong>Archivo con correcciones</strong>
-                            </td>
-                            <td>
-                                <strong>
-                                    <div class="stateDocument">
-                                        <a href="{{ asset($scientificArticle->correctDocumentStoragePath) }}" class="link-document">
-                                            <i class="fa-regular fa-file-word"></i> {{ $scientificArticle->nameCorrectDocument }}
-                                        </a>
-                                        <form id="formSARDC" action="{{ route('scientificArticleReport.changeCorrect', ['idcId' => $scientificArticle->idcId, 
-                                            'idScientificArticleReport' => $idScientificArticleReport]) }}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            <button type="button" class="contenedor-btn-file">
-                                                <i class="fas fa-file"></i>
-                                                Adjuntar otro documento
-                                                <label for="btn-file-SARDC"></label>
-                                                <input type="file" id="btn-file-SARDC" name="archivoCorrecciones" accept=".doc, .docx">
-                                            </button>
-                                        </form>
-                                    </div>
-                                </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><strong>Archivo corregido</strong></td>
-                            <td>Por subirse</td>
-                        </tr>
                     @elseif($scientificArticle->state === 'Debe corregirse' && session('role') === 'Estudiante')
                         @if($scientificArticle->documentImageStoragePath !== 'Sin Intento')
                             <tr>
@@ -286,26 +240,6 @@
                                 </strong>
                             </td>
                         </tr>
-
-                        @if(session('role') === 'Coordinador')
-                            <tr>
-                                <td><strong>Comentarios al envío</strong></td>
-                                <td>
-                                    <div class="stateDocument">
-                                        <form action="{{ route('scientificArticleReport.approveCorrected', ['idcId' => $scientificArticle->idcId, 
-                                            'idScientificArticleReport' => $idScientificArticleReport]) }}" method="POST">
-                                            @csrf
-                                            <button class="btn"><i class="fa-solid fa-check"></i>Aprobar Documento</button>
-                                        </form>
-                                        <form action="{{ route('scientificArticleReport.decline', ['idcId' => $scientificArticle->idcId, 
-                                            'idScientificArticleReport' => $idScientificArticleReport]) }}" method="POST">
-                                            @csrf
-                                            <button class="btn"><i class="fa-solid fa-xmark"></i>Rechazar Documento</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endif 
                     @endif
 
                     @if($scientificArticle->state === 'En revisión')
@@ -358,32 +292,6 @@
                                 @endif
                             @endif
                         </tr>
-                        <tr>
-                            <td><strong>Comentarios al envío</strong></td>
-                            <td>
-                                @if(session('role') === 'Coordinador')
-                                    <div class="stateDocument">
-                                        <form action="{{ route('scientificArticleReport.approve', ['idcId' => $scientificArticle->idcId, 
-                                            'idScientificArticleReport' => $idScientificArticleReport]) }}" method="POST">
-                                            @csrf
-                                            <button class="btn"><i class="fa-solid fa-check"></i>Aprobar Documento</button>
-                                        </form>
-                                        <form id="formSARC" action="{{ route('scientificArticleReport.correct', ['idcId' => $scientificArticle->idcId, 
-                                            'idScientificArticleReport' => $idScientificArticleReport]) }}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            <button type="button" class="contenedor-btn-file">
-                                                <i class="fas fa-file"></i>
-                                                Adjuntar archivo con correcciones
-                                                <label for="btn-file-SARC"></label>
-                                                <input type="file" id="btn-file-SARC" name="archivoCorrecciones" accept=".doc, .docx">
-                                            </button>
-                                        </form>
-                                    </div>
-                                @else
-                                    No hay comentarios por el momento
-                                @endif
-                            </td>
-                        </tr>
                     @endif
                 </tbody>
             </table>
@@ -392,9 +300,9 @@
                     <a href="{{ url('/scientificArticleReport', ['idcId' => $scientificArticle->idcId, 
                         'idScientificArticleReport' => $idScientificArticleReport]) }}" class="btn-login">
                         @if(session('role') === 'Docente')
-                            <h4>Crear Informe</h4>
+                            <h4>Crear Informe <i class="fa-regular fa-file-word"></i></h4>
                         @elseif(session('role') === 'Estudiante')
-                            <h4>Aportar al Informe</h4>
+                            <h4>Aportar al Informe <i class="fa-regular fa-file-word"></i></h4>
                         @endif
                     </a>
                 </div>

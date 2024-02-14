@@ -1,7 +1,6 @@
 <?php
-    use App\Http\Controllers\FacultyController;
-    use App\Notifications\DocEntregado;
     use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\FacultyController;
     use App\Http\Controllers\AuthGoogleLoginController;
     use App\Http\Controllers\DocumentController;
     use App\Http\Controllers\EndProcessController;
@@ -21,12 +20,15 @@
     use App\Http\Controllers\CareerController;
     use App\Http\Controllers\CommentsController;
     use App\Http\Controllers\CycleController;
+    use App\Http\Controllers\GenerateDocumentsController;
     use App\Http\Controllers\HistoryController;
     use App\Http\Controllers\HomeController;
     use App\Http\Controllers\IDCDatesController;
     use App\Http\Controllers\NextIdcTopicsFormController;
     use App\Http\Controllers\SubjectController;
-    use App\Http\Controllers\UserController;
+use App\Http\Controllers\TopicController;
+use App\Http\Controllers\UserController;
+use App\Models\TopicSearchReport;
 
     // Private Routes
     Route::middleware(['auth'])->group(function () {
@@ -57,11 +59,33 @@
 
     // Admin Routes
     Route::middleware('admin')->group(function () {
+        // Read
         Route::get('/cycle', [CycleController::class, 'getCycles'])->name('cycle');
-        Route::get('/faculty', [FacultyController::class, 'getCareers'])->name('faculty');
+        Route::get('/faculty', [FacultyController::class, 'getFacultys'])->name('faculty');
         Route::get('/career', [CareerController::class, 'getCareers'])->name('career');
-        Route::get('/subject', [SubjectController::class, 'getSubject'])->name('subject');
-        Route::get('/user', [UserController::class, 'getCareers'])->name('user');
+        Route::get('/subject', [SubjectController::class, 'getSubjects'])->name('subject');
+        Route::get('/user', [UserController::class, 'getUsers'])->name('user');
+
+        // Create
+        Route::post('/addCycle', [CycleController::class, 'addCycle'])->name('cycle.create');
+        Route::post('/addFaculty', [FacultyController::class, 'addFaculty'])->name('faculty.create');
+        Route::post('/addCareer', [CareerController::class, 'addCareer'])->name('career.create');
+        Route::post('/addSubject', [SubjectController::class, 'addSubject'])->name('subject.create');
+        Route::post('/addUser', [UserController::class, 'addUser'])->name('user.create');
+
+        // Update
+        Route::post('/editCycle', [CycleController::class, 'editCycle'])->name('cycle.edit');
+        Route::post('/editFaculty', [FacultyController::class, 'editFaculty'])->name('faculty.edit');
+        Route::post('/editCareer', [CareerController::class, 'editCareer'])->name('career.edit');
+        Route::post('/editSubject', [SubjectController::class, 'editSubject'])->name('subject.edit');
+        Route::post('/editUser', [UserController::class, 'editUser'])->name('user.edit');
+        
+        // Delete
+        Route::delete('/deleteCycle', [CycleController::class, 'deleteCycle'])->name('cycle.delete');
+        Route::delete('/deleteFaculty', [FacultyController::class, 'deleteFaculty'])->name('faculty.delete');
+        Route::delete('/deleteCareer', [CareerController::class, 'deleteCareer'])->name('career.delete');
+        Route::delete('/deleteSubject', [SubjectController::class, 'deleteSubject'])->name('subject.delete');
+        Route::delete('/deleteUser', [UserController::class, 'deleteUser'])->name('user.delete');
      });
 
     // Public Routes
@@ -71,6 +95,8 @@
 
     Route::get('/assignSubject', [SubjectController::class, 'getAssignSubject'])->name('assignSubject');
     Route::get('/idcDates', [IDCDatesController::class, 'getDates'])->name('idcDates');
+    Route::get('/generateDocuments', [GenerateDocumentsController::class, 'getGenerateDocuments'])->name('generateDocuments');
+    Route::get('/topicsApproveIdc/{subjectId}', [TopicController::class, 'getTopics'])->name('topicsApproveIdc');
 
     //GET
     Route::get('/login-google', [AuthGoogleLoginController::class, 'redirectToGoogle']);
@@ -86,14 +112,7 @@
     Route::get('/topicSearchReport/{idcId}/{idTopicSearchReport}', [TopicSearchReportController::class, 'getSources'])->name('topicSearchReport');
     Route::get('/scientificArticleReport/{idcId}/{idScientificArticleReport}', [ScientificArticleReportController::class, 'getSources'])->name('scientificArticleReport');
     Route::get('/nextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [NextIdcTopicReportController::class, 'getTopics'])->name('nextIdcTopicReport');
-
-    use App\User;
-    Route::get('/notificacion', function (){
-        $user = User::find(1);
-        $user->notify(new DocEntregado);
-
-        return "Notificacion Enviada";
-    });
+    
     //POST
     Route::post('/addStudent', [FormPostulationController::class, 'addStudent'])->name('student.store');
     Route::post('/addPostulated', [ResearchTopicInformationController::class, 'store'])->name('studentSubject.store');
@@ -108,16 +127,16 @@
     Route::post('/generate-word', [DocumentController::class, 'generateWord'])->name('generate-word');
     Route::post('/generate-scientific-article', [ScientificArticleReportController::class, 'generateWord'])->name('generate-scientific-article');
     Route::post('/generate-nextIdcReport', [NextIdcTopicsFormController::class, 'generateWord'])->name('generate-nextIdcReport');
-    Route::post('/addUser', [UserController::class, 'addUser'])->name('user.create');
+    
     Route::post('/updateAvatar/{idUser}', [PerfilController::class, 'updateAvatar'])->name('userAvatar.update');
-    Route::post('/addFaculty', [FacultyController::class, 'addFaculty'])->name('faculty.create');
-    Route::post('/addSubject', [SubjectController::class, 'addSubject'])->name('subject.create');
-    Route::post('/addCycle', [CycleController::class, 'addCycle'])->name('cycle.create');
     Route::post('/assignTeacher', [SubjectController::class, 'assignTeacher'])->name('assignTeacher');
     Route::post('/addDocument/{idcId}', [ProcessInfoController::class, 'addDocument'])->name('document.add');
     Route::post('/approvedResearchTopic/{researchTopicId}', [ResearchTopicController::class, 'approvedTopic'])->name('researchTopic.approved');
     Route::post('/addComments/{idcId}/{idNextIdcTopicReport}', [CommentsController::class, 'addComment'])->name('comment.create');
     Route::post('/assignDate', [IDCDatesController::class, 'assignDates'])->name('datesIdc.assign');
+    Route::post('/approvedTeam/{teamId}', [TeamController::class, 'approvedTeam'])->name('team.approve');
+    Route::post('/approvedTopicIdc/{topicId}', [TopicController::class, 'approvedTopicIdc'])->name('topicIdc.approved');
+    Route::post('/addTopicIdc/{subjectId}/{topicId}', [ResearchTopicController::class, 'addTopicIdc'])->name('topicIdc.create');
 
     // UPDATE
     Route::get('/source/{idSource}', [TopicSearchReportController::class, 'updateSource'])->name('source.update');
@@ -129,18 +148,13 @@
     Route::get('/updateReference/{idReference}', [ScientificArticleReportController::class, 'updateReference'])->name('reference.update');
     Route::get('/updateTopic/{idTopic}', [NextIdcTopicReportController::class, 'updateTopic'])->name('topic.update');
     
-    Route::post('/editCycle',[CycleController::class, 'editCycle'])->name('editCycle');
-    Route::post('/addCareer', [CareerController::class, 'addCareer'])->name('career.create');
-    Route::post('/editCareer',[CareerController::class, 'editCareer'])->name('editcareer');
-    Route::post('/editUser',[UserController::class, 'editUser'])->name('editUser');
     Route::post('/editSource', [TopicSearchReportController::class, 'editSource'])->name('source.edit');
     Route::post('/editObjetive', [TopicSearchReportController::class, 'editObjetive'])->name('objetive.edit');
     Route::post('/editTopic', [NextIdcTopicReportController::class, 'editTopic'])->name('topic.edit');
     Route::post('/editDevelopment', [ScientificArticleReportController::class, 'editDevelopment'])->name('development.edit');
     Route::post('/editConclusion', [ScientificArticleReportController::class, 'editConclusion'])->name('conclusion.edit');
     Route::post('/editReference', [ScientificArticleReportController::class, 'editReference'])->name('reference.edit');
-    Route::post('/editSubject', [SubjectController::class, 'editSubject'])->name('editSubject');
-    Route::post('/editFaculty', [FacultyController::class, 'editFaculty'])->name('editFaculty');
+    Route::post('/updateScientificArticleReport/{idScientificArticleReport}', [ScientificArticleReportController::class, 'saveProgress'])->name('scientificArticleReport.saveProgress');
 
     Route::post('/approveTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'approveTopicSearchReport'])->name('topicSearchReport.approve');
     Route::post('/aprovedCorrectedTopicSearchReport/{idcId}/{idTopicSearchReport}', [SearchInformationController::class, 'approveCorrectedTopicSearchReport'])->name('topicSearchReport.approveCorrected');
@@ -172,16 +186,11 @@
     Route::post('/changeCorrectedNextIdcTopicReport/{idcId}/{idNextIdcTopicReport}', [EndProcessController::class, 'changeCorrectedNextIdcTopicReport'])->name('nextIdcTopicReport.changeCorrected');
 
     //DELETE
-    Route::delete('/deleteCycle', [CycleController::class, 'deleteCycle'])->name('deleteCycle');
-    Route::delete('/deleteUser', [UserController::class, 'deleteUser'])->name('deleteUser');
-    Route::delete('/deleteCareer', [CareerController::class, 'deleteCareer'])->name('deleteCareer');
     Route::delete('/deleteSource', [TopicSearchReportController::class, 'deleteSource'])->name('source.delete');
     Route::delete('/deleteObjetive', [TopicSearchReportController::class, 'deleteObjetive'])->name('objetive.delete');
     Route::delete('/deleteTopic', [NextIdcTopicReportController::class, 'deleteTopic'])->name('topic.delete');
     Route::delete('/deleteDevelopment', [ScientificArticleReportController::class, 'deleteDevelopment'])->name('development.delete');
     Route::delete('/deleteConclusion', [ScientificArticleReportController::class, 'deleteConclusion'])->name('conclusion.delete');
     Route::delete('/deleteReference', [ScientificArticleReportController::class, 'deleteReference'])->name('reference.delete');
-    Route::delete('/deleteSubject', [SubjectController::class, 'deleteSubject'])->name('deleteSubject');
-    Route::delete('/deleteFaculty', [FacultyController::class, 'deleteFaculty'])->name('deleteFaculty');
     Route::delete('/deleteDocument/{trainingDocumentId}', [ProcessInfoController::class, 'deleteDocument'])->name('document.delete');
 ?>

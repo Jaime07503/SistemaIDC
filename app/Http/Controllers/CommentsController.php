@@ -22,40 +22,55 @@
             $idcComment->save();
 
             $idc = Idc::find($idcId);
+            $teamId = $idc->idTeam;
+            $team = Team::find($teamId);
 
-            if ($idc) {
-                $teamId = $idc->idTeam;
-                if ($teamId) {
-                    $team = Team::find($teamId); 
-                    if ($team) {
-                        $userIds = $team->studentTeam()->pluck('idStudent')->toArray(); 
-                        if (!in_array($team->idTeacher, $userIds)) {
-                            $userIds[] = $team->idTeacher;
-                        }
+            $userIds = [];
+
+            if ($team) {
+                $teacher = $team->teacher;
+
+                if ($teacher && $teacher->user) {
+                    $userIds[] = $teacher->user->userId;
+                }
+
+                $studentTeam = $team->studentTeam;
+
+                foreach ($studentTeam as $studentTeamMember) {
+                    $student = $studentTeamMember->student;
+
+                    if ($student && $student->user) {
+                        $userIds[] = $student->user->userId;
                     }
-                } 
-            } 
+                }
+            }
+
+            $commentUserIds = Comments::pluck('idUser')->toArray();
 
             $incomplete = false;
-
             foreach ($userIds as $userId) {
-                $count = Comments::where('idUser', $userId)->count();
-                if ($count === 0) {
+                if (!in_array($userId, $commentUserIds)) {
                     $incomplete = true;
                     break;
                 }
             }
 
-            if ($incomplete) {
-                $estado = 'Incompleto';
-            } else {
-                $estado = 'Completo';
-            }
-
-            if ($estado === 'Completo') {
+            if ($incomplete === false) {
                 $idc->state = 'Finalizado';
                 $idc->save();
 
+                $teacher = $team->teacher;
+                $teacher->idcQuantity += 1;
+                $teacher->save();
+
+                foreach ($team->studentTeam as $studentTeamMember) {
+                    $student = $studentTeamMember->student;
+                    if ($student) {
+                        $student->idcQuantity += 1;
+                        $student->save();
+                    }
+                }
+    
                 return redirect()->route('tablero');
             }
 

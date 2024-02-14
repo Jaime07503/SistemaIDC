@@ -1,0 +1,336 @@
+:root {
+    --primary: #800000;
+    --gold: #F0AD4E;
+    --light: #E5EEF4;
+    --white: #FFFFFF;
+    --texas-rose-50: #fef7ec;
+    --texas-rose-100: #fae9cb;
+    --texas-rose-200: #f6d091;
+    --texas-rose-300: #f0ad4e;
+    --texas-rose-400: #ed9732;
+    --texas-rose-500: #e6751a;
+    --texas-rose-600: #cc5513;
+    --texas-rose-700: #a93914;
+    --texas-rose-800: #8a2d16;
+    --texas-rose-900: #712716;
+    --texas-rose-950: #411107;
+}
+
+html, body, div, form, h1, h2, h3, h4, input, i, ul, li, span, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: scroll;
+    background: var(--light);
+}
+
+/* Contenedor Principal */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+    gap: 1.7rem;
+}
+
+/* Encabezado */
+.head-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    width: 95%;
+    padding: 1rem;
+    margin-top: 6rem;
+    border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+}
+
+.head-lbl {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 1.8rem;
+}
+
+/* Historial de vistas */
+.history {
+    display: flex;
+    gap: .7rem;
+    flex-wrap: wrap; 
+    justify-content: start;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.history-view {
+    text-decoration: none;
+    padding: .5rem;
+    color: var(--primary);
+    background: var(--texas-rose-50);
+    box-sizing: border-box;
+    width: auto;
+    border-radius: .5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+}
+
+.history-view:hover {
+    text-decoration: underline;
+}
+
+.history-view:hover:nth-child(2) {
+    text-decoration: none;
+}
+
+/* Vista general de las etapas del proceso */
+.documents-content {
+    margin-bottom: 1.5rem;
+    width: 95%;
+    background: var(--white);
+    padding: 1rem;
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+}
+
+.head-title {
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+.content-table {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    min-width: 200px;
+    width: 100%;
+    border-radius: .5rem;
+    overflow: hidden;
+    color: var(--primary);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+}
+
+.content-table thead tr {
+    background-color: var(--texas-rose-50);
+    color: var(--primary);
+    text-align: left;
+    font-weight: 900;
+}
+
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+}
+
+.content-table tbody tr {
+    border-bottom: 1px solid var(--texas-rose-200);
+}
+
+.content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+.content-table th {
+	cursor: pointer;
+}
+
+.content-table .th-sort-asc::after {
+	content: "\25b4";
+}
+
+.content-table .th-sort-desc::after {
+	content: "\25be";
+}
+
+.content-table .th-sort-asc::after,
+.content-table .th-sort-desc::after {
+	margin-left: 5px;
+}
+
+.content-table .th-sort-asc,
+.content-table .th-sort-desc {
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.contenedor-btn-file input[type="file"] {
+    appearance: none;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    z-index: -1;
+}
+.contenedor-btn-file {
+    display: inline-block;
+    position: relative;
+    background: var(--texas-rose-50);
+    color: var(--primary);
+    border: 0;
+    padding: .3rem;
+    border-radius: .5rem;
+    overflow: hidden;
+    transition: ease-out 120ms background-color;
+    border: 3px solid transparent;
+    font-weight: 900;
+    font-size: .9rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+}
+.contenedor-btn-file:hover {
+    background-color: var(--texas-rose-200);
+    border: 3px solid var(--primary);
+}
+.contenedor-btn-file:active {
+    border: 3px solid var(--primary);
+    border: 3px solid var(--primary);
+}
+.contenedor-btn-file > i {
+    margin-right: .4rem;
+}
+
+.contenedor-btn-file label {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.stateDocument {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.link-document {
+    font-size: .9rem;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.link-document:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    background: var(--texas-rose-50);
+    border: 3px solid  transparent;
+    color: var(--primary);
+    text-align: center;
+    outline: none;
+    font-size: .9rem;
+    font-weight: 900;
+    height: 100%;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem;
+    cursor: pointer;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+}
+
+.btn:hover {
+    background-color: var(--texas-rose-200);
+    border: 3px solid var(--primary);
+}
+
+.btn:active {
+    border: 3px solid var(--primary);
+}
+
+.empty {
+    font-size: .9rem;
+    color: var(--primary);
+    margin: auto;
+    font-weight: 100;
+    text-align: center;
+}
+
+.stateAprobado {
+    background-color: var(--texas-rose-200);
+    border-radius: .5rem;
+    text-align: center;
+    padding: .5rem;
+    font-weight: 100;
+}
+
+.stateDebeCorregirse {
+    background-color: var(--texas-rose-700);
+    color: var(--white);
+    border-radius: .5rem;
+    text-align: center;
+    padding: .5rem;
+    font-weight: 100;
+}
+
+.stateEnRevision {
+    background-color: #CCCCCC;
+    color: black;
+    border-radius: .5rem;
+    text-align: center;
+    padding: .5rem;
+    font-weight: 100;
+}
+
+.stateCorregido {
+    background-color: lightgreen;
+    color: black;
+    border-radius: .5rem;
+    text-align: center;
+    padding: .5rem;
+    font-weight: 100;
+}
+
+.stateRechazado {
+    background-color: var(--primary);
+    color: var(--white);
+    border-radius: .5rem;
+    text-align: center;
+    padding: .5rem;
+    font-weight: 100;
+}
+
+/* Scroll */
+::-webkit-scrollbar {
+    width: .4rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: .5rem;
+}
+
+@media (max-width: 1160px) {
+    table thead {
+        display: none;
+    }
+
+    table td[data-values] {
+        display: flex;
+        gap: 3rem;
+    }
+
+    table td[data-values]::before {
+        content: attr(data-values);
+        width: 4rem;
+        font-weight: 700;
+    }
+
+    table tr {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

@@ -13,8 +13,8 @@
                 $table->string('themeName', 300);
                 $table->string('description', 500);
                 $table->string('avatar', 512)->nullable();
-                $table->string('importanceRegional', 512);
-                $table->string('importanceGlobal', 512);
+                $table->string('importanceRegional', 512)->nullable();
+                $table->string('importanceGlobal', 512)->nullable();
                 $table->string('state', 30);
                 $table->unsignedBigInteger('idSubject');
                 $table->timestamps();

@@ -53,7 +53,6 @@
             } else {
                 $idcs = Team::join('Research_Topic as rt', 'rt.researchTopicId', '=', 'Team.idResearchTopic')
                     ->join('Idc', 'Team.teamId', '=', 'Idc.idTeam')
-                    ->where('Idc.idUser', $idUser)
                     ->where('Idc.state', 'Finalizado')
                     ->select('Team.*', 'rt.*', 'Idc.idcId')
                     ->get();

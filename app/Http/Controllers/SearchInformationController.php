@@ -23,7 +23,7 @@
                 ->join('Research_Topic', 'Team.idResearchTopic', '=', 'Research_Topic.researchTopicId')
                 ->join('Subject', 'Research_Topic.idSubject', '=', 'Subject.subjectId')
                 ->select('Topic_Search_Report.state', 'Topic_Search_Report.storagePath',
-                'Idc.idcId', 'Topic_Search_Report.creationDate', 'Topic_Search_Report.previousState','Research_Topic.researchTopicId', 
+                'Idc.idcId', 'Topic_Search_Report.previousState','Research_Topic.researchTopicId', 
                 'Topic_Search_Report.correctDocumentStoragePath', 'Topic_Search_Report.nameCorrectDocument',
                 'Topic_Search_Report.correctedDocumentStoragePath', 'Topic_Search_Report.nameCorrectedDocument', 
                 'Research_Topic.themeName', 'Research_Topic.code', 'Subject.subjectId', 'Team.teamId', 
@@ -113,7 +113,7 @@
                 $user->notify(new ApproveTSR($topicSearchReport, $idcId));
             }
 
-            return redirect()->route('searchInformation', compact('idcId', 'idTopicSearchReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function approveCorrectedTopicSearchReport($idcId, $idTopicSearchReport) {
@@ -155,7 +155,7 @@
                 $user->notify(new ApproveTSR($topicSearchReport, $idcId));
             }
 
-            return redirect()->route('searchInformation', compact('idcId', 'idTopicSearchReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function correctTopicSearchReport($idcId, $idTopicSearchReport, Request $request) {
@@ -186,7 +186,7 @@
             $user = User::find($teacher->userId);
             $user->notify(new CorrectDocumentTSR($topicSearchReport, $idcId));
 
-            return redirect()->route('searchInformation', compact('idcId', 'idTopicSearchReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function changeCorrectTopicSearchReport($idcId, $idTopicSearchReport, Request $request) {
@@ -215,7 +215,7 @@
             $user = User::find($teacher->userId);
             $user->notify(new ChangeCorrectDocumentTSR($topicSearchReport, $idcId));
 
-            return redirect()->route('searchInformation', compact('idcId', 'idTopicSearchReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function correctedTopicSearchReport($idcId, $idTopicSearchReport, Request $request) {
@@ -236,12 +236,14 @@
             $topicSearchReport->state = $CORRECTED_STATE;
             $topicSearchReport->save();
 
-            $coordinator = Idc::select('Idc.idUser')
-                ->where('Idc.idcId', $idcId)
-                ->first();
-                
-            $user = User::find($coordinator->idUser);
-            $user->notify(new CorrectedDocumentTSR($topicSearchReport, $idcId));
+            $processAdmins = User::select('userId')
+                ->where('role', 'Administrador del Proceso')
+                ->get();
+
+            foreach ($processAdmins as $processAdmin) {
+                $user = User::find($processAdmin->userId);
+                $user->notify(new CorrectedDocumentTSR($topicSearchReport, $idcId));
+            }
 
             return redirect()->route('searchInformation', compact('idcId', 'idTopicSearchReport'));
         }
@@ -262,12 +264,14 @@
             
             $topicSearchReport->save();
 
-            $coordinator = Idc::select('Idc.idUser')
-                ->where('Idc.idcId', $idcId)
-                ->first();
-                
-            $user = User::find($coordinator->idUser);
-            $user->notify(new ChangeCorrectDocumentTSR($topicSearchReport, $idcId));
+            $processAdmins = User::select('userId')
+            ->where('role', 'Administrador del Proceso')
+            ->get();
+
+            foreach ($processAdmins as $processAdmin) {
+                $user = User::find($processAdmin->userId);
+                $user->notify(new ChangeCorrectedDocumentTSR($topicSearchReport, $idcId));
+            }
 
             return redirect()->route('searchInformation', compact('idcId', 'idTopicSearchReport'));
         }
@@ -310,7 +314,7 @@
                 $user->notify(new DeclineTSR($topicSearchReport, $idcId));
             }
 
-            return redirect()->route('searchInformation', compact('idcId', 'idTopicSearchReport'));
+            return redirect()->route('generateDocuments');
         }
     }
 ?>

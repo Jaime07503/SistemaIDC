@@ -13,7 +13,7 @@
         <header class="head-content">
             <h1>Asignación de Fechas para IDC</h1>
             <div class="history">
-                <a class="history-view" href="{{ url('/tablero') }}">Tablero</a>
+                <a class="history-view" href="{{ url('/home') }}">Inicio del Sitio</a>
                 <a class="history-view">Asignación de Fechas</a>
             </div>
         </header>

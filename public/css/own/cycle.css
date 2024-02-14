@@ -66,12 +66,14 @@ h2 {
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 /* Historial de vistas */
 .history {
     display: flex;
-    gap: .5rem;
+    gap: .7rem;
     flex-wrap: wrap;
     justify-content: start;
     align-items: center;
@@ -86,6 +88,7 @@ h2 {
     box-sizing: border-box;
     width: auto;
     border-radius: .5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .history-view:hover {
@@ -104,15 +107,17 @@ h2 {
     background: var(--white);
     padding: 1rem;
     border-radius: .5rem;
-    gap: .5rem;
+    gap: .7rem;
     margin-bottom: 1.5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .options-users {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: .5rem;
+    gap: .7rem;
 }
 
 .custom-listbox {
@@ -210,7 +215,7 @@ h2 {
     display: block;
     min-width: 0;
     width: auto;
-    padding: .5rem;
+    padding: .7rem;
     color: var(--primary);
     background: transparent;
 }
@@ -225,6 +230,7 @@ h2 {
     width: 15rem; 
     outline: none;
     background: var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .custom-input::placeholder {
@@ -296,14 +302,6 @@ input::placeholder {
 
 .content-table tbody tr {
     border-bottom: 1px solid var(--texas-rose-200);
-}
-
-.content-table tbody tr td:first-child {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    gap: .5rem;
-
 }
 
 .content-table tbody tr.active-row {
@@ -381,16 +379,17 @@ input::placeholder {
 
 .btn {
     background: var(--texas-rose-100);
-    border: 3px solid var(--white);
+    border: 3px solid transparent;
     color: var(--primary);
     text-align: center;
     outline: none;
     font-size: .9rem;
-    font-weight: 100;
+    font-weight: 900;
     height: 100%;
     border-radius: .5rem;
     padding: 0.5rem;
     cursor: pointer;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .btn:hover {
@@ -556,6 +555,14 @@ input::placeholder {
 
 .notificationM.show {
     display: block;
+}
+
+.empty {
+    font-size: .9rem;
+    color: var(--primary);
+    margin: auto;
+    font-weight: 100;
+    text-align: center;
 }
 
 /* Scroll */

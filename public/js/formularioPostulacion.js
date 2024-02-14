@@ -11,29 +11,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Inputs validation
     document.getElementById("nameInput").addEventListener("input", function () {
-        let inputValue = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜ\s]/g, ''); // Allows letters, spaces and accented vowels
+        let inputValue = this.value.replace(/[^a-zA-ñÑZáéíóúÁÉÍÓÚüÜ\s]/g, ''); // Allows letters, spaces and accented vowels
         this.value = inputValue;
     });
 
     document.getElementById("carnetInput").addEventListener("input", function () {
         let inputValue = this.value.replace(/[^a-zA-Z0-9]/g, ''); // Remove unwanted characters
         let formattedValue = "";
-    
+        
         for (let i = 0; i < inputValue.length; i++) {
-          if (i < 4) {
-            // The first four characters must be numbers
-            formattedValue += inputValue[i].replace(/[^0-9]/g, '');
-          } else if (i < 6) {
-            // The next two characters must be letters
-            formattedValue += inputValue[i].replace(/[^a-zA-Z]/g, '');
-          } else {
-            // The last three characters must be numbers
-            formattedValue += inputValue[i].replace(/[^0-9]/g, '');
-          }
+            let charToAdd = inputValue[i];
     
-          if ((i === 3 || i === 5) && inputValue.length > (i + 1)) {
-            formattedValue += "-";
-          }
+            if (i < 4) {
+                // The first four characters must be numbers
+                charToAdd = charToAdd.replace(/[^0-9]/g, '');
+            } else if (i < 6) {
+                // The next two characters must be letters
+                charToAdd = charToAdd.replace(/[^a-zA-Z]/g, '').toUpperCase();
+            } else {
+                // The last three characters must be numbers
+                charToAdd = charToAdd.replace(/[^0-9]/g, '');
+            }
+    
+            formattedValue += charToAdd;
+    
+            if ((i === 3 || i === 5) && inputValue.length > (i + 1)) {
+                formattedValue += "-";
+            }
         }
     
         this.value = formattedValue;
@@ -213,9 +217,16 @@ document.addEventListener("DOMContentLoaded", function () {
         let selectedSubjects = [];
         let selectedMaterias = [];
         let maxSelected = 5;
+
+        const cumInputValue = parseFloat(document.getElementById("cumInput").value);
+
+        if (cumInputValue > 8.5) {
+            maxSelected = 6;
+        }
+
         jsonSubjects.forEach(function (subject, index) {
             if (selectedSubjects.length >= maxSelected) {
-                return; // No permitir seleccionar más de 6
+                return;
             }
     
             // Create the label element

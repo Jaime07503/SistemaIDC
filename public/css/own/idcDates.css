@@ -65,6 +65,7 @@ h2 {
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
     box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
@@ -215,4 +216,10 @@ h2 {
 ::-webkit-scrollbar-thumb {
     background: var(--gold);
     border-radius: 0.3rem;
+}
+
+@media only screen and (max-width: 650px) {
+	.dates {
+        flex-direction: column;
+    }
 }

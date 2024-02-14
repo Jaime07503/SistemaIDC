@@ -74,12 +74,14 @@ h2 {
     padding: 1rem;
     margin-top: 6rem;
     border-radius: .5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 /* Historial de vistas */
 .history {
     display: flex;
-    gap: .5rem;
+    gap: .7rem;
     flex-wrap: wrap;
     justify-content: start;
     align-items: center;
@@ -94,6 +96,7 @@ h2 {
     box-sizing: border-box;
     width: auto;
     border-radius: .5rem;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .history-view:hover {
@@ -113,7 +116,7 @@ h2 {
 
 .opt {
     display: flex;
-    gap: .5rem;
+    gap: 1rem;
 }
 
 .custom-listbox {
@@ -123,7 +126,7 @@ h2 {
     font-size: 1rem;
 }
 
-.role, .role-edit, .contract, .contract-edit, .specialty, .specialty-edit {
+.role, .role-edit, .contract, .contract-edit, .specialty, .specialty-edit, .title, .title-edit {
     width: 100%;
 }
   
@@ -137,6 +140,7 @@ h2 {
     border-radius: .5rem;
     background: var(--texas-rose-50);
     width: auto;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .listbox-header:hover {
@@ -151,14 +155,6 @@ h2 {
 .active {
     background: var(--texas-rose-100);
     border: 3px solid var(--primary);
-}
-
-.lst-contract, .lst-contract-edit {
-    z-index: 1;
-}
-
-.lst-specialty, .lst-specialty-edit {
-    z-index: 0;
 }
 
 .selected-option {
@@ -222,7 +218,6 @@ h2 {
 }
 
 .listbox {
-    height: 2.5rem;
     border: transparent;
     border-radius: .5rem;
     font-size: .9rem;
@@ -230,7 +225,8 @@ h2 {
     display: block;
     min-width: 0;
     width: auto;
-    padding: .5rem;
+    height: auto;
+    padding: .7rem;
     color: var(--primary);
     background: transparent;
 }
@@ -244,6 +240,7 @@ h2 {
     width: 15rem; 
     outline: none;
     background: var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .custom-input::placeholder {
@@ -267,7 +264,9 @@ h2 {
     background: var(--white);
     padding: 1rem;
     border-radius: .5rem;
-    gap: .5rem;
+    gap: .7rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .info-user:last-child {
@@ -280,16 +279,10 @@ form {
     gap: 1rem;
 }
 
-.input-box {
+
+input {
     width: 100%;
     height: 3rem;
-    position: relative;
-    display: inline-block;
-}
-
-.input-box input {
-    width: 100%;
-    height: 95%;
     background: transparent;
     border: none;
     outline: none;
@@ -301,7 +294,7 @@ form {
     font-weight: 100;
 }
 
-.input-box input:focus {
+input:focus {
     border: 3px solid #eac875;
 }
 
@@ -349,12 +342,12 @@ input::placeholder {
     border-bottom: 1px solid var(--texas-rose-200);
 }
 
-.content-table tbody tr td:first-child {
+#data-table-users tbody tr td:first-child {
     display: inline-flex;
     justify-content: center;
     align-items: center;
     gap: .5rem;
-
+    padding: 1rem;
 }
 
 .content-table tbody tr.active-row {
@@ -427,16 +420,17 @@ input::placeholder {
 
 .btn {
     background: var(--texas-rose-100);
-    border: 3px solid var(--white);
+    border: 3px solid transparent;
     color: var(--primary);
     text-align: center;
     outline: none;
     font-size: .9rem;
-    font-weight: 100;
+    font-weight: 900;
     height: 100%;
     border-radius: .5rem;
     padding: 0.5rem;
     cursor: pointer;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .btn:hover {
@@ -491,6 +485,7 @@ input::placeholder {
 	background: var(--white);
 	border-radius: .5rem;
     cursor: pointer;
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 .container h3 {
     text-align: center;
@@ -574,15 +569,35 @@ input::placeholder {
 	background: var(--primary);
 }
 
-#lt-teachers {
+#lt-teachers, .role {
     z-index: 1000;
 }
 
+.lst-contract, .lst-contract-edit {
+    z-index: 20;
+}
+
+.lst-specialty, .lst-specialty-edit {
+    z-index: 15;
+}
+
+.lst-title, .lst-title-edit {
+    z-index: 10;
+}
+
 .approveIDC, .cycle {
+    z-index: 10;
+}
+
+.cycle, .cycleEdit {
     z-index: 1;
 }
 
-.career, .lt-subject2 {
+.lt-subject2 {
+    z-index: 9;
+}
+
+.title, .career, .careerEdit  {
     z-index: 0;
 }
 
@@ -603,6 +618,14 @@ input::placeholder {
 
 .notificationM.show {
     display: block;
+}
+
+.empty {
+    font-size: .9rem;
+    color: var(--primary);
+    margin: auto;
+    font-weight: 100;
+    text-align: center;
 }
 
 @media (max-width: 1160px) {
@@ -632,6 +655,10 @@ input::placeholder {
         flex-direction: column;
         flex-wrap: nowrap;
         gap: 0;
+    }
+
+    .opt {
+        flex-direction: column;
     }
 
     table tr {

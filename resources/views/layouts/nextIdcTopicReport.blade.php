@@ -40,7 +40,6 @@
                         <table id="data-table-topic" class="table content-table">
                             <thead>
                                 <tr>
-                                    <th>Contribuyente</th>
                                     <th>Tema</th>
                                     <th>Relevancia</th>
                                     <th>Estado</th>
@@ -50,7 +49,6 @@
                             <tbody>
                                 @foreach ($topics as $topic)
                                     <tr>
-                                        <td data-values="Contribuyente"><p>{{ $topic->studentContribute }}</p></td>
                                         <td data-values="Tema"><p>{{ $topic->nameTopic }}</p></td>
                                         <td data-values="Tema"><p>{{ $topic->subjectRelevance }}</p></td>
                                         <td data-values="Estado">
@@ -106,40 +104,44 @@
                     <button type="button" id="btnAddTopic" class="btn"><i class="fa-solid fa-square-plus"></i> Agregar</button>
                 </div>
                 <div>
-                    <table id="data-table-topics" class="table content-table">
-                        <thead>
-                            <tr>
-                                <th>Tema</th>
-                                <th>Relevancia</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($topics as $topic)
+                    @if($topics->isEmpty())
+                        <h3 class="empty">No haz propuesto <strong>Temas de Investigación</strong></h3>
+                    @else
+                        <table id="data-table-topics" class="table content-table">
+                            <thead>
                                 <tr>
-                                    <td data-values="Tema"><p>{{ $topic->nameTopic }}</p></td>
-                                    <td data-values="Tema"><p>{{ $topic->subjectRelevance }}</p></td>
-                                    <td data-values="Estado">
-                                        <h4 style="font-weight: 100;">{{ $topic->state}}</h4>
-                                    </td>
-                                    <td data-values="Acciones">
-                                        @if($topic->state !== 'Aprobado')
-                                            <button type="button" class="btn btn-edit" data-modal="editarModalTopic" data-topicId="{{ $topic->topicId }}" 
-                                                data-nameTopic="{{ $topic->nameTopic }}" data-description="{{ $topic->description }}" data-subjectRelevance="{{ $topic->subjectRelevance }}" data-globalUpdateImg="{{ $topic->globalUpdateImg }}"
-                                                data-localUpdateImg="{{ $topic->localUpdateImg }}" data-updatedInformation="{{ $topic->updatedInformation }}" data-localRelevance="{{ $topic->localRelevance }}" 
-                                                data-globalRelevance="{{ $topic->globalRelevance }}">
-                                                <i class="fa-regular fa-pen-to-square"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-delete" data-modal="eliminarModalTopic" data-topicId="{{ $topic->topicId }}">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </button>
-                                        @endif
-                                    </td>
+                                    <th>Tema</th>
+                                    <th>Relevancia</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach ($topics as $topic)
+                                    <tr>
+                                        <td data-values="Tema"><p>{{ $topic->nameTopic }}</p></td>
+                                        <td data-values="Tema"><p>{{ $topic->subjectRelevance }}</p></td>
+                                        <td data-values="Estado">
+                                            <h4 style="font-weight: 100;">{{ $topic->state}}</h4>
+                                        </td>
+                                        <td data-values="Acciones">
+                                            @if($topic->state !== 'Aprobado')
+                                                <button type="button" class="btn btn-edit" data-modal="editarModalTopic" data-topicId="{{ $topic->topicId }}" 
+                                                    data-nameTopic="{{ $topic->nameTopic }}" data-description="{{ $topic->description }}" data-subjectRelevance="{{ $topic->subjectRelevance }}" data-globalUpdateImg="{{ $topic->globalUpdateImg }}"
+                                                    data-localUpdateImg="{{ $topic->localUpdateImg }}" data-updatedInformation="{{ $topic->updatedInformation }}" data-localRelevance="{{ $topic->localRelevance }}" 
+                                                    data-globalRelevance="{{ $topic->globalRelevance }}">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-delete" data-modal="eliminarModalTopic" data-topicId="{{ $topic->topicId }}">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
                 <!-- Modal -->
                 <div id="myModalTopic" class="modal">
@@ -150,9 +152,9 @@
                         </header>
                         <form id="formTopic" action="{{ route('topic.create') }}" method="POST" class="basic-information" enctype="multipart/form-data">
                             @csrf
-                            <textarea class="textarea textareaTopicA" name="nameTopic" placeholder="Tema"></textarea>
-                            <textarea class="textarea textareaTopicA" name="description" placeholder="Descripción"></textarea>
-                            <textarea class="textarea textareaTopicA" name="subjectRelevance" placeholder="Es pertinente para la materia"></textarea>
+                            <textarea class="textarea textareaTopicA" name="nameTopic" placeholder="Tema" maxlength="200"></textarea>
+                            <textarea class="textarea textareaTopicA" name="description" placeholder="Descripción" maxlength="500"></textarea>
+                            <textarea class="textarea textareaTopicA" name="subjectRelevance" placeholder="Es pertinente para la materia" maxlength="500"></textarea>
                             <div class="container file-container" id="container">
                                 <input type="file" name="Imagen-Importancia-Global" class="file-input" accept="image/png, image/jpeg" hidden>
                                 <div class="img-area" data-img="">
@@ -171,9 +173,9 @@
                                     <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
                                 </div>
                             </div>
-                            <textarea class="textarea textareaTopicA" name="updatedInformation" placeholder="Existe información actualizada sobre el tema"></textarea>
-                            <textarea class="textarea textareaTopicA" name="localRelevance" placeholder="Qué tan pertinente es el tema localmente"></textarea>
-                            <textarea class="textarea textareaTopicA" name="globalRelevance" placeholder="Qué tan pertinente es el tema geográficamente"></textarea>
+                            <textarea class="textarea textareaTopicA" name="updatedInformation" placeholder="Existe información actualizada sobre el tema" maxlength="400"></textarea>
+                            <textarea class="textarea textareaTopicA" name="localRelevance" placeholder="Qué tan pertinente es el tema localmente" maxlength="400"></textarea>
+                            <textarea class="textarea textareaTopicA" name="globalRelevance" placeholder="Qué tan pertinente es el tema geográficamente" maxlength="500"></textarea>
                             <input name="idcId" type="text" hidden value="{{ $idcId }}">
                             <input name="idNextIdcTopicReport" type="text" hidden value="{{ $idNextIdcTopicReport }}">
                             <div id="notificationT" class="notificationM"></div>

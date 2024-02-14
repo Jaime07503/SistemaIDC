@@ -32,11 +32,11 @@
                     <div class="data">
                         <h3 class="lbl3"><strong>Dirección Email</strong></h3>
                         <p class="paragraph">{{ $user->email }}</p>
-                        @if(auth()->user()->role === 'Estudiante' || auth()->user()->role === 'Docente' || auth()->user()->role === 'Coordinador')
+                        @if(auth()->user()->role === 'Estudiante' || auth()->user()->role === 'Docente')
                             <h3 class="lbl3"><strong>Participaciones IDC</strong></h3>
                             <div class="badges">
-                                @for ($i = 0; $i < $user->participationsIdc; $i++)
-                                    <i class="fa-solid fa-certificate badge"></i>
+                                @for ($i = 0; $i < $userInfo->idcQuantity; $i++)
+                                    <i class="fa-solid fa-medal badge"></i>
                                 @endfor
                             </div>
                         @endif
@@ -54,18 +54,22 @@
                     </div>
                 </div>
             </div>
-            @if(auth()->user()->role === 'Estudiante' || auth()->user()->role === 'Docente' || auth()->user()->role === 'Coordinador')
-                <aside class="actives-idc">
-                    <h2 class="lbl2">Detalles de las investigaciones de catedra</h2>
-                    @foreach ($idcs as $idc)
-                        <div class="idc-link">
-                            <img class="avatarTopic" src="{{ $idc->avatar }}" alt="Avatar">
-                            <a class="link" href="{{ route('stagesProcess', ['researchTopicId' => $idc->researchTopicId, 
-                                'teamId' => $idc->teamId, 'idcId' => $idc->idcId]) }}">{{ $idc->themeName }} - Equipo #{{ $idc->teamId }}
-                            </a>
-                        </div>
-                    @endforeach
-                </aside>
+            @if(auth()->user()->role === 'Estudiante' || auth()->user()->role === 'Docente')
+                @if(isset($noIdcs))
+                    <h3 class="empty">No tienes <strong>Investigaciones de Cátedra Activas</strong></h3>
+                @else
+                    <div class="actives-idc">
+                        <h2 class="lbl2">Detalles de las investigaciones de catedra</h2>
+                        @foreach ($idcs as $idc)
+                            <div class="idc-link">
+                                <img class="avatarTopic" src="{{ $idc->avatar }}" alt="Avatar">
+                                <a class="link" href="{{ route('stagesProcess', ['researchTopicId' => $idc->researchTopicId, 
+                                    'teamId' => $idc->teamId, 'idcId' => $idc->idcId]) }}">{{ $idc->themeName }} - Equipo #{{ $idc->teamId }}
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             @endif
         </section>
         <!-- Modal Change User Avatar -->

@@ -10,59 +10,93 @@
 
 @section('content')
     <main class="main-content">
+        <!-- Título IDC -->
         <header class="head-content">
-            <h1 class="head-lbl">Investigaciones de Cátedra</h1>
+            <div>
+                <h1 class="head-title">Investigaciones de Cátedra</h1>
+                <h3 class="greeting">Bienvenido, {{ auth()->user()->name }} 👋</h3>
+            </div>
+            <img src="{{ asset('images/idc_logo.webp') }}" class="image-idc" alt="Logo IDC">
         </header>
         <section class="facultys-content">
-            @foreach($facultys as $faculty)
-                <ul class="lt-faculty">
-                    <li class="lt-item-faculty lt-item-faculty--click">
-                        <div class="lt-button-faculty lt-button--click-faculty">
-                            <i class="fa-solid fa-chevron-down lt-arrow"></i>
-                            <h2 class="faculty"><strong>{{$faculty->nameFaculty}}</strong></h2>
-                        </div>
-                        <ul class="lt-show-careers">
-                            @foreach($faculty->career as $careerF)
-                                <li class="lt-inside-career lt-item-career--click">
-                                    <div class="lt-button-career lt-button--click-career">
-                                        <i class="fa-solid fa-chevron-down lt-arrow"></i>
-                                        <h2 class="faculty">{{$careerF->nameCareer}}</h2>
-                                    </div>
-                                    <ul class="lt-show-subjects">
-                                        @foreach($careerF->subject as $subjectC)
-                                            <li class="lt-inside-subject lt-item-subject--click">
-                                                <div class="lt-button-subject lt-button--click-subject">
-                                                    <i class="fa-solid fa-chevron-down lt-arrow"></i>
-                                                    <h2 class="faculty">{{$subjectC->nameSubject}}</h2>
-                                                </div>
-                                                <ul class="lt-show-researchTopics">
-                                                    @foreach($subjectC->researchTopic as $researchTopicS)
-                                                        <li class="lt-inside-researchTopic lt-item-researchTopic--click">
-                                                            <div class="lt-button-subject lt-button--click-subject">
-                                                                <i class="fa-solid fa-chevron-down lt-arrow"></i>
-                                                                <h2 class="faculty">{{ $researchTopicS->themeName }}</h2>
-                                                            </div>
-                                                            <ul class="lt-show-teams">
-                                                                @foreach($researchTopicS->team as $teamRT)
-                                                                    <a class="lt-link" href="{{ route('stagesProcess', ['researchTopicId' => $researchTopicS->researchTopicId, 
-                                                                        'teamId' => $teamRT->teamId, 'idcId' => $teamRT->idc->idcId]) }}"> <img src="{{ $researchTopicS->avatar }}" alt="Avatar tema" 
-                                                                        class="img-topic">
-                                                                        Equipo #{{ $teamRT->teamId }}
-                                                                    </a>
-                                                                @endforeach
-                                                            </ul>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </li>
-                </ul>
-            @endforeach
+            <h2 class="head-lbl">Acciones Principales</h2>
+            @if(auth()->user()->role === 'Administrador del Sistema')
+                <div class="stages">
+                    <div class="stage-card">
+                        <img src="{{ asset('images/robot.webp') }}" alt="Imagen de informacion del proceso" class="stage-image">
+                        <a href="{{ route('cycle') }}" 
+                            class="stage-link"><i class="fa-solid fa-arrows-spin"></i>
+                            Ciclos
+                        </a>
+                    </div>
+                    <div class="stage-card">
+                        <img src="{{ asset('images/search.webp') }}" alt="Imagen relacionada con la busqueda de informacion" class="stage-image">
+                        <a href="{{ route('faculty') }}" 
+                            class="stage-link"><i class="fa-solid fa-building-columns"></i>
+                            Facultades
+                        </a>
+                    </div>
+                    <div class="stage-card">
+                        <img src="{{ asset('images/article.webp') }}" alt="Imagen relacionada con el articulo cientifico" class="stage-image">
+                        <a href="{{ route('career') }}" 
+                            class="stage-link"><i class="fa-solid fa-flag-checkered"></i>
+                            Carreras
+                        </a>
+                    </div>
+                    <div class="stage-card">
+                        <img src="{{ asset('images/end.webp') }}" alt="Imagen relacionada con la finalizacion del proceso" class="stage-image">
+                        <a href="{{ route('subject') }}" 
+                            class="stage-link"><i class="fa-solid fa-brain"></i>
+                            Materias
+                        </a>
+                    </div>
+                    <div class="stage-card">
+                        <img src="{{ asset('images/end.webp') }}" alt="Imagen relacionada con la finalizacion del proceso" class="stage-image">
+                        <a href="{{ route('user') }}" 
+                            class="stage-link"><i class="fa-regular fa-user"></i>
+                            Usuarios
+                        </a>
+                    </div>
+                </div>
+            @else
+                <div class="stages">
+                    <div class="stage-card">
+                        <img src="{{ asset('images/robot.webp') }}" alt="Imagen de informacion del proceso" class="stage-image">
+                        <a href="{{ route('idcDates') }}" 
+                            class="stage-link"><i class="fa-regular fa-calendar"></i>
+                            Asignación de Fechas IDC
+                        </a>
+                    </div>
+                    <div class="stage-card">
+                        <img src="{{ asset('images/search.webp') }}" alt="Imagen relacionada con la busqueda de informacion" class="stage-image">
+                        <a href="{{ route('assignSubject') }}" 
+                            class="stage-link"><i class="fa-solid fa-chalkboard-user"></i>
+                            Asignación de Materias a Docentes
+                        </a>
+                    </div>
+                    <div class="stage-card">
+                        <img src="{{ asset('images/article.webp') }}" alt="Imagen relacionada con el articulo cientifico" class="stage-image">
+                        <a href="{{ route('approveResearchTopics') }}" 
+                            class="stage-link"><i class="fa-solid fa-flask"></i>
+                            Aprobación de Temas de Investigación
+                        </a>
+                    </div>
+                    <div class="stage-card">
+                        <img src="{{ asset('images/end.webp') }}" alt="Imagen relacionada con la finalizacion del proceso" class="stage-image">
+                        <a href="{{ route('approveTeam') }}" 
+                            class="stage-link"><i class="fa-solid fa-people-group"></i>
+                            Aprobación de Equipos de Investigación
+                        </a>
+                    </div>
+                    <div class="stage-card">
+                        <img src="{{ asset('images/search.webp') }}" alt="Imagen relacionada con la busqueda de informacion" class="stage-image">
+                        <a href="{{ route('generateDocuments') }}" 
+                            class="stage-link"><i class="fa-regular fa-file-word"></i>
+                            Documentos generados
+                        </a>
+                    </div>
+                </div>
+            @endif
         </section>
     </main>
 @endsection

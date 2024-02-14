@@ -29,7 +29,7 @@
                 'Scientific_Article_Report.correctDocumentStoragePath', 'Scientific_Article_Report.nameCorrectDocument',
                 'Scientific_Article_Report.correctedDocumentStoragePath', 'Scientific_Article_Report.nameCorrectedDocument', 
                 'Scientific_Article_Report.documentImageStoragePath', 'Scientific_Article_Report.nameDocumentImage',
-                'Scientific_Article_Report.code AS scientificArticleCode', 'Scientific_Article_Report.creationDate', 'Scientific_Article_Report.storagePath')
+                'Scientific_Article_Report.code AS scientificArticleCode', 'Scientific_Article_Report.storagePath')
                 ->where('Idc.idcId', $idcId)
                 ->first();
             
@@ -121,7 +121,7 @@
                 $user->notify(new ApproveSAR($scientificArticleReport, $idcId));
             }
 
-            return redirect()->route('scientificArticle', compact('idcId', 'idScientificArticleReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function approveCorrectedScientificArticleReport($idcId, $idScientificArticleReport) {
@@ -163,7 +163,7 @@
                 $user->notify(new ApproveSAR($scientificArticleReport, $idcId));
             }
 
-            return redirect()->route('scientificArticle', compact('idcId', 'idScientificArticleReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function correctScientificArticleReport($idcId, $idScientificArticleReport, Request $request) {
@@ -194,7 +194,7 @@
             $user = User::find($teacher->userId);
             $user->notify(new CorrectDocumentSAR($scientificArticleReport, $idcId));
 
-            return redirect()->route('scientificArticle', compact('idcId', 'idScientificArticleReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function docImageScientificArticleReport($idcId, $idScientificArticleReport, Request $request) {
@@ -227,12 +227,14 @@
                 $students = $team->studentTeam->pluck('student');
             }
 
-            $coordinator = Idc::select('Idc.idUser')
-                ->where('Idc.idcId', $idcId)
-                ->first();
-                
-            $user = User::find($coordinator->idUser);
-            $user->notify(new DocumentImageSAR($scientificArticleReport, $idcId));
+            $processAdmins = User::select('userId')
+                ->where('role', 'Administrador del Proceso')
+                ->get();
+
+            foreach ($processAdmins as $processAdmin) {
+                $user = User::find($processAdmin->userId);
+                $user->notify(new DocumentImageSAR($scientificArticleReport, $idcId));
+            }
 
             foreach ($students as $student) {
                 $user = User::find($student->idUser);
@@ -260,12 +262,14 @@
             $scientificArticleReport->state = $CORRECTED_STATE;
             $scientificArticleReport->save();
 
-            $coordinator = Idc::select('Idc.idUser')
-                ->where('Idc.idcId', $idcId)
-                ->first();
-                
-            $user = User::find($coordinator->idUser);
-            $user->notify(new CorrectedDocumentSAR($scientificArticleReport, $idcId));
+            $processAdmins = User::select('userId')
+                ->where('role', 'Administrador del Proceso')
+                ->get();
+
+            foreach ($processAdmins as $processAdmin) {
+                $user = User::find($processAdmin->userId);
+                $user->notify(new CorrectedDocumentSAR($scientificArticleReport, $idcId));
+            }
 
             return redirect()->route('scientificArticle', compact('idcId', 'idScientificArticleReport'));
         }
@@ -296,7 +300,7 @@
             $user = User::find($teacher->userId);
             $user->notify(new ChangeCorrectDocumentSAR($scientificArticleReport, $idcId));
 
-            return redirect()->route('scientificArticle', compact('idcId', 'idScientificArticleReport'));
+            return redirect()->route('generateDocuments');
         }
 
         public function changeDocImageScientificArticleReport($idcId, $idScientificArticleReport, Request $request) {
@@ -329,12 +333,14 @@
                 $students = $team->studentTeam->pluck('student');
             }
 
-            $coordinator = Idc::select('Idc.idUser')
-            ->where('Idc.idcId', $idcId)
-            ->first();
-            
-            $user = User::find($coordinator->idUser);
-            $user->notify(new changeDocumentImageSAR($scientificArticleReport, $idcId));
+            $processAdmins = User::select('userId')
+                ->where('role', 'Administrador del Proceso')
+                ->get();
+
+            foreach ($processAdmins as $processAdmin) {
+                $user = User::find($processAdmin->userId);
+                $user->notify(new changeDocumentImageSAR($scientificArticleReport, $idcId));
+            }
 
             foreach ($students as $student) {
                 $user = User::find($student->idUser);
@@ -360,12 +366,14 @@
 
             $scientificArticleReport->save();
 
-            $coordinator = Idc::select('Idc.idUser')
-                ->where('Idc.idcId', $idcId)
-                ->first();
-                
-            $user = User::find($coordinator->idUser);
-            $user->notify(new changeCorrectedDocumentSAR($scientificArticleReport, $idcId));
+            $processAdmins = User::select('userId')
+            ->where('role', 'Administrador del Proceso')
+            ->get();
+
+            foreach ($processAdmins as $processAdmin) {
+                $user = User::find($processAdmin->userId);
+                $user->notify(new changeCorrectedDocumentSAR($scientificArticleReport, $idcId));
+            }
 
             return redirect()->route('scientificArticle', compact('idcId', 'idScientificArticleReport'));
         }
