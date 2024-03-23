@@ -31,7 +31,7 @@
         {
             return [
                 'subjectId' => $this->subjectId,
-                'title' => 'Tema de Investigación Aprobado',
+                'title' => 'Tema de Investigación Postulado',
                 'type' => 'PRT',
             ];
         }

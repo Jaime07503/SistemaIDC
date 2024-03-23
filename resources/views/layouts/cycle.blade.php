@@ -18,7 +18,7 @@
             </nav>
         </header>
         <section class="cycle-content">
-            <h2>Ciclos</h2>
+            <h2><i class="fa-solid fa-arrows-spin"></i> Ciclos</h2>
             <div class="options-users">
                 <input id="searchInput" class="custom-input" type="text" placeholder="Buscar...">
                 <!-- Add Cycle Button -->
@@ -75,7 +75,7 @@
                         <form id="formAddCycle" class="forms" action="{{ route('cycle.create') }}" method="POST" id="formCycle" class="addCycle">
                             @csrf
                             <div class="input-box">
-                                <input class="input-cycle" type="text" name="nameCycle" id="nameCycleInput" placeholder="Ciclo" autocomplete="off" maxlength="40">
+                                <input class="input-cycle" type="text" name="nameCycle" id="nameCycleInput" placeholder="Ciclo" autocomplete="off" maxlength="13">
                             </div>
                             <!-- State Listbox -->
                             <div class="custom-listbox state">
@@ -91,7 +91,7 @@
                             <input hidden type="text" name="state" id="stateInput">
                             <div id="notificationC" class="notificationM"></div>
 
-                            <button type="submit" class="btn">Crear</button>
+                            <button type="submit" class="btn">Crear <i class="fa-brands fa-pushed"></i></button>
                         </form>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                             <input hidden type="text" name="cycleId" id="cycleEditId">
                             <div id="notificationCE" class="notificationM"></div>
                 
-                            <button type="submit" class="btn">Guardar</button>
+                            <button type="submit" class="btn">Guardar <i class="fa-regular fa-floppy-disk"></i></button>
                         </form>
                     </div>
                 </div>
@@ -140,9 +140,9 @@
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="cycleId" id="cycleId" class="error-input" autocomplete="off">
-                                <button class="btn">Eliminar</button>
+                                <button class="btn">Eliminar <i class="fa-solid fa-trash"></i></button>
                             </form>
-                            <button class="btn cancel">Cancelar</button>
+                            <button class="btn cancel">Cancelar <i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 </div>

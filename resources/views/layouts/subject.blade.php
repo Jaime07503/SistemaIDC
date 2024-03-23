@@ -14,12 +14,12 @@
             <h1>Administración de materias</h1>
             <div class="history">
                 <a class="history-view" href="{{ route('home') }}">Inicio del Sitio</a>
-                <a class="history-view" >Materias</a>
+                <a class="history-view">Materias</a>
             </div>
         </div>
         <div class="info-user">
             <div class="head">
-                <h2>Materias sin asignar Docente</h2>
+                <h2><i class="fa-solid fa-brain"></i> Materias sin asignar Docente</h2>
             </div>
             <div class="options-users">
                 <div class="opt">
@@ -119,7 +119,7 @@
                                 <input type="file" name="Avatar-Materia" class="file-input" accept="image/*" hidden>
                                 <div class="img-area" data-img="">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
-                                    <h4>Avatar Materia</h4>
+                                    <h4>Avatar Materia (Opcional)</h4>
                                     <p>El tamaño de la imagen debe ser menor a <span>2MB</span></p>
                                     <img id="uploadedImage" src="" alt="Imagen previa" style="display: none;">
                                 </div>
@@ -167,7 +167,7 @@
                             <input hidden type="text" name="idCareer" id="careerIdInput">
                             <div id="notificationS" class="notificationM"></div>
 
-                            <button type="submit" class="btn" id="submitButton">Crear</button>
+                            <button type="submit" class="btn" id="submitButton">Crear <i class="fa-brands fa-pushed"></i></button>
                         </form>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
                         <form id="formEditSubject" action="{{ route('subject.edit') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="input-box">
-                                <input class="input-edit-subject" type="text" name="code" id="codigoInput" placeholder="Código" autocomplete="off" maxlength="80">
+                                <input class="input-edit-subject" type="text" name="code" id="codigoInput" placeholder="Código" autocomplete="off" maxlength="14">
                             </div>
 
                             <div class="input-box">
@@ -246,7 +246,7 @@
                             <input hidden type="text" name="subjectId" id="materiaId">
                             <div id="notificationSE" class="notificationM"></div>
 
-                            <button id="btnEditSubject" class="btn">Guardar</button>
+                            <button id="btnEditSubject" class="btn">Guardar <i class="fa-regular fa-floppy-disk"></i></button>
                         </form>
                     </div>
                 </div>
@@ -263,9 +263,9 @@
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="subjectId" id="subjectId" class="error-input" autocomplete="off">
-                                <button class="btn">Eliminar</button>
+                                <button class="btn">Eliminar <i class="fa-solid fa-trash"></i></button>
                             </form>
-                            <button class="btn cancel">Cancelar</button>
+                            <button class="btn cancel">Cancelar <i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 </div>
@@ -273,7 +273,7 @@
         </div>
         <div class="info-user">
             <div class="head">
-                <h2>Materias asignadas a Docentes</h2>
+                <h2><i class="fa-solid fa-brain"></i> Materias asignadas a Docentes <i class="fa-solid fa-chalkboard-user action-icon"></i></h2>
             </div>
             <div class="options-users">
                 <div class="opt">

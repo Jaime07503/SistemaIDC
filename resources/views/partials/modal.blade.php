@@ -44,13 +44,18 @@
             @else
                 @foreach(auth()->user()->unreadNotifications as $notification)
                     <div class="notificationContent">
-                        @if($notification->data['type'] === 'PT' || $notification->data['type'] === 'AT')
+                        @if($notification->data['type'] === 'AT') 
                             <a href="{{ route('researchTopicInformation', ['researchTopicId' => $notification->data['researchTopicId'], 
                                 'subjectId' => $notification->data['subjectId']]) }}" class="link">
                                 {{ $notification->data['title'] }} - {{ $notification->created_at->locale('es')->diffForHumans() }}
                             </a>
-                        @elseif($notification->data['type'] === 'PRT' || $notification->data['type'] === 'ART')
-                            <a href="{{ route('researchTopics', ['subjectId' => $notification->data['subjectId']]) }}" class="link">
+                        @elseif($notification->data['type'] === 'PRT')
+                            <a href="{{ route('approveResearchTopics') }}" class="link">
+                                {{ $notification->data['title'] }} - {{ $notification->created_at->locale('es')->diffForHumans() }}
+                            </a>
+                            <!-- Falta ART -->
+                        @elseif($notification->data['type'] === 'PT')
+                            <a href="{{ route('approveTeam') }}" class="link">
                                 {{ $notification->data['title'] }} - {{ $notification->created_at->locale('es')->diffForHumans() }}
                             </a>
                         @elseif($notification->data['type'] === 'TSR' || $notification->data['type'] === 'TSRAPP' || $notification->data['type'] === 'CHTSRCRT'

@@ -208,15 +208,6 @@
                 $user = User::find($processAdmin->userId);
                 $user->notify(new PostulateTeam($data->researchTopicId, $data->subjectId));
             }
-
-            $students = $team->studentTeam->pluck('student');
-
-            foreach ($students as $student) {
-                $user = User::find($student->idUser);
-                $user->notify(new PostulateTeam($data->researchTopicId, $data->subjectId));
-            }
-
-
             return redirect()->route('researchTopicInformation', compact('researchTopicId', 'subjectId'));
         }
     }

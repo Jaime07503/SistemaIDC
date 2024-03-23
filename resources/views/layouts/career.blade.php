@@ -19,7 +19,7 @@
         </div>
         <div class="info-user">
             <div class="head">
-                <h2>Carreras</h2>
+                <h2><i class="fa-solid fa-flag-checkered"></i> Carreras</h2>
             </div>
             <div class="options-users">
                 <div class="opt">
@@ -109,7 +109,7 @@
                             <input type="text" hidden name="idFaculty" class="idFaculty">
                             <div id="notificationC" class="notificationM"></div>
 
-                            <button type="submit" class="btn" id="submitButton">Crear</button>
+                            <button type="submit" class="btn" id="submitButton">Crear <i class="fa-brands fa-pushed"></i></button>
                         </form>
                     </div>
                 </div>
@@ -142,7 +142,7 @@
                             <input type="text" hidden name="careerId" class="careerId">
                             <div id="notificationCE" class="notificationM"></div>
 
-                            <button id="btnEditUser" class="btn">Guardar</button>
+                            <button id="btnEditUser" class="btn">Guardar <i class="fa-regular fa-floppy-disk"></i></button>
                         </form>
                     </div>
                 </div>
@@ -159,9 +159,9 @@
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="careerId" id="idInputs" class="error-input" autocomplete="off">
-                                <button class="btn">Eliminar</button>
+                                <button class="btn">Eliminar <i class="fa-solid fa-trash"></i></button>
                             </form>
-                            <button class="btn cancel">Cancelar</button>
+                            <button class="btn cancel">Cancelar <i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 </div>

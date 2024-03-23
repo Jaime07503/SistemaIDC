@@ -428,7 +428,7 @@
                         </header>
                         <form id="formObjetiveE" action="{{ route('objetive.create') }}" method="POST" class="basic-information">
                             @csrf
-                            <textarea id="objetivoEspecifico" class="textarea textareaOE" name="objetive" placeholder="Objetivo especifíco"></textarea>
+                            <textarea id="objetivoEspecifico" class="textarea textareaOE" name="objetive" placeholder="Objetivo específico"></textarea>
                             <input name="idcId" type="text" hidden value="{{ $idcId }}">
                             <input name="idTopicSearchReport" type="text" hidden value="{{ $idTopicSearchReport }}">
                             <input name="type" type="text" hidden value="Especifico">

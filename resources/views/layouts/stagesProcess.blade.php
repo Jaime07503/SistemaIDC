@@ -39,22 +39,26 @@
                         Búsqueda de Información
                     </a>
                 </div>
-                <div class="stage-card">
-                    <img src="{{ asset('images/article.webp') }}" alt="Imagen relacionada con el articulo cientifico" class="stage-image">
-                    <a href="{{ route('scientificArticle', ['idcId' => $researchTopic->idcId, 
-                        'idScientificArticleReport' => $researchTopic->scientificArticleReportId]) }}" 
-                        class="stage-link"><i class="fa-solid fa-atom stage-icon"></i> 
-                        Artículo Científico
-                    </a>
-                </div>
-                <div class="stage-card">
-                    <img src="{{ asset('images/end.webp') }}" alt="Imagen relacionada con la finalizacion del proceso" class="stage-image">
-                    <a href="{{ route('endProcess', ['idcId' => $researchTopic->idcId, 
-                        'idNextIdcTopicReport' => $researchTopic->nextIdcTopicReportId]) }}" 
-                        class="stage-link"><i class="fa-solid fa-hourglass-end stage-icon"></i> 
-                        Finalización del Proceso
-                    </a>
-                </div>
+                @if($researchTopic->canShowStageCard)
+                    <div class="stage-card">
+                        <img src="{{ asset('images/article.webp') }}" alt="Imagen relacionada con el articulo cientifico" class="stage-image">
+                        <a href="{{ route('scientificArticle', ['idcId' => $researchTopic->idcId, 
+                            'idScientificArticleReport' => $researchTopic->scientificArticleReportId]) }}" 
+                            class="stage-link"><i class="fa-solid fa-atom stage-icon"></i> 
+                            Artículo Científico
+                        </a>
+                    </div>
+                @endif
+                @if($researchTopic->canShowLastStageCard)
+                    <div class="stage-card">
+                        <img src="{{ asset('images/end.webp') }}" alt="Imagen relacionada con la finalizacion del proceso" class="stage-image">
+                        <a href="{{ route('endProcess', ['idcId' => $researchTopic->idcId, 
+                            'idNextIdcTopicReport' => $researchTopic->nextIdcTopicReportId]) }}" 
+                            class="stage-link"><i class="fa-solid fa-hourglass-end stage-icon"></i> 
+                            Finalización del Proceso
+                        </a>
+                    </div>
+                @endif
             </div>
         </section>
     </main>

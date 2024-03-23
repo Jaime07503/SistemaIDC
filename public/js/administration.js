@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return
         }
 
-        const roleSpan = document.getElementById('role').getAttribute('data-value')
+        const roleSpan = document.getElementById('role').getAttribute('data-value').trim()
         if (roleSpan.trim() === 'Rol') {
             showNotification('Por favor, selecciona un Rol', true, '#notificationU')
             event.preventDefault()
@@ -200,6 +200,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (title.trim() === 'Título') {
                 showNotification('Por favor, seleccione un Título', true, '#notificationU')
+                event.preventDefault()
+                return
+            }
+
+            const idcQuantityTeacher = document.getElementById('idcQuantity')
+            if(idcQuantityTeacher.value.trim() === '') {
+                showNotification(`Por favor, completa el campo "${idcQuantityTeacher.placeholder}"`, true, '#notificationU')
                 event.preventDefault()
                 return
             }

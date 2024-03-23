@@ -7,15 +7,12 @@
     {
         public function create(Request $request)
         {
-            // Obtenemos los datos envíados desde el formulario
             $data = json_decode($request->input('datos'), true);
 
-            // Recorremos los datos para agregarlos a la DB
             if(!is_null($data))
             {
                 foreach ($data as $bSource)
                 {
-                    // Creamos una nueva instancia del Modelo BibliographicSource 
                     $bibliographicSource = new BibliographicSource;
                     $bibliographicSource->bibliographicSourceType = $bSource['bibliographicSourceType'];
                     $bibliographicSource->author = $bSource['author'];

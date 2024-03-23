@@ -90,45 +90,39 @@ body {
 
 .head-lbl {
     color: var(--primary);
-    font-size: 1rem;
+    font-size: 1.1rem;
 }
 
 /* Acciones */
-.stages {
+.action-content {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+    gap: 1.5rem;
 }
 
 /* Accion */
-.stage-card {
-    background: var(--white);
-    border-radius: .5rem;
-    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
+.action-link-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
 }
 
-.stage-image {
-    height: 18rem;
-    width: 100%;
-    border-radius: .5rem .5rem 0 0;
-}
-
-.stage-link {
-    display: block;
+.action-icon {
+    font-size: 2rem;
     color: var(--primary);
-    font-size: .9rem;
-    padding: .5rem;
-    text-align: center;
+}
+
+.action-link {
+    color: var(--primary);
     text-decoration: none;
-}
-
-.stage-link:hover {
-    text-decoration: underline;
-}
-
-.stage-icon {
+    display: block;
     font-size: 1rem;
-    color: var(--primary);
+    font-weight: 100;
+}
+
+.action-link:hover {
+    text-decoration: underline;
 }
 
 /* Scroll */

@@ -114,6 +114,8 @@ h2 {
     gap: 1rem;
     box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
     margin-bottom: 1.5rem;
+    border: 3px solid var(--texas-rose-50);
+    box-shadow: 0 .1rem .2rem rgb(0 0 0 / 20%);
 }
 
 .datepicker {

@@ -9,7 +9,7 @@
         {
             Schema::create('Subject', function (Blueprint $table) {
                 $table->increments('subjectId');
-                $table->string('code', 80);
+                $table->string('code', 14);
                 $table->string('nameSubject', 200);
                 $table->string('section', 1);
                 $table->string('approvedIdc', 30)->nullable();

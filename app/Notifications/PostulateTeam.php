@@ -32,8 +32,6 @@
         public function toArray($notifiable)
         {
             return [
-                'researchTopicId' => $this->researchTopicId,
-                'subjectId' => $this->subjectId,
                 'title' => 'Equipo Postulado',
                 'type' => 'PT',
             ];

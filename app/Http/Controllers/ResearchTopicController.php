@@ -18,7 +18,9 @@
                 ->join('User', 'Teacher.idUser', '=', 'User.userId')
                 ->find($subjectId);
 
-            $researchTopics = ResearchTopic::where('idSubject', $subjectId)->get();
+            $researchTopics = ResearchTopic::where('idSubject', $subjectId)
+                ->orderby('state')
+                ->get();
 
             // if(auth()->user()->role === 'Docente') {
             //     if ($subject->userId !== auth()->user()->userId) {
@@ -93,7 +95,16 @@
             $researchTopic->themeName = $request->input('themeName');
             $researchTopic->description = $request->input('description');
             $researchTopic->avatar = 'http://localhost/SistemaIDC/public/images/curso_logo.webp';
-            if ($fileIR !== null) {
+            if($fileIR !== null && $fileIG !== null) {
+                $fileNameIR = uniqid().'.'.$fileIR->getClientOriginalExtension();
+                $fileNameIG = uniqid().'.'.$fileIG->getClientOriginalExtension();
+
+                $fileIR->move(public_path('images'), $fileNameIR);
+                $fileIG->move(public_path('images'), $fileNameIG);
+
+                $researchTopic->importanceRegional = 'http://localhost/SistemaIDC/public/images/'.$fileNameIR;
+                $researchTopic->importanceGlobal = 'http://localhost/SistemaIDC/public/images/'.$fileNameIG;
+            } elseif ($fileIR !== null) {
                 $fileNameIR = uniqid().'.'.$fileIR->getClientOriginalExtension();
                 $fileIR->move(public_path('images'), $fileNameIR);
                 $researchTopic->importanceRegional = 'http://localhost/SistemaIDC/public/images/'.$fileNameIR;
@@ -101,24 +112,16 @@
                 $fileNameIG = uniqid().'.'.$fileIG->getClientOriginalExtension();
                 $fileIG->move(public_path('images'), $fileNameIG);
                 $researchTopic->importanceGlobal = 'http://localhost/SistemaIDC/public/images/'.$fileNameIG;
-            } elseif($fileIR !== null && $fileIG !== null) {
-                $fileNameIR = uniqid().'.'.$fileIR->getClientOriginalExtension();
-                $fileNameIG = uniqid().'.'.$fileIG->getClientOriginalExtension();
-
-                $fileIR->move(public_path('images'), $fileNameIR);
-                $fileIG->move(public_path('images'), $fileNameIG);
-
-                $researchTopic->importanceRegional = 'http://localhost/SistemaIDC/public/images/'.$fileNameIR;
-                $researchTopic->importanceGlobal = 'http://localhost/SistemaIDC/public/images/'.$fileNameIG;
-            }
+            } 
             $researchTopic->state = $TO_BE_APPROVED;
             $researchTopic->idSubject = $subjectId;
             $researchTopic->save();
 
-            $users = User::where('role', 'Administrador del Proceso');
+            $users = User::where('role', 'Administrador del Proceso')
+                ->get();
 
             foreach ($users as $user) {
-                $user = User::find($users->userId);
+                $user = User::find($user->userId);
                 $user->notify(new PostulateResearchTopic($subjectId));
             }
 

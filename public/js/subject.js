@@ -161,11 +161,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        Promise.all([validarImagenWrapper('Avatar-Materia')])
-            .catch(error => {
-                showNotification(`${error.message} en el campo "${error.inputName}"`, true, '#notificationS')
-            })
-
         const state = document.querySelector('.state .selected-option').textContent.trim()
         const cycle = document.querySelector('.cycle .selected-option').textContent.trim()
         const career = document.querySelector('.career .selected-option').textContent.trim()
@@ -184,33 +179,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return
         }
     })
-
-    async function validarImagenWrapper(inputName) {
-        try {
-            await validarImagen(inputName)
-        } catch (error) {
-            error.inputName = inputName
-            throw error
-        }
-    }
-    
-    function validarImagen(inputName) {
-        return new Promise((resolve, reject) => {
-            var fileInput = document.getElementsByName(inputName)[0]
-    
-            if (fileInput && fileInput.files.length > 0) {
-                var file = fileInput.files[0]
-    
-                var reader = new FileReader()
-                reader.onload = function (e) {
-                    resolve()
-                }
-                reader.readAsDataURL(file)
-            } else {
-                reject({ message: 'Por favor, selecciona una imagen', inputName: inputName })
-            }
-        })
-    }
 
     const searchInput = document.getElementById('searchInput')
     const userListbox = document.getElementById('subjectListbox')

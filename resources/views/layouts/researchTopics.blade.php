@@ -23,11 +23,11 @@
         <section class="topics-content">
             <header class="head">
                 <h2>Temas de investigación</h2>
-                @if(session('role') === 'Docente' && $subject->teacher->idcQuantity === 0)
+                @if(auth()->user()->role === 'Docente' && $subject->teacher->idcQuantity === 0)
                     <a href="{{ route('newResearchTopic', ['subjectId' => $subject->subjectId]) }}" class="btn-postulate">
                         <i class="fa-solid fa-bookmark"></i> Postular Tema</h3>
                     </a>
-                @else
+                @elseif(auth()->user()->role === 'Docente' && $subject->teacher->idcQuantity > 0)
                     <a href="{{ route('topicsApproveIdc', ['subjectId' => $subject->subjectId]) }}" class="btn-postulate">
                         <i class="fa-solid fa-hand-pointer"></i> Seleccionar Temas</h3>
                     </a>

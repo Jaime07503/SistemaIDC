@@ -22,7 +22,7 @@
 
             <!-- Input Name -->
             <div class="input-box">
-                <input type="text" name="name" id="nameInput" placeholder="Nombre completo" class="error-input" autocomplete="off">
+                <input type="text" name="name" id="nameInput" placeholder="Nombre completo" class="error-input" autocomplete="off" maxlength="200">
                 <i class="fa-solid fa-circle-exclamation errores" id="nameInputError"></i>
             </div>
 
@@ -58,7 +58,7 @@
             <div class="options-subjects subject">
                 <div class="custom-listbox enrolled">
                     <div class="listbox-header">
-                        <input class="selected-option listbox" placeholder="Materias inscritas" id="enrolledInputSubjects" readonly></input>
+                        <input class="selected-option listbox" placeholder="Materias inscritas" id="enrolledInputSubjects" readonly maxlength=""></input>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
                         <i class="fa-solid fa-circle-exclamation error" id="enrolledInputError"></i>
                     </div>
@@ -74,7 +74,7 @@
             <div class="subject-postulate pos">
                 <div class="custom-listbox subjectPostulated">
                     <div class="listbox-header">
-                        <input class="selected-option listbox" name="subjectApply" id="subjectPostulated" placeholder="Materia a postular" readonly></input>
+                        <input class="selected-option listbox" name="subjectApply" id="subjectPostulated" placeholder="Materia a postular" readonly maxlength=""></input>
                         <i class="fa-solid fa-chevron-down arrow-down"></i>
                         <i class="fa-solid fa-circle-exclamation error" id="subjectPostulatedError"></i>
                     </div>
@@ -100,7 +100,7 @@
 
             <!-- Participated IDC Subject -->
             <div class="input-box idc" id="input-box">
-                <input type="text" name="previousIDC" placeholder="En que materia" id="participated-idc-input" autocomplete="off">
+                <input type="text" name="previousIDC" placeholder="En que materia" id="participated-idc-input" autocomplete="off" maxlength="200">
                 <i class="fa-solid fa-circle-exclamation errores" id="previousIDCInputError"></i>
             </div>
 

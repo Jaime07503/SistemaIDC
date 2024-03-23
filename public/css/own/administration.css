@@ -47,15 +47,6 @@ h2 {
     color: var(--primary);
 }
 
-::-webkit-scrollbar {
-    width: 0.3rem;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--gold);
-    border-radius: 0.3rem;
-}
-
 .main-content {
     display: flex;
     flex-direction: column;
@@ -226,7 +217,7 @@ h2 {
     min-width: 0;
     width: auto;
     height: auto;
-    padding: .7rem;
+    padding: .65rem;
     color: var(--primary);
     background: transparent;
 }
@@ -393,7 +384,7 @@ input::placeholder {
     background: var(--white);
     margin: 15% auto;
     padding: 20px;
-    border: 3px solid var(--primary);
+    border: 2px solid var(--primary);
     width: 24rem;
     border-radius: .5rem;
     display: flex;
@@ -626,6 +617,16 @@ input::placeholder {
     margin: auto;
     font-weight: 100;
     text-align: center;
+}
+
+/* Scroll */
+::-webkit-scrollbar {
+    width: 0.3rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 0.3rem;
 }
 
 @media (max-width: 1160px) {

@@ -162,7 +162,7 @@
 
             $year = substr($cycle->cycle, -4);
 
-            $code = $initials . '-' . $request->input('section') . '-' . $cycleType . substr($year, -2). '-' . $themeInitials;
+            $code = 'IDC' . '-' . $request->input('section') . '-' . $cycleType . substr($year, -2). '-' . $themeInitials;
 
 
             $subject = new Subject();
@@ -172,6 +172,9 @@
             $subject->approvedIdc = $TO_BE_APPROVED;
             if($avatarName !== null){
                 $subject->avatar = asset('images/' . $avatarName);
+            } 
+            else {
+                $subject->avatar = 'http://localhost/SistemaIDC/public/images/curso_logo.webp';
             }
             $subject->state = $request->input('state');
             $subject->idCycle = $request->input('idCycle');

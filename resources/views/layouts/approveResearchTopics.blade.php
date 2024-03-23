@@ -51,7 +51,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($topics as $topic)
+                            @foreach($researchTopics as $topic)
                                 <tr>
                                     <td data-values="Materia">{{ $topic->nameSubject }}</td>
                                     <td data-values="Tema">{{ $topic->themeName }}</td>

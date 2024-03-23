@@ -19,7 +19,7 @@
         </header>
         <section class="info-user">
             <div class="head">
-                <h2>Facultades</h2>
+                <h2><i class="fa-solid fa-building-columns"></i> Facultades</h2>
             </div>
             <div class="options-users">
                 <input id="searchInput" class="custom-input" type="text" placeholder="Buscar...">
@@ -72,11 +72,11 @@
                         <form id="formAddFaculty" action="{{ route('faculty.create') }}" method="POST" id="formFaculty" class="addFaculty">
                             @csrf
                             <div class="input-box">
-                                <input class="input-faculty" type="text" name="nameFaculty" id="nameFacultyInput" placeholder="Facultad" autocomplete="off" maxlength="200">
+                                <input class="input-faculty" type="text" name="nameFaculty" id="nameFacultyInput" placeholder="Facultad" autocomplete="off" maxlength="100">
                             </div>
                             <div id="notificationF" class="notificationM"></div>
 
-                            <button type="submit" class="btn" id="submitButton">Crear</button>
+                            <button type="submit" class="btn" id="submitButton">Crear <i class="fa-brands fa-pushed"></i></button>
                         </form>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                             <input hidden type="text" name="facultyId" id="facultyEditId">
                             <div id="notificationFE" class="notificationM"></div>
                 
-                            <button id="btnEditUser" class="btn">Guardar</button>
+                            <button id="btnEditUser" class="btn">Guardar <i class="fa-regular fa-floppy-disk"></i></button>
                         </form>
                     </div>
                 </div>
@@ -113,9 +113,9 @@
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="facultyId" id="facultyId" class="error-input" autocomplete="off">
-                                <button class="btn">Eliminar</button>
+                                <button class="btn">Eliminar <i class="fa-solid fa-trash"></i></button>
                             </form>
-                            <button class="btn cancel">Cancelar</button>
+                            <button class="btn cancel">Cancelar <i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 </div>

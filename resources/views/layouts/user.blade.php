@@ -19,7 +19,7 @@
         </div>
         <div class="info-user">
             <div class="head">
-                <h2>Usuarios del sistema</h2>
+                <h2><i class="fa-regular fa-user"></i> Usuarios del sistema</h2>
             </div>
             <div class="options-users">
                 <div class="opt">
@@ -179,7 +179,7 @@
 
                             <div id="notificationU" class="notificationM"></div>
 
-                            <button type="submit" class="btn" id="submitButton">Crear</button>
+                            <button type="submit" class="btn" id="submitButton">Crear <i class="fa-brands fa-pushed"></i></button>
                         </form>
                     </div>
                 </div>
@@ -252,7 +252,7 @@
                             <input hidden type="text" name="teacherId" id="teacherIdEdit">
                             <div id="notificationUE" class="notificationM"></div>
 
-                            <button id="btnEditUser" class="btn">Guardar</button>
+                            <button id="btnEditUser" class="btn">Guardar <i class="fa-regular fa-floppy-disk"></i></button>
                         </form>
                     </div>
                 </div>
@@ -269,9 +269,9 @@
                                 @csrf
                                 @method('DELETE')
                                 <input hidden type="text" name="userId" id="idInputs" class="error-input" autocomplete="off">
-                                <button class="btn">Eliminar</button>
+                                <button class="btn">Eliminar <i class="fa-solid fa-trash"></i></button>
                             </form>
-                            <button class="btn cancel">Cancelar</button>
+                            <button class="btn cancel">Cancelar <i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
                 </div>
